@@ -1,0 +1,257 @@
+{
+  "schema": "R10.timewindow17_independent_limited_geometry_review.v1",
+  "complete": true,
+  "decision": "PASS_FOR_LIMITED_ZERO_STEP_MODEL_INFERENCE_CONTROL",
+  "geometry_npz": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/candidate_reprojected_v1/candidate_geometry.npz",
+    "bytes": 26546830,
+    "sha256": "0d62e87abddd3017a40b06d80c485d331c0feb5c13a433be7f50f6933cda269b"
+  },
+  "candidate_geometry": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/candidate_reprojected_v1/candidate_geometry.npz",
+    "bytes": 26546830,
+    "sha256": "0d62e87abddd3017a40b06d80c485d331c0feb5c13a433be7f50f6933cda269b"
+  },
+  "geometry_source_kind": 2,
+  "all_approved_geometry_model_inferred": true,
+  "approved_cell_mask_key": "cell_asset_mask",
+  "approved_cell_mask_count": 175302,
+  "candidate_geometry_accepted_for_zero_step": true,
+  "requires_separate_root_authorization": true,
+  "requires_fresh_source_projection_and_acceptance": true,
+  "old_fee13_or1844_not_approved_for_new_geometry": true,
+  "full_requested_geometry_coverage_PASS": false,
+  "unknown_requested_cells": 3736,
+  "full_road_geometry_final_PASS": false,
+  "whole_scene_restoration_PASS": false,
+  "numeric_integrity": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/candidate_reprojected_v1/independent_audit_v1/independent_geometry_audit.json",
+    "bytes": 17168,
+    "sha256": "2545d7f22f7b29080d6fea4d19ccca80ea5997662da662782c44bbb225036ab2"
+  },
+  "training_physical_gate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/training_physical_gate_summary.json",
+    "bytes": 4785,
+    "sha256": "836ac9723cf414d44340002e16f997297a5b6d0ea348a5dfdbd268c2b628d8ef"
+  },
+  "heldout_evaluation": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/loo_selection/expanded_curvature_diagnostic.json",
+    "bytes": 13664,
+    "sha256": "3df493dc2a245e510e0d46fde28a7fa88a2c7aa749480a437b945b1878787b1e"
+  },
+  "independent_pointfit_max_abs_error": 1.4210854715202004e-14,
+  "globalUV_and_camera_calibrations_unchanged": true,
+  "visual_review": {
+    "complete": true,
+    "decision": "PASS_FOR_SUPPORTED_GEOMETRY_SUBSET",
+    "reviewer": "native_clean_photo_regions",
+    "root_concurred": false,
+    "frames": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "native_image_wh": [
+      1152,
+      768
+    ],
+    "observations": [
+      {
+        "raw": 86,
+        "note": "Grid is continuous with no visible fold or gross axis mismatch.62 fixed edit pixels remain unsupported at the qualified edge. The photographed originalA9 occludes the inferred road and is not material truth."
+      },
+      {
+        "raw": 110,
+        "note": "Smooth inferred road grid, coherent road perspective and GT bottom outlines; no abrupt height boundary visible. Ground behind the preserved vehicle requires native joint occlusion verification."
+      },
+      {
+        "raw": 134,
+        "note": "No visible fold or gross camera mismatch. Broader qualified footprint remains continuous; original photo car body is display context, not a new road label."
+      },
+      {
+        "raw": 179,
+        "note": "Grid remains smooth and aligned in perspective. The GT bottom crosscheck is an indirect contact reference, not a tyre-surface or hidden-road measurement."
+      },
+      {
+        "raw": 198,
+        "note": "No visible fold or coordinate jump. Supported subset is suitable for a limited zero-step joint probe; final body/ground contact and source appearance remain separate gates."
+      }
+    ],
+    "contactsheet": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/candidate_reprojected_v1/independent_audit_v1/five_view_geometry_contactsheet.png",
+      "bytes": 1587046,
+      "sha256": "053e3309773688ed641886022cd4eaa04319c6305005c96d70c105f4a224a241"
+    }
+  },
+  "target_coverage": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/candidate_reprojected_v1/fixed_target_coverage.json",
+    "bytes": 7091,
+    "sha256": "ae4addd4274880af250ed4730dcd7f01ab40e68f206ac3c98ee8b4359810b165"
+  },
+  "GT_contact": [
+    {
+      "raw": 86,
+      "contacts": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            -0.059846030084308666,
+            -0.046671312534531495,
+            -0.017137521437994963,
+            -0.003962803888210686,
+            -0.03190441698626145
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            -0.0129570749234027,
+            0.0033711521967347835,
+            0.03229410606684624,
+            0.04862233318698728,
+            0.017832629131788735
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        }
+      ]
+    },
+    {
+      "raw": 110,
+      "contacts": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            -0.0004628327150548728,
+            0.009627789817923116,
+            0.028959996961333445,
+            0.039050619494314986,
+            0.01929389338963361
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.004090919925211267,
+            0.016571831521417835,
+            0.03515836911507009,
+            0.04763928071126955,
+            0.025865100318242185
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        }
+      ]
+    },
+    {
+      "raw": 134,
+      "contacts": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            -0.0011137883688903116,
+            0.00958751520463963,
+            0.031858049743085814,
+            0.042559353316615756,
+            0.02072278247386805
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.009797002349529293,
+            0.02306147731489716,
+            0.0446545064774071,
+            0.05791898144277141,
+            0.03385799189615213
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        }
+      ]
+    },
+    {
+      "raw": 179,
+      "contacts": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.00013845789295885425,
+            0.011045868766753841,
+            0.03577053481275527,
+            0.04667794568654671,
+            0.023408201789759886
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.02321923109066759,
+            0.03677150228694259,
+            0.06093536161759161,
+            0.07448763281386661,
+            0.0488534319522671
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        }
+      ]
+    },
+    {
+      "raw": 198,
+      "contacts": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.0007280737927146674,
+            0.011838378561879637,
+            0.03724571216578454,
+            0.048356016934945956,
+            0.024542045363833864
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.028951690191817647,
+            0.042759608706234076,
+            0.06760997472016683,
+            0.08141789323457971,
+            0.05518479171319868
+          ],
+          "GT_not_fitted": true,
+          "actor_not_moved": true
+        }
+      ]
+    }
+  ],
+  "parameter_bootstrap_SD_m": {
+    "count": 175302,
+    "min": 0.0026790607841141283,
+    "mean": 0.003129579005602133,
+    "median": 0.00309739620631717,
+    "p05": 0.0027345414622153954,
+    "p95": 0.0036367265246512806,
+    "max": 0.003895966517736672
+  },
+  "uncertainty_is_conditional_not_calibrated_probability": true,
+  "pool_comparison": "Fixed86..198 evaluation time window, every17 available official semantic frame included; time-window change plus added observations, not count-only ablation",
+  "old8_pool_and_failed_models_preserved": true,
+  "heldout_not_used_to_choose_model": true,
+  "original_actor_camera_oldroad_and_source_RGB_unchanged": true,
+  "GPU_forward": 0,
+  "backward": 0,
+  "updates": 0
+}

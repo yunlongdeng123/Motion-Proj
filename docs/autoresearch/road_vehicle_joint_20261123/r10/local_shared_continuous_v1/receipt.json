@@ -1,0 +1,332 @@
+{
+  "schema": "R10.local_extension_joint_continuous_appearance.v1",
+  "complete": true,
+  "CPU_only": true,
+  "parent": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/joint_shared_continuous_v2/final_atlas.npz",
+    "sha256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+    "bytes": 4087145
+  },
+  "seed": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_texture_seed_v1/texture_seed.npz",
+    "sha256": "f110558e1ebea80c6fa1af27bc76e9b1ba622006becba0c51f3059ccdd6cd44a",
+    "bytes": 4214701
+  },
+  "geometry": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/candidate_geometry.npz",
+    "sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a",
+    "bytes": 4459551
+  },
+  "new_observation_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_world_observations_v1/receipt.json",
+    "sha256": "a7379334b9cbe70275314230cbfd0397eccb5bea6b24d4a05935a1b9247abcdd",
+    "bytes": 2941
+  },
+  "original_observation_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/world_observations_v2/receipt.json",
+    "sha256": "cce445acf69ec30a43dfad5ab98fe7d58c86595b36666c9a3b0090674560d515",
+    "bytes": 4161
+  },
+  "inputs": [
+    {
+      "raw": 86,
+      "original_observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/world_observations_v2/086/world_observation.npz",
+        "sha256": "bb775d55efe71670f1ff7a289a37579936eff6d000ed77146235a2562f0031d5",
+        "bytes": 12824282
+      },
+      "local_observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_world_observations_v1/086/world_observation.npz",
+        "sha256": "23a18e39c398e544557db118e9376a5108a7c0c5b55553b259d4c0b86e58ace6",
+        "bytes": 1337723
+      },
+      "original_valid_overwritten": 11655,
+      "local_valid": 24539,
+      "local_valid_new_extension": 195,
+      "true_real_anchor_samples": 4148,
+      "canonical_RGB_already_contains_original_photo_exposure_gain": true,
+      "photo_gain_applied_again": false
+    },
+    {
+      "raw": 110,
+      "original_observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/world_observations_v2/110/world_observation.npz",
+        "sha256": "56aebfd5e26d3f8501ccc17f471591116b5de766ba2a1fefe7449d6cc13433b9",
+        "bytes": 13002030
+      },
+      "local_observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_world_observations_v1/110/world_observation.npz",
+        "sha256": "b9eadea597e5a83139bcd304cf9e3d2ee589512df6cefd9df90c0f7f05c4d7d9",
+        "bytes": 1297470
+      },
+      "original_valid_overwritten": 13548,
+      "local_valid": 24542,
+      "local_valid_new_extension": 195,
+      "true_real_anchor_samples": 5228,
+      "canonical_RGB_already_contains_original_photo_exposure_gain": true,
+      "photo_gain_applied_again": false
+    }
+  ],
+  "frames": [
+    86,
+    110
+  ],
+  "reused_joint_solver_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/code/fuse_old_raw_joint.py",
+    "sha256": "083fdfd863027b9a2e21784c57eb9a24e71ec59c87c357cf28df60ab2e1a6db2",
+    "bytes": 9769
+  },
+  "reused_PDE_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/code/solve_continuous_shared_field.py",
+    "sha256": "6bc4c44aa27da75ea24dfb052a371c20e8a39b04fec6b9e88d263199b9830ffc",
+    "bytes": 6702
+  },
+  "affine_settings": {
+    "affine_IRLS_steps": 8,
+    "affine_gain_bounds": [
+      0.8,
+      1.25
+    ],
+    "affine_bias_bounds_linear": [
+      -0.025,
+      0.025
+    ],
+    "Huber_delta_linear": 0.01,
+    "real_anchor_weight_per_view": 2.0,
+    "pair_weight": 1.0,
+    "synchronous_world_bias_steps": 8,
+    "world_bias_sigma_m": 0.3,
+    "world_bias_bounds_linear": [
+      -0.025,
+      0.025
+    ],
+    "world_bias_relaxation": 0.75,
+    "shared_tone_sigma_m": 0.12,
+    "teacher_to_seed_boundary_feather_m": 0.2
+  },
+  "PDE_settings": {
+    "schema": "R9.continuous_shared_field.contract.v2",
+    "reason": "v1 fixed-overlap radiometric scores passed but its pointwise support/feather writing introduced visible stripes; preserve v1 and replace shared-field writing",
+    "unchanged": [
+      "original raw teacher source bytes",
+      "qualified world observations",
+      "v1 joint radiometric candidate corrections",
+      "actual world geometry",
+      "real6407 hard locks"
+    ],
+    "unknown": "one world-surface RGB residual field relative to the complete real-photo texture seed",
+    "objective": "all qualified view RGB residual data with robust weights + reference-gradient smoothness + weak seed-colour prior, with exact observed-real and outside-scope Dirichlet values",
+    "grid_texel_m": 0.02,
+    "smoothing_length_m": 0.4,
+    "laplacian_lambda": 400.0,
+    "seed_residual_prior": 0.05,
+    "IRLS_iterations": 4,
+    "Huber_delta_linear_RGB": 0.01,
+    "CG_relative_tolerance": 1e-06,
+    "CG_max_iterations": 600,
+    "output_support": "continuous variational field; data visibility does not directly multiply the output RGB",
+    "source_interpretation": "teacher supplies a smooth colour correction; complete similar-photo texture supplies the gradient/detail reference; inferred teacher influence is recorded separately from direct teacher observations",
+    "acceptance": "v1 source/geometry, real-lock, fixed-pair and seam checks retained; independent five-view visual PASS required before Gaussian fitting",
+    "new_diffusion_calls": 0,
+    "Gaussian_updates": 0
+  },
+  "affine_parameters": [
+    {
+      "gain": [
+        0.9126431831131426,
+        1.0335989271745576,
+        0.9858116921641759
+      ],
+      "bias_linear": [
+        0.013224902207483423,
+        0.010336529506245185,
+        0.012300927856365095
+      ],
+      "real_anchor_texels": 4148
+    },
+    {
+      "gain": [
+        0.9687297387660068,
+        1.1271764316056798,
+        1.0650784746147097
+      ],
+      "bias_linear": [
+        0.017176696991476195,
+        0.012598665391937837,
+        0.015237040552218934
+      ],
+      "real_anchor_texels": 5228
+    }
+  ],
+  "synchronous_history": [
+    {
+      "iteration": 1,
+      "max_abs": 0.012945635082068065
+    },
+    {
+      "iteration": 2,
+      "max_abs": 0.02229284400864034
+    },
+    {
+      "iteration": 3,
+      "max_abs": 0.025
+    },
+    {
+      "iteration": 4,
+      "max_abs": 0.025
+    },
+    {
+      "iteration": 5,
+      "max_abs": 0.025
+    },
+    {
+      "iteration": 6,
+      "max_abs": 0.025
+    },
+    {
+      "iteration": 7,
+      "max_abs": 0.025
+    },
+    {
+      "iteration": 8,
+      "max_abs": 0.025
+    }
+  ],
+  "IRLS_CG_history": [
+    {
+      "iteration": 1,
+      "channels": [
+        {
+          "CG_iterations": 18,
+          "relative_residual": 6.188513668072855e-07
+        },
+        {
+          "CG_iterations": 18,
+          "relative_residual": 9.429238152428365e-07
+        },
+        {
+          "CG_iterations": 18,
+          "relative_residual": 9.886180520110296e-07
+        }
+      ],
+      "RGB_residual_abs_max": 0.00012113404755161808
+    },
+    {
+      "iteration": 2,
+      "channels": [
+        {
+          "CG_iterations": 11,
+          "relative_residual": 9.357451220887084e-07
+        },
+        {
+          "CG_iterations": 11,
+          "relative_residual": 8.661404037432404e-07
+        },
+        {
+          "CG_iterations": 11,
+          "relative_residual": 5.741528431867571e-07
+        }
+      ],
+      "RGB_residual_abs_max": 0.00012144693115151595
+    },
+    {
+      "iteration": 3,
+      "channels": [
+        {
+          "CG_iterations": 3,
+          "relative_residual": 8.263306816664543e-07
+        },
+        {
+          "CG_iterations": 3,
+          "relative_residual": 7.947213354700454e-07
+        },
+        {
+          "CG_iterations": 3,
+          "relative_residual": 6.545707435703016e-07
+        }
+      ],
+      "RGB_residual_abs_max": 0.00012144761305220541
+    },
+    {
+      "iteration": 4,
+      "channels": [
+        {
+          "CG_iterations": 0,
+          "relative_residual": 8.263278542306175e-07
+        },
+        {
+          "CG_iterations": 0,
+          "relative_residual": 7.947169689044168e-07
+        },
+        {
+          "CG_iterations": 0,
+          "relative_residual": 6.545866505524252e-07
+        }
+      ],
+      "RGB_residual_abs_max": 0.00012144761305220541
+    }
+  ],
+  "influence_CG": {
+    "CG_iterations": 19,
+    "relative_residual": 9.61291209437221e-07
+  },
+  "true_same_world_real_anchor_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/quilt_seed/atlas_seed.npz",
+    "sha256": "c056796e9cc7b116aeb9db328063f6e1ca1faa8b663de50c86396dcfc110bd1a",
+    "bytes": 3291782
+  },
+  "true_real_lock_count": 6407,
+  "parent_inferred_pixels_not_relabelled_real": true,
+  "parent_RGB_and_real_locks_byteexact": true,
+  "extension_only_write_pixels": 12328,
+  "teacher_direct_extension_pixels": 195,
+  "teacher_inferred_extension_pixels": 0,
+  "source2_weak_teacher_tail_retained_pixels": 41,
+  "conditional_influence_is_not_calibrated_probability": true,
+  "no_pointwise_support_multiplication_of_final_RGB": true,
+  "parent_boundary_residual_Dirichlet_zero": true,
+  "harmonic_seed_coordination_applied": false,
+  "HF_texture_not_blurred_to_pass_seam": true,
+  "accepted_parent_field_read": true,
+  "old_hard_final_images_or_failed_v1_atlas_read": false,
+  "new_geometry_acceptance": false,
+  "final_atlas": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_shared_continuous_v1/final_atlas.npz",
+    "sha256": "eb86cb6d61b711366d8c30052fd02b823433a6e940b80d6f4e0463685e38a5dd",
+    "bytes": 4219825
+  },
+  "radiometry_state": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_shared_continuous_v1/radiometry_state.npz",
+    "sha256": "f4e3c99b3e837e36e41bb0f93798b0d79670d20b41898f9017b33f32ebe53669",
+    "bytes": 6754137
+  },
+  "solve_state": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_shared_continuous_v1/solve_state.npz",
+    "sha256": "68b289a9146e64faadd19cc0e5de28bd7c61708c44c7f28fbcc499d5c1fe44aa",
+    "bytes": 521220
+  },
+  "metrics": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_shared_continuous_v1/metrics.json",
+    "sha256": "c5a71be821291ce5ae7d91647010a5f665ea0a2b064f50a3b0d01ca454e01341",
+    "bytes": 2277
+  },
+  "source_photo_seed_lineage": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_texture_seed_v1/new_texture_lineage.npz",
+    "sha256": "9b2ff454e9e0810ac9f4598d6d96e0d37d36796ea21434922693af0dbafa0f9c",
+    "bytes": 102587
+  },
+  "source_photo_seed_trace": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_texture_seed_v1/quilt_trace.json",
+    "sha256": "cab7d15c89b9127d43d22f5244077be9965f9ae6e05c40f9a4ed77133887907f",
+    "bytes": 67431
+  },
+  "Gaussian_fit_authorized": false,
+  "numeric_acceptance": "PENDING independent fixed-domain LF/seam/grain checks",
+  "visual_acceptance": "PENDING independent and root review",
+  "nativeF": 0,
+  "nativeB": 0,
+  "new_semantic_calls": 0,
+  "new_diffusion_calls": 0,
+  "Gaussian_updates": 0,
+  "seconds": 13.494236707687378
+}

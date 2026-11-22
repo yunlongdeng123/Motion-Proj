@@ -1,0 +1,37 @@
+{
+  "schema": "R10.expanded_mask_driven_geometry_contract.v1",
+  "complete": true,
+  "written_before_credibility_statistics": true,
+  "parent_geometry": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/candidate_geometry.npz",
+    "bytes": 4459551,
+    "sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a"
+  },
+  "source_masks": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/edit_footprint_masks_v2/receipt.json",
+    "bytes": 9941,
+    "sha256": "1a9b70d9780b26f335ca0bd6d5de7aa56ab0bbe0fca4fd49636968977d5f9327"
+  },
+  "model_unchanged": true,
+  "all_coordinates_model_inferred": true,
+  "scope": "Five-view inside_allowed_edit pixel squares ray-plane -> worldUV union plus exact .2m metric cell ring; no RGB selection and no hardcoded u0",
+  "bounds_uvxy_half_open": [
+    173,
+    19,
+    1055,
+    287
+  ],
+  "credibility": {
+    "physical_official_road_hull_required": true,
+    "nearest_official_road_max_m": 2.0,
+    "conditional_bootstrap_SD_max_m": 0.05,
+    "nearest16_official_road_median_abs_profile_residual_max_m": 0.1
+  },
+  "physical_validation": "Original8 official-labeled training frames only, full global ROAD/LANE points restricted to requested world bbox +3m; no OBB/photo/model-residual point pruning; no refitting",
+  "original_fit_hull": "Separate477 original fitting medoids with+.4m context, not the new3m validation padding; extrapolation flagged",
+  "leverage_reported_not_silently_renormalized": true,
+  "heldout_not_fitted_or_used_for_screen_selection": true,
+  "uncertainty_is_conditional_not_calibrated_probability": true,
+  "approval": false,
+  "GPU_forward": 0
+}

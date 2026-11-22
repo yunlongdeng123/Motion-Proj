@@ -1,0 +1,298 @@
+{
+  "schema": "ROAD-VEHICLE-JOINT-20261123.final_finite_stage.v1",
+  "task": "ROAD-VEHICLE-JOINT-20261123",
+  "method_stage_complete": true,
+  "overall_run_complete": false,
+  "whole_scene_restoration_accepted": false,
+  "production_asset_promoted": false,
+  "human_verdict": null,
+  "problem_solved": null,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "updated:V82-F06",
+  "result": {
+    "schema": "R10.root_final_finite_stage_review.v1",
+    "complete": true,
+    "method_stage_review_complete": true,
+    "overall_run_complete": false,
+    "whole_scene_restoration_accepted": false,
+    "production_asset_promoted": false,
+    "root_actual_joint_views_reviewed": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "latest_control": "intrinsic_component_replacement_zero_v4_v1",
+    "root_actual_joint_decision": "FAIL",
+    "visual_findings": [
+      "The original approved A20 body remains usable, with all five protected K/car readouts byte-exact and no newly introduced original-full-band or unknown-target alpha95 holes.",
+      "New continuous road appearance reduces much of the red outline, but a prominent blue-grey vehicle-shaped foreground ghost and cyan/white fragments remain in all five reviewed joint renders.",
+      "Replacing whole components under an independent local-coverage domain has not produced a visibly satisfactory final combination. Numerical protection gates are not image-quality acceptance."
+    ],
+    "latest_fixed_colour_diagnostics": {
+      "frames": [
+        86,
+        110
+      ],
+      "red_remaining": [
+        2,
+        30
+      ],
+      "red_fixed_denominators": [
+        357,
+        692
+      ],
+      "blue_remaining": [
+        3125,
+        4016
+      ],
+      "blue_fixed_denominators": [
+        3389,
+        4575
+      ],
+      "last_three_empty_colour_diagnostic_domains_are_unmeasured": true
+    },
+    "latest_old_fixed_ground_MSE": [
+      0.003782176412642002,
+      0.003939472604542971,
+      0.003167642280459404,
+      0.0015567024238407612,
+      0.0015883981250226498
+    ],
+    "old_fixed_evaluation_denominators_preserved": true,
+    "source_and_geometry": {
+      "new_geometry": "0d62e87abddd3017a40b06d80c485d331c0feb5c13a433be7f50f6933cda269b",
+      "shared_field": "45b4b9d752f1584019e6687008de489de071a81907ab2c3c1b61b20964f64d32",
+      "old_A20": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+      "geometry_training_pool": "17 official-labelled frames90..170, all kept within pre-existing evaluation time window; not a count-only ablation",
+      "shared_field_real_locks": 6332,
+      "displaced_old_addresses_requalified_and_downgraded": 75,
+      "new_asset_strict_same_world_real_material_anchors": 0,
+      "fresh_photo_candidates_retained": 2999905,
+      "zero_strict_qualification_is_not_proven_invisibility": true,
+      "existing_raw_teachers": [
+        86,
+        110
+      ],
+      "similar_photo_texture_references": [
+        110,
+        137
+      ],
+      "shared_input_colour_and_internal_seam_gate_passed": true
+    },
+    "independent_new_local_material_conversion": {
+      "audit": "audit/intrinsic_material_fidelity_v1/metrics.json",
+      "fixed_high_alpha_intersection_pixels": [
+        18732,
+        28136,
+        30983,
+        30884,
+        30845
+      ],
+      "canonical_linear_MAE": [
+        0.002708,
+        0.00261,
+        0.002564,
+        0.002566,
+        0.002578
+      ],
+      "mean_channel_bias_abs_below": 0.0001,
+      "dark_core_pixels": 0,
+      "texture_fidelity_accepted": false,
+      "HF_RMS_ratio_range": [
+        0.498,
+        0.586
+      ],
+      "interpretation": "High-frequency correspondence is weak or negative. Gaussian filtering and unprefiltered surface-sampling alias may contribute; a unique cause is not established. This is not evidence that the original photographic references are intrinsically unusable."
+    },
+    "global_opacity_controls": {
+      "v1": "2 actual smoke updates; absolute outside-alpha guard failed; real 1F replay showed maximum alpha change was a coverage increase",
+      "v2": "Only coverage readout revised before another smoke; same source, masks, optimizer, loss and eligibility.3 actual smoke updates then outside RGB0.0090767 exceeded1/255",
+      "formal_optimizer_updates_added": 0,
+      "recovery_replay_and_fresh_reload_not_reached": true,
+      "route_stopped": true,
+      "not_a_universal_claim_about_all_opacity_optimization": true
+    },
+    "R10_actual_nativeF": 127,
+    "R10_actual_nativeB": 76,
+    "R10_actual_smoke_optimizer_updates": 5,
+    "existing_representation_formal_updates": 400,
+    "existing_representation_total_cap": 2000,
+    "new_diffusion_calls": 0,
+    "new_semantic_calls": 0,
+    "remaining_delivery": "Original HTML final QA/snapshot; full R10 archive/local all-member verification; isolated-index research publication and push verification",
+    "GPU_stays_on": true,
+    "human_verdict": null,
+    "problem_solved": null,
+    "no_pending_R10_GPU_or_experiment_controller": true,
+    "scope_limit": "Opacity smoke failures refer to the specific conservative registered contracts, not universal impossibility. New local Gaussians have only zero-step colour initialization; their texture fidelity has not received a formal intrinsic RGB fit in this phase."
+  },
+  "resources": {
+    "R10": {
+      "nativeF": 127,
+      "nativeB": 76,
+      "actual_optimizer_updates": 5,
+      "failed_engineering_nativeF": 21,
+      "failed_engineering_nativeB": 6,
+      "formal_updates": 0,
+      "smoke_updates": 5,
+      "unclassified_updates": 0
+    },
+    "historical_separate": {
+      "R7": {
+        "nativeF": 956,
+        "nativeB": 811,
+        "historical_formal_updates": 800
+      },
+      "R8": {
+        "nativeF": 970,
+        "nativeB": 833,
+        "formal_updates": 400,
+        "smoke_updates": 13
+      },
+      "R9": {
+        "new_semantic_calls": 2,
+        "new_diffusion_calls": 0
+      },
+      "authority": "Root-provided fixed historical subtotals; preserved raw receipts/archives remain the authority. This script recomputes the current R10 subtotal only."
+    },
+    "current_existing_representation_budget": {
+      "prior_formal_updates": 400,
+      "cap": 2000,
+      "R10_classified_additional_formal_updates": 0,
+      "classified_used": 400,
+      "unclassified_updates_requiring_root": 0,
+      "smoke_excluded_from_formal_cap": true,
+      "budget_not_reset": true
+    },
+    "DrivingEditor_historical_plus_R10": {
+      "nativeF": 2053,
+      "nativeB": 1720,
+      "DGGT_excluded": true
+    },
+    "DGGT": {
+      "unique_main_network_forwards": 1,
+      "recovery_new_main_network_forwards": 0,
+      "inherited_main_network_forward_not_double_counted": true,
+      "sky_auxiliary_forward_completed": 1,
+      "sky_camera_raster_F": 5,
+      "original_scene_camera_raster_F": 5,
+      "camera_raster_F_total": 10,
+      "sky_failed_API_attempts_retained": 1,
+      "sky_failed_API_completed": 0,
+      "recovery_API_attempts": 2,
+      "recovery_API_completed": 2,
+      "original_scene_API_attempts": 5,
+      "original_scene_API_completed": 5,
+      "total_API_attempts": 8,
+      "total_API_completed": 7,
+      "training_updates": 0,
+      "new_diffusion_calls": 0,
+      "DrivingEditor_nativeF_included": false,
+      "receipts": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/forward_smoke_five_views_v1/receipt.json",
+          "sha256": "f9d8d5b2a16b8e3b0ba8c1727c6d5acadb4a0395b993c1423b15faf6363f89d0"
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/forward_smoke_five_views_recovered_v2/receipt.json",
+          "sha256": "cafda0042aac80b0c0a12cd814bc9d375fec1c1a5c50b072e9d1de91ffc8fb8b"
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/dggt_no_diff_control_v1/receipt.json",
+          "sha256": "d0f621a9d1676c5a9c5b6610042016094da1e0130b757a29c3700199bd43355d"
+        }
+      ]
+    }
+  },
+  "resource_classification_note": "Frozen ledger failed_engineering_* counts all incomplete runs, including protection stops. They are not all wiring/numerical errors. Per-run mode/exception and actual counters remain the authority.",
+  "incomplete_call_classification": [
+    {
+      "kind": "FP32,CLI and exact-readout engineering controls",
+      "nativeF": 4,
+      "nativeB": 1
+    },
+    {
+      "kind": "v1 protection-readout stop before revision",
+      "nativeF": 8,
+      "nativeB": 2
+    },
+    {
+      "kind": "v2 constrained opacity-control stop",
+      "nativeF": 9,
+      "nativeB": 3
+    }
+  ],
+  "report": {
+    "url": "http://127.0.0.1:18765/index.html#road-underbody-local",
+    "HTML": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\outputs\\road_material_three_rounds_20261121\\index.html",
+      "sha256": "7058cba72afc2473723786ff7a900a20cd365fbeae32149cfbd56ee5e37c7111",
+      "bytes": 6037720
+    },
+    "QA": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/docs/final_report_QA.actual.json",
+      "sha256": "a07cf776c9f7a8b4049c5f4a2aa368d8a84e86d9009f4ee70b493b3c0ac2de57",
+      "bytes": 1484
+    },
+    "freeze_metadata": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/docs/final_report_freeze.actual.json",
+      "sha256": "da8ebf6abc745f7ef183ceb7e8540ef7599eb1a9095976d58c7bdab14955ac74",
+      "bytes": 151186
+    },
+    "only_original_public_HTML": true
+  },
+  "archives": {
+    "R8_R9": {
+      "schema": "R8_R9.completed_stage_local_takeback.v1",
+      "complete": true,
+      "archive": "completed_R8_R9_snapshot_20261123.tar.gz",
+      "archive_bytes": 2163874181,
+      "archive_sha256": "41f79eda42cd03385fa135fbc783e279aca2a85d63a5a0b4997b36006f5d544c",
+      "remote_archive_verified": true,
+      "local_archive_and_all_1700_member_SHA_verified": true,
+      "local_verification_command_exit_code": 0,
+      "local_verification_receipt": "completed_R8_R9_snapshot_20261123.tar.gz.verify.json",
+      "HTML_included": false,
+      "scope": "Completed R8 and R9 methods, persistent assets, exact retained runtime sources and evidence. Evolving R10 and original HTML are separate continuing work.",
+      "whole_task_complete": false,
+      "remote_GPU_shutdown": false
+    },
+    "R10": {
+      "schema": "R10.safe_local_archive_verification.v1",
+      "complete": true,
+      "decision": "PASS",
+      "created_UTC": "2026-11-22T23:44:39.707378+00:00",
+      "archive": {
+        "path": "outputs\\road_underbody_local_20261123_r10\\method_archive\\r10_method_stage_timewindow17_v1.tar.gz",
+        "bytes": 3792513073,
+        "sha256": "4f5d4cffd49f6bd8434a05658fcd74a4f92f03a6a9fdd2a65222dfdc578358d7"
+      },
+      "manifest": {
+        "path": "outputs\\road_underbody_local_20261123_r10\\method_archive\\r10_method_stage_timewindow17_v1.manifest.json",
+        "bytes": 700949,
+        "sha256": "463b40183f09c22920793638e1a7d50b9210eb5f04198c12ac24409b60c47c89"
+      },
+      "all_member_SHA_verified": true,
+      "member_count": 2416,
+      "payload_bytes": 3980423954,
+      "tar_extracted": false,
+      "remote_reference_paths_dereferenced": false,
+      "archived_code_executed": false,
+      "model_or_NPZ_loaded": false,
+      "report_HTML_included": false,
+      "whole_scene_quality_not_asserted": true,
+      "GPU_calls": 0
+    },
+    "original_vehicle_archive_member": "provenance/original_A20_r3/actor.npz",
+    "original_vehicle_sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "original_vehicle_bytes": 24031638,
+    "original_native_models_and_DGGT_large_weights": "External immutable references remain required; see archive dependency/path-map indexes."
+  },
+  "source_00_02_correction_preserved": true,
+  "R7_NOT_ACCEPTED_preserved": true,
+  "GPU_stays_on": true
+}

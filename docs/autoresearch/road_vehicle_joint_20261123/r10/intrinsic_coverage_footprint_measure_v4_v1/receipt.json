@@ -1,0 +1,719 @@
+{
+  "schema": "R10.actual_intrinsic_coverage_footprint_alphaT_VJP.v1",
+  "complete": true,
+  "error": null,
+  "native_F_attempts": 5,
+  "actual_nativeF": 5,
+  "nativeF": 5,
+  "nativeB": 5,
+  "updates": 0,
+  "asset_manifest": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v4/manifest.json",
+    "sha256": "57d34ac1ba46375eb6d3746068319ff80dab69d9e9c27f2089ace393af4c4b88",
+    "bytes": 10217
+  },
+  "zero_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v4/receipt.json",
+    "sha256": "5fb2c61e9308130abd408dbc12c7dfb023b2d24d4b89ea0e9b7ff6def92096e1",
+    "bytes": 31459
+  },
+  "mask_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_masks_v4_v1/receipt.json",
+    "sha256": "0128c440f1e7f283eb39d382a722ffaa9579627451cf3fc685a5a41044327101",
+    "bytes": 14571
+  },
+  "baseline_contract_sha256": "fd95066c0ae9cffe33080e64619d24a9466dcfa6ec61ab92aa5f1c980ef00f4d",
+  "measurement_contract": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+    "sha256": "79b03ab5ef0a76e9e45824f275471aded417a4cbcb913a93f4df951046b7d17a",
+    "bytes": 4818
+  },
+  "engineering_contract": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/engineering_contract_v3.json",
+    "sha256": "22bcf538a797f21c1802dde890881fb5262a39a1516f37045b35f5e6dbb28392",
+    "bytes": 1587
+  },
+  "ROI_names": [
+    "full_image",
+    "outside_allowed_edit",
+    "actor_protected",
+    "K_protected",
+    "inside_allowed_edit",
+    "outside_replacement",
+    "inside_replacement",
+    "single_pixel_sentinel"
+  ],
+  "feature_columns": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "rows": [
+    {
+      "raw": 86,
+      "all_packet_rows": 1626585,
+      "all_context_rows": 1032278,
+      "native_context_rows": 869930,
+      "native_global_row_count": 2593301,
+      "packet": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/086/all_context_rows.npz",
+        "sha256": "732c635d1f169527d7b8751585195fd4d4f1a7956e3605ba336148ccc8d50864",
+        "bytes": 5553084
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_masks_v4_v1/086/scope_masks.npz",
+        "sha256": "b1c7ec264dbc436db046491ae0bafa0df448a95d993e4a926b8592fc8d3e4a76",
+        "bytes": 24976
+      },
+      "raw_region_vjp": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/086/raw_feature_alphaT_vjp.npz",
+        "sha256": "d4cb3fd2a8f5b994761d9e702de92cd7a8118026a6e7dc6e62d5296f17c22f33",
+        "bytes": 9584240
+      },
+      "full_RGB_alpha_byteexact_new0": true,
+      "actual_single_depth_sort": true,
+      "conservation": [
+        {
+          "region": "full_image",
+          "pixels": 884736,
+          "all_packet_row_alphaT_mass": 560283.4598222659,
+          "direct_alpha_mass": 560289.6357772923,
+          "absolute_sum_error": 6.17595502641052,
+          "relative_sum_error": 1.1022790057222083e-05,
+          "registered_absolute_bound": 17.69472,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_allowed_edit",
+          "pixels": 859541,
+          "all_packet_row_alphaT_mass": 535097.0837908246,
+          "direct_alpha_mass": 535101.159742055,
+          "absolute_sum_error": 4.075951230362989,
+          "relative_sum_error": 7.617160150293446e-06,
+          "registered_absolute_bound": 17.190820000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "actor_protected",
+          "pixels": 6498,
+          "all_packet_row_alphaT_mass": 6496.41181832761,
+          "direct_alpha_mass": 6496.411898970604,
+          "absolute_sum_error": 8.064299436227884e-05,
+          "relative_sum_error": 1.2413466943969057e-08,
+          "registered_absolute_bound": 0.12996000000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "K_protected",
+          "pixels": 76057,
+          "all_packet_row_alphaT_mass": 76029.93817938892,
+          "direct_alpha_mass": 76029.9373486638,
+          "absolute_sum_error": 0.0008307251118822023,
+          "relative_sum_error": 1.0926289575547071e-08,
+          "registered_absolute_bound": 1.5211400000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_allowed_edit",
+          "pixels": 25195,
+          "all_packet_row_alphaT_mass": 25188.47563568862,
+          "direct_alpha_mass": 25188.476035237312,
+          "absolute_sum_error": 0.0003995486913481727,
+          "relative_sum_error": 1.5862360660058424e-08,
+          "registered_absolute_bound": 0.5039,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_replacement",
+          "pixels": 865837,
+          "all_packet_row_alphaT_mass": 541391.1101771671,
+          "direct_alpha_mass": 541395.2147042132,
+          "absolute_sum_error": 4.104527046089061,
+          "relative_sum_error": 7.581387745238079e-06,
+          "registered_absolute_bound": 17.316740000000003,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_replacement",
+          "pixels": 18899,
+          "all_packet_row_alphaT_mass": 18894.421118467693,
+          "direct_alpha_mass": 18894.42107307911,
+          "absolute_sum_error": 4.538858411251567e-05,
+          "relative_sum_error": 2.4022214778088974e-09,
+          "registered_absolute_bound": 0.37798000000000004,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "single_pixel_sentinel",
+          "pixels": 1,
+          "all_packet_row_alphaT_mass": 0.9998920047827369,
+          "direct_alpha_mass": 0.9998918175697327,
+          "absolute_sum_error": 1.8721300421020715e-07,
+          "relative_sum_error": 1.8723325955925314e-07,
+          "registered_absolute_bound": 1e-05,
+          "constant_one_feature_alpha_max_abs": 0.0
+        }
+      ],
+      "exact_pixel_partition_inside_outside": true,
+      "protected_masks_are_overlapping_diagnostics_not_disjoint_partition": true,
+      "per_context_row_partition_roundoff_abs_max": 1.976806640625,
+      "per_context_row_partition_roundoff_abs_sum": 2.1524389418781595,
+      "per_context_row_replacement_partition_roundoff_abs_max": 1.96466064453125,
+      "per_context_row_replacement_partition_roundoff_abs_sum": 2.1342874851230533,
+      "per_context_row_partition_max_fraction_registered_bound": 0.46753099175581825,
+      "roundoff_is_not_a_tolerance_for_strict_zero_selection": true,
+      "non_context_alphaT_mass": [
+        13613.39486115091,
+        7130.250256584652,
+        4566.552848123241,
+        112.87656692827886,
+        6483.144597213304,
+        7255.164807275726,
+        6358.230046142518,
+        0.9757246468133189
+      ]
+    },
+    {
+      "raw": 110,
+      "all_packet_rows": 1556477,
+      "all_context_rows": 962170,
+      "native_context_rows": 799830,
+      "native_global_row_count": 2593301,
+      "packet": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/110/all_context_rows.npz",
+        "sha256": "01efe667a0e2b003c92016dc72e45fb57afb30f92201a276038c44c7459d46d4",
+        "bytes": 5381707
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_masks_v4_v1/110/scope_masks.npz",
+        "sha256": "5091f9a05c5e0698fd68290f0c61ae8136b1e138d54c49be17bd4c15ce7dbe57",
+        "bytes": 25976
+      },
+      "raw_region_vjp": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/110/raw_feature_alphaT_vjp.npz",
+        "sha256": "1000b4ec364b19286fc4211062c8ed12e29d2b63403aa6067bde54923237ba7a",
+        "bytes": 9453837
+      },
+      "full_RGB_alpha_byteexact_new0": true,
+      "actual_single_depth_sort": true,
+      "conservation": [
+        {
+          "region": "full_image",
+          "pixels": 884736,
+          "all_packet_row_alphaT_mass": 549506.0530941593,
+          "direct_alpha_mass": 549511.4691931717,
+          "absolute_sum_error": 5.416099012363702,
+          "relative_sum_error": 9.856207406036436e-06,
+          "registered_absolute_bound": 17.69472,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_allowed_edit",
+          "pixels": 852444,
+          "all_packet_row_alphaT_mass": 517223.07512633316,
+          "direct_alpha_mass": 517228.33441765234,
+          "absolute_sum_error": 5.259291319176555,
+          "relative_sum_error": 1.0168219660854415e-05,
+          "registered_absolute_bound": 17.04888,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "actor_protected",
+          "pixels": 10238,
+          "all_packet_row_alphaT_mass": 10235.413231313449,
+          "direct_alpha_mass": 10235.413554131985,
+          "absolute_sum_error": 0.0003228185360057978,
+          "relative_sum_error": 3.153937398801806e-08,
+          "registered_absolute_bound": 0.20476000000000003,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "K_protected",
+          "pixels": 79186,
+          "all_packet_row_alphaT_mass": 79130.52808400133,
+          "direct_alpha_mass": 79130.53483223915,
+          "absolute_sum_error": 0.006748237821739167,
+          "relative_sum_error": 8.527982069179467e-08,
+          "registered_absolute_bound": 1.5837200000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_allowed_edit",
+          "pixels": 32292,
+          "all_packet_row_alphaT_mass": 32283.133070243854,
+          "direct_alpha_mass": 32283.13477551937,
+          "absolute_sum_error": 0.0017052755174518097,
+          "relative_sum_error": 5.2822488562818796e-08,
+          "registered_absolute_bound": 0.6458400000000001,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_replacement",
+          "pixels": 856787,
+          "all_packet_row_alphaT_mass": 521564.5815427803,
+          "direct_alpha_mass": 521569.8702392094,
+          "absolute_sum_error": 5.288696429110132,
+          "relative_sum_error": 1.013995771397715e-05,
+          "registered_absolute_bound": 17.135740000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_replacement",
+          "pixels": 27949,
+          "all_packet_row_alphaT_mass": 27941.597539635746,
+          "direct_alpha_mass": 27941.598953962326,
+          "absolute_sum_error": 0.0014143265798338689,
+          "relative_sum_error": 5.061723855403439e-08,
+          "registered_absolute_bound": 0.55898,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "single_pixel_sentinel",
+          "pixels": 1,
+          "all_packet_row_alphaT_mass": 0.9987260286834498,
+          "direct_alpha_mass": 0.9987256526947021,
+          "absolute_sum_error": 3.759887476917356e-07,
+          "relative_sum_error": 3.7646849930936003e-07,
+          "registered_absolute_bound": 1e-05,
+          "constant_one_feature_alpha_max_abs": 0.0
+        }
+      ],
+      "exact_pixel_partition_inside_outside": true,
+      "protected_masks_are_overlapping_diagnostics_not_disjoint_partition": true,
+      "per_context_row_partition_roundoff_abs_max": 0.041534423828125,
+      "per_context_row_partition_roundoff_abs_sum": 0.1898319431966229,
+      "per_context_row_replacement_partition_roundoff_abs_max": 0.0401458740234375,
+      "per_context_row_replacement_partition_roundoff_abs_sum": 0.17897680152717044,
+      "per_context_row_partition_max_fraction_registered_bound": 0.020767693044786196,
+      "roundoff_is_not_a_tolerance_for_strict_zero_selection": true,
+      "non_context_alphaT_mass": [
+        18883.78347056008,
+        9347.759718718646,
+        7602.737235767063,
+        235.92239964504702,
+        9536.023761992747,
+        9392.877473611925,
+        9490.906008883223,
+        0.9880595540998911
+      ]
+    },
+    {
+      "raw": 134,
+      "all_packet_rows": 1528422,
+      "all_context_rows": 934115,
+      "native_context_rows": 772194,
+      "native_global_row_count": 2593301,
+      "packet": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/134/all_context_rows.npz",
+        "sha256": "d49989872b846343319809cf2253109c4e52946af26cfd533e99cee3f5782f1d",
+        "bytes": 5303302
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_masks_v4_v1/134/scope_masks.npz",
+        "sha256": "d27d873f60c915fc80893353f1b4719243d86a845f4d5fe506d3a309e6e7a850",
+        "bytes": 26688
+      },
+      "raw_region_vjp": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/134/raw_feature_alphaT_vjp.npz",
+        "sha256": "4c54fe8a59c56e581413808e569941883b9f31fee34c82cd4732df9ef2297fba",
+        "bytes": 9403221
+      },
+      "full_RGB_alpha_byteexact_new0": true,
+      "actual_single_depth_sort": true,
+      "conservation": [
+        {
+          "region": "full_image",
+          "pixels": 884736,
+          "all_packet_row_alphaT_mass": 563649.2208706954,
+          "direct_alpha_mass": 563655.4870402552,
+          "absolute_sum_error": 6.2661695597926155,
+          "relative_sum_error": 1.1117020420924417e-05,
+          "registered_absolute_bound": 17.69472,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_allowed_edit",
+          "pixels": 851245,
+          "all_packet_row_alphaT_mass": 530167.6302198718,
+          "direct_alpha_mass": 530173.7465583421,
+          "absolute_sum_error": 6.116338470368646,
+          "relative_sum_error": 1.1536479333564253e-05,
+          "registered_absolute_bound": 17.024900000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "actor_protected",
+          "pixels": 12694,
+          "all_packet_row_alphaT_mass": 12690.888362025906,
+          "direct_alpha_mass": 12690.889012157917,
+          "absolute_sum_error": 0.0006501320112874964,
+          "relative_sum_error": 5.122824812861161e-08,
+          "registered_absolute_bound": 0.25388,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "K_protected",
+          "pixels": 83975,
+          "all_packet_row_alphaT_mass": 83841.92035049677,
+          "direct_alpha_mass": 83841.92464500666,
+          "absolute_sum_error": 0.0042945098830387,
+          "relative_sum_error": 5.122150882415921e-08,
+          "registered_absolute_bound": 1.6795000000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_allowed_edit",
+          "pixels": 33491,
+          "all_packet_row_alphaT_mass": 33481.739833455875,
+          "direct_alpha_mass": 33481.74048191309,
+          "absolute_sum_error": 0.000648457214992959,
+          "relative_sum_error": 1.9367488238649274e-08,
+          "registered_absolute_bound": 0.6698200000000001,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_replacement",
+          "pixels": 854874,
+          "all_packet_row_alphaT_mass": 533795.3442373076,
+          "direct_alpha_mass": 533801.4668596722,
+          "absolute_sum_error": 6.122622364666313,
+          "relative_sum_error": 1.1469849269402348e-05,
+          "registered_absolute_bound": 17.09748,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_replacement",
+          "pixels": 29862,
+          "all_packet_row_alphaT_mass": 29854.01894809333,
+          "direct_alpha_mass": 29854.020180583,
+          "absolute_sum_error": 0.001232489670655923,
+          "relative_sum_error": 4.128387611453187e-08,
+          "registered_absolute_bound": 0.5972400000000001,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "single_pixel_sentinel",
+          "pixels": 1,
+          "all_packet_row_alphaT_mass": 0.9998974702448322,
+          "direct_alpha_mass": 0.9998976588249207,
+          "absolute_sum_error": 1.8858008843380958e-07,
+          "relative_sum_error": 1.8859938991699293e-07,
+          "registered_absolute_bound": 1e-05,
+          "constant_one_feature_alpha_max_abs": 0.0
+        }
+      ],
+      "exact_pixel_partition_inside_outside": true,
+      "protected_masks_are_overlapping_diagnostics_not_disjoint_partition": true,
+      "per_context_row_partition_roundoff_abs_max": 0.06729888916015625,
+      "per_context_row_partition_roundoff_abs_sum": 0.2102610265796443,
+      "per_context_row_replacement_partition_roundoff_abs_max": 0.0686492919921875,
+      "per_context_row_replacement_partition_roundoff_abs_sum": 0.22700117518010643,
+      "per_context_row_partition_max_fraction_registered_bound": 0.07995768542958367,
+      "roundoff_is_not_a_tolerance_for_strict_zero_selection": true,
+      "non_context_alphaT_mass": [
+        20297.425053253937,
+        10547.962380434692,
+        9497.462302477676,
+        0.0,
+        9749.462684836088,
+        10628.468201056685,
+        9668.956874496702,
+        0.9827683111780061
+      ]
+    },
+    {
+      "raw": 179,
+      "all_packet_rows": 1460179,
+      "all_context_rows": 865872,
+      "native_context_rows": 703933,
+      "native_global_row_count": 2593301,
+      "packet": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/179/all_context_rows.npz",
+        "sha256": "a29498f992195d629e38d3fc334a7693591a459c6f97e46d8764382a8848450f",
+        "bytes": 5038254
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_masks_v4_v1/179/scope_masks.npz",
+        "sha256": "d1a5add51a5c37ebd991f0e8a23713bab53e89b19fffa5eb75bcda8789f2d81d",
+        "bytes": 26794
+      },
+      "raw_region_vjp": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/179/raw_feature_alphaT_vjp.npz",
+        "sha256": "6e1c75ddb9ec28a1e3dd1c18633e3a93db212586b7a4fde741d3f14dceb733da",
+        "bytes": 8986364
+      },
+      "full_RGB_alpha_byteexact_new0": true,
+      "actual_single_depth_sort": true,
+      "conservation": [
+        {
+          "region": "full_image",
+          "pixels": 884736,
+          "all_packet_row_alphaT_mass": 564580.9060288502,
+          "direct_alpha_mass": 564586.9922236064,
+          "absolute_sum_error": 6.086194756207988,
+          "relative_sum_error": 1.0779906090711936e-05,
+          "registered_absolute_bound": 17.69472,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_allowed_edit",
+          "pixels": 851535,
+          "all_packet_row_alphaT_mass": 531389.0702070119,
+          "direct_alpha_mass": 531395.0405080775,
+          "absolute_sum_error": 5.970301065593958,
+          "relative_sum_error": 1.1235146379773572e-05,
+          "registered_absolute_bound": 17.030700000000003,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "actor_protected",
+          "pixels": 12890,
+          "all_packet_row_alphaT_mass": 12886.864100826911,
+          "direct_alpha_mass": 12886.864057660103,
+          "absolute_sum_error": 4.316680860938504e-05,
+          "relative_sum_error": 3.3496751743668926e-09,
+          "registered_absolute_bound": 0.25780000000000003,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "K_protected",
+          "pixels": 84441,
+          "all_packet_row_alphaT_mass": 84141.58709845252,
+          "direct_alpha_mass": 84141.58907330036,
+          "absolute_sum_error": 0.001974847837118432,
+          "relative_sum_error": 2.347053174142021e-08,
+          "registered_absolute_bound": 1.6888200000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_allowed_edit",
+          "pixels": 33201,
+          "all_packet_row_alphaT_mass": 33191.950233669646,
+          "direct_alpha_mass": 33191.951715528965,
+          "absolute_sum_error": 0.0014818593190284446,
+          "relative_sum_error": 4.46451396329054e-08,
+          "registered_absolute_bound": 0.66402,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_replacement",
+          "pixels": 855180,
+          "all_packet_row_alphaT_mass": 535032.7270506143,
+          "direct_alpha_mass": 535038.7222861508,
+          "absolute_sum_error": 5.9952355364803225,
+          "relative_sum_error": 1.1205236717939706e-05,
+          "registered_absolute_bound": 17.1036,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_replacement",
+          "pixels": 29556,
+          "all_packet_row_alphaT_mass": 29548.269116404306,
+          "direct_alpha_mass": 29548.269937455654,
+          "absolute_sum_error": 0.0008210513478843495,
+          "relative_sum_error": 2.7786782428286178e-08,
+          "registered_absolute_bound": 0.5911200000000001,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "single_pixel_sentinel",
+          "pixels": 1,
+          "all_packet_row_alphaT_mass": 0.9998780669951657,
+          "direct_alpha_mass": 0.9998779892921448,
+          "absolute_sum_error": 7.770302090648329e-08,
+          "relative_sum_error": 7.771250266394252e-08,
+          "registered_absolute_bound": 1e-05,
+          "constant_one_feature_alpha_max_abs": 0.0
+        }
+      ],
+      "exact_pixel_partition_inside_outside": true,
+      "protected_masks_are_overlapping_diagnostics_not_disjoint_partition": true,
+      "per_context_row_partition_roundoff_abs_max": 0.0664215087890625,
+      "per_context_row_partition_roundoff_abs_sum": 0.16378363139784824,
+      "per_context_row_replacement_partition_roundoff_abs_max": 0.0553741455078125,
+      "per_context_row_replacement_partition_roundoff_abs_sum": 0.14971823332598433,
+      "per_context_row_partition_max_fraction_registered_bound": 0.024492754105937615,
+      "roundoff_is_not_a_tolerance_for_strict_zero_selection": true,
+      "non_context_alphaT_mass": [
+        20307.416380041814,
+        10788.01776790032,
+        9869.40041407465,
+        0.0,
+        9519.39859712403,
+        10847.83460829135,
+        9459.58176858337,
+        0.9772187800230085
+      ]
+    },
+    {
+      "raw": 198,
+      "all_packet_rows": 1406906,
+      "all_context_rows": 812599,
+      "native_context_rows": 650660,
+      "native_global_row_count": 2593301,
+      "packet": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/198/all_context_rows.npz",
+        "sha256": "acf7301ba00d276cce773de96568eb206e5a5b43d8e34bf0a3184be3c4b96eea",
+        "bytes": 4806019
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_masks_v4_v1/198/scope_masks.npz",
+        "sha256": "6d6fbce4155457aeb8df36fe97efcf52d6dbe2c83ab091c7adc09c756da3c241",
+        "bytes": 26060
+      },
+      "raw_region_vjp": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_coverage_footprint_measure_v4_v1/198/raw_feature_alphaT_vjp.npz",
+        "sha256": "01cfb0e789f486faecc9b00674c18eba4966e417b3d4de0ded88a6ad5ba604f4",
+        "bytes": 8635862
+      },
+      "full_RGB_alpha_byteexact_new0": true,
+      "actual_single_depth_sort": true,
+      "conservation": [
+        {
+          "region": "full_image",
+          "pixels": 884736,
+          "all_packet_row_alphaT_mass": 563787.5558105191,
+          "direct_alpha_mass": 563793.3148453236,
+          "absolute_sum_error": 5.759034804417752,
+          "relative_sum_error": 1.0214797963678836e-05,
+          "registered_absolute_bound": 17.69472,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_allowed_edit",
+          "pixels": 851429,
+          "all_packet_row_alphaT_mass": 530489.8397476905,
+          "direct_alpha_mass": 530495.3964830637,
+          "absolute_sum_error": 5.556735373218544,
+          "relative_sum_error": 1.0474615632967034e-05,
+          "registered_absolute_bound": 17.02858,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "actor_protected",
+          "pixels": 12939,
+          "all_packet_row_alphaT_mass": 12935.850738099352,
+          "direct_alpha_mass": 12935.852327644825,
+          "absolute_sum_error": 0.0015895454725978198,
+          "relative_sum_error": 1.2287906759733563e-07,
+          "registered_absolute_bound": 0.25878,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "K_protected",
+          "pixels": 65384,
+          "all_packet_row_alphaT_mass": 65316.0746122539,
+          "direct_alpha_mass": 65316.07144933939,
+          "absolute_sum_error": 0.00316291450872086,
+          "relative_sum_error": 4.842475119119936e-08,
+          "registered_absolute_bound": 1.3076800000000002,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_allowed_edit",
+          "pixels": 33307,
+          "all_packet_row_alphaT_mass": 33297.91918006674,
+          "direct_alpha_mass": 33297.918362259865,
+          "absolute_sum_error": 0.0008178068746929057,
+          "relative_sum_error": 2.4560300310538775e-08,
+          "registered_absolute_bound": 0.6661400000000001,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "outside_replacement",
+          "pixels": 855317,
+          "all_packet_row_alphaT_mass": 534376.5241904971,
+          "direct_alpha_mass": 534382.1259815097,
+          "absolute_sum_error": 5.601791012566537,
+          "relative_sum_error": 1.048274397703258e-05,
+          "registered_absolute_bound": 17.106340000000003,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "inside_replacement",
+          "pixels": 29419,
+          "all_packet_row_alphaT_mass": 29411.189491430683,
+          "direct_alpha_mass": 29411.188863813877,
+          "absolute_sum_error": 0.0006276168060139753,
+          "relative_sum_error": 2.1339389200487744e-08,
+          "registered_absolute_bound": 0.58838,
+          "constant_one_feature_alpha_max_abs": 0.0
+        },
+        {
+          "region": "single_pixel_sentinel",
+          "pixels": 1,
+          "all_packet_row_alphaT_mass": 0.9998948098002529,
+          "direct_alpha_mass": 0.9998949766159058,
+          "absolute_sum_error": 1.6681565284670796e-07,
+          "relative_sum_error": 1.668331742312449e-07,
+          "registered_absolute_bound": 1e-05,
+          "constant_one_feature_alpha_max_abs": 0.0
+        }
+      ],
+      "exact_pixel_partition_inside_outside": true,
+      "protected_masks_are_overlapping_diagnostics_not_disjoint_partition": true,
+      "per_context_row_partition_roundoff_abs_max": 0.05523681640625,
+      "per_context_row_partition_roundoff_abs_sum": 0.2632571454007291,
+      "per_context_row_replacement_partition_roundoff_abs_max": 0.0452880859375,
+      "per_context_row_replacement_partition_roundoff_abs_sum": 0.25271420234682296,
+      "per_context_row_partition_max_fraction_registered_bound": 0.08332953674472453,
+      "roundoff_is_not_a_tolerance_for_strict_zero_selection": true,
+      "non_context_alphaT_mass": [
+        20444.18976406559,
+        10954.424535451644,
+        10087.160702839765,
+        0.0,
+        9489.76523976794,
+        11004.953869575465,
+        9439.235906047597,
+        0.9755534317885122
+      ]
+    }
+  ],
+  "original_vehicle_SHA": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+  "all_native_source_parameters_unchanged": true,
+  "all_native_retained": true,
+  "old_road400_frozen": true,
+  "local_asset_unchanged": true,
+  "source_colour_used_for_selection": false,
+  "broad_canonical_alpha_not_used_as_car_mask": true,
+  "heldout_real_V_not_read": true,
+  "existing_formal_updates": 400,
+  "new_local_optimizer_updates": 0,
+  "new_diffusion_calls": 0,
+  "new_semantic_calls": 0,
+  "scope_or_quality_approved_by_this_measurement": false,
+  "production_gate_created": false,
+  "seconds": 32.64490628242493,
+  "inherited_measurement_schema": "R10.actual_semantic_edit_footprint_alphaT_VJP.v3",
+  "intrinsic_coverage_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/asset_intrinsic_coverage_v4_v1/receipt.json",
+    "sha256": "52993528804146a195f8b7ee2b4278bac9fb71f582173120127d2052f71e2d71",
+    "bytes": 7413
+  },
+  "mask_definition": "(original band union intrinsic local-only alpha>0) minus K/car; replacement uses intrinsic alpha>=.95",
+  "intrinsic_domain_adapter": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/measure_intrinsic_coverage_footprint.py",
+    "sha256": "b864bc8c23f5bf99152b8ee8f1c61e51fa7bd0210216f01b1edf1ef87e57261e",
+    "bytes": 1508
+  },
+  "unchanged_v3_measurement_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/measure_local_edit_footprint.py",
+    "sha256": "cdb1a9d15477b1dbf4c001db5181c4dd7759f34fdda7f5522d2954e9699b3d0a",
+    "bytes": 15877
+  },
+  "new_native_raster_implementation": false,
+  "original_band_evaluation_denominator_unchanged": true
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "R10.GT_contact_prior_readonly_contract.v1",
+  "complete": true,
+  "written_before_comparison": true,
+  "tracks": {
+    "a9": "NTjq-OhZ_97OMJ4xwJAxXg",
+    "a20": "bzFbWRrSGOgEaXxnuGV0tw"
+  },
+  "frames": [
+    60,
+    70,
+    80,
+    86,
+    95,
+    110,
+    125,
+    134,
+    145,
+    165,
+    179,
+    198
+  ],
+  "primary_evidence": "Original Waymo 3D GT box bottom vs original official ROAD18/LANE19 points",
+  "box_bottom": "actor-local centre origin, XYZ axes length/width/height; z=-height/2, exact check against raw label centre/dimensions/heading and ego pose",
+  "offsets": "positive GT-box bottom minus physical road height, vertically at each actual road XY; no road residual-based point trim",
+  "neighbour_footprint_radii_m": [
+    0.5,
+    1.0,
+    1.5
+  ],
+  "main_radius_m": 1.0,
+  "canonical_actor": "approved ab4fa A20 active mean positions, opacity>=.5; report lower quantiles, never treat minimum/means as GT contact",
+  "prior_calibration": "training frames only if later adopted; current task only descriptive statistics, no fitted ground or actor changes",
+  "primary_pose_source": "Direct original TFRecord ego pose @ rawGT heading/centre and rawGT length/width/height. Observation exact-equality predicate remains separately false when derived dimensions differ by micrometres.",
+  "source_evidence": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/official_ground_point_receipt.json",
+    "bytes": 65910,
+    "sha256": "b558ec83f0e095c407d0bdba451731cf2bb1e12f91594c3d86434911b824efc2"
+  },
+  "GPU_forward": 0,
+  "updates": 0
+}

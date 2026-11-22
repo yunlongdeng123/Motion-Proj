@@ -1,0 +1,81 @@
+{
+  "schema": "R10.training_LOO_curvature_ridge_contract.v1",
+  "complete": true,
+  "written_before_CV": true,
+  "input": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/official_ground_point_receipt.json",
+    "bytes": 65910,
+    "sha256": "b558ec83f0e095c407d0bdba451731cf2bb1e12f91594c3d86434911b824efc2"
+  },
+  "train_frames": [
+    60,
+    70,
+    80,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "sealed_heldout_frames": [
+    134,
+    179,
+    198
+  ],
+  "models": [
+    {
+      "name": "plane",
+      "kind": "plane",
+      "lambda_m4": 0.0
+    },
+    {
+      "name": "quadratic_lambda_0",
+      "kind": "quadratic",
+      "lambda_m4": 0.0
+    },
+    {
+      "name": "quadratic_lambda_0.001",
+      "kind": "quadratic",
+      "lambda_m4": 0.001
+    },
+    {
+      "name": "quadratic_lambda_0.01",
+      "kind": "quadratic",
+      "lambda_m4": 0.01
+    },
+    {
+      "name": "quadratic_lambda_0.1",
+      "kind": "quadratic",
+      "lambda_m4": 0.1
+    },
+    {
+      "name": "quadratic_lambda_1",
+      "kind": "quadratic",
+      "lambda_m4": 1.0
+    },
+    {
+      "name": "quadratic_lambda_10",
+      "kind": "quadratic",
+      "lambda_m4": 10.0
+    },
+    {
+      "name": "quadratic_lambda_100",
+      "kind": "quadratic",
+      "lambda_m4": 100.0
+    },
+    {
+      "name": "quadratic_lambda_1000",
+      "kind": "quadratic",
+      "lambda_m4": 1000.0
+    }
+  ],
+  "profile": "z=b0+bx*x+by*y+bxx*x\u00b2+bxy*x*y+byy*y\u00b2 around original local XY centre; nonconstant height, not whole-scene constant-Z",
+  "loss": "mean Huber.03m IRLS8 on measured0.1m cell medoids plus lambda_m4*(4*bxx\u00b2+2*bxy\u00b2+4*byy\u00b2); affine slope/intercept not penalized",
+  "CV": "leave one official training frame out; recompute medoid selection on remaining original points; evaluate ALL original official-road/lane points of left-out frame untrimmed; equal per-frame mean absolute error",
+  "selection": "lowest mean fold MAE; one-standard-error rule then prefer plane, else largest lambda; also retain best and one-SE quadratic independently",
+  "uncertainty": "512 training-frame cluster bootstraps at fixed selected lambda and full-training actual medoids, seed20261123; conditional sensitivity, not calibrated probability",
+  "heldout_policy": "selection receipt written before loading heldout point NPZ; heldout not tuning lambda, domains or thresholds",
+  "activation": "none; inferred candidate and physical prior require separate root review; old strict/profile unchanged",
+  "GPU_forward": 0,
+  "updates": 0
+}

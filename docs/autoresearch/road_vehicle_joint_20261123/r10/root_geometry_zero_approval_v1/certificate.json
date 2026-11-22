@@ -1,0 +1,48 @@
+{
+  "complete": true,
+  "decision": "PASS",
+  "geometry_npz_sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a",
+  "approval_scope": "new_local_zero_step_only",
+  "actual_geometry_render_acceptance": false,
+  "whole_scene_quality_accepted": false,
+  "production_geometry_approved": false,
+  "original_vehicle_or_existing_geometry_edited": false,
+  "Gaussian_updates": 0,
+  "GPU_forward": 0,
+  "GPU_backward": 0,
+  "schema": "R10.root_limited_inferred_geometry_certificate.v1",
+  "geometry_npz": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/candidate_geometry.npz",
+    "sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a"
+  },
+  "constant_z_plane_used": false,
+  "candidate_geometry_accepted_for_zero_step": true,
+  "approved_cell_mask_key": "cell_asset_mask",
+  "spacing_m": 0.02,
+  "cell_center_interpolation_authorized": false,
+  "cell_centres_analytically_evaluated": true,
+  "independent_review": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/independent_limited_geometry_review.json",
+    "sha256": "359176c9149e996e2f5c9f5a74443a0f014c546bb3fce4a455c27debd93ecd26"
+  },
+  "training_and_heldout": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/curvature_ridge_loo_v1/curvature_ridge_diagnostic.json",
+    "sha256": "460986b07a62dd6771f5d6c4035dafe4b2c7577c36a4744a1a41c5cd019b8dd5"
+  },
+  "five_view_geometry": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/five_view_geometry_receipt.json",
+    "sha256": "8b7fd8a0d39e57add6acfd8bfbf7cbe0434b7c80528d1f64f57eee66d4226350"
+  },
+  "root_visual_review": {
+    "complete": true,
+    "views": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "observed": "No obvious projection mismatch or fold in the metric road-grid and raw-GT-bottom comparisons; deleted A9 photo occlusion is not new-road colour truth"
+  },
+  "rationale": "Local sloping plane selected only by training-frame LOO one-SE rule; held-out physical checks pass. A20 box/wheel contact is an indirect crosscheck only. This approves the declared model-inferred 34793-cell prototype, not measured ground truth or watertight stitching to the noisy parent."
+}

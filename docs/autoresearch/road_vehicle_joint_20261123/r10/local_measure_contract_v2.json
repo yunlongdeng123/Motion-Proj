@@ -1,0 +1,96 @@
+{
+  "schema": "R10.seven_region_feature_VJP_local_measurement.v2",
+  "baseline_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/baseline_vehicle0_road400.json",
+  "original_R8_baseline_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_contract.json",
+  "accepted_actor_sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+  "existing_formal_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/receipt.json",
+  "existing_formal_updates": 400,
+  "existing_representation_total_limit": 2000,
+  "proposed_gate_optimization_max_updates": 600,
+  "proposed_phase_stop_at_cumulative": 1000,
+  "discarded_smoke_updates_separately_accounted": 13,
+  "optimization_enabled": false,
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "train_frames_if_later_authorized": [
+    86,
+    110
+  ],
+  "evaluation_frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "ground_band_definition": {
+    "x_pad": 30,
+    "bottom_start": -12,
+    "bottom_end": 100
+  },
+  "body_alpha_threshold": 0.05,
+  "body_dilation_pixels": 3,
+  "low_canonical_alpha_max": 0.05,
+  "source": {
+    "field": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/joint_shared_continuous_v2/final_atlas.npz",
+    "sha256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+    "numeric_gate": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/cpu_review/joint_shared_continuous_v2/numeric_acceptance.json",
+    "visual_gate": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/cpu_review/joint_shared_continuous_v2/visual_review.json",
+    "numeric_gate_sha256": "da34a40b8ab0212863a97cb5744ce993ab55f76d38a04a46e306723b78751f93",
+    "visual_gate_sha256": "46fc8264cb47b1745a2b7b754297e68353112aea5921c5b76065b49a1b428bce",
+    "root_review": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/cpu_review/joint_shared_continuous_v2/root_shared_input_review.json",
+    "root_review_sha256": "fa1490aafd847c4e6bd4e9e2b1193ac6232d6cae29ed8672be4aa4be0652a25f"
+  },
+  "rectified_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1",
+  "actor_alpha_reference": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/final_readout",
+  "old_group_evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/residual_rgb_groups_v1",
+  "camera_cache": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1",
+  "surface_geometry_certificate": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/audit/surface_visibility",
+  "exposure_gains": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/exposure_gain.json",
+  "fixed_eval": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/fixed_eval_v1_replay1",
+  "source_weights": {
+    "same_world": 1.0,
+    "similar_reference": 0.5,
+    "teacher_continuous": 0.35
+  },
+  "VJP_channels": [
+    "corrected_other_K",
+    "accepted_original_vehicle_body",
+    "full_noncolor_ground_band",
+    "certified_fixed_ground",
+    "fixed_original_red_diagnostic",
+    "fixed_original_blue_diagnostic",
+    "fixed_original_dark_diagnostic"
+  ],
+  "candidate_policy": "other-native owner<=0 or already-excluded owner; positive FULL noncolor ground-band alphaT including unknown-target pixels; exact-zero K/body in ALL five full packed-row records; not old permanent guard; selected/retained vehicles fixed",
+  "zero_retire_is_new_geometry_reconstruction": false,
+  "new_local_geometry_allowed_only_after_separate_geometry_and_appearance_acceptance": true,
+  "early_switch": "No safe candidate, no fixed-eval/joint improvement, or nonnegative frozen-RGB bound proves the old colour path cannot attain target: stop before exhausting remaining budget; evaluate new local representation separately",
+  "road_and_original_actor_parameters_fixed": true,
+  "all_existing_centers_scales_rotations_tracks_fixed": true,
+  "future_candidate_opacity_gate_range": [
+    0.0,
+    1.0
+  ],
+  "future_candidate_opacity_may_only_decrease": true,
+  "diffusion_calls": 0,
+  "feature_VJP_columns": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "full_band_for_attribution_certified_only_for_RGB_loss": true,
+  "deleted_target_owner_ids": [
+    10
+  ],
+  "all_positive_owner_ids_other_than_deleted_targets_fixed": true
+}

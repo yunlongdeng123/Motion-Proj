@@ -1,0 +1,56 @@
+{
+  "schema": "R8.fixed_geometry_joint_RGB.contract.v1",
+  "baseline_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_contract.json",
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "train_frames": [
+    86,
+    110
+  ],
+  "evaluation_only_frames": [
+    134,
+    179,
+    198
+  ],
+  "formal_steps": 400,
+  "smoke_steps": 6,
+  "seed": 20261123,
+  "learning_rate_road": 0.01,
+  "learning_rate_actor_DC": 0.01,
+  "RGB_prior": 0.0001,
+  "geometry_sigma_opacity_normal_tracks_fixed": true,
+  "road_initialization": "atlas_assignment_0",
+  "source": {
+    "field": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/joint_shared_continuous_v2/final_atlas.npz",
+    "sha256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+    "numeric_gate": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/cpu_review/joint_shared_continuous_v2/numeric_acceptance.json",
+    "visual_gate": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/cpu_review/joint_shared_continuous_v2/visual_review.json",
+    "numeric_gate_sha256": "da34a40b8ab0212863a97cb5744ce993ab55f76d38a04a46e306723b78751f93",
+    "visual_gate_sha256": "46fc8264cb47b1745a2b7b754297e68353112aea5921c5b76065b49a1b428bce",
+    "root_review": "/root/autodl-tmp/drivingeditor_repro/campaign/old_raw_teacher_joint_20261123_r9/cpu_review/joint_shared_continuous_v2/root_shared_input_review.json",
+    "root_review_sha256": "fa1490aafd847c4e6bd4e9e2b1193ac6232d6cae29ed8672be4aa4be0652a25f"
+  },
+  "rectified_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1",
+  "baseline_render": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views",
+  "row_uv": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/gaussian_uv.npz",
+  "road_eligible": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/rgb_permission_v2/permission.npz",
+  "exposure_gains": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/exposure_gain.json",
+  "colour_guard": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_colour_guard_v1",
+  "joint_road_loss_requires_actual_road_alphaT_gt": 0.95,
+  "road_material_loss_requires_standalone_alpha_gt": 0.95,
+  "source_weights": {
+    "same_world": 1.0,
+    "similar_reference": 0.5,
+    "teacher_continuous": 0.35
+  },
+  "native_context_trainable": false,
+  "actor_canonical_parameter": "SH degree0 DC only",
+  "road_parameter": "reference_srgb with exact matching effective_row_rgb ledger",
+  "sigma_opacity_updates": 0,
+  "new_diffusion_calls": 0
+}

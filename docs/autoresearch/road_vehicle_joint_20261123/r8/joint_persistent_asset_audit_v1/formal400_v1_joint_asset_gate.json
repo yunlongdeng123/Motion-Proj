@@ -1,0 +1,76 @@
+{
+  "schema": "R9.formal400_independent_joint_persistent_asset_gate.v1",
+  "complete": true,
+  "decision": "PASS",
+  "checks": {
+    "formal_method_configuration_exact": true,
+    "formal_complete": true,
+    "formal400_fresh": true,
+    "source_field_exact": true,
+    "asset_independent_PASS": true,
+    "fresh_native_all_float_independent_PASS": true,
+    "smoke_lifecycle_independent_PASS": true,
+    "no_new_diffusion": true
+  },
+  "source_field_sha256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+  "formal_run_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/receipt.json",
+    "bytes": 854,
+    "sha256": "b2f77c2b1edbb46e3cad83bb9c5231b15b1a23765abb5f980d89ecc2392ff3b8"
+  },
+  "formal_resources": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/resources.json",
+    "bytes": 308,
+    "sha256": "a24c9e0acf59d08d2f2432d22518d5b01014d26ddb147974dfca4accc21c1d85"
+  },
+  "native_fresh_run_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/fresh_reload/receipt.json",
+    "bytes": 6154,
+    "sha256": "358676bbba888409ba0eee5741c0b410ebba0aa4b22f91d7438bf8969d73ef55"
+  },
+  "frozen_invariants": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_persistent_asset_audit_v1/frozen_invariants.json",
+    "bytes": 60599,
+    "sha256": "1b2cf3a343a5b7e7357215713f767f1b24b4a1842bfeffdf62418647f0b9f908"
+  },
+  "independent_asset_check": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_persistent_asset_audit_v1/formal400_v1_CPU_assets.json",
+    "bytes": 11203,
+    "sha256": "c60f07e656916af4ba4c19e3bb224269ce8cf67eeb463a3e7ba243d8124e2c73"
+  },
+  "independent_all_float_native_check": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_persistent_asset_audit_v1/formal400_v1_native_all_float_readback.json",
+    "bytes": 32439,
+    "sha256": "1536a4f01f6a5b83e6ccd18d108d277f05d41f0cbe6c7f1e7a54d975ce3ba9fa"
+  },
+  "smoke_lifecycle_gate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_persistent_asset_audit_v1/smoke6_v2_joint_lifecycle_gate.json",
+    "bytes": 2697,
+    "sha256": "92d0bde3d4fc9470a1836bee1ce200526965a16b1bf87877ab0c505c83667073"
+  },
+  "formal_model_assets": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/asset/road/road.npz",
+      "bytes": 24978522,
+      "sha256": "749601560eae88f205a64bd5774373802a7fe9a37caf87a2745dc40f876bd023"
+    },
+    {
+      "name": "a20",
+      "asset": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/asset/actors/a20/actor.npz",
+        "bytes": 24034140,
+        "sha256": "2c85d48703517fd67e9bd0d98b499849b2be73b553551c136533dc7778d1f637"
+      },
+      "rows": 419005,
+      "active": 418194,
+      "DC_changed": true,
+      "Kpositive_rows_frozen": 6570
+    }
+  ],
+  "scope": "Persistent colour-only asset invariants and fresh public-loader parity; final scene visual quality is evaluated separately.",
+  "whole_scene_restoration_accepted_by_this_gate": false,
+  "auditor_added_GPU_forward": 0,
+  "auditor_added_GPU_backward": 0,
+  "diffusion_calls": 0,
+  "updates": 0
+}

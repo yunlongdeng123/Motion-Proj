@@ -1,0 +1,219 @@
+{
+  "schema": "R10.independent_local_shared_source_numeric_gate.v1",
+  "complete": true,
+  "decision": "PASS",
+  "final_atlas_sha256": "eb86cb6d61b711366d8c30052fd02b823433a6e940b80d6f4e0463685e38a5dd",
+  "geometry_sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a",
+  "scope": "Shared colour input for local zero-step probe only",
+  "parent_SHA256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+  "parent_RGB_outside_extension_byteexact": true,
+  "extension_texels": 12328,
+  "real6407_mask_and_RGB_byteexact": true,
+  "finite_in_range_RGB": true,
+  "current_new_geometry_RGB_sampling_replay": [
+    {
+      "raw": 86,
+      "source": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker0/scene065_raw086__full1152_T0__legacy__seed101/raw_model.png",
+        "bytes": 1165563,
+        "sha256": "eb813f4d2a9ab4035413dd4fe929656e8f3841f7e3d243d9ed9a85597eee802c"
+      },
+      "local_observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_world_observations_v1/086/world_observation.npz",
+        "bytes": 1337723,
+        "sha256": "23a18e39c398e544557db118e9376a5108a7c0c5b55553b259d4c0b86e58ace6"
+      },
+      "valid_texels": 24539,
+      "RGB_max_abs_linear": 8.432794221246986e-08,
+      "OpenCV_Brown_model_UV_max_abs_px": 3.051712405977014e-05,
+      "original_raw_only": true
+    },
+    {
+      "raw": 110,
+      "source": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker1/scene065_raw110__full1152_T0__legacy__seed101/raw_model.png",
+        "bytes": 1132654,
+        "sha256": "fb3dc7b2da3308a8b74c2c93dd5e66f2882a8a77d13b031806eedafa18d8be2e"
+      },
+      "local_observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_world_observations_v1/110/world_observation.npz",
+        "bytes": 1297470,
+        "sha256": "b9eadea597e5a83139bcd304cf9e3d2ee589512df6cefd9df90c0f7f05c4d7d9"
+      },
+      "valid_texels": 24542,
+      "RGB_max_abs_linear": 1.305721666899906e-07,
+      "OpenCV_Brown_model_UV_max_abs_px": 3.051816781862726e-05,
+      "original_raw_only": true
+    }
+  ],
+  "fixed_domain_frequency_metrics": {
+    "full_RGB": {
+      "before_MAE": 0.014822617791911956,
+      "after_MAE": 0.011102328644361469,
+      "reduction": 0.2509873221976002,
+      "pair_texels": 24237,
+      "channel_samples": 72711
+    },
+    "LF_sigma0p12m": {
+      "before_MAE": 0.010834251895530445,
+      "after_MAE": 0.00497317634922517,
+      "reduction": 0.5409764885310816,
+      "pair_texels": 24237,
+      "channel_samples": 72711
+    }
+  },
+  "parent_extension_boundary": {
+    "seed": {
+      "LF": {
+        "count": 2895,
+        "min": 4.244345894188761e-08,
+        "mean": 0.0019284295782930783,
+        "median": 0.00151398285531186,
+        "p05": 0.00012816023749095544,
+        "p95": 0.0050103475562831845,
+        "max": 0.0073671383268715945
+      },
+      "full_texture_plus_colour": {
+        "count": 2895,
+        "min": 3.606081008911133e-06,
+        "mean": 0.004339776933193207,
+        "median": 0.003506392240524292,
+        "p05": 0.00037557780160568655,
+        "p95": 0.01162927970290184,
+        "max": 0.02457112818956375
+      }
+    },
+    "final": {
+      "LF": {
+        "count": 2895,
+        "min": 2.2085596444731959e-07,
+        "mean": 0.0019268950958473007,
+        "median": 0.001519987074585935,
+        "p05": 0.00013354356940668277,
+        "p95": 0.005004225182839122,
+        "max": 0.0073671383268715945
+      },
+      "full_texture_plus_colour": {
+        "count": 2895,
+        "min": 9.909272193908691e-07,
+        "mean": 0.004341054242104292,
+        "median": 0.0035039708018302917,
+        "p05": 0.0003757767262868583,
+        "p95": 0.011614453978836536,
+        "max": 0.024584420025348663
+      }
+    }
+  },
+  "boundary_LF_p95_is_diagnostic_not_preregistered_0p005_hard_gate": true,
+  "extension_full_texture_HF": {
+    "0.02": {
+      "texels": 12328,
+      "HF_correlation": 0.9999998835233295,
+      "HF_RMS_ratio": 1.0000025608898448,
+      "HF_delta_RMS_over_seed_RMS": 0.00048278676470645356
+    },
+    "0.04": {
+      "texels": 12328,
+      "HF_correlation": 0.9999998533001794,
+      "HF_RMS_ratio": 1.0000032953267446,
+      "HF_delta_RMS_over_seed_RMS": 0.0005417640462027909
+    }
+  },
+  "joint_radiometry": {
+    "first_teacher_locked": false,
+    "both_views_affine_joint_optimized": true,
+    "synchronous_world_bias_steps": 8,
+    "fresh_affine_replay_max_abs": 2.9780717780703014e-08,
+    "reversed_affine_source_order_max_abs": 4.022758082200539e-08,
+    "source_order_check_does_not_claim_full_PDE_reexecution": true,
+    "affine_bias_sum_replay_max_abs": 5.8673322200775146e-08,
+    "affine_parameters": [
+      {
+        "gain": [
+          0.9126431831131426,
+          1.0335989271745576,
+          0.9858116921641759
+        ],
+        "bias_linear": [
+          0.013224902207483423,
+          0.010336529506245185,
+          0.012300927856365095
+        ],
+        "real_anchor_texels": 4148
+      },
+      {
+        "gain": [
+          0.9687297387660068,
+          1.1271764316056798,
+          1.0650784746147097
+        ],
+        "bias_linear": [
+          0.017176696991476195,
+          0.012598665391937837,
+          0.015237040552218934
+        ],
+        "real_anchor_texels": 5228
+      }
+    ],
+    "conditional_influence_not_probability": true
+  },
+  "seed_plus_continuous_delta_replay_max_abs": 0.0,
+  "pointwise_alpha_multiplication_not_used": true,
+  "extension_teacher_direct_observed_texels": 195,
+  "extension_teacher_adopted_texels": 154,
+  "extension_source2_weak_teacher_tail_texels": 41,
+  "similar_photo_not_same_world_or_dense_teacher_GT": true,
+  "five_view_material_domain_checks": [
+    {
+      "raw": 86,
+      "material_pixels": 8673,
+      "unavailable_material": 0,
+      "near_black_RGB_pixels_in_material": 0,
+      "exact_cell_asset_triangles": true
+    },
+    {
+      "raw": 110,
+      "material_pixels": 14189,
+      "unavailable_material": 0,
+      "near_black_RGB_pixels_in_material": 0,
+      "exact_cell_asset_triangles": true
+    },
+    {
+      "raw": 134,
+      "material_pixels": 15970,
+      "unavailable_material": 0,
+      "near_black_RGB_pixels_in_material": 0,
+      "exact_cell_asset_triangles": true
+    },
+    {
+      "raw": 179,
+      "material_pixels": 15928,
+      "unavailable_material": 0,
+      "near_black_RGB_pixels_in_material": 0,
+      "exact_cell_asset_triangles": true
+    },
+    {
+      "raw": 198,
+      "material_pixels": 15980,
+      "unavailable_material": 0,
+      "near_black_RGB_pixels_in_material": 0,
+      "exact_cell_asset_triangles": true
+    }
+  ],
+  "source_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_shared_continuous_v1/receipt.json",
+    "bytes": 11780,
+    "sha256": "87f8fafcbab8521b1a07100c9976874e33572795ddc35f3d04cd52e77395ed2b"
+  },
+  "surface_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_shared_surface_review_v1/receipt.json",
+    "bytes": 2083,
+    "sha256": "603cdf465e5b479a32492c78f0419bf1dd8ebf46cd04091631e581d2cad47aa8"
+  },
+  "full_joint_image_quality_acceptance": false,
+  "native_Gaussian_evaluation_performed": false,
+  "new_GPU_forward": 0,
+  "new_GPU_backward": 0,
+  "Gaussian_updates": 0,
+  "seconds": 3.911025047302246
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "R9.semantic_partial_execution_receipt.v1",
+  "complete": false,
+  "outcome": "one semantic inference completed; subsequent diagnostic overlay failed",
+  "error": {
+    "type": "ValueError",
+    "message": "assignment destination is read-only",
+    "stage": "diagnostic overlay after saving raw086 labels and eroded road mask"
+  },
+  "semantic_image_inference_calls": 1,
+  "new_diffusion_calls": 0,
+  "nativeF": 0,
+  "nativeB": 0,
+  "optimizer_updates": 0,
+  "preserved_outputs": {
+    "labels_model_Brown.png": {
+      "sha256": "146c9547bb8e67cdb9f0388be8e7a5c855635b9f063f3b8bc9a98809f2bb69a2",
+      "bytes": 10953
+    },
+    "road_eroded_model_Brown.png": {
+      "sha256": "d114ffda9d1639eb2c9d9380563712ae5fa60579f02c8104c84e5343a4f75818",
+      "bytes": 3887
+    }
+  },
+  "recovery": "v2 copied the writable overlay array, reused this exact086 prediction and inferred110 once; two total semantic calls across v1+v2"
+}

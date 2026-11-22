@@ -1,0 +1,62 @@
+{
+  "schema": "R10.local_nonplanar_geometry_qualification_contract.v1",
+  "written_before_local_point_fit": true,
+  "train_raw": [
+    60,
+    70,
+    80,
+    86,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "heldout_raw": [
+    134,
+    179,
+    198
+  ],
+  "bounds_uvxy_half_open": [
+    245,
+    62,
+    579,
+    213
+  ],
+  "nominal_spacing_m": 0.02,
+  "XY_fit_context_bbox": [
+    [
+      2320.321421705604,
+      1364.8375830235377
+    ],
+    [
+      2327.7902256525804,
+      1368.6553933011764
+    ]
+  ],
+  "broad_Z_window": "median training ego origin Z +/-1.5m, before fit; heldout residual is not trimmed",
+  "strict_point_filter": "finite rawXYZ->ego_world; original3DOBB margin[.15,.15,.08]; original real-photo road0 erode2 proxy",
+  "surface": "local quadratic height IRLS8 Huber .03m; one measured medoid per0.1m XY cell; no whole-scene constant-Z plane",
+  "heldout_height_median_max_m": 0.04,
+  "heldout_height_p95_max_m": 0.1,
+  "heldout_minimum_points_per_view": 50,
+  "normal_PCA": "same heldout-view nearest20 within .5m, >=10, eigen fraction<=.05; no model-residual-based normal selection",
+  "heldout_normal_median_max_deg": 10.0,
+  "heldout_normal_p95_max_deg": 20.0,
+  "normal_minimum_valid_per_view": 20,
+  "normal_minimum_valid_total": 100,
+  "witness_triangle_max_edge_m": 1.6,
+  "nearest_measured_cell_max_m": 0.8,
+  "distinct_source_frames_within0p8m_min": 3,
+  "direction_quadrants_within1m_min": 3,
+  "witness_triangle_fit_height_delta_max_m": 0.05,
+  "witness_triangle_normal_delta_max_deg": 15.0,
+  "geometry_only_nonphoto_road_candidates": "separate diagnostic counts, never silently added to strict fit/PASS",
+  "source_grid": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/shared_grid_geometry.npz",
+    "bytes": 34787543,
+    "sha256": "886338a4a82d859c08426c8575a7679354327ab70b2393860237763f4c5563e1"
+  },
+  "original_grid_edited": false,
+  "GPU_forward": 0
+}

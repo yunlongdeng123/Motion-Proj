@@ -1,0 +1,30 @@
+{
+  "schema": "R10.root_joint_zero_comparison_review.v1",
+  "complete": true,
+  "new_local_zero": {
+    "decision": "NOT_ACCEPTED_AS_COMPLETE_JOINT_RESTORATION",
+    "root_viewed_original_views": [86, 110, 134, 179, 198],
+    "independent_review": "audit/new_local_zero_v1_independent/visual_review.json",
+    "finding": "The new road naturally occludes most of the red underbody residual while preserving all five K images and the opened vehicle ground-truth visible pixels. Blue-grey foreground fragments, bright tails and road-edge fragments remain clearly visible.",
+    "new_RGB_400_started": false,
+    "source_input_acceptance_is_unchanged": true
+  },
+  "new_local_background_zero": {
+    "decision": "NOT_ACCEPTED",
+    "root_viewed_original_view": 110,
+    "independent_review": "audit/new_local_background_zero_v1_independent/independent_review.json",
+    "finding": "Whole-kernel retirement reduces some blue-grey mass but exposes cyan tails, additional fragments and coverage deficits, with substantial changes outside the edit band. K preservation and nearly unchanged vehicle photo loss do not qualify this edit.",
+    "new_full_band_alpha_below_095": [35, 100, 117, 159, 171],
+    "new_deficits_are_outside_replacement_surface": true,
+    "production_native_gate_adopted": false
+  },
+  "next_action": "Measure full-image, semantic edit-region and actual replacement-surface support separately. Only wholly contained unowned kernels may be retired as whole kernels; mixed support remains for local splitting or reconstruction.",
+  "existing_representation_formal_updates": 400,
+  "existing_representation_formal_limit": 2000,
+  "new_local_optimizer_updates": 0,
+  "R10_actual_native_forward": 25,
+  "R10_actual_native_backward": 10,
+  "original_vehicle_asset_preserved": true,
+  "overall_run_complete": false,
+  "remote_GPU_keep_on": true
+}

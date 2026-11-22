@@ -1,0 +1,91 @@
+{
+  "schema": "R10.footprint_selection_CPU_supplement.v1",
+  "complete": true,
+  "CPU_only": true,
+  "nativeF": 0,
+  "nativeB": 0,
+  "updates": 0,
+  "scope_sha256": "79f602c2a371170ae4812043a9dff9045e2fd61f63a29bba74afb1a031a93839",
+  "selector_source_sha256": "e8b2eb6b79423546bf3ed8fcfa60707156d1cbd854daf6c4ac1a3a4db4538404",
+  "statistics": [
+    {
+      "set": "replacement_contained",
+      "rows": 4183,
+      "independent_partition_discrepancy": {
+        "edit": {
+          "max_abs": 3.814697265625e-06,
+          "sum_abs_by_view": [
+            4.915018507745117e-06,
+            1.1158004781464115e-05,
+            1.1197997082490474e-05,
+            1.764854823704809e-05,
+            1.6155401681317016e-05
+          ]
+        },
+        "replacement": {
+          "max_abs": 7.62939453125e-06,
+          "sum_abs_by_view": [
+            6.588623364223167e-06,
+            1.6924404917517677e-05,
+            2.0422212401172146e-05,
+            2.5111781724262983e-05,
+            2.0592735381796956e-05
+          ]
+        }
+      }
+    },
+    {
+      "set": "edit_contained",
+      "rows": 12385,
+      "independent_partition_discrepancy": {
+        "edit": {
+          "max_abs": 7.62939453125e-06,
+          "sum_abs_by_view": [
+            2.22213475353783e-05,
+            3.520597965689376e-05,
+            3.331148036522791e-05,
+            4.479164590520668e-05,
+            5.083097221358912e-05
+          ]
+        },
+        "replacement": {
+          "max_abs": 3.0040740966796875e-05,
+          "sum_abs_by_view": [
+            0.00020038465333982458,
+            0.00027836814857096215,
+            0.00027123822201247094,
+            0.0003152427700001681,
+            0.00038079741298702174
+          ]
+        }
+      }
+    },
+    {
+      "set": "all_initial_unowned",
+      "rows": 223073,
+      "independent_partition_discrepancy": {
+        "edit": {
+          "max_abs": 1.9480743408203125,
+          "sum_abs_by_view": [
+            2.1290971123811175,
+            0.15358455082386513,
+            0.2154063013084908,
+            0.14209587622178788,
+            0.24221089097920867
+          ]
+        },
+        "replacement": {
+          "max_abs": 1.9391937255859375,
+          "sum_abs_by_view": [
+            2.0161027641477745,
+            0.12576263876053417,
+            0.13920592793402875,
+            0.08819062979870296,
+            0.187718225521337
+          ]
+        }
+      }
+    }
+  ],
+  "interpretation": "Measured full/inside/outside channels were accumulated independently in float32. Raw discrepancies are reported; selection uses exact measured outside/car/K zeros with no epsilon. The selected source dataset, masks and readout remain unchanged."
+}

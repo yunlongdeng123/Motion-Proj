@@ -1,0 +1,41 @@
+{
+  "schema": "R10.expanded_height_cause_qualification.v2",
+  "complete": true,
+  "decision": "PHYSICAL_GEOMETRY_FAIL_CAUSE_UNDETERMINED",
+  "original_status_preserved": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/expanded_geometry_status.json",
+    "bytes": 3033,
+    "sha256": "2ab7467431f260ac805f40b69b82c2b8576fc4a1ac55f542102b0d27c2df46f8"
+  },
+  "numerical_model_selection_and_failures_unchanged": true,
+  "geometry_accepted_for_zero_step": false,
+  "correction": "The first interpretation called same-XY10cm height differences frame bias too early. Different curb/top/bottom surfaces can lie within10cm XY; nearestXY alone does not distinguish physical layering from pose bias.",
+  "independent_same_frame_layers": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/same_frame_surface_layers_v1/same_frame_surface_summary.json",
+    "bytes": 28758,
+    "sha256": "fa302bcd18afa785176283ff067fc7eb8db910bd96d7c47a09768f43e5ffd543"
+  },
+  "independent_record_TOP_chain": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/anomalous_raw_point_chain_v1/point_chain_summary.json",
+    "bytes": 41771,
+    "sha256": "24403a2fc9e5a8f2ec1aae337212a523e71ac05b9fb78485306429b333e46ca0"
+  },
+  "confirmed": [
+    "All9 plane/quadratic models fail original per-frame actual-scope height bands",
+    "Original raw60/70 and3 comparison-frame bin redecodes/timestamps/poses match their exact records",
+    "Independent float64 TOP world arithmetic differs from exported world by <=.000668m XYZ and <=8.7e-6m Z",
+    "Same-frame10cm ROAD/LANE pairs do not show8cm steps in the sampled points"
+  ],
+  "not_yet_determined": [
+    "Whether cross-frame matched points lie on the same physical road surface",
+    "Whether original official CP and independent Brown image positions support curb or asphalt qualification",
+    "Physical accuracy of the dataset-provided per-pixel / frame poses, not just arithmetic consistency"
+  ],
+  "next_checks": "Official Front CP vs Brown overlays, original-photo surface qualification, same-frame layer context; coordinate/time physical diagnosis only if those establish same asphalt",
+  "holdout_not_used_for_new_model_selection": true,
+  "new_heightfield_fit": false,
+  "old_files_or_RGB_or_geometry_modified": false,
+  "GPU_forward": 0,
+  "backward": 0,
+  "updates": 0
+}

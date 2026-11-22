@@ -1,5 +1,7 @@
 # 065源材质保真：00／02实拍与高斯颜色链路
 
+**来源纠正（ROAD-NATIVE-SOURCE-CORRECTION-20261122）**：本组主00／02路块来自加工道路`road_surface_residual_20261121_r2/appearance_fit/asset`。原始历史数据与数值保留为加工道路对照；不作为未编辑原生重建源迁移证据。两组独立native_static直接来自formal30k静态checkpoint，保持原生静态对照身份。[原生来源与可见集合历史诊断](../road_native_source_transfer_20261122/README.md)。
+
 本轮优先解决源材质，不进行目标迁移或融合。人工核验后，选择02／115作为较佳实拍参考，117复核；00／137保留对照。本轮固定几何的单参考取色和颜色算子求解能减轻偏色，但00／02未通过该设置下的多视图纹理保真检查，未晋升为可迁移材质。多帧参考池与随机采样400步训练另在r3对照验证。
 
 ![实际组件与数据流](architecture_components.svg)

@@ -1,0 +1,578 @@
+{
+  "schema": "R10.bounded_active_only_support_pruning_controller.v1",
+  "complete": true,
+  "error": null,
+  "stages": [
+    {
+      "tag": "v1_support_audit",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/inspect_new_local_footprint_cpu.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v1",
+        "--measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v1",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v1"
+      ],
+      "started_unix": 1795386063.963096,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v1_support_audit.log",
+      "exit_code": 0,
+      "finished_unix": 1795386066.8601422,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v1/receipt.json",
+        "sha256": "85f2218848c7f8852882936f93a8785d0e54faf785e4db146af5b5ef53cbb84c",
+        "bytes": 9135
+      }
+    },
+    {
+      "tag": "v2_child_export",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/export_local_support_child_cpu.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v1",
+        "--audit",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v1",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v2"
+      ],
+      "started_unix": 1795386066.8607974,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v2_child_export.log",
+      "exit_code": 0,
+      "finished_unix": 1795386069.1256003,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v2/active_only_proof.json",
+        "sha256": "6e05c0f003af20c47224e7ca979b18ad63d6b8cfe36bde94df06a6780fe91f55",
+        "bytes": 2313
+      }
+    },
+    {
+      "tag": "v2_zero_preflight",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/render_new_local_zero.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v2",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v2",
+        "--measure-row-guard"
+      ],
+      "started_unix": 1795386069.1261003,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v2_zero_preflight.log",
+      "exit_code": 0,
+      "finished_unix": 1795386070.1867218
+    },
+    {
+      "tag": "v2_zero_actual",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/render_new_local_zero.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v2",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v2",
+        "--measure-row-guard",
+        "--execute"
+      ],
+      "started_unix": 1795386070.18689,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v2_zero_actual.log",
+      "exit_code": 0,
+      "finished_unix": 1795386098.2962997,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v2/receipt.json",
+        "sha256": "dea001df974fc0f9f7740ed5c56ae2286079bbe73995574f5dd270a93a97e638",
+        "bytes": 31525
+      }
+    },
+    {
+      "tag": "v2_fixed_scope_review",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/review_pruned_zero_cpu.py",
+        "--zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v2",
+        "--unpruned-zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_expanded_zero_v1",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--masks",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_footprint_masks_v1",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_scope_review_v2"
+      ],
+      "started_unix": 1795386098.2965643,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v2_fixed_scope_review.log",
+      "exit_code": 0,
+      "finished_unix": 1795386104.4615767,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_scope_review_v2/receipt.json",
+        "sha256": "aaf8e4d5ace94f4b4faf359f579935d0747e324a6b6728dbe810879baace54f7",
+        "bytes": 9488
+      }
+    },
+    {
+      "tag": "v2_fresh_preflight",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/measure_local_edit_footprint.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v2",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v2",
+        "--surface-review",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_requalified_surface_review_v2_replay1",
+        "--engineering-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/engineering_contract_v3.json",
+        "--masks",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_masks_v2",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v2"
+      ],
+      "started_unix": 1795386104.462286,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v2_fresh_preflight.log",
+      "exit_code": 0,
+      "finished_unix": 1795386108.300765,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_masks_v2/receipt.json",
+        "sha256": "fbd9d6c0c5f7134b883058fb9fb9e9d8e10808a027dc409539589a664294c42e",
+        "bytes": 11314
+      }
+    },
+    {
+      "tag": "v2_fresh_actual",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/measure_local_edit_footprint.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v2",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v2",
+        "--surface-review",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_requalified_surface_review_v2_replay1",
+        "--engineering-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/engineering_contract_v3.json",
+        "--masks",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_masks_v2",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v2",
+        "--execute"
+      ],
+      "started_unix": 1795386108.3012424,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v2_fresh_actual.log",
+      "exit_code": 0,
+      "finished_unix": 1795386141.0275013,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v2/receipt.json",
+        "sha256": "52db11960f8a7d7392fe52c427ea33b9c3645fca58529e51b316b1ff569c622e",
+        "bytes": 29466
+      }
+    },
+    {
+      "tag": "v2_support_audit",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/inspect_new_local_footprint_cpu.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v2",
+        "--measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v2",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v2"
+      ],
+      "started_unix": 1795386141.0291307,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v2_support_audit.log",
+      "exit_code": 0,
+      "finished_unix": 1795386142.8417778,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v2/receipt.json",
+        "sha256": "410726bae3619c068217ac6cda8dcfe8f2a20e6230afd530498971cc680bf2e5",
+        "bytes": 9047
+      }
+    },
+    {
+      "tag": "v3_child_export",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/export_local_support_child_cpu.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v2",
+        "--audit",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v2",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v3"
+      ],
+      "started_unix": 1795386142.842285,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v3_child_export.log",
+      "exit_code": 0,
+      "finished_unix": 1795386145.4350538,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v3/active_only_proof.json",
+        "sha256": "e09a4a2bc08ac8b5f193d9174d693f374da7bcbc8b80ccd792045fbf76f81907",
+        "bytes": 2313
+      }
+    },
+    {
+      "tag": "v3_zero_preflight",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/render_new_local_zero.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v3",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v3",
+        "--measure-row-guard"
+      ],
+      "started_unix": 1795386145.4355211,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v3_zero_preflight.log",
+      "exit_code": 0,
+      "finished_unix": 1795386146.1586957
+    },
+    {
+      "tag": "v3_zero_actual",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/render_new_local_zero.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v3",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v3",
+        "--measure-row-guard",
+        "--execute"
+      ],
+      "started_unix": 1795386146.15886,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v3_zero_actual.log",
+      "exit_code": 0,
+      "finished_unix": 1795386173.6547878,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v3/receipt.json",
+        "sha256": "05bee0ef58df8737804c71388c2536bd72a819a7340f0a0e7eb0ea56811d47e5",
+        "bytes": 31525
+      }
+    },
+    {
+      "tag": "v3_fixed_scope_review",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/review_pruned_zero_cpu.py",
+        "--zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v3",
+        "--unpruned-zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_expanded_zero_v1",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--masks",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_footprint_masks_v1",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_scope_review_v3"
+      ],
+      "started_unix": 1795386173.6553931,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v3_fixed_scope_review.log",
+      "exit_code": 0,
+      "finished_unix": 1795386178.0604994,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_scope_review_v3/receipt.json",
+        "sha256": "7b0578327abafcffc0cf3fb2e1bffc92a070bd90dcb70e98026e502b0af309c1",
+        "bytes": 9490
+      }
+    },
+    {
+      "tag": "v3_fresh_preflight",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/measure_local_edit_footprint.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v3",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v3",
+        "--surface-review",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_requalified_surface_review_v2_replay1",
+        "--engineering-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/engineering_contract_v3.json",
+        "--masks",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_masks_v3",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v3"
+      ],
+      "started_unix": 1795386178.0615036,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v3_fresh_preflight.log",
+      "exit_code": 0,
+      "finished_unix": 1795386181.7942247,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_masks_v3/receipt.json",
+        "sha256": "a358c55fdf8ca1bdda929be3ab9930ccadec3e2cb21831ea793a7c233d97cfb4",
+        "bytes": 11314
+      }
+    },
+    {
+      "tag": "v3_fresh_actual",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/measure_local_edit_footprint.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v3",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v3",
+        "--surface-review",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_requalified_surface_review_v2_replay1",
+        "--engineering-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/engineering_contract_v3.json",
+        "--masks",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_masks_v3",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v3",
+        "--execute"
+      ],
+      "started_unix": 1795386181.7946923,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v3_fresh_actual.log",
+      "exit_code": 0,
+      "finished_unix": 1795386213.7315795,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v3/receipt.json",
+        "sha256": "b4dedd9cfe7e79b3b9662dd0372f343e017547bb4c59c3372ffb68c7dc49a9b0",
+        "bytes": 29469
+      }
+    },
+    {
+      "tag": "v3_support_audit",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/inspect_new_local_footprint_cpu.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v3",
+        "--measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v3",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v3"
+      ],
+      "started_unix": 1795386213.7331429,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v3_support_audit.log",
+      "exit_code": 0,
+      "finished_unix": 1795386216.5606449,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v3/receipt.json",
+        "sha256": "5d80f4571555a5ffeda7481b8427e2bc9113691be5ea3438c871ed9526d723e8",
+        "bytes": 9055
+      }
+    },
+    {
+      "tag": "v4_child_export",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/export_local_support_child_cpu.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v3",
+        "--audit",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_local_footprint_audit_v3",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v4"
+      ],
+      "started_unix": 1795386216.561297,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v4_child_export.log",
+      "exit_code": 0,
+      "finished_unix": 1795386219.3055484,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v4/active_only_proof.json",
+        "sha256": "7694b4dd4b66f9ea47f97a8ad9c04a402e9e864c6c6f47a17907eb7a1b82ca62",
+        "bytes": 2312
+      }
+    },
+    {
+      "tag": "v4_zero_preflight",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/render_new_local_zero.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v4",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v4",
+        "--measure-row-guard"
+      ],
+      "started_unix": 1795386219.3060327,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v4_zero_preflight.log",
+      "exit_code": 0,
+      "finished_unix": 1795386220.377185
+    },
+    {
+      "tag": "v4_zero_actual",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/render_new_local_zero.py",
+        "--asset",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_asset_support_child_v4",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v4",
+        "--measure-row-guard",
+        "--execute"
+      ],
+      "started_unix": 1795386220.3773558,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v4_zero_actual.log",
+      "exit_code": 0,
+      "finished_unix": 1795386247.4496458,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v4/receipt.json",
+        "sha256": "5fb2c61e9308130abd408dbc12c7dfb023b2d24d4b89ea0e9b7ff6def92096e1",
+        "bytes": 31459
+      }
+    },
+    {
+      "tag": "v4_fixed_scope_review",
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/review_pruned_zero_cpu.py",
+        "--zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_v4",
+        "--unpruned-zero",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_expanded_zero_v1",
+        "--baseline-measurement",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1",
+        "--masks",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_footprint_masks_v1",
+        "--measurement-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_scope_review_v4"
+      ],
+      "started_unix": 1795386247.4502592,
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_bounded_support_pruning_v1/v4_fixed_scope_review.log",
+      "exit_code": 0,
+      "finished_unix": 1795386252.9163017,
+      "actual_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_zero_scope_review_v4/receipt.json",
+        "sha256": "19d4cacd2ed4a1ab7d98e38d780693453b97286fedda5da441f2f6cfd6d9f19f",
+        "bytes": 9495
+      }
+    }
+  ],
+  "final": {
+    "status": "STOP_AFTER_THREE_NEW_CHILDREN",
+    "quality_accepted": false,
+    "scope_accepted": false
+  },
+  "maximum_new_child_versions": [
+    2,
+    3,
+    4
+  ],
+  "actual_GPU_jobs": [
+    {
+      "stage": "v1_support_audit",
+      "nativeF": 0,
+      "nativeB": 0
+    },
+    {
+      "stage": "v2_child_export",
+      "nativeF": 0,
+      "nativeB": 0
+    },
+    {
+      "stage": "v2_zero_actual",
+      "nativeF": 5,
+      "nativeB": 5
+    },
+    {
+      "stage": "v2_fixed_scope_review",
+      "nativeF": 0,
+      "nativeB": 0
+    },
+    {
+      "stage": "v2_fresh_actual",
+      "nativeF": 5,
+      "nativeB": 5
+    },
+    {
+      "stage": "v2_support_audit",
+      "nativeF": 0,
+      "nativeB": 0
+    },
+    {
+      "stage": "v3_child_export",
+      "nativeF": 0,
+      "nativeB": 0
+    },
+    {
+      "stage": "v3_zero_actual",
+      "nativeF": 5,
+      "nativeB": 5
+    },
+    {
+      "stage": "v3_fixed_scope_review",
+      "nativeF": 0,
+      "nativeB": 0
+    },
+    {
+      "stage": "v3_fresh_actual",
+      "nativeF": 5,
+      "nativeB": 5
+    },
+    {
+      "stage": "v3_support_audit",
+      "nativeF": 0,
+      "nativeB": 0
+    },
+    {
+      "stage": "v4_child_export",
+      "nativeF": 0,
+      "nativeB": 0
+    },
+    {
+      "stage": "v4_zero_actual",
+      "nativeF": 5,
+      "nativeB": 5
+    },
+    {
+      "stage": "v4_fixed_scope_review",
+      "nativeF": 0,
+      "nativeB": 0
+    }
+  ],
+  "nativeF": 25,
+  "nativeB": 25,
+  "updates": 0,
+  "first_measurement_not_counted_here": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_pruned_footprint_measure_v1/receipt.json",
+    "sha256": "7a8da22e555889742996ea540bd27124974577da4afaa74f4bdb73d5ccd3a5c0",
+    "bytes": 29476
+  },
+  "no_old_scope_reused": true,
+  "all_original_assets_preserved": true,
+  "old_row_retirement_executed": false,
+  "whole_joint_quality_accepted": false,
+  "seconds": 188.96737790107727
+}

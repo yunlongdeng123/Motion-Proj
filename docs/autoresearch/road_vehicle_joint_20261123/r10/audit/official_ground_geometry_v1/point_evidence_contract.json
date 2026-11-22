@@ -1,0 +1,73 @@
+{
+  "schema": "R10.official_ground_point_diagnostic_contract.v1",
+  "complete": true,
+  "written_before_official_points_examined": true,
+  "decision": "READ_ONLY_POINT_EVIDENCE_NOT_GEOMETRY_ACCEPTANCE",
+  "raw_pool_train": [
+    60,
+    70,
+    80,
+    86,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "raw_pool_heldout": [
+    134,
+    179,
+    198
+  ],
+  "selected_by_original_pool_not_point_quality": true,
+  "official_label_enum": {
+    "TYPE_UNDEFINED": 0,
+    "TYPE_CAR": 1,
+    "TYPE_TRUCK": 2,
+    "TYPE_BUS": 3,
+    "TYPE_OTHER_VEHICLE": 4,
+    "TYPE_MOTORCYCLIST": 5,
+    "TYPE_BICYCLIST": 6,
+    "TYPE_PEDESTRIAN": 7,
+    "TYPE_SIGN": 8,
+    "TYPE_TRAFFIC_LIGHT": 9,
+    "TYPE_POLE": 10,
+    "TYPE_CONSTRUCTION_CONE": 11,
+    "TYPE_BICYCLE": 12,
+    "TYPE_MOTORCYCLE": 13,
+    "TYPE_BUILDING": 14,
+    "TYPE_VEGETATION": 15,
+    "TYPE_TREE_TRUNK": 16,
+    "TYPE_CURB": 17,
+    "TYPE_ROAD": 18,
+    "TYPE_LANE_MARKER": 19,
+    "TYPE_OTHER_GROUND": 20,
+    "TYPE_WALKABLE": 21,
+    "TYPE_SIDEWALK": 22
+  },
+  "official_enum_source": {
+    "path": "/root/autodl-tmp/envs/dggt_data_cpu/lib/python3.10/site-packages/waymo_open_dataset/protos/segmentation_pb2.py",
+    "bytes": 5979,
+    "sha256": "304bb6e6c92b9a1e25db3cbab8eaf7e3766e64b2f20ed45da10a2755e67807f4"
+  },
+  "official_semantic_channels": [
+    "instance_id",
+    "semantic_class"
+  ],
+  "documentation_source": {
+    "path": "/root/autodl-tmp/envs/dggt_data_cpu/lib/python3.10/site-packages/waymo_open_dataset/v2/perception/segmentation.py",
+    "bytes": 5411,
+    "sha256": "cd9c09e248484a1a26a6c41bb06a3067c6d3c5a891dee2d702fff5792f7ae3b8"
+  },
+  "ground_classes": {
+    "road": 18,
+    "lane_marker": 19
+  },
+  "other_ground_not_silently_added": true,
+  "alignment": "exported column6 TOP encoded=((return_index*H+row)*W+column); nonTOP=-1 remains unknown; original valid/NLZ mask and row order independently verified",
+  "OBB_policy": "preserve every official-ground point; original OBB and expanded OBB are independent diagnostic flags, never default rejection",
+  "photo_policy": "original Brown photo road0 and erode2 are independent diagnostic flags; camera occlusion cannot delete physical official-ground evidence",
+  "fit_and_activation": "none in this stage; no strict/old model edit; next official geometry protocol must be separately registered",
+  "GPU_forward": 0,
+  "updates": 0
+}

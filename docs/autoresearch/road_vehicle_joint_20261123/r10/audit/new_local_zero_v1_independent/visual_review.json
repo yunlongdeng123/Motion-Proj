@@ -1,0 +1,85 @@
+{
+  "schema": "R10.independent_new0_joint_visual_review.v1",
+  "complete": true,
+  "decision": "FAIL",
+  "reviewer": "native_clean_photo_regions",
+  "root_concurred": false,
+  "asset_manifest_sha256": "bf832487ab3275b21ed8cc1569996492652b5897e64e1d530d2524f820cdb97f",
+  "source_field_sha256": "eb86cb6d61b711366d8c30052fd02b823433a6e940b80d6f4e0463685e38a5dd",
+  "geometry_sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a",
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "original_resolution": [
+    1152,
+    768
+  ],
+  "actual_single_sorted_joint_native_renders": true,
+  "per_view": [
+    {
+      "raw": 86,
+      "PNG": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/new_local_zero_v1/086/shared.png",
+        "bytes": 877675,
+        "sha256": "3cb0550c3744ece6a5e61bc5c321993eb8a42cee1aebbb603cb1e0bc16402a5a"
+      },
+      "notes": "Large red slab is largely covered. Blue-grey underbody/front ghost and a small bright point remain; left road fragments and patch boundary remain visible."
+    },
+    {
+      "raw": 110,
+      "PNG": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/new_local_zero_v1/110/shared.png",
+        "bytes": 898370,
+        "sha256": "39e4b576d11c58c9b05ae60f43ce35aa0cfd9f6db539978ec8fb729c3f9e583a"
+      },
+      "notes": "Red area is substantially reduced, but a red thin edge and prominent blue-grey front ghost remain. Vehicle body core remains visually intact; whole restoration not accepted."
+    },
+    {
+      "raw": 134,
+      "PNG": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/new_local_zero_v1/134/shared.png",
+        "bytes": 910570,
+        "sha256": "ff7c6b17e329338416518ceaf525d0ae4ee0add75b9704bfa45c46ec5b57b4f5"
+      },
+      "notes": "Evaluation view retains the blue-grey underbody/front ghost, fragmented left edge and local extent boundary."
+    },
+    {
+      "raw": 179,
+      "PNG": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/new_local_zero_v1/179/shared.png",
+        "bytes": 912779,
+        "sha256": "54635aa4f173f385c7f6f3bf65619a07101ec3bb549db3e1a0ba05ad6b3845c0"
+      },
+      "notes": "Evaluation view retains the front ghost/bright smear and left fragments; adding local road alone has not produced a clean joint result."
+    },
+    {
+      "raw": 198,
+      "PNG": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/new_local_zero_v1/198/shared.png",
+        "bytes": 913101,
+        "sha256": "afcd158921a88363161d96b65144d6e92dbba5118f115a4d1343a937ace02a07"
+      },
+      "notes": "Evaluation view retains ghost and fragment structure despite smooth source material. Body core is retained, whole scene still fails."
+    }
+  ],
+  "reason": "Smooth accepted source and local inferred geometry do not remove residual mixed native contribution. Red improves, blue-grey front/underbody ghost and left fragments remain.",
+  "original_vehicle_body_core_visually_retained": true,
+  "local_road_source_input_gates_unchanged": true,
+  "full_restoration_decision": "NOT_ACCEPTED",
+  "automatic_promotion": false,
+  "new_RGB400_authorized": false,
+  "road_only_alpha_not_used_as_scene_hole_evidence": true,
+  "actual_scene_full_band_alpha_holes": 0,
+  "numeric_review": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/new_local_zero_v1_independent/numeric_review.json",
+    "bytes": 22939,
+    "sha256": "88e95ae5f4d461ca41682650d6ca93abe54dafb6f05800eee754dcb93b3eb1ca"
+  },
+  "new_GPU_forward": 0,
+  "new_GPU_backward": 0,
+  "updates": 0
+}

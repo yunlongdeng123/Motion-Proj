@@ -1,0 +1,37 @@
+{
+  "schema": "R10.nonplanar_inference_diagnostic_contract.v1",
+  "complete": true,
+  "decision": "DIAGNOSTIC_ONLY_NOT_APPROVED",
+  "written_before_diagnostics": true,
+  "strict_contract": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_geometry_v1/geometry_qualification_contract.json",
+    "bytes": 1953,
+    "sha256": "c60555e8f1118d123a79df12533fa071ee4217b36e947903b2a9e361b4a13256"
+  },
+  "train_raw": [
+    60,
+    70,
+    80,
+    86,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "heldout_raw": [
+    134,
+    179,
+    198
+  ],
+  "fit": "Identical strict 0.1m measured medoids and IRLS8 quadratic profile; no extra points added",
+  "cluster_bootstrap": "512 resamples of the 9 training-frame clusters on fixed measured medoids; repeated clusters weight their original rows; seed20261123; no heldout fitting",
+  "leave_one_frame_out": "refit medoid selection on remaining strict training points for each of9 frames",
+  "uncertainty": "Conditional sensitivity under this quadratic/profile and proxy-filtered measurements; not a calibrated coverage probability or evidence of hidden surface truth",
+  "inference_candidate": "Only missing-parent texels within global measured XY convex hull; no PASS threshold registered or inferred geometry activated",
+  "C0_C1": "Compare raw quadratic profile with actual supported parent boundary height and normal; no silent correction or C1 claim",
+  "original_denominators": "red357/692 and focused1923/3288 remain fixed; rasterization is perspective-correct actual XYZ, not old perview material masks",
+  "renderable_authorized": false,
+  "GPU_forward": 0,
+  "updates": 0
+}

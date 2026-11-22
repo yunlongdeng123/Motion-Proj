@@ -1,0 +1,1066 @@
+{
+  "schema": "R9.old_raw_teacher_sources.v1",
+  "complete": true,
+  "scope": "source identity, coordinate domains, and deterministic historical resize/composite replay",
+  "sources": [
+    {
+      "raw": 86,
+      "seed": 101,
+      "prompt_id": "legacy",
+      "prompt_text": "a photograph of a continuous gray asphalt road surface, extending the visible lane markings in perspective, consistent natural lighting",
+      "selected_before_R9_fusion": true,
+      "selection_policy": "two explicitly accepted views; fixed seed101; no best-of-N",
+      "actual_model_wh": [
+        1152,
+        768
+      ],
+      "native_wh": [
+        1920,
+        1280
+      ],
+      "crop_native_xyxy_half_open": [
+        0,
+        0,
+        1920,
+        1280
+      ],
+      "timestamp_micros": 1507240556444187,
+      "raw_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker0/scene065_raw086__full1152_T0__legacy__seed101/raw_model.png",
+        "bytes": 1165563,
+        "sha256": "eb813f4d2a9ab4035413dd4fe929656e8f3841f7e3d243d9ed9a85597eee802c",
+        "size_wh": [
+          1152,
+          768
+        ],
+        "mode": "RGB",
+        "coordinate_domain": "full-frame Brown distorted photo domain resized to 1152x768",
+        "colour_encoding": "sRGB encoded RGB uint8",
+        "supervision_role": "only permitted teacher RGB source; qualify surface independently",
+        "local_path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/audit/source_inputs/086/raw_model.png"
+      },
+      "raw_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker0/scene065_raw086__full1152_T0__legacy__seed101/raw_native.png",
+        "bytes": 2262167,
+        "sha256": "f07f8ecb7c4c9b9c8a39802eb8a15af2efc9046a062849cdc354d1800c6cb5e6",
+        "size_wh": [
+          1920,
+          1280
+        ],
+        "mode": "RGB",
+        "coordinate_domain": "native Brown distorted photo grid 1920x1280",
+        "supervision_role": "audit-only; not R9 teacher RGB"
+      },
+      "final_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker0/scene065_raw086__full1152_T0__legacy__seed101/final_native.png",
+        "bytes": 2208666,
+        "sha256": "015ba06692287865077074427b07fbcba414f27b9a0fae61751a921878bc2474",
+        "size_wh": [
+          1920,
+          1280
+        ],
+        "mode": "RGB",
+        "coordinate_domain": "native Brown distorted photo grid 1920x1280",
+        "supervision_role": "audit-only; not R9 teacher RGB"
+      },
+      "source_photo": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/image/image_0/0065086.png",
+        "bytes": 2228304,
+        "sha256": "03b56bdf3355f52a869d7254fd13f3347c0b542023e669817f556a4685bc432f",
+        "size_wh": [
+          1920,
+          1280
+        ],
+        "mode": "RGB"
+      },
+      "original_observation_json": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/086.json",
+        "bytes": 40630,
+        "sha256": "f3cf942844cbf41c67b078f7e23a9dd84d97c058e10122faf204be8b7aa13f3f"
+      },
+      "prepared_observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/observation.png",
+        "bytes": 2228304,
+        "sha256": "03b56bdf3355f52a869d7254fd13f3347c0b542023e669817f556a4685bc432f",
+        "size_wh": [
+          1920,
+          1280
+        ],
+        "mode": "RGB"
+      },
+      "prepared_observation_decoded_exact_source_photo": true,
+      "raw_native_exact_PIL_BILINEAR_resize": true,
+      "final_outside_old_W_and_inside_old_K_exact_photo": true,
+      "old_native_roles": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/roles_native.npz",
+        "bytes": 222091,
+        "sha256": "1a0181f2c9a85d519c8b84c0474799190f70ec26e1b61950b04c4cfdabba41e2",
+        "coordinate_domain": "native Brown photo grid, 1920x1280; old output policy only",
+        "arrays": {
+          "target_core": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 91328
+          },
+          "target_uncertainty": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 2842
+          },
+          "target_unknown": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 166774
+          },
+          "rgb_unknown_core": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 93682
+          },
+          "material_contaminated_effect": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 26017
+          },
+          "physical_unknown": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 93682
+          },
+          "geometry_observed_valid": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 2363918
+          },
+          "geometry_road_visible": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 713122
+          },
+          "road_geometry_observed": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 713122
+          },
+          "effect_inferred": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 24541
+          },
+          "retained_core": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 250180
+          },
+          "K": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 250180
+          },
+          "ownership_conflict": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "foreground_core": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 250180
+          },
+          "foreground_possible": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 250180
+          },
+          "foreground_uncertainty": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 12253
+          },
+          "uncertainty": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 22510
+          },
+          "road_observed": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 713122
+          },
+          "road_inferred": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 93682
+          },
+          "road_support": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 806804
+          },
+          "C_mat": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 640030
+          },
+          "visible_support": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 640030
+          },
+          "retained_context": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 2290826
+          },
+          "shadow_possible": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 24541
+          },
+          "shadow_high": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 21096
+          },
+          "shadow_uncertain": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 7679
+          },
+          "shadow_boundary_guard": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 3626
+          },
+          "shadow_prediction_unavailable": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "shadow_protection_conflict": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "shadow_pending": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "W_edit": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 112020
+          },
+          "H_input": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 166774
+          },
+          "M_material": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 1817570
+          },
+          "W_output": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 112020
+          },
+          "pending_output": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "remaining_effect": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 6203
+          },
+          "input_only": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 54754
+          }
+        },
+        "used_as_R9_geometric_visibility": false,
+        "used_as_R9_permission": false
+      },
+      "old_model_roles": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/roles_model.npz",
+        "bytes": 126331,
+        "sha256": "e1434bf8d4e071374fa81887e39e12a38408883c838160fbb0f576e6d48f4196",
+        "coordinate_domain": "Brown full-frame 1152x768; full support resampled old C/S/W/K policy",
+        "used_as_R9_visibility_or_permission": false
+      },
+      "old_model_inputs": {
+        "I_geo": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/I_geo.png",
+          "bytes": 941214,
+          "sha256": "8ad3d44cc588b4edfcb865ea1d55113c23696b317d3556aa448a2a47c6c0e3eb",
+          "size_wh": [
+            1152,
+            768
+          ],
+          "mode": "RGB"
+        },
+        "H_input": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/H_input.png",
+          "bytes": 3492,
+          "sha256": "8ac83ccd65f9b682df06ab40d7c79321afc89008b83234a07531a6e6a364968e",
+          "size_wh": [
+            1152,
+            768
+          ],
+          "mode": "L"
+        },
+        "C_mat": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/C_mat.png",
+          "bytes": 4727,
+          "sha256": "d16414d36f34af7df5de9aa3f7f507b0e21a24a870753f089bdc93bcbbf85c91",
+          "size_wh": [
+            1152,
+            768
+          ],
+          "mode": "L"
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/construction.json",
+          "bytes": 3335,
+          "sha256": "1bea5fa637c89cfe2db94e9079a2a7d69fa928348ac939aeadbcff9726cb86bb"
+        }
+      },
+      "camera_intrinsic_Brown": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_size": [
+        1920,
+        1280
+      ],
+      "camera_pose_world": [
+        0.9999783764793326,
+        -0.004555766927790638,
+        0.004742526906384606,
+        2304.4921900133672,
+        0.004601875351130327,
+        0.9999418077054844,
+        -0.00975725094177855,
+        1366.9530751995499,
+        -0.004697799166715411,
+        0.009778864473333718,
+        0.9999411505146698,
+        -20.817,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "camera_extrinsic": [
+        0.9998422115945026,
+        0.00037180750013298097,
+        -0.017759889442137543,
+        1.5444373518820733,
+        -0.00035684106158265916,
+        0.9999995785827032,
+        0.0008458716646450704,
+        -0.024495479018263978,
+        0.017760196459242004,
+        -0.0008394007381017275,
+        0.9998419229198834,
+        2.1165579041407794,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "projection_cache": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/086/view_cache.npz",
+        "bytes": 14647434,
+        "sha256": "5b3ac9ce07d8a7a77f380fa893965252234076bbea16daabcc9194f72ff20c51",
+        "role": "independent geometric support and Brown-to-pinhole preview map; old requested_C/S/K not policy"
+      },
+      "R8_pinhole_protection_reference": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/mask_coordinate_audit/rectified_masks/086/rectified_masks.npz",
+        "exists_at_manifest_build": false,
+        "local_path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/road_vehicle_joint_dggt_20261123_r8/audit/mask_coordinate_audit/rectified_masks/086/rectified_masks.npz",
+        "role": "new pinhole protected mask; independently bind before using"
+      },
+      "actual_road_semantic_and_visual_qualification": "pending separate R9 audit; source SHA binding is not road qualification",
+      "composition_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker0/scene065_raw086__full1152_T0__legacy__seed101/composition.json",
+        "bytes": 1045,
+        "sha256": "b13be24963691ed611b3c270c847c400180bc161b5868f604321b8a46fdb6b94"
+      }
+    },
+    {
+      "raw": 110,
+      "seed": 101,
+      "prompt_id": "legacy",
+      "prompt_text": "a photograph of a continuous gray asphalt road surface, extending the visible lane markings in perspective, consistent natural lighting",
+      "selected_before_R9_fusion": true,
+      "selection_policy": "two explicitly accepted views; fixed seed101; no best-of-N",
+      "actual_model_wh": [
+        1152,
+        768
+      ],
+      "native_wh": [
+        1920,
+        1280
+      ],
+      "crop_native_xyxy_half_open": [
+        0,
+        0,
+        1920,
+        1280
+      ],
+      "timestamp_micros": 1507240558844353,
+      "raw_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker1/scene065_raw110__full1152_T0__legacy__seed101/raw_model.png",
+        "bytes": 1132654,
+        "sha256": "fb3dc7b2da3308a8b74c2c93dd5e66f2882a8a77d13b031806eedafa18d8be2e",
+        "size_wh": [
+          1152,
+          768
+        ],
+        "mode": "RGB",
+        "coordinate_domain": "full-frame Brown distorted photo domain resized to 1152x768",
+        "colour_encoding": "sRGB encoded RGB uint8",
+        "supervision_role": "only permitted teacher RGB source; qualify surface independently",
+        "local_path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/audit/source_inputs/110/raw_model.png"
+      },
+      "raw_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker1/scene065_raw110__full1152_T0__legacy__seed101/raw_native.png",
+        "bytes": 2178500,
+        "sha256": "750d12ab399eb2b9d06610068ebf5d5253034044bf2b13cbdd595a25cb140390",
+        "size_wh": [
+          1920,
+          1280
+        ],
+        "mode": "RGB",
+        "coordinate_domain": "native Brown distorted photo grid 1920x1280",
+        "supervision_role": "audit-only; not R9 teacher RGB"
+      },
+      "final_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker1/scene065_raw110__full1152_T0__legacy__seed101/final_native.png",
+        "bytes": 2114125,
+        "sha256": "5d130b552227a317d4def48493cdc8a64189a39664bd8251e7139b2ec04f6e2f",
+        "size_wh": [
+          1920,
+          1280
+        ],
+        "mode": "RGB",
+        "coordinate_domain": "native Brown distorted photo grid 1920x1280",
+        "supervision_role": "audit-only; not R9 teacher RGB"
+      },
+      "source_photo": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/image/image_0/0065110.png",
+        "bytes": 2138444,
+        "sha256": "79bf49344f311e27337a0a0ff5cecd4108c1b77fadbf525b19fd0ce966d958c5",
+        "size_wh": [
+          1920,
+          1280
+        ],
+        "mode": "RGB"
+      },
+      "original_observation_json": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+        "bytes": 36675,
+        "sha256": "67ab85c64bca56b2d309f7c2fccef021b9749cd0bbb196d0573cfcad4ed6a300"
+      },
+      "prepared_observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/observation.png",
+        "bytes": 2138444,
+        "sha256": "79bf49344f311e27337a0a0ff5cecd4108c1b77fadbf525b19fd0ce966d958c5",
+        "size_wh": [
+          1920,
+          1280
+        ],
+        "mode": "RGB"
+      },
+      "prepared_observation_decoded_exact_source_photo": true,
+      "raw_native_exact_PIL_BILINEAR_resize": true,
+      "final_outside_old_W_and_inside_old_K_exact_photo": true,
+      "old_native_roles": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/roles_native.npz",
+        "bytes": 217115,
+        "sha256": "20424702d55f45c67ce9796f80e96bcf81c4c6c3b83298241d50a95758efce3f",
+        "coordinate_domain": "native Brown photo grid, 1920x1280; old output policy only",
+        "arrays": {
+          "target_core": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 169280
+          },
+          "target_uncertainty": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 3901
+          },
+          "target_unknown": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 235001
+          },
+          "rgb_unknown_core": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 172665
+          },
+          "material_contaminated_effect": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 46631
+          },
+          "physical_unknown": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 172665
+          },
+          "geometry_observed_valid": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 2284935
+          },
+          "geometry_road_visible": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 620662
+          },
+          "road_geometry_observed": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 620662
+          },
+          "effect_inferred": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 45235
+          },
+          "retained_core": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 271846
+          },
+          "K": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 271846
+          },
+          "ownership_conflict": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "foreground_core": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 271846
+          },
+          "foreground_possible": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 271846
+          },
+          "foreground_uncertainty": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 13492
+          },
+          "uncertainty": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 26975
+          },
+          "road_observed": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 620662
+          },
+          "road_inferred": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 172665
+          },
+          "road_support": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 793327
+          },
+          "C_mat": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 558326
+          },
+          "visible_support": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 558326
+          },
+          "retained_context": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 2222599
+          },
+          "shadow_possible": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 45235
+          },
+          "shadow_high": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 41239
+          },
+          "shadow_uncertain": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 9883
+          },
+          "shadow_boundary_guard": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 4520
+          },
+          "shadow_prediction_unavailable": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "shadow_protection_conflict": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "shadow_pending": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "W_edit": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 209413
+          },
+          "H_input": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 235001
+          },
+          "M_material": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 1899274
+          },
+          "W_output": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 209413
+          },
+          "pending_output": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 0
+          },
+          "remaining_effect": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 8487
+          },
+          "input_only": {
+            "shape": [
+              1280,
+              1920
+            ],
+            "dtype": "bool",
+            "true_count": 25588
+          }
+        },
+        "used_as_R9_geometric_visibility": false,
+        "used_as_R9_permission": false
+      },
+      "old_model_roles": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/roles_model.npz",
+        "bytes": 121634,
+        "sha256": "ef113a0eaf6ee35c48900099009e6cd51d122841e0976b1e3a1ea18a011c6a7c",
+        "coordinate_domain": "Brown full-frame 1152x768; full support resampled old C/S/W/K policy",
+        "used_as_R9_visibility_or_permission": false
+      },
+      "old_model_inputs": {
+        "I_geo": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/I_geo.png",
+          "bytes": 871838,
+          "sha256": "8fa00ccfee1f2a401f0504c6cc0437019d7568417ae0a11a5350f3946b57b5e4",
+          "size_wh": [
+            1152,
+            768
+          ],
+          "mode": "RGB"
+        },
+        "H_input": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/H_input.png",
+          "bytes": 2549,
+          "sha256": "fce1a08e53815721389ad4ed4baf75fb90622b736579cb140b67d41157f753bf",
+          "size_wh": [
+            1152,
+            768
+          ],
+          "mode": "L"
+        },
+        "C_mat": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/C_mat.png",
+          "bytes": 3856,
+          "sha256": "9ca8293836e5d6d7b3d73dfe1b93812a30ac637a85bb1a8ccb79bc6ed426a814",
+          "size_wh": [
+            1152,
+            768
+          ],
+          "mode": "L"
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/construction.json",
+          "bytes": 3338,
+          "sha256": "e94df8c2bb7d1374552ddbbfbaff0f6f0be3a21f53881e42ab6a23a434338811"
+        }
+      },
+      "camera_intrinsic_Brown": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_size": [
+        1920,
+        1280
+      ],
+      "camera_pose_world": [
+        0.9999917044321078,
+        -0.003622534431824771,
+        0.0018623402637601672,
+        2307.168198251937,
+        0.003643190354236326,
+        0.9999305258795714,
+        -0.011210288945720822,
+        1366.962806467355,
+        -0.0018216012216118254,
+        0.011216980810093018,
+        0.9999354284705064,
+        -20.834,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "camera_extrinsic": [
+        0.9998422115945026,
+        0.00037180750013298097,
+        -0.017759889442137543,
+        1.5444373518820733,
+        -0.00035684106158265916,
+        0.9999995785827032,
+        0.0008458716646450704,
+        -0.024495479018263978,
+        0.017760196459242004,
+        -0.0008394007381017275,
+        0.9998419229198834,
+        2.1165579041407794,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "projection_cache": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/110/view_cache.npz",
+        "bytes": 15021702,
+        "sha256": "00006364e796ecc649562d72f51947b7201cb40b331339ae0d700fc05874b55a",
+        "role": "independent geometric support and Brown-to-pinhole preview map; old requested_C/S/K not policy"
+      },
+      "R8_pinhole_protection_reference": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/mask_coordinate_audit/rectified_masks/110/rectified_masks.npz",
+        "exists_at_manifest_build": false,
+        "local_path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/road_vehicle_joint_dggt_20261123_r8/audit/mask_coordinate_audit/rectified_masks/110/rectified_masks.npz",
+        "role": "new pinhole protected mask; independently bind before using"
+      },
+      "actual_road_semantic_and_visual_qualification": "pending separate R9 audit; source SHA binding is not road qualification",
+      "composition_receipt": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker1/scene065_raw110__full1152_T0__legacy__seed101/composition.json",
+        "bytes": 1045,
+        "sha256": "7ffb7b7f1478fd22e35804046f085811d5e8e7e2b10a8aabba464365939df4b9"
+      }
+    }
+  ],
+  "teacher_view_count": 2,
+  "seed_count_per_view": 1,
+  "legacy_plan": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/prepared_r1/plan.json",
+    "bytes": 52886,
+    "sha256": "b118c064e1208c0ce808528997224b2167c3944bc8b4df3451b6a7852a589dd8"
+  },
+  "legacy_model": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_singleframe_20261115_r1/formal/T0/checkpoint_step000600.pt",
+    "sha256": "a75423e126b93eca22e0ce587782b3dc4edd76654d6a929302118aa45bda14ae"
+  },
+  "inference": {
+    "model_wh": [
+      1152,
+      768
+    ],
+    "view": "full1152",
+    "adapter": "T0",
+    "scheduler": "DDIM",
+    "inference_steps": 20,
+    "guidance": 3.0,
+    "eta": 0.0,
+    "strength": 1.0,
+    "dtype": "bfloat16",
+    "weight_variant": "fp16",
+    "negative_prompt": ""
+  },
+  "sampling_contract": {
+    "world_to_source": "actual world XYZ -> independently bound world_to_camera -> Brown distortion -> native pixel-index UV -> model pixel-index UV",
+    "native_pixel_index_to_model": "(native_uv + 0.5) * (1152/1920,768/1280) - 0.5",
+    "RGB_interpolation": "sRGB EOTF per original raw_model texel BEFORE bilinear interpolation; do not interpolate encoded sRGB",
+    "raw_native_not_resampled_for_supervision": true,
+    "geometric_visibility": "R7 atlas_uv_map four-neighbour support plus same-world consistency certificate; no old C/S/W reuse",
+    "new_protection": "R8 rectified pinhole protected mask; separate metadata; not old Brown K",
+    "world_scope": "R7 write_domain is only initial world-material scope; no parent RGB supervision",
+    "pinhole_preview": "separate warp using cached photo_source_brown_uv, not proof raw_model was generated pinhole"
+  },
+  "CPU_only": true,
+  "new_GPU_forward": 0,
+  "new_diffusion_calls": 0,
+  "training_updates": 0,
+  "elapsed_seconds": 2.3856089115142822
+}

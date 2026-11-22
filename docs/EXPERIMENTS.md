@@ -470,3 +470,7 @@ task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_2
 原始02默认：五目标视角内缩3px∩alpha≥.95评分域的RGB/alpha色度>.15均0。110帧评分3483像素；完整物理5585像素中alpha95为3896（69.76%），其中2像素高色度。保存crop内、物理投影外alpha .05–.95有1611像素，其中native灰底高色度50；归一化RGB/alpha为116，两个读出分开。仅取core行仍有边缘足迹。原父场景只提供定位框，独立组件未做父点退出或联合叠加。
 
 资源107F／0B（源42F、目标65F），优化更新0，新扩散0；CPU审计新增GPU0。全量组件／float／追踪／照片／相机／目标检查在归档，Git仅代码与轻量恢复入口。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06；human_verdict/problem_solved=null。
+
+## ROAD-VEHICLE-JOINT-20261123
+
+[方法、资产与恢复导航](autoresearch/road_vehicle_joint_20261123/README.md) · [固定评价与实际资源](autoresearch/road_vehicle_joint_20261123/compact_result.json) · [交付及归档入口](autoresearch/road_vehicle_joint_20261123/final_delivery.json)。包含R8对齐/联合RGB400步和原版DGGT原场景控制、R9原始教师联合校色、R10局部新表示/足迹与独立覆盖替换/两次不透明度smoke。唯一可视化仍为原道路HTML；所有实际失败保留。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict=null，problem_solved=null。

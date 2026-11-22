@@ -1,0 +1,61 @@
+{
+  "schema": "R10.authorized_underbody_execution_contract.v1",
+  "complete": false,
+  "overall_run_complete": false,
+  "objective": "Keep the approved vehicle asset and repair local underbody background/residual components; accept their actual joint rendering across aligned views.",
+  "approved_vehicle": {
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/assets/geometry_ablation/actor.npz",
+    "sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "all_fields_frozen": true,
+    "canonical_vehicle_rebuild_authorized_by_default": false
+  },
+  "shared_input": {
+    "accepted_field_sha256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+    "original_raw_teachers_only": true,
+    "hard_composite_is_road_truth": false,
+    "local_extension_requires_new_geometry_and_colour_seam_review": true
+  },
+  "existing_representation_budget": {
+    "formal_total_cap": 2000,
+    "formal_already_completed": 400,
+    "formal_remaining_maximum": 1600,
+    "historical_R7_formal800_is_not_this_budget": true,
+    "smoke_and_replay_updates_already_used_separately": 13,
+    "stop_early_if_fixed_evaluation_and_joint_visuals_stagnate": true,
+    "maximum_is_not_a_required_target": true
+  },
+  "evaluation": {
+    "frames": [86, 110, 134, 179, 198],
+    "training_frames": [86, 110],
+    "other_frames_are_evaluation_only": true,
+    "fixed_underbody_band": "photo proxy bbox x+/-30px, bottom[-12,+100]px at1152x768, with preserved body/K masks; complete band denominator remains visible",
+    "supervised_ground_subset_requires": ["reliable geometry", "valid projection", "all-four UV support", "legal source permission", "finite source RGB"],
+    "unsupported_pixels_remain_explicit_unknown": true,
+    "camera_pixels_supervision_and_weights_frozen_before_new_optimization": true,
+    "random_training_loss_is_not_the_stopping_criterion": true,
+    "primary_acceptance": "Joint underbody residual removal, pavement continuity, occlusion/contact, cross-view stability and protected-region performance.",
+    "isolated_layers_need_to_look_like_complete_photographs": false,
+    "standalone_road_low_alpha_proves_a_scene_hole": false
+  },
+  "sequence": [
+    "Use actual same-sort RGB attribution to identify contributing local problem rows; never retire an entire semantic group by assumption.",
+    "Separate geometry support failures from appearance permission/support failures.",
+    "Measure protected/body/ground contribution and keep all existing guards before a bounded old-representation attempt.",
+    "Switch early to a genuinely new local representation if old representation cannot improve fixed evaluation and actual joint rendering.",
+    "For a new local asset: certify reliable nonplanar local geometry, coordinate and fuse the shared appearance, accept its direct surface render, then fit new Gaussians and replace the problem components."
+  ],
+  "local_rebuild": {
+    "authorized": true,
+    "new_local_initialization_and_replacement": true,
+    "old_assets_logs_and_comparisons_retained": true,
+    "whole_vehicle_or_whole_scene_rebuild": false,
+    "continuing_same_old_gaussians_with_new_parameters_is_not_called_new_local_reconstruction": true,
+    "keep_inputs_vehicle_and_renderer_fixed_as_far_as_possible": true
+  },
+  "delivery": {
+    "only_HTML": "C:/Users/dengyunlong/Documents/Codex/2026-11-16/xian/outputs/road_material_three_rounds_20261121/index.html",
+    "URL": "http://127.0.0.1:18765/index.html",
+    "required_comparison": ["approved original vehicle", "old formal400", "local new reconstruction if triggered", "fixed evaluation curve", "initialization and cumulative formal steps", "separate engineering overhead"],
+    "GPU_stays_on": true
+  }
+}

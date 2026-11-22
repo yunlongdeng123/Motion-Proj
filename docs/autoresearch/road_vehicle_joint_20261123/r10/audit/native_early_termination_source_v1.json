@@ -1,0 +1,37 @@
+{
+  "schema": "R10.native_early_termination_primary_source_audit.v1",
+  "complete": true,
+  "CPU_only": true,
+  "nativeF": 0,
+  "nativeB": 0,
+  "updates": 0,
+  "actual_binding_chain": ["JointNativeAdapter", "persistent_road_handoff.load_persistent_handoff", "v44_scene._bindings", "engine/utils/v4_road_render.py", "diff_gaussian_rasterization.GaussianRasterizer"],
+  "installed_module": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py",
+  "installed_direct_url": "file:///root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization",
+  "forward_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.cu",
+    "sha256": "732e8cec40d00e93ce9959428c8e451148c791c0eaea351b8eeff9db759d7a8d",
+    "alpha_cap_line": 346,
+    "test_T_and_early_continue_lines": [349, 350, 351, 352, 353, 354],
+    "first_weight_line": 356,
+    "RGB_accumulation_line": 359,
+    "feature_accumulation_line": 362,
+    "T_update_line": 364,
+    "last_contributor_update_line": 368
+  },
+  "backward_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.cu",
+    "sha256": "ab6bffce4fe0c9faae112db0de6600fc4b17ca0010e5af653ffe113f0f956fc1",
+    "last_contributor_read_line": 452,
+    "last_contributor_skip_line": 499,
+    "feature_gradient_line": 546,
+    "opacity_gradient_line": 577
+  },
+  "source_fact": "When test_T=T*(1-alpha)<1e-4, the forward sets done and continues before weight/RGB/features/T/last_contributor update. The stopping row therefore has zero accumulated feature mass and is skipped by backward, but removing or attenuating it can expose later fragments.",
+  "not_a_strict_1e4_readout_bound": "The stored transmittance is pre-stop T, not test_T. With alpha capped at .99, pre-stop T can approach .01; RGB changes also depend on colour and environment values.",
+  "measured_difference_unique_cause_proved": false,
+  "interpretation": "The source proves this mechanism exists. Current tiny counterfactual readout differences are compatible with it; their exact per-pixel cause has not been traced.",
+  "eligibility_threshold_changed": false,
+  "original_exact_failure_evidence_preserved": true,
+  "earlier_surface_rasterizer_path": "Same-family copy was inspected first, then corrected to the installed diff_gaussian_rasterization dependency; the actual primary paths and SHA above are authoritative."
+}

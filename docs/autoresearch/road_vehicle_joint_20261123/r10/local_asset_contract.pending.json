@@ -1,0 +1,39 @@
+{
+  "schema": "R10.new_local_asset_initialization.contract.v1",
+  "ready": false,
+  "frames": [86, 110, 134, 179, 198],
+  "parent_contract": {"path": "baseline_vehicle0_road400.json", "sha256": null},
+  "parent_pins": [
+    {"role": "actor_asset", "path": "PENDING/original_A20_actor.npz", "sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7"},
+    {"role": "road_asset", "path": "PENDING/frozen_parent_road.npz", "sha256": null},
+    {"role": "scene_manifest", "path": "PENDING/scene.json", "sha256": null},
+    {"role": "scene_proof", "path": "PENDING/proof.json", "sha256": null},
+    {"role": "context_plan", "path": "PENDING/context_plan.json", "sha256": null},
+    {"role": "actor_field_module", "path": "PENDING/joint_gpu.py", "sha256": null}
+  ],
+  "geometry": {
+    "npz": {"path": "audit/local_surface_geometry_FINAL/local_surface_geometry.npz", "sha256": null},
+    "certificate": {"path": "audit/local_surface_geometry_FINAL/certificate.json", "sha256": null},
+    "target_coverage_gate": {"path": "audit/local_surface_geometry_FINAL/target_coverage_gate.json", "sha256": null},
+    "inferred_gate": {"path": "audit/local_surface_geometry_FINAL/model_inferred_acceptance.json", "sha256": null}
+  },
+  "source": {
+    "field": {"path": "local_shared_appearance_ACCEPTED/final_atlas.npz", "sha256": null},
+    "numeric_gate": {"path": "local_shared_appearance_ACCEPTED/numeric_acceptance.json", "sha256": null},
+    "visual_gate": {"path": "local_shared_appearance_ACCEPTED/visual_review.json", "sha256": null},
+    "root_gate": {"path": "local_shared_appearance_ACCEPTED/root_review.json", "sha256": null},
+    "rgb_key": "atlas_linear", "valid_key": "permission_mask", "kind_key": "source_kind", "uv_origin_global": [0, 0]
+  },
+  "native_gate": {
+    "mode": "identity_no_retirement",
+    "npz": {"path": "native_identity_gate_v1/native_gate0.npz", "sha256": "7f541d5a3a7f21c28b29b544c9a8c16c6395ed6269e57262c7cf2556201f6164"},
+    "proof": {"path": "native_identity_gate_v1/native_gate0.proof.json", "sha256": "5eabb0285165adfd89d15e24f3e138f3f4bc13ec5ac646da9d164ebe396ae583"},
+    "candidates": {"path": "native_identity_gate_v1/native_candidates.npz", "sha256": "6b717edb226f5a21dc1ebf8c2cb3e6a455b7a9ee83445518e3de6951b779a4a5"},
+    "deleted_target_owner_ids": []
+  },
+  "r8_code": "../road_vehicle_joint_dggt_20261123_r8/code",
+  "new_patch_near_m": 0.2,
+  "initialization": {"opacity": 0.9, "normal_sigma_m": 0.0015, "cell_alpha_target": 0.95},
+  "no_GPU_execution_authorized_by_this_pending_file": true,
+  "existing_representation_updates": 0
+}

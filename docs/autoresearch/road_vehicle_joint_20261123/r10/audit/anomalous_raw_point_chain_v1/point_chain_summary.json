@@ -1,0 +1,1264 @@
+{
+  "schema": "R10.anomalous_frames_original_point_chain_audit.v1",
+  "complete": true,
+  "decision": "PASS_EXPORT_BINDING_AND_INDEPENDENT_TOP_ARITHMETIC",
+  "targets": [
+    60,
+    70,
+    110,
+    145,
+    165
+  ],
+  "rows": [
+    {
+      "raw": 60,
+      "timestamp_micros": 1507240553844252,
+      "original_record": {
+        "header_offset": 317264002,
+        "payload_length": 5042625,
+        "header_CRC32C": true,
+        "payload_CRC32C": true,
+        "payload_sha256": "366fae2a5dadd79114f576eb6f7987f6ef8f27f9759c1d88cbe9d10362da38ae"
+      },
+      "all_timestamp_bindings_exact": true,
+      "exported_bin_redecode_all6columns_byteexact": true,
+      "per_column_max_abs_difference": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "all_sensor_return_details": [
+        {
+          "laser_name": 1,
+          "return_index": 0,
+          "positive_range_points": 140494,
+          "NLZ_excluded": 1884,
+          "retained_points": 138610,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 0,
+          "positive_range_points": 3322,
+          "NLZ_excluded": 0,
+          "retained_points": 3322,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 0,
+          "positive_range_points": 3452,
+          "NLZ_excluded": 0,
+          "retained_points": 3452,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 0,
+          "positive_range_points": 4211,
+          "NLZ_excluded": 0,
+          "retained_points": 4211,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 0,
+          "positive_range_points": 3976,
+          "NLZ_excluded": 0,
+          "retained_points": 3976,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 1,
+          "return_index": 1,
+          "positive_range_points": 8610,
+          "NLZ_excluded": 265,
+          "retained_points": 8345,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 1,
+          "positive_range_points": 1,
+          "NLZ_excluded": 0,
+          "retained_points": 1,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 1,
+          "positive_range_points": 2,
+          "NLZ_excluded": 0,
+          "retained_points": 2,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 1,
+          "positive_range_points": 6,
+          "NLZ_excluded": 0,
+          "retained_points": 6,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 1,
+          "positive_range_points": 7,
+          "NLZ_excluded": 0,
+          "retained_points": 7,
+          "TOP_pixel_motion_compensated": false
+        }
+      ],
+      "frame_pose_vs_obs_max_abs": 0.0,
+      "frame_pose_vs_posefile_max_abs": 4.547473508864641e-13,
+      "camera_pose_vs_obs_max_abs": 0.0,
+      "camera_extrinsic_vs_obs_max_abs": 0.0,
+      "camera_intrinsics_vs_obs_max_abs": 0.0,
+      "camera_timing": {
+        "pose_timestamp": 1507240553.8995216,
+        "pose_timestamp_minus_frame_seconds": 0.055269718170166016,
+        "camera_trigger_time": 1507240553.873665,
+        "camera_trigger_time_minus_frame_seconds": 0.029413223266601562,
+        "camera_readout_done_time": 1507240553.918096,
+        "camera_readout_done_time_minus_frame_seconds": 0.07384419441223145
+      },
+      "TOP_pixelPose_RPY_range": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.011715653352439404,
+          0.009845398366451263,
+          0.012430978007614613
+        ]
+      ],
+      "TOP_pixelPose_worldXYZ_range": [
+        [
+          0.0,
+          0.0,
+          -20.74367904663086
+        ],
+        [
+          2295.429931640625,
+          1366.89013671875,
+          0.0
+        ]
+      ],
+      "independent_TOP_returns": [
+        {
+          "return_index": 0,
+          "points": 138610,
+          "official_front_projected_points": 14367,
+          "independent_world_max_abs_xyz_m": [
+            0.0006023475298206904,
+            0.0002570526758063352,
+            8.683348859506168e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 138610,
+            "min": 9.345777209412531e-07,
+            "mean": 0.000179598057027386,
+            "median": 0.00016262825974311336,
+            "p05": 4.0816674693253134e-05,
+            "p95": 0.0003724965825985034,
+            "max": 0.000605095898669541
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.000601802720419764,
+            0.00025811147191490136,
+            4.973310449990498e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 138610,
+            "min": -8.683348859506168e-06,
+            "mean": -1.8570099999708134e-06,
+            "median": -1.8548936679962935e-06,
+            "p05": -4.641550989070708e-06,
+            "p95": 9.267396398726643e-07,
+            "max": 5.310504427313845e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 138610,
+            "min": -0.021641223086366068,
+            "mean": 0.0009387116394984191,
+            "median": 0.0010251101267169105,
+            "p05": -0.006470587209134315,
+            "p95": 0.007111883729960588,
+            "max": 0.017786331529475063
+          }
+        },
+        {
+          "return_index": 1,
+          "points": 8345,
+          "official_front_projected_points": 155,
+          "independent_world_max_abs_xyz_m": [
+            0.0005733561915803875,
+            0.00023771558403495874,
+            7.651385441675984e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 8345,
+            "min": 2.5062137907599314e-06,
+            "mean": 0.00018008276860022825,
+            "median": 0.00016303582673678283,
+            "p05": 4.252023316363369e-05,
+            "p95": 0.00037116253115240637,
+            "max": 0.0005784883838952576
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.000574261464219461,
+            0.00023966095906047258,
+            4.552977438176953e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 8345,
+            "min": -7.651385441675984e-06,
+            "mean": -1.8467703635582868e-06,
+            "median": -1.813326647948088e-06,
+            "p05": -4.73174483985872e-06,
+            "p95": 1.0321710917082766e-06,
+            "max": 3.669343634271627e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 8345,
+            "min": -0.014863183373051925,
+            "mean": 0.0024823494381025525,
+            "median": 0.0022280294350487395,
+            "p05": -0.008601289205165586,
+            "p95": 0.01144569052241664,
+            "max": 0.01773273246478979
+          }
+        }
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/060.json",
+        "bytes": 39996,
+        "sha256": "b2866a276eeec4ca8a3f3601ab95ab23c1b46f9302bdc4cc4af592b8b160223b"
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065060.bin",
+        "bytes": 3886368,
+        "sha256": "92d8dd786edc202137286b8edf1b32fc901b8bb7ca2e09d987c9a0e6713037bc"
+      },
+      "cache": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/anomalous_raw_point_chain_v1/060/official_TOP_camera_projection_and_world.npz",
+        "bytes": 10421532,
+        "sha256": "9604eef7dc3c86180292496160590361543bfeacce43423958894ad812248c6b"
+      }
+    },
+    {
+      "raw": 70,
+      "timestamp_micros": 1507240554844413,
+      "original_record": {
+        "header_offset": 366837955,
+        "payload_length": 4863429,
+        "header_CRC32C": true,
+        "payload_CRC32C": true,
+        "payload_sha256": "81fba4c7bda8ce69a91bb0ead6357f07cf3cf4c0a979284224def909363094f1"
+      },
+      "all_timestamp_bindings_exact": true,
+      "exported_bin_redecode_all6columns_byteexact": true,
+      "per_column_max_abs_difference": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "all_sensor_return_details": [
+        {
+          "laser_name": 1,
+          "return_index": 0,
+          "positive_range_points": 140080,
+          "NLZ_excluded": 1625,
+          "retained_points": 138455,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 0,
+          "positive_range_points": 3375,
+          "NLZ_excluded": 0,
+          "retained_points": 3375,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 0,
+          "positive_range_points": 3397,
+          "NLZ_excluded": 0,
+          "retained_points": 3397,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 0,
+          "positive_range_points": 4146,
+          "NLZ_excluded": 0,
+          "retained_points": 4146,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 0,
+          "positive_range_points": 4030,
+          "NLZ_excluded": 0,
+          "retained_points": 4030,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 1,
+          "return_index": 1,
+          "positive_range_points": 8322,
+          "NLZ_excluded": 239,
+          "retained_points": 8083,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 1,
+          "positive_range_points": 0,
+          "NLZ_excluded": 0,
+          "retained_points": 0,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 1,
+          "positive_range_points": 9,
+          "NLZ_excluded": 0,
+          "retained_points": 9,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 1,
+          "positive_range_points": 3,
+          "NLZ_excluded": 0,
+          "retained_points": 3,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 1,
+          "positive_range_points": 4,
+          "NLZ_excluded": 0,
+          "retained_points": 4,
+          "TOP_pixel_motion_compensated": false
+        }
+      ],
+      "frame_pose_vs_obs_max_abs": 0.0,
+      "frame_pose_vs_posefile_max_abs": 4.547473508864641e-13,
+      "camera_pose_vs_obs_max_abs": 0.0,
+      "camera_extrinsic_vs_obs_max_abs": 0.0,
+      "camera_intrinsics_vs_obs_max_abs": 0.0,
+      "camera_timing": {
+        "pose_timestamp": 1507240554.8994908,
+        "pose_timestamp_minus_frame_seconds": 0.05507779121398926,
+        "camera_trigger_time": 1507240554.873742,
+        "camera_trigger_time_minus_frame_seconds": 0.02932906150817871,
+        "camera_readout_done_time": 1507240554.91814,
+        "camera_readout_done_time_minus_frame_seconds": 0.07372689247131348
+      },
+      "TOP_pixelPose_RPY_range": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.008187036029994488,
+          0.0075154961086809635,
+          0.007876362651586533
+        ]
+      ],
+      "TOP_pixelPose_worldXYZ_range": [
+        [
+          0.0,
+          0.0,
+          -20.786054611206055
+        ],
+        [
+          2299.7822265625,
+          1366.92919921875,
+          0.0
+        ]
+      ],
+      "independent_TOP_returns": [
+        {
+          "return_index": 0,
+          "points": 138455,
+          "official_front_projected_points": 14377,
+          "independent_world_max_abs_xyz_m": [
+            0.00048606906148052076,
+            0.00024896389300010924,
+            6.810169768556307e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 138455,
+            "min": 6.474949092995463e-07,
+            "mean": 0.00013958952857929692,
+            "median": 0.00012721478863145347,
+            "p05": 3.326324189520355e-05,
+            "p95": 0.00028849165136991714,
+            "max": 0.0004917842257197599
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.000486628608618922,
+            0.00024802986944560956,
+            5.4211714313190384e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 138455,
+            "min": -6.810169768556307e-06,
+            "mean": -9.88020765179377e-07,
+            "median": -9.660662776411755e-07,
+            "p05": -3.231324506458577e-06,
+            "p95": 1.1896062840577305e-06,
+            "max": 4.2104355948424654e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 138455,
+            "min": -0.01744174174131885,
+            "mean": -0.001616615482902265,
+            "median": -0.001354854894280777,
+            "p05": -0.011051302454445987,
+            "p95": 0.004701675623009293,
+            "max": 0.013166161486449113
+          }
+        },
+        {
+          "return_index": 1,
+          "points": 8083,
+          "official_front_projected_points": 281,
+          "independent_world_max_abs_xyz_m": [
+            0.00047178334716591053,
+            0.00021697178408430773,
+            6.1074926236415195e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 8083,
+            "min": 2.1053516001360928e-06,
+            "mean": 0.00013829189253042519,
+            "median": 0.00012485668834050833,
+            "p05": 3.308320088137068e-05,
+            "p95": 0.000288694158796523,
+            "max": 0.0004834332515720596
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.00047259930266463357,
+            0.00021875612885580153,
+            4.879831903670251e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 8083,
+            "min": -6.1074926236415195e-06,
+            "mean": -1.0141939521211315e-06,
+            "median": -9.82018711681576e-07,
+            "p05": -3.4822458392369526e-06,
+            "p95": 1.308990619719452e-06,
+            "max": 3.908349313519466e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 8083,
+            "min": -0.017807444878066292,
+            "mean": -0.00346571560687357,
+            "median": -0.0039370785430072885,
+            "p05": -0.013985281626847623,
+            "p95": 0.007737715443274591,
+            "max": 0.01294900064105775
+          }
+        }
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/070.json",
+        "bytes": 40295,
+        "sha256": "df528b76c20750afd0c6183c9ca29ce122f9d2d955d71f46464f140f666d028c"
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065070.bin",
+        "bytes": 3876048,
+        "sha256": "a2aa70f8c3f3458aa8e9f08ffba301401f96dc4e9ebb30ba13e02db8f2228f45"
+      },
+      "cache": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/anomalous_raw_point_chain_v1/070/official_TOP_camera_projection_and_world.npz",
+        "bytes": 10424657,
+        "sha256": "6738b953efa7873d9a2e290e979af8c38fee687fca8547382795d59422263809"
+      }
+    },
+    {
+      "raw": 110,
+      "timestamp_micros": 1507240558844353,
+      "original_record": {
+        "header_offset": 549824384,
+        "payload_length": 4457175,
+        "header_CRC32C": true,
+        "payload_CRC32C": true,
+        "payload_sha256": "047dc9bebabe871b5c726d0c880324ee9308acee6213048f1252b3aa015975c4"
+      },
+      "all_timestamp_bindings_exact": true,
+      "exported_bin_redecode_all6columns_byteexact": true,
+      "per_column_max_abs_difference": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "all_sensor_return_details": [
+        {
+          "laser_name": 1,
+          "return_index": 0,
+          "positive_range_points": 138407,
+          "NLZ_excluded": 1261,
+          "retained_points": 137146,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 0,
+          "positive_range_points": 3437,
+          "NLZ_excluded": 0,
+          "retained_points": 3437,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 0,
+          "positive_range_points": 3429,
+          "NLZ_excluded": 0,
+          "retained_points": 3429,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 0,
+          "positive_range_points": 4314,
+          "NLZ_excluded": 0,
+          "retained_points": 4314,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 0,
+          "positive_range_points": 4013,
+          "NLZ_excluded": 0,
+          "retained_points": 4013,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 1,
+          "return_index": 1,
+          "positive_range_points": 7403,
+          "NLZ_excluded": 184,
+          "retained_points": 7219,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 1,
+          "positive_range_points": 8,
+          "NLZ_excluded": 0,
+          "retained_points": 8,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 1,
+          "positive_range_points": 5,
+          "NLZ_excluded": 0,
+          "retained_points": 5,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 1,
+          "positive_range_points": 11,
+          "NLZ_excluded": 0,
+          "retained_points": 11,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 1,
+          "positive_range_points": 5,
+          "NLZ_excluded": 0,
+          "retained_points": 5,
+          "TOP_pixel_motion_compensated": false
+        }
+      ],
+      "frame_pose_vs_obs_max_abs": 0.0,
+      "frame_pose_vs_posefile_max_abs": 1.734723475976807e-18,
+      "camera_pose_vs_obs_max_abs": 0.0,
+      "camera_extrinsic_vs_obs_max_abs": 0.0,
+      "camera_intrinsics_vs_obs_max_abs": 0.0,
+      "camera_timing": {
+        "pose_timestamp": 1507240558.8993673,
+        "pose_timestamp_minus_frame_seconds": 0.05501437187194824,
+        "camera_trigger_time": 1507240558.8737876,
+        "camera_trigger_time_minus_frame_seconds": 0.029434680938720703,
+        "camera_readout_done_time": 1507240558.91818,
+        "camera_readout_done_time_minus_frame_seconds": 0.07382702827453613
+      },
+      "TOP_pixelPose_RPY_range": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.011239424347877502,
+          0.0020112216006964445,
+          0.0037877901922911406
+        ]
+      ],
+      "TOP_pixelPose_worldXYZ_range": [
+        [
+          0.0,
+          0.0,
+          -20.834978103637695
+        ],
+        [
+          2307.184814453125,
+          1366.962890625,
+          0.0
+        ]
+      ],
+      "independent_TOP_returns": [
+        {
+          "return_index": 0,
+          "points": 137146,
+          "official_front_projected_points": 14518,
+          "independent_world_max_abs_xyz_m": [
+            0.0005118659787513025,
+            0.00030114438345663075,
+            5.518853711805605e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 137146,
+            "min": 9.508311928811768e-07,
+            "mean": 0.0001537004833522261,
+            "median": 0.0001439233810849852,
+            "p05": 4.032889155592651e-05,
+            "p95": 0.0003023776667766009,
+            "max": 0.0005273169528801707
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.0005123156362181192,
+            0.0003010291177183433,
+            6.3412598568235445e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 137146,
+            "min": -5.518853711805605e-06,
+            "mean": -1.9924188822923025e-07,
+            "median": -1.9529333883383515e-07,
+            "p05": -2.362961496693572e-06,
+            "p95": 1.9489966973651462e-06,
+            "max": 5.505306003072974e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 137146,
+            "min": -0.010282863550351351,
+            "mean": 0.0005984912259390531,
+            "median": 0.00047013936031881087,
+            "p05": -0.0034050085147097064,
+            "p95": 0.005901329580401793,
+            "max": 0.013442548205606641
+          }
+        },
+        {
+          "return_index": 1,
+          "points": 7219,
+          "official_front_projected_points": 437,
+          "independent_world_max_abs_xyz_m": [
+            0.00048055198158181156,
+            0.0002696415567697841,
+            5.537547846046209e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 7219,
+            "min": 1.315117412651966e-06,
+            "mean": 0.0001516566475523733,
+            "median": 0.0001418363226491958,
+            "p05": 3.9016125872421556e-05,
+            "p95": 0.00030068745292992203,
+            "max": 0.0004938620731741948
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.00048095123190705635,
+            0.00026999493532997576,
+            6.1344286357289945e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 7219,
+            "min": -5.537547846046209e-06,
+            "mean": -1.9763441575437152e-07,
+            "median": -2.0649184406806853e-07,
+            "p05": -2.402976771165299e-06,
+            "p95": 1.9918905973526067e-06,
+            "max": 4.84484850460376e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 7219,
+            "min": -0.009838510197894834,
+            "mean": 0.00041228838203675794,
+            "median": -0.0003347014529637704,
+            "p05": -0.006151738545700524,
+            "p95": 0.008469129517824924,
+            "max": 0.011861364081980241
+          }
+        }
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+        "bytes": 36675,
+        "sha256": "67ab85c64bca56b2d309f7c2fccef021b9749cd0bbb196d0573cfcad4ed6a300"
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065110.bin",
+        "bytes": 3830088,
+        "sha256": "280708e87b263f76e58183c8cd7218e1cab8ec5df35d4ad6741498739b1354b3"
+      },
+      "cache": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/anomalous_raw_point_chain_v1/110/official_TOP_camera_projection_and_world.npz",
+        "bytes": 9950000,
+        "sha256": "056bc4bb9f3a95fa667da3c03aade80521e52b5d50fd920f0da932a223d0ba75"
+      }
+    },
+    {
+      "raw": 145,
+      "timestamp_micros": 1507240562344093,
+      "original_record": {
+        "header_offset": 702670694,
+        "payload_length": 4329644,
+        "header_CRC32C": true,
+        "payload_CRC32C": true,
+        "payload_sha256": "00bbc5319fbb6a79a4ea866187596573a739ce7112b7aba1c8a8a3b5f6c5c86e"
+      },
+      "all_timestamp_bindings_exact": true,
+      "exported_bin_redecode_all6columns_byteexact": true,
+      "per_column_max_abs_difference": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "all_sensor_return_details": [
+        {
+          "laser_name": 1,
+          "return_index": 0,
+          "positive_range_points": 138363,
+          "NLZ_excluded": 1251,
+          "retained_points": 137112,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 0,
+          "positive_range_points": 3471,
+          "NLZ_excluded": 0,
+          "retained_points": 3471,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 0,
+          "positive_range_points": 3387,
+          "NLZ_excluded": 0,
+          "retained_points": 3387,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 0,
+          "positive_range_points": 4279,
+          "NLZ_excluded": 0,
+          "retained_points": 4279,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 0,
+          "positive_range_points": 4057,
+          "NLZ_excluded": 0,
+          "retained_points": 4057,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 1,
+          "return_index": 1,
+          "positive_range_points": 7205,
+          "NLZ_excluded": 193,
+          "retained_points": 7012,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 1,
+          "positive_range_points": 4,
+          "NLZ_excluded": 0,
+          "retained_points": 4,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 1,
+          "positive_range_points": 6,
+          "NLZ_excluded": 0,
+          "retained_points": 6,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 1,
+          "positive_range_points": 11,
+          "NLZ_excluded": 0,
+          "retained_points": 11,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 1,
+          "positive_range_points": 8,
+          "NLZ_excluded": 0,
+          "retained_points": 8,
+          "TOP_pixel_motion_compensated": false
+        }
+      ],
+      "frame_pose_vs_obs_max_abs": 0.0,
+      "frame_pose_vs_posefile_max_abs": 4.547473508864641e-13,
+      "camera_pose_vs_obs_max_abs": 0.0,
+      "camera_extrinsic_vs_obs_max_abs": 0.0,
+      "camera_intrinsics_vs_obs_max_abs": 0.0,
+      "camera_timing": {
+        "pose_timestamp": 1507240562.3992345,
+        "pose_timestamp_minus_frame_seconds": 0.05514168739318848,
+        "camera_trigger_time": 1507240562.3737612,
+        "camera_trigger_time_minus_frame_seconds": 0.029668331146240234,
+        "camera_readout_done_time": 1507240562.418131,
+        "camera_readout_done_time_minus_frame_seconds": 0.07403826713562012
+      },
+      "TOP_pixelPose_RPY_range": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0108430041000247,
+          0.0031508116517215967,
+          0.0037190690636634827
+        ]
+      ],
+      "TOP_pixelPose_worldXYZ_range": [
+        [
+          0.0,
+          0.0,
+          -20.83300018310547
+        ],
+        [
+          2307.71875,
+          1366.96240234375,
+          0.0
+        ]
+      ],
+      "independent_TOP_returns": [
+        {
+          "return_index": 0,
+          "points": 137112,
+          "official_front_projected_points": 15308,
+          "independent_world_max_abs_xyz_m": [
+            0.0006557523342962668,
+            0.00023665677076678548,
+            5.465797926262894e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 137112,
+            "min": 1.1267606990982046e-06,
+            "mean": 0.00022175338209192482,
+            "median": 0.00020975780892602196,
+            "p05": 5.253234141037065e-05,
+            "p95": 0.0004325939579289644,
+            "max": 0.0006740911835073807
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.000656309686895229,
+            0.00023582297791868712,
+            4.256737873589711e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 137112,
+            "min": -5.465797926262894e-06,
+            "mean": -3.788771701989976e-07,
+            "median": -3.780156774269017e-07,
+            "p05": -2.4890751134876155e-06,
+            "p95": 1.7257502038958705e-06,
+            "max": 4.577887732892805e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 137112,
+            "min": -0.005784652390705247,
+            "mean": 0.0001071484195604369,
+            "median": -7.58894304713209e-05,
+            "p05": -0.0011500242000122894,
+            "p95": 0.001499788133116553,
+            "max": 0.009419843102300263
+          }
+        },
+        {
+          "return_index": 1,
+          "points": 7012,
+          "official_front_projected_points": 528,
+          "independent_world_max_abs_xyz_m": [
+            0.0006673221614619251,
+            0.0002453631341268192,
+            4.994991684270644e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 7012,
+            "min": 2.5045837558001524e-06,
+            "mean": 0.00021701351221783852,
+            "median": 0.00020350345622010058,
+            "p05": 4.87782829538731e-05,
+            "p95": 0.00043046634160381187,
+            "max": 0.0006701304009524513
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.0006670967259765348,
+            0.00024503330826775027,
+            4.527806432008674e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 7012,
+            "min": -4.994991684270644e-06,
+            "mean": -3.377105417197735e-07,
+            "median": -3.5295558298287233e-07,
+            "p05": -2.4566024810823705e-06,
+            "p95": 1.8194574984420342e-06,
+            "max": 4.3537703930951466e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 7012,
+            "min": -0.005408195835986618,
+            "mean": 0.00016486489021442168,
+            "median": -2.1969251172038184e-05,
+            "p05": -0.002051365149888973,
+            "p95": 0.0032231503773367354,
+            "max": 0.009361617360596597
+          }
+        }
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/145.json",
+        "bytes": 38777,
+        "sha256": "82541747775bfb6c2da54672099e1798f04f6c5f1130ef35ac4d6c33321fa805"
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065145.bin",
+        "bytes": 3824328,
+        "sha256": "0b95d1e4464713c58d9b538b26fb969723e781f4c922b28d9a6d917b446a0a5a"
+      },
+      "cache": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/anomalous_raw_point_chain_v1/145/official_TOP_camera_projection_and_world.npz",
+        "bytes": 9725870,
+        "sha256": "bd22ef2ba36ccc2fdebc5ef86653c0cafd675e2d99cfb2d67ec7f357c66575ea"
+      }
+    },
+    {
+      "raw": 165,
+      "timestamp_micros": 1507240564344416,
+      "original_record": {
+        "header_offset": 788590103,
+        "payload_length": 4351262,
+        "header_CRC32C": true,
+        "payload_CRC32C": true,
+        "payload_sha256": "785f830ce0bd573a0d66da5ff1adb325348b9e275c8626dfc8b96a47b6225761"
+      },
+      "all_timestamp_bindings_exact": true,
+      "exported_bin_redecode_all6columns_byteexact": true,
+      "per_column_max_abs_difference": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "all_sensor_return_details": [
+        {
+          "laser_name": 1,
+          "return_index": 0,
+          "positive_range_points": 138534,
+          "NLZ_excluded": 1254,
+          "retained_points": 137280,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 0,
+          "positive_range_points": 3505,
+          "NLZ_excluded": 0,
+          "retained_points": 3505,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 0,
+          "positive_range_points": 3434,
+          "NLZ_excluded": 0,
+          "retained_points": 3434,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 0,
+          "positive_range_points": 4316,
+          "NLZ_excluded": 0,
+          "retained_points": 4316,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 0,
+          "positive_range_points": 4125,
+          "NLZ_excluded": 0,
+          "retained_points": 4125,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 1,
+          "return_index": 1,
+          "positive_range_points": 7294,
+          "NLZ_excluded": 200,
+          "retained_points": 7094,
+          "TOP_pixel_motion_compensated": true
+        },
+        {
+          "laser_name": 2,
+          "return_index": 1,
+          "positive_range_points": 6,
+          "NLZ_excluded": 0,
+          "retained_points": 6,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 3,
+          "return_index": 1,
+          "positive_range_points": 7,
+          "NLZ_excluded": 0,
+          "retained_points": 7,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 4,
+          "return_index": 1,
+          "positive_range_points": 11,
+          "NLZ_excluded": 0,
+          "retained_points": 11,
+          "TOP_pixel_motion_compensated": false
+        },
+        {
+          "laser_name": 5,
+          "return_index": 1,
+          "positive_range_points": 14,
+          "NLZ_excluded": 0,
+          "retained_points": 14,
+          "TOP_pixel_motion_compensated": false
+        }
+      ],
+      "frame_pose_vs_obs_max_abs": 0.0,
+      "frame_pose_vs_posefile_max_abs": 4.547473508864641e-13,
+      "camera_pose_vs_obs_max_abs": 0.0,
+      "camera_extrinsic_vs_obs_max_abs": 0.0,
+      "camera_intrinsics_vs_obs_max_abs": 0.0,
+      "camera_timing": {
+        "pose_timestamp": 1507240564.3992193,
+        "pose_timestamp_minus_frame_seconds": 0.05480337142944336,
+        "camera_trigger_time": 1507240564.3737607,
+        "camera_trigger_time_minus_frame_seconds": 0.029344797134399414,
+        "camera_readout_done_time": 1507240564.418087,
+        "camera_readout_done_time_minus_frame_seconds": 0.07367110252380371
+      },
+      "TOP_pixelPose_RPY_range": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.010891031473875046,
+          0.003188062459230423,
+          0.0037516728043556213
+        ]
+      ],
+      "TOP_pixelPose_worldXYZ_range": [
+        [
+          0.0,
+          0.0,
+          -20.83300018310547
+        ],
+        [
+          2307.718505859375,
+          1366.9625244140625,
+          0.0
+        ]
+      ],
+      "independent_TOP_returns": [
+        {
+          "return_index": 0,
+          "points": 137280,
+          "official_front_projected_points": 15087,
+          "independent_world_max_abs_xyz_m": [
+            0.0005252356345408771,
+            0.0002482123056779528,
+            5.911158631022317e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 137280,
+            "min": 8.673251617399381e-07,
+            "mean": 0.00014942093867562525,
+            "median": 0.00013491850039301135,
+            "p05": 3.529401235586234e-05,
+            "p95": 0.0003131303935486097,
+            "max": 0.0005520829600086124
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.0005251966644457262,
+            0.0002484503337516486,
+            5.071568831255258e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 137280,
+            "min": -3.8584008166253625e-06,
+            "mean": 1.0737993828025812e-06,
+            "median": 1.076306949343575e-06,
+            "p05": -1.0565428114617248e-06,
+            "p95": 3.196774639313558e-06,
+            "max": 5.911158631022317e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 137280,
+            "min": -0.0033343824892639873,
+            "mean": -2.500389432048281e-05,
+            "median": 5.825885744670245e-05,
+            "p05": -0.0013242027626271025,
+            "p95": 0.0009455440012233748,
+            "max": 0.0018187947954899641
+          }
+        },
+        {
+          "return_index": 1,
+          "points": 7094,
+          "official_front_projected_points": 518,
+          "independent_world_max_abs_xyz_m": [
+            0.0004892182514595333,
+            0.00023342810300164274,
+            5.647013708198756e-06
+          ],
+          "independent_world_distance_m": {
+            "count": 7094,
+            "min": 2.288499302296388e-06,
+            "mean": 0.00014558056471297834,
+            "median": 0.00013105079733255397,
+            "p05": 3.398098209274872e-05,
+            "p95": 0.00030514889338947035,
+            "max": 0.0004950880072751741
+          },
+          "independent_ego_max_abs_xyz_m": [
+            0.0004894917959923362,
+            0.00023263676371909625,
+            4.952186549722626e-06
+          ],
+          "world_Z_from_pixel_pose_minus_exported_m": {
+            "count": 7094,
+            "min": -2.956905397866194e-06,
+            "mean": 1.1163645823042647e-06,
+            "median": 1.1307434597540578e-06,
+            "p05": -9.786910872833232e-07,
+            "p95": 3.2346764816892907e-06,
+            "max": 5.647013708198756e-06
+          },
+          "no_pixelPose_frame_world_minus_corrected_world_Z_m": {
+            "count": 7094,
+            "min": -0.003333998709106112,
+            "mean": -0.00028751963031014476,
+            "median": -0.00020292437597468904,
+            "p05": -0.002553653502561293,
+            "p95": 0.0013096437810956366,
+            "max": 0.0018055077349643511
+          }
+        }
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/165.json",
+        "bytes": 38168,
+        "sha256": "5c6a0e6a7eee5d79d39c6bc4ecc05a6d482e15738382c0d4879d47cb33ff0ada"
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065165.bin",
+        "bytes": 3835008,
+        "sha256": "7e3171f2beda33e8e2d1c2ea874199cae17e1936cfad95bb0cafaf9ca35b3605"
+      },
+      "cache": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/anomalous_raw_point_chain_v1/165/official_TOP_camera_projection_and_world.npz",
+        "bytes": 9721059,
+        "sha256": "576f3c2c021374be1e3f88b0cd78e9d6eede8eb7e2cc90178912d231b9704d4c"
+      }
+    }
+  ],
+  "source_code": [
+    {
+      "path": "/root/autodl-tmp/codex_tmp/v43_actor_diagnostics_20261101/waymo_numpy_cpu.py",
+      "bytes": 9374,
+      "sha256": "f584f24ef31c4f32928e861528e4aa95a8cabb04f236627d7a3d8b9b7f1b3382"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/v43_actor_diagnostics_20261101/fast_range_matrix.py",
+      "bytes": 2445,
+      "sha256": "6d07d45ed9304ca134ebe0e52f3aca0382193cd115e0cafcacf64df9db1455b1"
+    },
+    {
+      "path": "/root/autodl-tmp/envs/dggt_data_cpu/lib/python3.10/site-packages/waymo_open_dataset/utils/range_image_utils.py",
+      "bytes": 26893,
+      "sha256": "48abee3df4bc0c5d24e83909b7f149201ab95a08d6b383dfb11382bedab5f265"
+    },
+    {
+      "path": "/root/autodl-tmp/envs/dggt_data_cpu/lib/python3.10/site-packages/waymo_open_dataset/utils/transform_utils.py",
+      "bytes": 4805,
+      "sha256": "d0be4e86768106a748938ea2c086be64c46c2526f0fd093cb0c9413fd7e26b2a"
+    },
+    {
+      "path": "/root/autodl-tmp/envs/dggt_data_cpu/lib/python3.10/site-packages/waymo_open_dataset/utils/frame_utils.py",
+      "bytes": 16094,
+      "sha256": "7c08fc2d2c474278f13c5047edd2f1e1ab7eec7236e038164950c51af141fddd"
+    }
+  ],
+  "raw_reference": {
+    "path": "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/validation/segment-15021599536622641101_556_150_576_150_with_camera_labels.tfrecord",
+    "bytes": 935219451,
+    "sha256": "286c3b2f627234a85a67005589b577bf4358e9a6a947aef2c42587807d1a1912",
+    "whole_file_SHA_recomputed_here": false
+  },
+  "selected_payload_CRC_and_SHA_verified": true,
+  "non_target_payloads_seeked_not_read_or_parsed": true,
+  "independent_math": "float64 sensor polar + calibration extrinsic + SciPy extrinsic xyz Euler(pixelPose) -> world directly; no frame inverse/roundtrip and no decoder.rotation call",
+  "arithmetic_check_is_not_physical_pose_accuracy_validation": true,
+  "official_CP_is_original_range_camera_projection_not_recomputed_Brown": true,
+  "curb_or_pose_cause_still_undetermined": true,
+  "no_pose_or_point_changed": true,
+  "no_heldout_read": true,
+  "GPU_forward": 0,
+  "backward": 0,
+  "updates": 0,
+  "seconds": 20.332205772399902
+}

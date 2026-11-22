@@ -1,0 +1,180 @@
+{
+  "schema": "R8_R9_explicit_actual_compute_ledger.v1",
+  "complete": true,
+  "native_branch": {
+    "stages": [
+      {
+        "stage": "baseline86_110",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_first2/receipt.json",
+          "sha256": "3fef11c2116b99485f63ba8fc1e8311aa3f82688ac35fad4fee3a591d5679a82",
+          "bytes": 4373
+        },
+        "complete": true,
+        "nativeF": 10,
+        "nativeB": 0,
+        "optimizer_updates": 0
+      },
+      {
+        "stage": "baseline5",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/receipt.json",
+          "sha256": "2b16c90637996bad1b1baf2a8b726f963b88032bb62e2ae6fdbb448e4ed822c8",
+          "bytes": 5167
+        },
+        "complete": true,
+        "nativeF": 15,
+        "nativeB": 0,
+        "optimizer_updates": 0
+      },
+      {
+        "stage": "owner_measurement",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/owner_measurement_A0_v1/receipt.json",
+          "sha256": "9e9227aa9f4e452e111aa22ee36c9445b18037b5e4e01e2f779ab95f4cff7dde",
+          "bytes": 28087
+        },
+        "complete": true,
+        "nativeF": 2,
+        "nativeB": 2,
+        "optimizer_updates": 0
+      },
+      {
+        "stage": "colour_K_guard",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_colour_guard_v1/receipt.json",
+          "sha256": "7b6ba404b7c722947bab9454727572fbc3792af7bbba137c9b7764361c985927",
+          "bytes": 2350
+        },
+        "complete": true,
+        "nativeF": 5,
+        "nativeB": 5,
+        "optimizer_updates": 0
+      },
+      {
+        "stage": "failed_strict_smoke",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_smoke6_v1/resources.json",
+          "sha256": "ac10eac5b473840db4d8f3f51504f42c01f00f9c631eced9bc4d4ac8f861b735",
+          "bytes": 427
+        },
+        "complete": false,
+        "nativeF": 27,
+        "nativeB": 12,
+        "optimizer_updates": 6
+      },
+      {
+        "stage": "discarded_smoke_v2",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_smoke6_v2/resources.json",
+          "sha256": "3d56cd93cb555cec8ae4de0907f9f0b3fb7be9e2433f2f236c0ffb4a6e6c6922",
+          "bytes": 305
+        },
+        "complete": true,
+        "nativeF": 44,
+        "nativeB": 14,
+        "optimizer_updates": 7
+      },
+      {
+        "stage": "smoke_fresh",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_smoke6_v2/fresh_reload/receipt.json",
+          "sha256": "4b450bba58e49d1cb73e273857e491734a3f2183a6d4d83d2559892180a43cc1",
+          "bytes": 6154
+        },
+        "complete": true,
+        "nativeF": 15,
+        "nativeB": 0,
+        "optimizer_updates": 0
+      },
+      {
+        "stage": "formal400",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/resources.json",
+          "sha256": "a24c9e0acf59d08d2f2432d22518d5b01014d26ddb147974dfca4accc21c1d85",
+          "bytes": 308
+        },
+        "complete": true,
+        "nativeF": 830,
+        "nativeB": 800,
+        "optimizer_updates": 400
+      },
+      {
+        "stage": "formal_fresh",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/fresh_reload/receipt.json",
+          "sha256": "358676bbba888409ba0eee5741c0b410ebba0aa4b22f91d7438bf8969d73ef55",
+          "bytes": 6154
+        },
+        "complete": true,
+        "nativeF": 15,
+        "nativeB": 0,
+        "optimizer_updates": 0
+      },
+      {
+        "stage": "supervision_readout",
+        "receipt": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/supervision_layers/receipt.json",
+          "sha256": "8c89f41192e7d9648bce2aeab3bb46a8ab51b60d85d60060617f213729cb8b97",
+          "bytes": 3757
+        },
+        "complete": true,
+        "nativeF": 5,
+        "nativeB": 0,
+        "optimizer_updates": 0
+      }
+    ],
+    "totals": {
+      "nativeF": 968,
+      "nativeB": 833,
+      "optimizer_updates": 413
+    },
+    "formal_updates": 400,
+    "discarded_smoke_updates": 13
+  },
+  "R9_semantic_forward_calls": 2,
+  "new_diffusion_calls": 0,
+  "DGGT_main": {
+    "unique_completed_forward": 1,
+    "original_attempts": 1,
+    "inherited_in_recovery": 1,
+    "new_recovery_forward": 0,
+    "mode2_new_forward": 0,
+    "seconds": 1.3103725910186768
+  },
+  "DGGT_sky": {
+    "original_failed_API_attempts": 1,
+    "original_failed_completed": 0,
+    "original_failed_camera_attempts": 4,
+    "original_failed_camera_F": 0,
+    "recovery_API_attempts": 2,
+    "recovery_API_completed": 2,
+    "recovery_camera_F": 5,
+    "aggregate_API_attempts": 3,
+    "aggregate_API_completed": 2,
+    "aggregate_camera_attempts": 9,
+    "aggregate_completed_camera_F": 5
+  },
+  "DGGT_mode2": {
+    "API_attempts": 5,
+    "API_completed": 5,
+    "camera_F": 5,
+    "B": 0,
+    "updates": 0,
+    "seconds": 6.989017724990845
+  },
+  "backend_probe": {
+    "complete": true,
+    "torch": "2.4.1+cu121",
+    "torch_CUDA": "12.1",
+    "CUDA_HOME": "/usr/local/cuda",
+    "build_arch": "8.6",
+    "backend_file": "/root/.cache/torch_extensions/py310_cu121/gsplat_cuda/gsplat_cuda.so",
+    "ninja_resolved": true,
+    "new_model_forward_calls": 0,
+    "new_raster_calls": 0
+  },
+  "CPU_audit_new_model_or_raster_calls": 0,
+  "model_and_Gaussian_raster_F_are_not_added_as_one_kind": true,
+  "failed_sky_attempt_is_not_erased": true
+}

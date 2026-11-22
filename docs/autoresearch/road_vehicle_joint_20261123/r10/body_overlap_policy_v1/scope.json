@@ -1,0 +1,95 @@
+{
+  "schema": "R10.body_overlap_diagnostic_scope.v1",
+  "complete": true,
+  "decision": "SCOPE_VALID_DIAGNOSTIC_ONLY",
+  "policy": "body_overlap_diagnostic",
+  "source_measurement": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/receipt.json",
+    "sha256": "947696307a5e6c92f9a468256dc6b8634fa7cd23bc8ef33bae8591b71439813e",
+    "bytes": 29213
+  },
+  "baseline_contract_sha256": "fd95066c0ae9cffe33080e64619d24a9466dcfa6ec61ab92aa5f1c980ef00f4d",
+  "source_field_sha256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+  "diagnostic_candidates": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/body_overlap_policy_v1/diagnostic_native_candidates.npz",
+    "sha256": "4069d073f42e2877fea896cae09c723c7ddb7b8e6fb0fff48eda53a4b120650c",
+    "bytes": 304564
+  },
+  "diagnostic_gate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/body_overlap_policy_v1/diagnostic_gate0.npz",
+    "sha256": "b3b4d840912763d9ab6063581063bc7aae120cd44a86de220db46d0603ceea93",
+    "bytes": 11026
+  },
+  "old_strict_candidates_unchanged": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/native_candidates.npz",
+    "sha256": "dcba4635bc0df9ecb354aabefd55126cad1eff5c64238cd88b85c1e57903b810",
+    "bytes": 264889
+  },
+  "old_strict_gate_unchanged": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/native_gate0.npz",
+    "sha256": "ec54ecdac0c053149f6fa2665433181a67dbe4e0bd4b90721779a238de1d5651",
+    "bytes": 17158
+  },
+  "positive_red_allowed_union_rows": 5590,
+  "candidate_rows": 5444,
+  "rejected_missing_view": 24,
+  "rejected_Ktouch": 132,
+  "rejected_old_guard": 0,
+  "rows_with_body_overlap": 5305,
+  "owners": [
+    -1
+  ],
+  "rows": [
+    {
+      "raw": 86,
+      "selected_red_alphaT_mass": 318.42959936940275,
+      "selected_blue_alphaT_mass": 213.5018666454446,
+      "selected_body_alphaT_mass": 729.3153242938039,
+      "selected_ground_alphaT_mass": 800.8806559988005,
+      "selected_K_alphaT_mass": 0.0
+    },
+    {
+      "raw": 110,
+      "selected_red_alphaT_mass": 606.5378703894239,
+      "selected_blue_alphaT_mass": 281.35495084951174,
+      "selected_body_alphaT_mass": 915.5704854251817,
+      "selected_ground_alphaT_mass": 1338.768058930503,
+      "selected_K_alphaT_mass": 0.0
+    },
+    {
+      "raw": 134,
+      "selected_red_alphaT_mass": 0.0,
+      "selected_blue_alphaT_mass": 0.0,
+      "selected_body_alphaT_mass": 840.5928454403413,
+      "selected_ground_alphaT_mass": 1388.5948562401722,
+      "selected_K_alphaT_mass": 0.0
+    },
+    {
+      "raw": 179,
+      "selected_red_alphaT_mass": 0.0,
+      "selected_blue_alphaT_mass": 0.0,
+      "selected_body_alphaT_mass": 953.4228518209834,
+      "selected_ground_alphaT_mass": 1421.6115201398645,
+      "selected_K_alphaT_mass": 0.0
+    },
+    {
+      "raw": 198,
+      "selected_red_alphaT_mass": 0.0,
+      "selected_blue_alphaT_mass": 0.0,
+      "selected_body_alphaT_mass": 976.742094752932,
+      "selected_ground_alphaT_mass": 1450.1731518317895,
+      "selected_K_alphaT_mass": 0.0
+    }
+  ],
+  "all_five_K_exact_zero": true,
+  "old_permanent_guard_preserved": true,
+  "body_overlap_allowed_only_for_counterfactual": true,
+  "canonical_native21_and_known_vehicles_assets_fixed": true,
+  "known_retained_owners_not_reclassified_as_A9": true,
+  "formal_updates": 0,
+  "new_geometry": false,
+  "production_asset_ready": false,
+  "quality_accepted": false,
+  "optimization_allowed": false,
+  "interpretation": "Frozen original red pixels select actual native contributors; these are not automatically bad/A9 Gaussian labels. Only a zero-step counterfactual is authorized."
+}

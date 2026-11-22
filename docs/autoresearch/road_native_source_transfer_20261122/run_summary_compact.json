@@ -1,0 +1,1079 @@
+{
+  "schema": "road_native_source_correction_compact.v1",
+  "complete": true,
+  "final_stage": "原生可见契约历史诊断输入已冻结",
+  "native_source_legal": true,
+  "donor_promoted": false,
+  "historical_diagnostic_only": true,
+  "final_archive_or_push": false,
+  "next_stage": "新主线由root执行：相似实拍参考与二维教师辅助的all-view共享道路外观图，再固定既有道路几何/中心拟合Gaussian RGB",
+  "footprint_processing_executed": false,
+  "target_transfer_or_composite_executed": false,
+  "source_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth",
+  "source_iteration": 30000,
+  "source_is_ordinary_reconstruction": true,
+  "stages": [
+    {
+      "run": "native_discovery_replay1",
+      "role": "原生相机/整帧发现",
+      "actual_nativeF": 4,
+      "actual_nativeB": 0,
+      "optimizer_updates": 0,
+      "new_diffusion_calls": 0,
+      "complete": true
+    },
+    {
+      "run": "native_source_blocks_v2",
+      "role": "期望深度定位工程对照，保留但不评价donor",
+      "actual_nativeF": 30,
+      "actual_nativeB": 0,
+      "optimizer_updates": 0,
+      "new_diffusion_calls": 0,
+      "complete": true
+    },
+    {
+      "run": "native_source_blocks_lidar_v1",
+      "role": "原始LiDAR定位+旧单位near控制",
+      "actual_nativeF": 30,
+      "actual_nativeB": 0,
+      "optimizer_updates": 0,
+      "new_diffusion_calls": 0,
+      "complete": true
+    },
+    {
+      "run": "native_source_blocks_lidar_metric_v1",
+      "role": "metric全模型释放旧near隐藏核的可见集合改变工程控制，非原appearance基准",
+      "actual_nativeF": 34,
+      "actual_nativeB": 0,
+      "optimizer_updates": 0,
+      "new_diffusion_calls": 0,
+      "complete": true
+    },
+    {
+      "run": "native_source_contributors_metric_v1",
+      "role": "metric all-row VJP取材工程控制，非原appearance基准",
+      "actual_nativeF": 18,
+      "actual_nativeB": 2,
+      "optimizer_updates": 0,
+      "new_diffusion_calls": 0,
+      "complete": true
+    },
+    {
+      "run": "native_source_visible_contract_v1",
+      "role": "恢复原raw native可见契约VJP与同ID资产读出强控制",
+      "actual_nativeF": 20,
+      "actual_nativeB": 2,
+      "optimizer_updates": 0,
+      "new_diffusion_calls": 0,
+      "complete": true
+    }
+  ],
+  "actual_total_nativeF": 136,
+  "actual_total_nativeB": 4,
+  "subagent_nativeF_excluding_discovery": 132,
+  "optimizer_updates": 0,
+  "new_diffusion_calls": 0,
+  "power_operations": 0,
+  "GPU_keep_on": true,
+  "R5_GPU_control_processes_completed": true,
+  "R5_no_further_GPU_work": true,
+  "zero_completedF_launch_errors": [
+    "发现脚本首次missing means2D在CUDA raster前失败，0F",
+    "native_source_blocks_v1使用motionproj解释器缺simple_knn，0F",
+    "贡献脚本首次解析括号错误，0F；修正前源码保留"
+  ],
+  "source_and_engine_provenance": "provenance/native_source_manifest.json",
+  "independent_CPU_parameter_checks": [
+    {
+      "run": "native_source_blocks_v2",
+      "checked_packets": 4,
+      "all_pass": true,
+      "maximum_CPU_vs_CUDA_prepared_difference": {
+        "means3D": 2.9802322387695312e-08,
+        "scales": 1.4901161193847656e-08,
+        "rotations": 1.1920928955078125e-07,
+        "opacities": 8.940696716308594e-08,
+        "shs": 0.0,
+        "mask": 0.0
+      },
+      "SH_exact": true
+    },
+    {
+      "run": "native_source_blocks_lidar_v1",
+      "checked_packets": 4,
+      "all_pass": true,
+      "maximum_CPU_vs_CUDA_prepared_difference": {
+        "means3D": 2.9802322387695312e-08,
+        "scales": 7.450580596923828e-09,
+        "rotations": 1.1920928955078125e-07,
+        "opacities": 2.9802322387695312e-08,
+        "shs": 0.0,
+        "mask": 0.0
+      },
+      "SH_exact": true
+    },
+    {
+      "run": "native_source_blocks_lidar_metric_v1",
+      "checked_packets": 4,
+      "all_pass": true,
+      "maximum_CPU_vs_CUDA_prepared_difference": {
+        "means3D": 2.9802322387695312e-08,
+        "scales": 7.450580596923828e-09,
+        "rotations": 1.1920928955078125e-07,
+        "opacities": 2.9802322387695312e-08,
+        "shs": 0.0,
+        "mask": 0.0
+      },
+      "SH_exact": true
+    },
+    {
+      "run": "native_source_contributors_metric_v1",
+      "checked_packets": 2,
+      "all_pass": true,
+      "maximum_CPU_vs_CUDA_prepared_difference": {
+        "means3D": 2.9802322387695312e-08,
+        "scales": 2.9802322387695312e-08,
+        "rotations": 1.1920928955078125e-07,
+        "opacities": 8.940696716308594e-08,
+        "shs": 0.0,
+        "mask": 0.0
+      },
+      "SH_exact": true
+    },
+    {
+      "run": "native_source_visible_contract_v1",
+      "checked_packets": 2,
+      "all_pass": true,
+      "maximum_CPU_vs_CUDA_prepared_difference": {
+        "means3D": 2.9802322387695312e-08,
+        "scales": 2.9802322387695312e-08,
+        "rotations": 1.1920928955078125e-07,
+        "opacities": 8.940696716308594e-08,
+        "shs": 0.0,
+        "mask": 0.0
+      },
+      "SH_exact": true
+    }
+  ],
+  "maximum_reload_RGB_error": 0.0,
+  "maximum_reload_alpha_error": 0.0,
+  "unit_equivalence": {
+    "unit_scale": 53.05060651707688,
+    "max_projected_xy_difference_px": 0.00043074365026636563,
+    "max_SH_direction_difference": 6.25809852272674e-08,
+    "max_SH_evaluation_difference": 2.181462471773088e-08,
+    "max_covariance2D_relative_difference": 6.356759271509916e-06,
+    "legacy_RGB_max_abs": 0.001729082316160202,
+    "legacy_alpha_max_abs": 0.0037233978509902954,
+    "audit": "provenance/render_unit_audit.json"
+  },
+  "original_native_visibility_contract": {
+    "schema": "native_visibility_contract_independent_cpu.v1",
+    "complete": true,
+    "CPU_only": true,
+    "nativeF": 0,
+    "nativeB": 0,
+    "all_parameters_pass": true,
+    "all_original_visibility_contract_pass": true,
+    "rows": [
+      {
+        "source": "P01",
+        "source_packet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native_source_transfer_20261122_r5/native_source_visible_contract_v1/P01/native_visible/native.npz",
+        "rows": 211,
+        "packet_sha256": "05690d7cae4fad002699159c8a44e0925788319436453a63c7c1a528e46f5e30",
+        "same_sidecar_source_IDs": true,
+        "source_subset_original_near_eligible": true,
+        "source_subset_original_raster_visible": true,
+        "packet_visible_IDs_exact_sidecar": true,
+        "independent_CPU_all_source_depth_gt02": true,
+        "minimum_reference_depth_model": 0.20050396617182548,
+        "GPU_saved_vs_CPU_depth_max_abs": 8.167093734634534e-08,
+        "raw_vs_metric_same_IDs_actual_fidelity_pass": true,
+        "core_RGB_MAE_raw_vs_metric": 2.3044988495257712e-07,
+        "source_new_metric_hidden_IDs": 0,
+        "pass": true
+      },
+      {
+        "source": "P02",
+        "source_packet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native_source_transfer_20261122_r5/native_source_visible_contract_v1/P02/native_visible/native.npz",
+        "rows": 1101,
+        "packet_sha256": "00ddd84945635f83a3cef4cb56d06882e9ca42d90f5a6fdddda0ee0c925317f2",
+        "same_sidecar_source_IDs": true,
+        "source_subset_original_near_eligible": true,
+        "source_subset_original_raster_visible": true,
+        "packet_visible_IDs_exact_sidecar": true,
+        "independent_CPU_all_source_depth_gt02": true,
+        "minimum_reference_depth_model": 0.20000887995558925,
+        "GPU_saved_vs_CPU_depth_max_abs": 4.743619252955966e-08,
+        "raw_vs_metric_same_IDs_actual_fidelity_pass": true,
+        "core_RGB_MAE_raw_vs_metric": 4.012132990283135e-07,
+        "source_new_metric_hidden_IDs": 0,
+        "pass": true
+      }
+    ],
+    "source_capture": "raw_original_native_reference_visibility",
+    "asset_readout": "metric_same_captured_IDs_only",
+    "full_native_photo_baseline": "raw_original_native; independent full-alpha domain",
+    "donor_promoted": false
+  },
+  "source_input_freeze_signal": "native_source_visible_contract_v1/source_input_freeze_signal.json",
+  "independent_full_native_photo_domain_correction": "independent_full_native_baseline_domain_correction.json",
+  "engineering_corrections": [
+    "R2/R3/R4加工RoadRows材质不是未编辑native donor；新源直接原生checkpoint",
+    "native期望深度道路定位倾斜异常，以独立原始LiDAR几何纠正，旧结果仅工程对照",
+    "原raw native的near=.2模型单位是原appearance可见契约；metric全模型释放隐藏近核会改变颜色，不得把其+.04偏亮归因原source",
+    "保留上述metric all-row工程控制；最终raw VJP只捕获原reference可见ID，再实证同ID metric读出保真",
+    "full-native照片基线域独立于source alpha；旧指标备份保留，42view已CPU补算独立域",
+    "中心/plane筛选会漏真实非局部贡献核；ROI成像重现不等于组件局部可迁移"
+  ],
+  "candidates": [
+    {
+      "run": "native_source_blocks_v2",
+      "source": "P01",
+      "variant": "center",
+      "reference_raw": 110,
+      "rows": 51,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.17158903181552887,
+        0.19505456686019898,
+        0.25008344650268555,
+        0.5628396481275557,
+        0.6592745780944824
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": null,
+      "source_full_alpha_ge05_pixels": null,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 12161,
+      "full_native_photo_RGB_MAE": 0.0062668537721037865,
+      "full_native_photo_RGB_bias": [
+        -0.00018721316882874817,
+        0.0001800672325771302,
+        -0.00013711264182347804
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.00048536717126219264,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.18020459542266018,
+        "cosine": 0.014574412419381162
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        1.0784112511310013,
+        1.4563315590962702,
+        0.8119530508896204
+      ],
+      "max_sigma_m": 4.439239386058746,
+      "plane_tilt_degree": 47.79254810779887,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_v2",
+      "source": "P02",
+      "variant": "center",
+      "reference_raw": 137,
+      "rows": 1377,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.44373512268066406,
+        0.519902092218399,
+        0.6758728623390198,
+        0.7775465846061707,
+        0.8330983519554138
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": null,
+      "source_full_alpha_ge05_pixels": null,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 24390,
+      "full_native_photo_RGB_MAE": 0.004992221482098103,
+      "full_native_photo_RGB_bias": [
+        0.0006662544910795987,
+        0.0007275947136804461,
+        -7.901193021098152e-05
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0006695812414280511,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.3193582567374689,
+        "cosine": 0.009033849895967592
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        0.6675714336361125,
+        1.508264308115713,
+        0.9509310642433064
+      ],
+      "max_sigma_m": 2.0194162714360093,
+      "plane_tilt_degree": 83.79290947919166,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_v2",
+      "source": "P01",
+      "variant": "footprint3sigma",
+      "reference_raw": 110,
+      "rows": 90,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.4964856207370758,
+        0.5040924251079559,
+        0.5633749961853027,
+        0.7017718374729156,
+        0.7732574939727783
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": null,
+      "source_full_alpha_ge05_pixels": null,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 12161,
+      "full_native_photo_RGB_MAE": 0.0062668537721037865,
+      "full_native_photo_RGB_bias": [
+        -0.00018721316882874817,
+        0.0001800672325771302,
+        -0.00013711264182347804
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.00048536717126219264,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.18020459542266018,
+        "cosine": 0.014574412419381162
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        2.4052393824331375,
+        4.313930308935369,
+        2.8664893065115606
+      ],
+      "max_sigma_m": 4.439239386058746,
+      "plane_tilt_degree": 47.79254810779887,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_v2",
+      "source": "P02",
+      "variant": "footprint3sigma",
+      "reference_raw": 137,
+      "rows": 2175,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.7812544107437134,
+        0.8105427980422973,
+        0.8464725017547607,
+        0.8889459788799285,
+        0.9141193628311157
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": null,
+      "source_full_alpha_ge05_pixels": null,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 24390,
+      "full_native_photo_RGB_MAE": 0.004992221482098103,
+      "full_native_photo_RGB_bias": [
+        0.0006662544910795987,
+        0.0007275947136804461,
+        -7.901193021098152e-05
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0006695812414280511,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.3193582567374689,
+        "cosine": 0.009033849895967592
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        1.0718174379967422,
+        18.446647156694326,
+        8.246073674310598
+      ],
+      "max_sigma_m": 235.86264768558956,
+      "plane_tilt_degree": 83.79290947919166,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_lidar_v1",
+      "source": "P01",
+      "variant": "center",
+      "reference_raw": 110,
+      "rows": 404,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.0,
+        0.0,
+        0.004901299485936761,
+        0.03503506649285555,
+        0.04733912646770477
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": null,
+      "source_full_alpha_ge05_pixels": 0,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 12161,
+      "full_native_photo_RGB_MAE": 0.0062668537721037865,
+      "full_native_photo_RGB_bias": [
+        -0.00018721316882874817,
+        0.0001800672325771302,
+        -0.00013711264182347804
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.00048536717126219264,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.18020459542266018,
+        "cosine": 0.014574412419381162
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        2.201846563105846,
+        1.7726842884524103,
+        0.5996273555065237
+      ],
+      "max_sigma_m": 2.3978455940811205,
+      "plane_tilt_degree": 0.723494419961954,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_lidar_v1",
+      "source": "P02",
+      "variant": "center",
+      "reference_raw": 137,
+      "rows": 2850,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": null,
+      "source_full_alpha_ge05_pixels": 0,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 24390,
+      "full_native_photo_RGB_MAE": 0.004992221482098103,
+      "full_native_photo_RGB_bias": [
+        0.0006662544910795987,
+        0.0007275947136804461,
+        -7.901193021098152e-05
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0006695812414280511,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.3193582567374689,
+        "cosine": 0.009033849895967592
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        2.2347471880980265,
+        1.8130291758168369,
+        0.6120344893904566
+      ],
+      "max_sigma_m": 1.0171684294335006,
+      "plane_tilt_degree": 0.7982632894609948,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_lidar_v1",
+      "source": "P01",
+      "variant": "footprint3sigma",
+      "reference_raw": 110,
+      "rows": 484,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.11468001455068588,
+        0.17047934830188752,
+        0.34933608770370483,
+        0.5169406980276108,
+        0.5827110409736633
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": 0.009027818217873573,
+      "source_full_alpha_ge05_pixels": 12161,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 12161,
+      "full_native_photo_RGB_MAE": 0.0062668537721037865,
+      "full_native_photo_RGB_bias": [
+        -0.00018721316882874817,
+        0.0001800672325771302,
+        -0.00013711264182347804
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.00048536717126219264,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.18020459542266018,
+        "cosine": 0.014574412419381162
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        7.067178139837324,
+        12.917482998497235,
+        0.5996273555065237
+      ],
+      "max_sigma_m": 4.439239386058746,
+      "plane_tilt_degree": 0.723494419961954,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_lidar_v1",
+      "source": "P02",
+      "variant": "footprint3sigma",
+      "reference_raw": 137,
+      "rows": 3256,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.0,
+        0.0,
+        0.0,
+        0.008416488952934731,
+        0.01860605739057064
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": null,
+      "source_full_alpha_ge05_pixels": 0,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 24390,
+      "full_native_photo_RGB_MAE": 0.004992221482098103,
+      "full_native_photo_RGB_bias": [
+        0.0006662544910795987,
+        0.0007275947136804461,
+        -7.901193021098152e-05
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0006695812414280511,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.3193582567374689,
+        "cosine": 0.009033849895967592
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        38.802958055910494,
+        22.743442908301176,
+        0.6166568781995885
+      ],
+      "max_sigma_m": 16.152922260851245,
+      "plane_tilt_degree": 0.7982632894609948,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_lidar_metric_v1",
+      "source": "P01",
+      "variant": "center",
+      "reference_raw": 110,
+      "rows": 404,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.01976226456463337,
+        0.04251387640833855,
+        0.10176096111536026,
+        0.16443225145339962,
+        0.2615031898021698
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": 0.07790521532297134,
+      "source_full_alpha_ge05_pixels": 11507,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 12161,
+      "full_native_photo_RGB_MAE": 0.04063311964273453,
+      "full_native_photo_RGB_bias": [
+        0.040299199521541595,
+        0.036633867770433426,
+        0.04495552182197571
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0007911149810595331,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.293721049826889,
+        "cosine": 0.013987781190045689
+      },
+      "full_native_is_original_appearance": false,
+      "world_extent_m": [
+        2.201846563105846,
+        1.7726842884524103,
+        0.5996273555065237
+      ],
+      "max_sigma_m": 2.3978455940811205,
+      "plane_tilt_degree": 0.723494419961954,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_lidar_metric_v1",
+      "source": "P02",
+      "variant": "center",
+      "reference_raw": 137,
+      "rows": 2850,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.39573097229003906,
+        0.5705828011035919,
+        0.7418726086616516,
+        0.8142258763313294,
+        0.8529099822044373
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": 0.013031553477048874,
+      "source_full_alpha_ge05_pixels": 24390,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 24390,
+      "full_native_photo_RGB_MAE": 0.04505617916584015,
+      "full_native_photo_RGB_bias": [
+        0.050499726086854935,
+        0.037744566798210144,
+        0.04692411422729492
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.001029998696271757,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.49126016042753745,
+        "cosine": -0.004085229862109817
+      },
+      "full_native_is_original_appearance": false,
+      "world_extent_m": [
+        2.2347471880980265,
+        1.8130291758168369,
+        0.6120344893904566
+      ],
+      "max_sigma_m": 1.0171684294335006,
+      "plane_tilt_degree": 0.7982632894609948,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_lidar_metric_v1",
+      "source": "P01",
+      "variant": "footprint3sigma",
+      "reference_raw": 110,
+      "rows": 484,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.14047273993492126,
+        0.22463080734014512,
+        0.4195246547460556,
+        0.5649401813745498,
+        0.6103467345237732
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": 0.042386773973703384,
+      "source_full_alpha_ge05_pixels": 12161,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 12161,
+      "full_native_photo_RGB_MAE": 0.04063311964273453,
+      "full_native_photo_RGB_bias": [
+        0.040299199521541595,
+        0.036633867770433426,
+        0.04495552182197571
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0007911149810595331,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.293721049826889,
+        "cosine": 0.013987781190045689
+      },
+      "full_native_is_original_appearance": false,
+      "world_extent_m": [
+        7.067178139837324,
+        12.917482998497235,
+        0.5996273555065237
+      ],
+      "max_sigma_m": 4.439239386058746,
+      "plane_tilt_degree": 0.723494419961954,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_blocks_lidar_metric_v1",
+      "source": "P02",
+      "variant": "footprint3sigma",
+      "reference_raw": 137,
+      "rows": 3256,
+      "alpha_ge95_core_fraction": 0.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.5428619384765625,
+        0.657236522436142,
+        0.7932353615760803,
+        0.8576955497264862,
+        0.8960715532302856
+      ],
+      "source_full_RGB_MAE_high_alpha": null,
+      "source_full_high_alpha_pixels": 0,
+      "source_full_RGB_MAE_alpha_ge05": 0.013124723918735981,
+      "source_full_alpha_ge05_pixels": 24390,
+      "photo_RGB_MAE_high_alpha": null,
+      "photo_HF_sigma1": null,
+      "full_native_photo_independent_pixels": 24390,
+      "full_native_photo_RGB_MAE": 0.04505617916584015,
+      "full_native_photo_RGB_bias": [
+        0.050499726086854935,
+        0.037744566798210144,
+        0.04692411422729492
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.001029998696271757,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.49126016042753745,
+        "cosine": -0.004085229862109817
+      },
+      "full_native_is_original_appearance": false,
+      "world_extent_m": [
+        38.802958055910494,
+        22.743442908301176,
+        0.6166568781995885
+      ],
+      "max_sigma_m": 16.152922260851245,
+      "plane_tilt_degree": 0.7982632894609948,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0
+    },
+    {
+      "run": "native_source_contributors_metric_v1",
+      "source": "P01",
+      "variant": "contributors",
+      "reference_raw": 110,
+      "rows": 351,
+      "alpha_ge95_core_fraction": 1.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.9982439875602722,
+        0.9993626862764359,
+        0.9994702637195587,
+        0.9995534420013428,
+        0.9996290802955627
+      ],
+      "source_full_RGB_MAE_high_alpha": 0.00012521266762632877,
+      "source_full_high_alpha_pixels": 12161,
+      "source_full_RGB_MAE_alpha_ge05": 0.00012521266762632877,
+      "source_full_alpha_ge05_pixels": 12161,
+      "photo_RGB_MAE_high_alpha": 0.04071712866425514,
+      "photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0007727448997785341,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.2869007017252339,
+        "cosine": 0.012791185002866209
+      },
+      "full_native_photo_independent_pixels": 12161,
+      "full_native_photo_RGB_MAE": 0.04063311591744423,
+      "full_native_photo_RGB_bias": [
+        0.0402991957962513,
+        0.036633867770433426,
+        0.04495551064610481
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.000791115127289607,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.29372110411842917,
+        "cosine": 0.01398757269656413
+      },
+      "full_native_is_original_appearance": false,
+      "world_extent_m": [
+        76.0640457381678,
+        27.3913230880612,
+        10.443211383081309
+      ],
+      "max_sigma_m": 18.171749005249364,
+      "plane_tilt_degree": 0.723494419961954,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0,
+      "retained_alphaT_fraction": 0.9995071554081462,
+      "alphaT_mass_within_30cm_plane_fraction": 0.15745788996805166,
+      "normal_height_abs_quantiles_m": [
+        0.0022042386319094396,
+        0.5519501473311318,
+        1.997104605275325,
+        2.6449181047219787,
+        5.921320215549706,
+        9.254173891683774
+      ],
+      "max_sigma_quantiles_m": [
+        0.015216763131320477,
+        0.8699002861976624,
+        3.9739205837249756,
+        5.482045412063599,
+        11.642620086669922,
+        18.171749114990234
+      ],
+      "alpha_mass_outside_physical_core_fraction": 0.9723674846147725,
+      "alpha_ge50_pixels_outside_core": 470294,
+      "contribution_conservation_relative_error": 8.521703842163711e-08
+    },
+    {
+      "run": "native_source_contributors_metric_v1",
+      "source": "P02",
+      "variant": "contributors",
+      "reference_raw": 137,
+      "rows": 3725,
+      "alpha_ge95_core_fraction": 1.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.9994301199913025,
+        0.9998270273208618,
+        0.9998884797096252,
+        0.9998994469642639,
+        0.9999009966850281
+      ],
+      "source_full_RGB_MAE_high_alpha": 5.424586925073527e-05,
+      "source_full_high_alpha_pixels": 24390,
+      "source_full_RGB_MAE_alpha_ge05": 5.424586925073527e-05,
+      "source_full_alpha_ge05_pixels": 24390,
+      "photo_RGB_MAE_high_alpha": 0.04507577791810036,
+      "photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0010281222436816573,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.49036518220690123,
+        "cosine": -0.0037544434084533446
+      },
+      "full_native_photo_independent_pixels": 24390,
+      "full_native_photo_RGB_MAE": 0.04505617916584015,
+      "full_native_photo_RGB_bias": [
+        0.05049973353743553,
+        0.037744563072919846,
+        0.04692411422729492
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.001029998426317168,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.4912600316720981,
+        "cosine": -0.004085213657514736
+      },
+      "full_native_is_original_appearance": false,
+      "world_extent_m": [
+        9.06780384008789,
+        12.54339723300086,
+        5.067735835188007
+      ],
+      "max_sigma_m": 10.67833347498882,
+      "plane_tilt_degree": 0.7982632894609948,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0,
+      "retained_alphaT_fraction": 0.999500397748866,
+      "alphaT_mass_within_30cm_plane_fraction": 0.626471092572997,
+      "normal_height_abs_quantiles_m": [
+        9.181947853401108e-05,
+        0.1901856889591985,
+        0.6785651483340008,
+        0.8494450080677934,
+        1.2783997444507271,
+        4.168926544867359
+      ],
+      "max_sigma_quantiles_m": [
+        0.007892019115388393,
+        0.10355588048696518,
+        0.5912477850914001,
+        0.9734158039093,
+        2.4460843849182097,
+        10.678333282470703
+      ],
+      "alpha_mass_outside_physical_core_fraction": 0.9165830029388582,
+      "alpha_ge50_pixels_outside_core": 328399,
+      "contribution_conservation_relative_error": 1.2201931215642443e-07
+    },
+    {
+      "run": "native_source_visible_contract_v1",
+      "source": "P01",
+      "variant": "native_visible",
+      "reference_raw": 110,
+      "rows": 211,
+      "alpha_ge95_core_fraction": 1.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.9972366094589233,
+        0.9985499173402786,
+        0.9990090131759644,
+        0.9991941660642624,
+        0.9993290901184082
+      ],
+      "source_full_RGB_MAE_high_alpha": 0.00013381098688114434,
+      "source_full_high_alpha_pixels": 12161,
+      "source_full_RGB_MAE_alpha_ge05": 0.00013381098688114434,
+      "source_full_alpha_ge05_pixels": 12161,
+      "photo_RGB_MAE_high_alpha": 0.006290626712143421,
+      "photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.00043963573166849084,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.16322566471202274,
+        "cosine": 0.010282822275149867
+      },
+      "full_native_photo_independent_pixels": 12161,
+      "full_native_photo_RGB_MAE": 0.006266853306442499,
+      "full_native_photo_RGB_bias": [
+        -0.00018721127707976848,
+        0.0001800673344405368,
+        -0.0001371118560200557
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.00048536712617637556,
+        "b_RMS": 0.002693422829333459,
+        "RMS_ratio": 0.18020457868343281,
+        "cosine": 0.01457450898099584
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        67.04507097462556,
+        24.712323987771242,
+        9.042680151426332
+      ],
+      "max_sigma_m": 18.171749005249364,
+      "plane_tilt_degree": 0.723494419961954,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0,
+      "retained_alphaT_fraction": 0.9995062995995259,
+      "alphaT_mass_within_30cm_plane_fraction": 0.16165504741163525,
+      "normal_height_abs_quantiles_m": [
+        0.005592460662265741,
+        0.8003160099311907,
+        2.179699064872104,
+        2.9815973079802665,
+        6.38231557790518,
+        9.254173891683774
+      ],
+      "max_sigma_quantiles_m": [
+        0.015286071226000786,
+        1.0163356065750122,
+        4.444672107696533,
+        6.337291955947876,
+        12.414049530029308,
+        18.171749114990234
+      ],
+      "alpha_mass_outside_physical_core_fraction": 0.9708851063050079,
+      "alpha_ge50_pixels_outside_core": 467575,
+      "contribution_conservation_relative_error": 2.828507879275206e-07
+    },
+    {
+      "run": "native_source_visible_contract_v1",
+      "source": "P02",
+      "variant": "native_visible",
+      "reference_raw": 137,
+      "rows": 1101,
+      "alpha_ge95_core_fraction": 1.0,
+      "alpha_core_q0_q05_q50_q95_q100": [
+        0.9976283311843872,
+        0.9997214674949646,
+        0.9998871684074402,
+        0.9998993873596191,
+        0.9999005794525146
+      ],
+      "source_full_RGB_MAE_high_alpha": 8.194205292966217e-05,
+      "source_full_high_alpha_pixels": 24390,
+      "source_full_RGB_MAE_alpha_ge05": 8.194205292966217e-05,
+      "source_full_alpha_ge05_pixels": 24390,
+      "photo_RGB_MAE_high_alpha": 0.004998304881155491,
+      "photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.00065779254150729,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.3137356101892085,
+        "cosine": 0.007420683117690061
+      },
+      "full_native_photo_independent_pixels": 24390,
+      "full_native_photo_RGB_MAE": 0.004992221482098103,
+      "full_native_photo_RGB_bias": [
+        0.0006662575760856271,
+        0.0007275966345332563,
+        -7.90114063420333e-05
+      ],
+      "full_native_photo_HF_sigma1": {
+        "sigma_px": 1.0,
+        "a_RMS": 0.0006695812701484686,
+        "b_RMS": 0.0020966460935390365,
+        "RMS_ratio": 0.3193582704357358,
+        "cosine": 0.009033856483634785
+      },
+      "full_native_is_original_appearance": true,
+      "world_extent_m": [
+        3.222194984136422,
+        16.41081773162341,
+        3.2405591339626163
+      ],
+      "max_sigma_m": 10.67833347498882,
+      "plane_tilt_degree": 0.7982632894609948,
+      "reload_RGB_max_abs": 0.0,
+      "reload_alpha_max_abs": 0.0,
+      "retained_alphaT_fraction": 0.9995000594608362,
+      "alphaT_mass_within_30cm_plane_fraction": 0.07992533163748845,
+      "normal_height_abs_quantiles_m": [
+        0.007306211925757134,
+        0.6193027875117119,
+        1.2845726864200038,
+        1.4368713715684365,
+        2.2917866762323493,
+        2.896038926612898
+      ],
+      "max_sigma_quantiles_m": [
+        0.003007480874657631,
+        0.2650882601737976,
+        0.8776980638504028,
+        1.5895366668701172,
+        4.008975505828857,
+        10.678333282470703
+      ],
+      "alpha_mass_outside_physical_core_fraction": 0.9198944655373293,
+      "alpha_ge50_pixels_outside_core": 346170,
+      "contribution_conservation_relative_error": 6.629501632408963e-07
+    }
+  ],
+  "final_finding": "原raw可见契约已恢复，reference同ID外观保真且颜色bias近0；源核仍非局部，作为历史诊断保存，未晋升直接迁移donor，不继续原生块/归属路线",
+  "human_verdict": null,
+  "quality_accepted": null,
+  "remote_full_float": {
+    "retained": true,
+    "count": 48,
+    "deletions": 0,
+    "remote_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native_source_transfer_20261122_r5",
+    "pattern": "各run/P0?/*/RAW/native_float_crop.npz",
+    "restoration": "从native.npz、native_context.py与各run contract/geometry/camera入口可重放；完整tail浮点原址保留",
+    "inventory": "takeback_lidar_geometry_review.json、takeback_contributor_review.json、takeback_original_native_visible_contract_review.json及诊断包清单"
+  },
+  "runtime_successful_forward_counts": {
+    "native_discovery_replay1": 4,
+    "native_source_blocks_v2": 30,
+    "native_source_blocks_lidar_v1": 30,
+    "native_source_blocks_lidar_metric_v1": 34,
+    "native_source_contributors_metric_v1": 18,
+    "native_source_visible_contract_v1": 20
+  }
+}

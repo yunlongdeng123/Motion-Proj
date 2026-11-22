@@ -1,0 +1,34 @@
+{
+  "schema": "R10.root_timewindow17_actual_joint_zero_review.v1",
+  "complete": true,
+  "decision": "FAIL",
+  "scope": "Actual five-view new local road plus original A20 and all old components",
+  "views_reviewed_at_1152x768": [86,110,134,179,198],
+  "asset_manifest_sha256": "71cbc8fd6027d2d266ca8080c08741e9c6dce4b74576eb035ffc6024cf536124",
+  "shared_input_approval_withdrawn": false,
+  "nativeF": 5,
+  "nativeB": 5,
+  "optimizer_updates": 0,
+  "observations": [
+    "New surface gives a more continuous low-contrast road area, but the blue-grey original-vehicle-shaped foreground ghost, cyan/white points and thin reddish underbody edge remain prominent.",
+    "Approved original A20 body remains visually usable. All K pixels are RGBA byte-exact; strict-real-V at110 has mean RGB delta1.4044e-6 and photoL1 increase1.7509e-7, which is recorded rather than called byte-exact.",
+    "New-road Gaussian footprints also change pixels outside the original band. At110,8430 pixels change above1e-6, maximum RGB delta.375225. Replacement invariance relative to this new0 alone would not undo that expansion."
+  ],
+  "fixed_original_masks": {
+    "red_remaining": [85,142],
+    "red_denominator": [357,692],
+    "blue_remaining": [3268,4398],
+    "blue_denominator": [3389,4575],
+    "last_three_empty_colour_masks_are_unmeasured_not_clean": true
+  },
+  "fixed_original_ground_MSE": [0.0034095209557563066,0.0029519156087189913,0.0027226917445659637,0.0015235142782330513,0.0014565624296665192],
+  "next_authorized": [
+    "Use actual full/outsideEdit/car/K feature-VJP measurements to qualify new-local footprint pruning without changing RGB or centres.",
+    "Re-render the pruned local child before measuring old-row replacement eligibility in the changed visibility.",
+    "Test supported contained native-unowned and old-RoadRows replacement with all positive native owners and original A20 frozen.",
+    "Prepare a bounded continuous-opacity control with fixed source, fixed centres, outside/K/realV protection and explicit 400-step maximum within the existing2000 total cap; GPU execution requires root review of the control contract and smoke."
+  ],
+  "new_local_RGB400_authorized": false,
+  "whole_scene_restoration_accepted": false,
+  "GPU_keep_on": true
+}

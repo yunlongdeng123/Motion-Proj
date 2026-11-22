@@ -1,0 +1,23 @@
+{
+  "schema": "R10.root_component_replacement_bounded_readout.contract.v1",
+  "complete": true,
+  "decision": "PASS",
+  "scope_sha256": "1fbed62873ff9900cb8e9c605dc71a2e933e653ddf277543f889b1f39b9ba20a",
+  "zero_receipt_sha256": "5fb2c61e9308130abd408dbc12c7dfb023b2d24d4b89ea0e9b7ff6def92096e1",
+  "outside_absolute_tolerance": 0.00196078431372549,
+  "K_and_car_RGBA_byteexact_required": true,
+  "eligibility_strict_zero_unchanged": true,
+  "new_full_original_band_or_unknown_alpha95_holes_allowed": 0,
+  "reference": "timewindow17_pruned_zero_v4 for replacement readout; original baseline differences from bounded local initialization remain separately reported",
+  "old_strict_failed_run_retained": "timewindow17_component_replacement_zero_v4",
+  "old_strict_actual_nativeF": 2,
+  "old_strict_actual_nativeB": 0,
+  "evidence": "Actual native forward.cu374-393 tests test_T<.0001 and continues before colour/feature accumulation. A stop-trigger row may have zero measured feature contribution while changing later compositing when removed. This demonstrates a limitation of zero-feature-mass eligibility as a byte-invariance guarantee. The current one-pixel difference is compatible with it, without a unique pixel-level causal proof or a claimed universal1e-4 bound.",
+  "actual_zero_step_authorized": true,
+  "expected_nativeF": 5,
+  "expected_nativeB": 0,
+  "optimizer_updates": 0,
+  "exact_readout_still_reported": true,
+  "whole_scene_restoration_accepted": false,
+  "GPU_keep_on": true
+}

@@ -1,0 +1,2744 @@
+{
+  "schema": "shared_road_photo_texture_quilt.v1",
+  "CPU_only": true,
+  "GPU_calls": 0,
+  "training_updates": 0,
+  "new_teacher_calls": 0,
+  "source_label_map": {
+    "0": "unknown/unfilled",
+    "1": "same-world photo observation locked",
+    "2": "similar-reference full spatial texture inferred"
+  },
+  "domain_basis": "explicit write_domain intersect geometry_valid",
+  "seed": 20261122,
+  "tile_size": 24,
+  "overlap": 6,
+  "candidate_count": 48,
+  "seam_dilate": 0,
+  "lattice_origin_xy": [
+    255,
+    104
+  ],
+  "exposure_basis": "R7 exposure JSON records",
+  "texture_bank_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/texture_bank/texture_bank_manifest.json",
+  "texture_bank_manifest_sha256": "b3156879fccc9b7a10d3baff68c49c09a10b305ddf47db8cb82a74cabdacdd75",
+  "tone_policy": "fixed source common exposure, plus scalar gain limited [.95,1.05] and channel mean offset limited +/-.008 linear RGB; no texture-RMS normalization or texture smoothing",
+  "blend_policy": "regular lattice; raised edge linear overlap blend on prior similar texels only; same-world texels are never modified; at most four ordered contributors per texel",
+  "teacher_policy": "only remaining eligible unknown, narrow quilting seams or low-frequency tone boundaries; exclude every trusted same-world texel; preserve majority of source2 as unmasked real-reference texture anchors",
+  "traceability": "mixture_tile_id/weight provides all blended contributors. Every tile references a source bank crop; that crop retains per-texel original Brown UV and source plane/world transform. Primary UV map represents the dominant contributor, not the sole contributor in blends.",
+  "statistics": {
+    "same_world_locked_texels": 243112,
+    "similar_full_texture_texels": 12328,
+    "unknown_eligible_texels": 0,
+    "teacher_mask_texels": 2324,
+    "teacher_mask_on_same_world": 0,
+    "same_world_RGB_max_abs_delta": 0.0,
+    "similar_unmasked_anchor_fraction": 0.8114860480207657,
+    "similar_RGB_std": [
+      0.004617154598236084,
+      0.0038075949996709824,
+      0.004801819566637278
+    ],
+    "similar_highpass_std_sigma1": [
+      0.002519317204132676,
+      0.0020480554085224867,
+      0.0024828945752233267
+    ],
+    "all_similar_mixture_weights_sum1": true,
+    "tiles": 79,
+    "texture_sources_used": [
+      "P01",
+      "P02"
+    ]
+  },
+  "operations": [
+    {
+      "tile_id": 0,
+      "destination_xy": [
+        327,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        44,
+        24
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -283,
+        -80
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.004689142107963562,
+        0.0027639418840408325
+      ],
+      "overlap_MSE_linear": 3.229867070331238e-05,
+      "written_similar_texels": 17,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 1,
+      "destination_xy": [
+        345,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        53,
+        22
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -292,
+        -82
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00514085590839386,
+        0.003129325807094574,
+        0.0010833293199539185
+      ],
+      "overlap_MSE_linear": 4.345332854427397e-05,
+      "written_similar_texels": 33,
+      "blended_prior_similar_texels": 16,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 2,
+      "destination_xy": [
+        381,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        69,
+        13
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -312,
+        -91
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0037679672241210938,
+        0.0007350742816925049,
+        -0.0011166483163833618
+      ],
+      "overlap_MSE_linear": 3.094077328569256e-05,
+      "written_similar_texels": 114,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 3,
+      "destination_xy": [
+        399,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        64,
+        36
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -335,
+        -68
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.028154107063183,
+      "tone_offset_linear": [
+        0.0019619539380073547,
+        0.00022239983081817627,
+        -0.007980316877365112
+      ],
+      "overlap_MSE_linear": 3.725393980857916e-05,
+      "written_similar_texels": 399,
+      "blended_prior_similar_texels": 95,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 4,
+      "destination_xy": [
+        417,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        45,
+        37
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -372,
+        -67
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0067726075649261475,
+        0.0025520697236061096,
+        0.0017013251781463623
+      ],
+      "overlap_MSE_linear": 2.57705214607995e-05,
+      "written_similar_texels": 392,
+      "blended_prior_similar_texels": 104,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 5,
+      "destination_xy": [
+        435,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        54,
+        24
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -381,
+        -80
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007240168750286102,
+        0.0020521506667137146,
+        0.0015713870525360107
+      ],
+      "overlap_MSE_linear": 2.3079956008587033e-05,
+      "written_similar_texels": 448,
+      "blended_prior_similar_texels": 96,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 6,
+      "destination_xy": [
+        453,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        56,
+        26
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -397,
+        -78
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00751572847366333,
+        0.0025583580136299133,
+        0.001507095992565155
+      ],
+      "overlap_MSE_linear": 2.757944821496494e-05,
+      "written_similar_texels": 480,
+      "blended_prior_similar_texels": 120,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 7,
+      "destination_xy": [
+        471,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        56,
+        29
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -415,
+        -75
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0067405253648757935,
+        0.0031584277749061584,
+        0.0018286854028701782
+      ],
+      "overlap_MSE_linear": 4.036615791846998e-05,
+      "written_similar_texels": 528,
+      "blended_prior_similar_texels": 120,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 8,
+      "destination_xy": [
+        489,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        48,
+        28
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -441,
+        -76
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.004611216485500336,
+        0.0028457939624786377
+      ],
+      "overlap_MSE_linear": 3.0150038583087735e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 144,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 9,
+      "destination_xy": [
+        507,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        64,
+        28
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -443,
+        -76
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0078118667006492615,
+        0.00423547625541687,
+        0.002093866467475891
+      ],
+      "overlap_MSE_linear": 2.1800200556754135e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 144,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 10,
+      "destination_xy": [
+        525,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        50,
+        27
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -475,
+        -77
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.006977565586566925,
+        0.004028208553791046
+      ],
+      "overlap_MSE_linear": 2.250518082291819e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 144,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 11,
+      "destination_xy": [
+        543,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        52,
+        27
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -491,
+        -77
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.00800000037997961,
+        0.004845641553401947
+      ],
+      "overlap_MSE_linear": 2.419201518932823e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 144,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 12,
+      "destination_xy": [
+        561,
+        104
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        50,
+        31
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -511,
+        -73
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.00800000037997961,
+        0.0049812570214271545
+      ],
+      "overlap_MSE_linear": 3.364490112289786e-05,
+      "written_similar_texels": 416,
+      "blended_prior_similar_texels": 144,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 13,
+      "destination_xy": [
+        255,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        68,
+        35
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -187,
+        -87
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.006322160363197327,
+        0.0008136332035064697
+      ],
+      "overlap_MSE_linear": 3.0493434678646736e-05,
+      "written_similar_texels": 16,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 14,
+      "destination_xy": [
+        273,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        72,
+        18
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -201,
+        -104
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.005889773368835449,
+        0.0058175623416900635
+      ],
+      "overlap_MSE_linear": 2.696559931791853e-05,
+      "written_similar_texels": 1,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 15,
+      "destination_xy": [
+        291,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        70,
+        24
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -221,
+        -98
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007391788065433502,
+        0.004341714084148407,
+        0.003678426146507263
+      ],
+      "overlap_MSE_linear": 2.9334321880014613e-05,
+      "written_similar_texels": 20,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 16,
+      "destination_xy": [
+        309,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        50,
+        25
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -259,
+        -97
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0045248717069625854,
+        0.0025308653712272644
+      ],
+      "overlap_MSE_linear": 2.760575807769783e-05,
+      "written_similar_texels": 3,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 17,
+      "destination_xy": [
+        327,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        51,
+        30
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -276,
+        -92
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.005406580865383148,
+        0.003110267221927643
+      ],
+      "overlap_MSE_linear": 2.342505831620656e-05,
+      "written_similar_texels": 33,
+      "blended_prior_similar_texels": 17,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 18,
+      "destination_xy": [
+        345,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        49,
+        28
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -296,
+        -94
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.00545182079076767,
+        0.003237776458263397
+      ],
+      "overlap_MSE_linear": 3.0266677640611306e-05,
+      "written_similar_texels": 33,
+      "blended_prior_similar_texels": 33,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 19,
+      "destination_xy": [
+        363,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        48,
+        24
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -315,
+        -98
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.003739200532436371,
+        0.0006176605820655823
+      ],
+      "overlap_MSE_linear": 2.90409352601273e-05,
+      "written_similar_texels": 1,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 20,
+      "destination_xy": [
+        381,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        53,
+        33
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -328,
+        -89
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.004841938614845276,
+        0.002182193100452423
+      ],
+      "overlap_MSE_linear": 2.4759377993177623e-05,
+      "written_similar_texels": 126,
+      "blended_prior_similar_texels": 35,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 21,
+      "destination_xy": [
+        399,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        69,
+        31
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -330,
+        -91
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00454401969909668,
+        0.0014930441975593567,
+        -0.0009805336594581604
+      ],
+      "overlap_MSE_linear": 3.574661604943685e-05,
+      "written_similar_texels": 551,
+      "blended_prior_similar_texels": 227,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 22,
+      "destination_xy": [
+        417,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        58,
+        32
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -359,
+        -90
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0027672797441482544,
+        0.0006929785013198853,
+        -0.002098560333251953
+      ],
+      "overlap_MSE_linear": 3.08301423501689e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 23,
+      "destination_xy": [
+        435,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        40,
+        33
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -395,
+        -89
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0069879889488220215,
+        0.0023970231413841248,
+        0.0005534887313842773
+      ],
+      "overlap_MSE_linear": 2.751823194557801e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 24,
+      "destination_xy": [
+        453,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        52,
+        31
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -401,
+        -91
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.006090007722377777,
+        0.0015389472246170044,
+        0.0008275583386421204
+      ],
+      "overlap_MSE_linear": 2.5430215828237124e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 25,
+      "destination_xy": [
+        471,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        72,
+        29
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -399,
+        -93
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.046116631445743,
+      "tone_offset_linear": [
+        0.003256954252719879,
+        -0.0008015111088752747,
+        -0.0016507431864738464
+      ],
+      "overlap_MSE_linear": 2.545979259593878e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 26,
+      "destination_xy": [
+        489,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        68,
+        25
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -421,
+        -97
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.0482625279572209,
+      "tone_offset_linear": [
+        0.002910517156124115,
+        -0.0005900338292121887,
+        -0.002725474536418915
+      ],
+      "overlap_MSE_linear": 2.3994998628040776e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 27,
+      "destination_xy": [
+        507,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        49,
+        27
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -458,
+        -95
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0061487555503845215,
+        0.002286478877067566,
+        -0.0011632516980171204
+      ],
+      "overlap_MSE_linear": 2.7185360522707924e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 28,
+      "destination_xy": [
+        525,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        55,
+        26
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -470,
+        -96
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.006570219993591309,
+        0.0040571317076683044,
+        0.0007020607590675354
+      ],
+      "overlap_MSE_linear": 2.3908651201054454e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 29,
+      "destination_xy": [
+        543,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        72,
+        24
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -471,
+        -98
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0037994906306266785,
+        0.003682337701320648,
+        -1.6167759895324707e-05
+      ],
+      "overlap_MSE_linear": 2.8611540983547457e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 30,
+      "destination_xy": [
+        561,
+        122
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        52,
+        32
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -509,
+        -90
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007947668433189392,
+        0.006252378225326538,
+        0.002932317554950714
+      ],
+      "overlap_MSE_linear": 2.3538905224995688e-05,
+      "written_similar_texels": 432,
+      "blended_prior_similar_texels": 216,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 31,
+      "destination_xy": [
+        255,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        51,
+        34
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -204,
+        -106
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0072365254163742065,
+        0.007433176040649414
+      ],
+      "overlap_MSE_linear": 2.6003974198829383e-05,
+      "written_similar_texels": 17,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 32,
+      "destination_xy": [
+        273,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        52,
+        32
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -221,
+        -108
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.006107419729232788,
+        0.0029681026935577393,
+        -0.001669079065322876
+      ],
+      "overlap_MSE_linear": 3.2242714951280504e-05,
+      "written_similar_texels": 33,
+      "blended_prior_similar_texels": 1,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 33,
+      "destination_xy": [
+        291,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        52,
+        36
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -239,
+        -104
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.006455063819885254,
+        0.005973264575004578
+      ],
+      "overlap_MSE_linear": 2.6584870283841155e-05,
+      "written_similar_texels": 19,
+      "blended_prior_similar_texels": 19,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 34,
+      "destination_xy": [
+        309,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        61,
+        31
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -248,
+        -109
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.003888823091983795,
+        0.002236410975456238
+      ],
+      "overlap_MSE_linear": 3.119466418866068e-05,
+      "written_similar_texels": 33,
+      "blended_prior_similar_texels": 1,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 35,
+      "destination_xy": [
+        327,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        49,
+        28
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -278,
+        -112
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.004597604274749756,
+        0.0023011714220046997
+      ],
+      "overlap_MSE_linear": 2.553097510826774e-05,
+      "written_similar_texels": 17,
+      "blended_prior_similar_texels": 16,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 36,
+      "destination_xy": [
+        345,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        51,
+        27
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -294,
+        -113
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0029611513018608093,
+        6.258487701416016e-07
+      ],
+      "overlap_MSE_linear": 3.200389619451016e-05,
+      "written_similar_texels": 20,
+      "blended_prior_similar_texels": 1,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 37,
+      "destination_xy": [
+        363,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        47,
+        29
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -316,
+        -111
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0076219066977500916,
+        0.002480447292327881,
+        -0.0011396706104278564
+      ],
+      "overlap_MSE_linear": 2.433872941765003e-05,
+      "written_similar_texels": 21,
+      "blended_prior_similar_texels": 16,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 38,
+      "destination_xy": [
+        381,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        65,
+        33
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -316,
+        -107
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0065610334277153015,
+        0.0018524900078773499,
+        -0.0014171600341796875
+      ],
+      "overlap_MSE_linear": 2.2536320102517493e-05,
+      "written_similar_texels": 100,
+      "blended_prior_similar_texels": 27,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 39,
+      "destination_xy": [
+        399,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        37,
+        27
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -362,
+        -113
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007930614054203033,
+        0.0015400499105453491,
+        -0.0023447200655937195
+      ],
+      "overlap_MSE_linear": 3.0693034204887226e-05,
+      "written_similar_texels": 522,
+      "blended_prior_similar_texels": 198,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 40,
+      "destination_xy": [
+        417,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        70,
+        12
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -347,
+        -128
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.005938805639743805,
+        -5.252659320831299e-06,
+        -0.002387404441833496
+      ],
+      "overlap_MSE_linear": 2.740211130003445e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 41,
+      "destination_xy": [
+        435,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        70,
+        12
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -365,
+        -128
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.006530627608299255,
+        0.0011177510023117065,
+        -0.0005024522542953491
+      ],
+      "overlap_MSE_linear": 2.9474023904185742e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 42,
+      "destination_xy": [
+        453,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        70,
+        18
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -383,
+        -122
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.005877047777175903,
+        -0.0003879964351654053,
+        -0.0015893802046775818
+      ],
+      "overlap_MSE_linear": 3.235333497286774e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 43,
+      "destination_xy": [
+        471,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        61,
+        16
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -410,
+        -124
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0009652450680732727,
+        -0.000296667218208313
+      ],
+      "overlap_MSE_linear": 3.846808976959437e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 44,
+      "destination_xy": [
+        489,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        49,
+        25
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -440,
+        -115
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.006932094693183899,
+        0.0015174224972724915,
+        -0.0015766099095344543
+      ],
+      "overlap_MSE_linear": 4.821209950023331e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 45,
+      "destination_xy": [
+        507,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        71,
+        19
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -436,
+        -121
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.004026047885417938,
+        -0.00010820478200912476,
+        -0.003728225827217102
+      ],
+      "overlap_MSE_linear": 2.7793874323833734e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 46,
+      "destination_xy": [
+        525,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        52,
+        29
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -473,
+        -111
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0067442357540130615,
+        0.002637326717376709,
+        -0.00048123300075531006
+      ],
+      "overlap_MSE_linear": 3.259036020608619e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 47,
+      "destination_xy": [
+        543,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        54,
+        31
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -489,
+        -109
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.004394911229610443,
+        0.001973375678062439,
+        -0.0015839636325836182
+      ],
+      "overlap_MSE_linear": 2.595502337499056e-05,
+      "written_similar_texels": 576,
+      "blended_prior_similar_texels": 252,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 48,
+      "destination_xy": [
+        561,
+        140
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        72,
+        29
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -489,
+        -111
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0032972171902656555,
+        0.000997304916381836,
+        -0.002302117645740509
+      ],
+      "overlap_MSE_linear": 2.2561775040230714e-05,
+      "written_similar_texels": 432,
+      "blended_prior_similar_texels": 216,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 49,
+      "destination_xy": [
+        255,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        68,
+        17
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -187,
+        -141
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.005612000823020935,
+        0.005212172865867615
+      ],
+      "overlap_MSE_linear": 3.0408402380999178e-05,
+      "written_similar_texels": 8,
+      "blended_prior_similar_texels": 8,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 50,
+      "destination_xy": [
+        273,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        65,
+        39
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -208,
+        -119
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.005367152392864227,
+        -0.0009216964244842529
+      ],
+      "overlap_MSE_linear": 3.555615694494918e-05,
+      "written_similar_texels": 16,
+      "blended_prior_similar_texels": 16,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 51,
+      "destination_xy": [
+        291,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        64,
+        37
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -227,
+        -121
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.005646824836730957,
+        -0.0016606971621513367
+      ],
+      "overlap_MSE_linear": 3.984944851254113e-05,
+      "written_similar_texels": 8,
+      "blended_prior_similar_texels": 8,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 52,
+      "destination_xy": [
+        309,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        71,
+        16
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -238,
+        -142
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007741391658782959,
+        0.0025056153535842896,
+        0.0004325062036514282
+      ],
+      "overlap_MSE_linear": 3.1441562896361575e-05,
+      "written_similar_texels": 24,
+      "blended_prior_similar_texels": 24,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 53,
+      "destination_xy": [
+        327,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        70,
+        16
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -257,
+        -142
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007697597146034241,
+        0.0014453455805778503,
+        -0.0015366151928901672
+      ],
+      "overlap_MSE_linear": 2.864010093617253e-05,
+      "written_similar_texels": 16,
+      "blended_prior_similar_texels": 16,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 54,
+      "destination_xy": [
+        345,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        72,
+        21
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -273,
+        -137
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.005689151585102081,
+        3.965944051742554e-05,
+        -0.004122227430343628
+      ],
+      "overlap_MSE_linear": 2.861215762095526e-05,
+      "written_similar_texels": 16,
+      "blended_prior_similar_texels": 16,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 55,
+      "destination_xy": [
+        363,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        54,
+        27
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -309,
+        -131
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.0074098557233810425,
+        0.0010858997702598572,
+        -0.0037602707743644714
+      ],
+      "overlap_MSE_linear": 2.1132185793248937e-05,
+      "written_similar_texels": 16,
+      "blended_prior_similar_texels": 16,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 56,
+      "destination_xy": [
+        381,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        55,
+        31
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -326,
+        -127
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.006300210952758789,
+        0.0010992512106895447,
+        -0.0037358105182647705
+      ],
+      "overlap_MSE_linear": 2.5508461476420052e-05,
+      "written_similar_texels": 63,
+      "blended_prior_similar_texels": 23,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 57,
+      "destination_xy": [
+        399,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        53,
+        31
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -346,
+        -127
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007375724613666534,
+        0.0014333873987197876,
+        -0.0031155720353126526
+      ],
+      "overlap_MSE_linear": 2.4824821593938395e-05,
+      "written_similar_texels": 225,
+      "blended_prior_similar_texels": 153,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 58,
+      "destination_xy": [
+        417,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        58,
+        33
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -359,
+        -125
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0022229552268981934,
+        -0.001836039125919342
+      ],
+      "overlap_MSE_linear": 2.443840821797494e-05,
+      "written_similar_texels": 248,
+      "blended_prior_similar_texels": 168,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 59,
+      "destination_xy": [
+        435,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        49,
+        31
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -386,
+        -127
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0034868642687797546,
+        -0.0003241226077079773
+      ],
+      "overlap_MSE_linear": 2.4428902179352008e-05,
+      "written_similar_texels": 320,
+      "blended_prior_similar_texels": 176,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 60,
+      "destination_xy": [
+        453,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        49,
+        29
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -404,
+        -129
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0036018192768096924,
+        0.00041319429874420166
+      ],
+      "overlap_MSE_linear": 2.6755018552648835e-05,
+      "written_similar_texels": 336,
+      "blended_prior_similar_texels": 192,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 61,
+      "destination_xy": [
+        471,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        66,
+        35
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -405,
+        -123
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.005607195198535919,
+        0.0003547370433807373,
+        -0.00800000037997961
+      ],
+      "overlap_MSE_linear": 2.8253796699573286e-05,
+      "written_similar_texels": 368,
+      "blended_prior_similar_texels": 192,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 62,
+      "destination_xy": [
+        489,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        53,
+        34
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -436,
+        -124
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.005447275936603546,
+        0.00025807321071624756,
+        -0.0064735934138298035
+      ],
+      "overlap_MSE_linear": 3.39951911882963e-05,
+      "written_similar_texels": 384,
+      "blended_prior_similar_texels": 216,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 63,
+      "destination_xy": [
+        507,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        59,
+        35
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -448,
+        -123
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00502486526966095,
+        0.00038900226354599,
+        -0.006318993866443634
+      ],
+      "overlap_MSE_linear": 3.417671177885495e-05,
+      "written_similar_texels": 384,
+      "blended_prior_similar_texels": 216,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 64,
+      "destination_xy": [
+        525,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        69,
+        14
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -456,
+        -144
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007406637072563171,
+        0.0012977123260498047,
+        0.003005765378475189
+      ],
+      "overlap_MSE_linear": 3.2309348171111196e-05,
+      "written_similar_texels": 336,
+      "blended_prior_similar_texels": 192,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 65,
+      "destination_xy": [
+        543,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        56,
+        18
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -487,
+        -140
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007976338267326355,
+        0.00305977463722229,
+        0.005633547902107239
+      ],
+      "overlap_MSE_linear": 4.365370477898978e-05,
+      "written_similar_texels": 368,
+      "blended_prior_similar_texels": 192,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 66,
+      "destination_xy": [
+        561,
+        158
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        69,
+        12
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -492,
+        -146
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00721045583486557,
+        0.0029465779662132263,
+        0.004479587078094482
+      ],
+      "overlap_MSE_linear": 3.788584945141338e-05,
+      "written_similar_texels": 324,
+      "blended_prior_similar_texels": 180,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 67,
+      "destination_xy": [
+        453,
+        194
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        48,
+        26
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -405,
+        -168
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.007964186370372772,
+        0.00048507004976272583,
+        -0.0052391961216926575
+      ],
+      "overlap_MSE_linear": 2.8163654860691167e-05,
+      "written_similar_texels": 101,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 68,
+      "destination_xy": [
+        471,
+        194
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        47,
+        23
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -424,
+        -171
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0011029765009880066,
+        -0.004677586257457733
+      ],
+      "overlap_MSE_linear": 3.0756567866774276e-05,
+      "written_similar_texels": 227,
+      "blended_prior_similar_texels": 57,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 69,
+      "destination_xy": [
+        489,
+        194
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        48,
+        24
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -441,
+        -170
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.006126008927822113,
+        -0.00013705343008041382,
+        -0.005952507257461548
+      ],
+      "overlap_MSE_linear": 3.659140202216804e-05,
+      "written_similar_texels": 159,
+      "blended_prior_similar_texels": 61,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 70,
+      "destination_xy": [
+        507,
+        194
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        32,
+        29
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -475,
+        -165
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0009149461984634399,
+        -0.0021788552403450012
+      ],
+      "overlap_MSE_linear": 2.957005926873535e-05,
+      "written_similar_texels": 43,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 71,
+      "destination_xy": [
+        525,
+        194
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        50,
+        30
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -475,
+        -164
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.004841901361942291,
+        -2.4490058422088623e-05,
+        -0.00039890408515930176
+      ],
+      "overlap_MSE_linear": 2.5817360437940806e-05,
+      "written_similar_texels": 17,
+      "blended_prior_similar_texels": 17,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 72,
+      "destination_xy": [
+        561,
+        194
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        35,
+        30
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -526,
+        -164
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.002474673092365265,
+        0.005170926451683044
+      ],
+      "overlap_MSE_linear": 3.093632039963268e-05,
+      "written_similar_texels": 9,
+      "blended_prior_similar_texels": 0,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 73,
+      "destination_xy": [
+        453,
+        212
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        50,
+        24
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -403,
+        -188
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0038463473320007324,
+        0.0002587810158729553
+      ],
+      "overlap_MSE_linear": 2.8167420168756507e-05,
+      "written_similar_texels": 10,
+      "blended_prior_similar_texels": 10,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 74,
+      "destination_xy": [
+        471,
+        212
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        70,
+        18
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -401,
+        -194
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.005566030740737915,
+        0.00106029212474823,
+        -0.004140891134738922
+      ],
+      "overlap_MSE_linear": 2.6042014724225737e-05,
+      "written_similar_texels": 14,
+      "blended_prior_similar_texels": 14,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 75,
+      "destination_xy": [
+        489,
+        212
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        48,
+        29
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -441,
+        -183
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.00800000037997961,
+        0.0035278573632240295,
+        -0.0019007325172424316
+      ],
+      "overlap_MSE_linear": 2.6466128474567086e-05,
+      "written_similar_texels": 12,
+      "blended_prior_similar_texels": 12,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 76,
+      "destination_xy": [
+        507,
+        212
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        50,
+        26
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -457,
+        -186
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.05,
+      "tone_offset_linear": [
+        0.006112106144428253,
+        0.0015236139297485352,
+        -0.00443306565284729
+      ],
+      "overlap_MSE_linear": 2.2799655198468827e-05,
+      "written_similar_texels": 11,
+      "blended_prior_similar_texels": 11,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 77,
+      "destination_xy": [
+        525,
+        212
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P02",
+      "source_raw": 137,
+      "bank_uv_origin": [
+        70,
+        15
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -455,
+        -197
+      ],
+      "canonical_exposure_gain": 1.0513012409210205,
+      "tone_gain": 1.033764174731077,
+      "tone_offset_linear": [
+        0.004166625440120697,
+        -0.0009768903255462646,
+        -0.00259215384721756
+      ],
+      "overlap_MSE_linear": 2.8330323402769864e-05,
+      "written_similar_texels": 5,
+      "blended_prior_similar_texels": 5,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    },
+    {
+      "tile_id": 78,
+      "destination_xy": [
+        561,
+        212
+      ],
+      "destination_actual_wh": [
+        24,
+        24
+      ],
+      "source_id": "P01",
+      "source_raw": 110,
+      "bank_uv_origin": [
+        70,
+        41
+      ],
+      "tile_size": 24,
+      "target_texel_to_source_bank_offset": [
+        -491,
+        -171
+      ],
+      "canonical_exposure_gain": 1.043259620666504,
+      "tone_gain": 1.0083538783167971,
+      "tone_offset_linear": [
+        0.001979149878025055,
+        -1.6026198863983154e-05,
+        -0.005669049918651581
+      ],
+      "overlap_MSE_linear": 3.274274422437884e-05,
+      "written_similar_texels": 4,
+      "blended_prior_similar_texels": 4,
+      "primary_label": 2,
+      "provenance_kind": "similar_reference_full_texture_inferred_not_same_world"
+    }
+  ],
+  "numerical_anchor_semantics": "immutable accepted parent field; its source1/2/3 provenance is inherited, not relabelled as new same-world real photographs",
+  "new_region_source_kind": "similar-photograph texture inference conditioned on the accepted parent boundary, including any inherited teacher colour conditioning"
+}

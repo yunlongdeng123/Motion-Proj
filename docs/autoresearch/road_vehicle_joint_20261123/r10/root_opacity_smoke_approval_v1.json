@@ -1,0 +1,20 @@
+{
+  "schema": "R10.root_opacity_lifecycle_smoke_approval.v1",
+  "complete": true,
+  "contract_sha256": "1cb87f9f2121372ea92ce50a5dcbee9fbbcd7e56d241fdd4dc3f281ffd935bbd",
+  "smoke_authorized": true,
+  "formal_authorized": false,
+  "scope": "Six logical opacity updates plus one replay, checkpoint save/full restore, all-five fixed evaluation and persistent sidecar fresh verification. No formal updates yet.",
+  "learning_rate": 0.001,
+  "source_and_local_vehicle_geometry_all_fixed": true,
+  "eligibility_K_car_positive_rows_frozen": true,
+  "K_car_actual_RGBA_byteexact_required_by_this_version": true,
+  "outside_RGB_max_abs_bound": 0.00392156862745098,
+  "outside_alpha_max_abs_bound": 0.00196078431372549,
+  "initial_child_small_outside_difference_retained": true,
+  "old_formal_updates_remain": 400,
+  "old_representation_total_cap": 2000,
+  "stop_and_preserve_failed_smoke": true,
+  "known_readout_caveat": "Native early ray termination can make zero-feature-mass eligibility insufficient for exact pixel invariance. This version retains strict K/car actual checks; any failure must be diagnosed from measured differences, not silently classified as visible vehicle damage or bypassed.",
+  "GPU_keep_on": true
+}

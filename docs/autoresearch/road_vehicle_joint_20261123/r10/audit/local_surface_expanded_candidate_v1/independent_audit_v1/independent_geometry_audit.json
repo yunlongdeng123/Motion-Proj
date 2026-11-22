@@ -1,0 +1,834 @@
+{
+  "schema": "R10.independent_expanded_geometry_candidate_audit.v1",
+  "complete": true,
+  "decision": "CANDIDATE_INTEGRITY_PASS_APPROVAL_PENDING",
+  "candidate_geometry": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/expanded_candidate_geometry.npz",
+    "bytes": 26316748,
+    "sha256": "1844e3596414a7cbe128167db615bece0f6ff7ec7a638f5ebb6163d60aee848d"
+  },
+  "producer_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/expanded_candidate_receipt.json",
+    "bytes": 8988,
+    "sha256": "9e970b6ae9e58d3668c099614b8b92d67dfa7b29c4bb365b0dd841460e537fc4"
+  },
+  "source_kind": 2,
+  "all_geometry_is_model_inference": true,
+  "geometry_accepted_for_zero_step": false,
+  "independent_checks": {
+    "model_and_512_bootstrap_byteexact": true,
+    "original_candidate_overlap_worldXYZ_byteexact": true,
+    "integer_vertex_and_half_cell_UV": true,
+    "analytic_XYZ_and_cell_Z_max_error_m": 0.0,
+    "normal_unit_max_error": 0.0,
+    "explicit_512_bootstrap_SD_max_error_m": 2.2898349882893854e-16,
+    "strict837_preserved": true,
+    "mask_partition_and_inference_labels_exact": true,
+    "renderable_false_preserved": true
+  },
+  "asset_cells": 170918,
+  "asset_vertices": 172146,
+  "asset_vertices_inside_original_fit_hull": 57633,
+  "asset_vertices_outside_original_fit_hull": 114513,
+  "asset_vertices_inside_broader_training_official_road_validation_hull": 172146,
+  "asset_vertex_original_fit_leverage_ratio": {
+    "count": 172146,
+    "min": 0.13904077561601583,
+    "mean": 2.3543165938982678,
+    "median": 1.6794364487141318,
+    "p05": 0.1866157045593267,
+    "p95": 6.318576924315531,
+    "max": 7.189657590046669
+  },
+  "conditional_parameter_bootstrap_SD_m": {
+    "count": 170918,
+    "min": 0.013727199585509798,
+    "mean": 0.02518293199799604,
+    "median": 0.025106755737199952,
+    "p05": 0.014811638063711873,
+    "p95": 0.036355851370189415,
+    "max": 0.0402883618555073
+  },
+  "conditional_SD_does_not_include_model_misspecification": true,
+  "nearest_official_road_distance_at_asset_cells_m": {
+    "count": 170918,
+    "min": 0.00030638067278900504,
+    "mean": 0.6213978201816399,
+    "median": 0.5443659478380456,
+    "p05": 0.034431635203803886,
+    "p95": 1.4494445534911011,
+    "max": 1.802509898369556
+  },
+  "asset_nearest16_official_point_direction_quadrants": {
+    "count": 170918,
+    "min": 1.0,
+    "mean": 2.3923460372810355,
+    "median": 2.0,
+    "p05": 2.0,
+    "p95": 4.0,
+    "max": 4.0
+  },
+  "asset_distinct_training_frames_with_official_road_within1m": {
+    "count": 170918,
+    "min": 0.0,
+    "mean": 4.710908154787676,
+    "median": 6.0,
+    "p05": 0.0,
+    "p95": 8.0,
+    "max": 8.0
+  },
+  "expanded_training_official_road_profile_diagnostic": [
+    {
+      "raw": 60,
+      "points": 1067,
+      "signed_plane_minus_official_road_m": {
+        "count": 1067,
+        "min": -0.48305833395583164,
+        "mean": -0.14591953134150792,
+        "median": -0.1389939079339939,
+        "p05": -0.1795668399823061,
+        "p95": -0.10305860823069751,
+        "max": 0.15991224513751234
+      },
+      "absolute_plane_minus_official_road_m": {
+        "count": 1067,
+        "min": 0.00043408560562596676,
+        "mean": 0.14622008678807427,
+        "median": 0.13899625611608357,
+        "p05": 0.1031820104535118,
+        "p95": 0.17956683998230608,
+        "max": 0.48305833395583164
+      }
+    },
+    {
+      "raw": 70,
+      "points": 1704,
+      "signed_plane_minus_official_road_m": {
+        "count": 1704,
+        "min": -0.477264558893026,
+        "mean": -0.0840652378063796,
+        "median": -0.07371097607311938,
+        "p05": -0.11991292072162042,
+        "p95": -0.03473668878608032,
+        "max": 0.49390300805603005
+      },
+      "absolute_plane_minus_official_road_m": {
+        "count": 1704,
+        "min": 0.0015843909894854846,
+        "mean": 0.08561770772111081,
+        "median": 0.07378792421407887,
+        "p05": 0.035221869835687335,
+        "p95": 0.12192612528762661,
+        "max": 0.49390300805603005
+      }
+    },
+    {
+      "raw": 80,
+      "points": 2426,
+      "signed_plane_minus_official_road_m": {
+        "count": 2426,
+        "min": -0.0943580371444952,
+        "mean": -0.0405411023691111,
+        "median": -0.04242063347479785,
+        "p05": -0.07415852917422239,
+        "p95": -0.00306464544642715,
+        "max": 0.07131931372702027
+      },
+      "absolute_plane_minus_official_road_m": {
+        "count": 2426,
+        "min": 1.514091050580646e-05,
+        "mean": 0.04192997383239221,
+        "median": 0.042814395590673016,
+        "p05": 0.0063400313132015995,
+        "p95": 0.07415852917422239,
+        "max": 0.0943580371444952
+      }
+    },
+    {
+      "raw": 95,
+      "points": 4309,
+      "signed_plane_minus_official_road_m": {
+        "count": 4309,
+        "min": -0.06860735836505327,
+        "mean": -0.007625240699194826,
+        "median": -0.007475504131932098,
+        "p05": -0.04393781941940418,
+        "p95": 0.031052852070112626,
+        "max": 0.10585755605685421
+      },
+      "absolute_plane_minus_official_road_m": {
+        "count": 4309,
+        "min": 7.80017756341067e-06,
+        "mean": 0.01935231730254687,
+        "median": 0.016347452841777965,
+        "p05": 0.0013767995738128036,
+        "p95": 0.0452660931468813,
+        "max": 0.10585755605685421
+      }
+    },
+    {
+      "raw": 110,
+      "points": 5204,
+      "signed_plane_minus_official_road_m": {
+        "count": 5204,
+        "min": -0.06317653952044111,
+        "mean": 0.010707607063376196,
+        "median": 0.012280899446178495,
+        "p05": -0.026917091502023104,
+        "p95": 0.04776988752505193,
+        "max": 0.09910719324529182
+      },
+      "absolute_plane_minus_official_road_m": {
+        "count": 5204,
+        "min": 1.3898259538791535e-06,
+        "mean": 0.02124226299822036,
+        "median": 0.019460555528787893,
+        "p05": 0.0017326863888731836,
+        "p95": 0.04791006198326073,
+        "max": 0.09910719324529182
+      }
+    },
+    {
+      "raw": 125,
+      "points": 5902,
+      "signed_plane_minus_official_road_m": {
+        "count": 5902,
+        "min": -0.09889630573651331,
+        "mean": 0.0051928337086478,
+        "median": 0.006571039408628465,
+        "p05": -0.030105937358336908,
+        "p95": 0.038671087647119504,
+        "max": 0.09732659994461912
+      },
+      "absolute_plane_minus_official_road_m": {
+        "count": 5902,
+        "min": 4.642678756994201e-06,
+        "mean": 0.018532155284340185,
+        "median": 0.01694083736857621,
+        "p05": 0.0017647953793915152,
+        "p95": 0.04013824258851155,
+        "max": 0.09889630573651331
+      }
+    },
+    {
+      "raw": 145,
+      "points": 5878,
+      "signed_plane_minus_official_road_m": {
+        "count": 5878,
+        "min": -0.08894872953613842,
+        "mean": 0.013057260067705202,
+        "median": 0.014913130335237668,
+        "p05": -0.023913130098879166,
+        "p95": 0.04782892046777645,
+        "max": 0.09662348034908419
+      },
+      "absolute_plane_minus_official_road_m": {
+        "count": 5878,
+        "min": 9.596007455314748e-06,
+        "mean": 0.02161267875726196,
+        "median": 0.0196132573257497,
+        "p05": 0.0024926044336345044,
+        "p95": 0.047946037402926016,
+        "max": 0.09662348034908419
+      }
+    },
+    {
+      "raw": 165,
+      "points": 5882,
+      "signed_plane_minus_official_road_m": {
+        "count": 5882,
+        "min": -0.08576627963143224,
+        "mean": 0.015044032575887153,
+        "median": 0.016998018285089955,
+        "p05": -0.02168935282518323,
+        "p95": 0.04981330277890343,
+        "max": 0.10329025347904519
+      },
+      "absolute_plane_minus_official_road_m": {
+        "count": 5882,
+        "min": 8.023938669055042e-07,
+        "mean": 0.022650672941896637,
+        "median": 0.020441247842168053,
+        "p05": 0.0022471256108484994,
+        "p95": 0.050030023321292375,
+        "max": 0.10329025347904519
+      }
+    }
+  ],
+  "inherited_fixed_heldout_scores": [
+    {
+      "raw": 134,
+      "signed_height_error_m": {
+        "count": 187,
+        "min": -0.013435033186716794,
+        "mean": 0.012009970444032163,
+        "median": 0.011819068562697765,
+        "p05": -0.006065067510956723,
+        "p95": 0.02528655516554181,
+        "max": 0.09755080187749599
+      },
+      "absolute_height_error_m": {
+        "count": 187,
+        "min": 8.690392094834465e-05,
+        "mean": 0.013654478167566347,
+        "median": 0.011822510309638545,
+        "p05": 0.0014561155927292901,
+        "p95": 0.02528655516554181,
+        "max": 0.09755080187749599
+      },
+      "normal_error_deg": {
+        "count": 169,
+        "min": 0.7605457834892888,
+        "mean": 6.676989953925247,
+        "median": 6.313736642636679,
+        "p05": 0.9879220988816828,
+        "p95": 13.7831089674442,
+        "max": 21.029418071814284
+      },
+      "threshold_checks_pass": true,
+      "points_trimmed": false
+    },
+    {
+      "raw": 179,
+      "signed_height_error_m": {
+        "count": 181,
+        "min": 0.0011418073890432368,
+        "mean": 0.021020958359852862,
+        "median": 0.020491632632150925,
+        "p05": 0.005514380811899144,
+        "p95": 0.03577054163561755,
+        "max": 0.06493772978512169
+      },
+      "absolute_height_error_m": {
+        "count": 181,
+        "min": 0.0011418073890432368,
+        "mean": 0.021020958359852862,
+        "median": 0.020491632632150925,
+        "p05": 0.005514380811899144,
+        "p95": 0.03577054163561755,
+        "max": 0.06493772978512169
+      },
+      "normal_error_deg": {
+        "count": 148,
+        "min": 0.592610277088903,
+        "mean": 6.587627878798585,
+        "median": 8.465295396067559,
+        "p05": 2.250553107505154,
+        "p95": 9.923591580953916,
+        "max": 11.10750696991282
+      },
+      "threshold_checks_pass": true,
+      "points_trimmed": false
+    },
+    {
+      "raw": 198,
+      "signed_height_error_m": {
+        "count": 185,
+        "min": -0.00105241432949299,
+        "mean": 0.02187925247143072,
+        "median": 0.022005942516631904,
+        "p05": 0.004603415659665444,
+        "p95": 0.03704970801304412,
+        "max": 0.10347154142683479
+      },
+      "absolute_height_error_m": {
+        "count": 185,
+        "min": 0.00105241432949299,
+        "mean": 0.021890629923641453,
+        "median": 0.022005942516631904,
+        "p05": 0.004603415659665444,
+        "p95": 0.03704970801304412,
+        "max": 0.10347154142683479
+      },
+      "normal_error_deg": {
+        "count": 150,
+        "min": 0.8149397917734605,
+        "mean": 7.0419730848336695,
+        "median": 4.2672091917234845,
+        "p05": 1.3437846635910846,
+        "p95": 12.894520246566884,
+        "max": 21.688734935251297
+      },
+      "threshold_checks_pass": true,
+      "points_trimmed": false
+    }
+  ],
+  "inherited_heldout_does_not_measure_entire_expanded_domain": true,
+  "original_LOO_and_heldout_selection_unchanged": true,
+  "GT_bottom_not_fitted": true,
+  "source_coverage_and_material_acceptance": "separate source preparation; no RGB written",
+  "five_view_projection": [
+    {
+      "raw": 86,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/086/view_cache.npz",
+        "bytes": 14647434,
+        "sha256": "5b3ac9ce07d8a7a77f380fa893965252234076bbea16daabcc9194f72ff20c51"
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/edit_footprint_masks_v2/086/scope_masks.npz",
+        "bytes": 16919,
+        "sha256": "4e30aa2defca512fbc891da7706e2d0c4798f454b3096b1fa28c959ece4a7a48"
+      },
+      "regions": {
+        "inside_allowed_edit": {
+          "fixed_pixels": 22225,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 72,
+            "asset_supported": 22153
+          },
+          "asset_supported_in_original_fit_hull": 12512,
+          "asset_supported_model_extrapolation": 9641
+        },
+        "full_original_band": {
+          "fixed_pixels": 22288,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 72,
+            "asset_supported": 22216
+          },
+          "asset_supported_in_original_fit_hull": 12512,
+          "asset_supported_model_extrapolation": 9704
+        },
+        "inside_replacement": {
+          "fixed_pixels": 8312,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 71,
+            "asset_supported": 8241
+          },
+          "asset_supported_in_original_fit_hull": 8241,
+          "asset_supported_model_extrapolation": 0
+        },
+        "K_protected": {
+          "fixed_pixels": 76057,
+          "partition": {
+            "outside_candidate_context": 75916,
+            "candidate_not_in_asset": 141,
+            "asset_supported": 0
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 0
+        },
+        "actor_protected": {
+          "fixed_pixels": 6498,
+          "partition": {
+            "outside_candidate_context": 6425,
+            "candidate_not_in_asset": 3,
+            "asset_supported": 70
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 70
+        }
+      },
+      "GT_bottom_contact": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            -0.05098358957816984,
+            -0.049224973924449245,
+            0.0005235547293871434,
+            0.0022821703831006346,
+            -0.024350709597534603
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.010907239380777867,
+            0.013778636413285028,
+            0.06642175747699497,
+            0.06929315450949503,
+            0.040100196945136446
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        }
+      ],
+      "shader": "neutral geometry, no material or native alpha",
+      "context_photo_only": true,
+      "protects_only_display_not_physical_road": true
+    },
+    {
+      "raw": 110,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/110/view_cache.npz",
+        "bytes": 15021702,
+        "sha256": "00006364e796ecc649562d72f51947b7201cb40b331339ae0d700fc05874b55a"
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/edit_footprint_masks_v2/110/scope_masks.npz",
+        "bytes": 16675,
+        "sha256": "555230f89d8208a4135a67094f87e8fa246ed8c1c31897844a8f6aa2b2287013"
+      },
+      "regions": {
+        "inside_allowed_edit": {
+          "fixed_pixels": 24710,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 95,
+            "asset_supported": 24615
+          },
+          "asset_supported_in_original_fit_hull": 16374,
+          "asset_supported_model_extrapolation": 8241
+        },
+        "full_original_band": {
+          "fixed_pixels": 24752,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 95,
+            "asset_supported": 24657
+          },
+          "asset_supported_in_original_fit_hull": 16374,
+          "asset_supported_model_extrapolation": 8283
+        },
+        "inside_replacement": {
+          "fixed_pixels": 11676,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 95,
+            "asset_supported": 11581
+          },
+          "asset_supported_in_original_fit_hull": 11581,
+          "asset_supported_model_extrapolation": 0
+        },
+        "K_protected": {
+          "fixed_pixels": 79186,
+          "partition": {
+            "outside_candidate_context": 78919,
+            "candidate_not_in_asset": 267,
+            "asset_supported": 0
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 0
+        },
+        "actor_protected": {
+          "fixed_pixels": 10238,
+          "partition": {
+            "outside_candidate_context": 9735,
+            "candidate_not_in_asset": 0,
+            "asset_supported": 503
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 503
+        }
+      },
+      "GT_bottom_contact": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.008277089095784618,
+            0.006945467997955035,
+            0.04645935818461311,
+            0.045127737086783526,
+            0.026702413091285848
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.02795218214218309,
+            0.02697648252146223,
+            0.06928373701115831,
+            0.06830803739043745,
+            0.048130109766312046
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        }
+      ],
+      "shader": "neutral geometry, no material or native alpha",
+      "context_photo_only": true,
+      "protects_only_display_not_physical_road": true
+    },
+    {
+      "raw": 134,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/134/view_cache.npz",
+        "bytes": 14990811,
+        "sha256": "12fea1d4578624d12299a855d23a126ae71d45133587814a52cc3d8a1ff6a877"
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/edit_footprint_masks_v2/134/scope_masks.npz",
+        "bytes": 16892,
+        "sha256": "c04f39d58007710e7a0c0d1dfdc511aca1481f532d5f96ee20be02174b35057b"
+      },
+      "regions": {
+        "inside_allowed_edit": {
+          "fixed_pixels": 25024,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 64,
+            "asset_supported": 24960
+          },
+          "asset_supported_in_original_fit_hull": 15772,
+          "asset_supported_model_extrapolation": 9188
+        },
+        "full_original_band": {
+          "fixed_pixels": 25536,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 64,
+            "asset_supported": 25472
+          },
+          "asset_supported_in_original_fit_hull": 15772,
+          "asset_supported_model_extrapolation": 9700
+        },
+        "inside_replacement": {
+          "fixed_pixels": 11129,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 64,
+            "asset_supported": 11065
+          },
+          "asset_supported_in_original_fit_hull": 11065,
+          "asset_supported_model_extrapolation": 0
+        },
+        "K_protected": {
+          "fixed_pixels": 83975,
+          "partition": {
+            "outside_candidate_context": 83689,
+            "candidate_not_in_asset": 286,
+            "asset_supported": 0
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 0
+        },
+        "actor_protected": {
+          "fixed_pixels": 12694,
+          "partition": {
+            "outside_candidate_context": 11222,
+            "candidate_not_in_asset": 0,
+            "asset_supported": 1472
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 1472
+        }
+      },
+      "GT_bottom_contact": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.007626362768917261,
+            0.006905385942896913,
+            0.049357427964640266,
+            0.04863645113862347,
+            0.028131406953772142
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.03365853772312022,
+            0.03346635431530132,
+            0.0787799207965989,
+            0.07858773738877645,
+            0.05612313755595011
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        }
+      ],
+      "shader": "neutral geometry, no material or native alpha",
+      "context_photo_only": true,
+      "protects_only_display_not_physical_road": true
+    },
+    {
+      "raw": 179,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/179/view_cache.npz",
+        "bytes": 14979674,
+        "sha256": "ca97596c39033af9bd89098e6d9539e7a7886e027a8f0261c585f88e81ad267d"
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/edit_footprint_masks_v2/179/scope_masks.npz",
+        "bytes": 17012,
+        "sha256": "8a94ea903829f72329faf6f2c8c81b89ccbb627c323cb0ef2cd690cb19a53f55"
+      },
+      "regions": {
+        "inside_allowed_edit": {
+          "fixed_pixels": 24922,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 64,
+            "asset_supported": 24858
+          },
+          "asset_supported_in_original_fit_hull": 15951,
+          "asset_supported_model_extrapolation": 8907
+        },
+        "full_original_band": {
+          "fixed_pixels": 25536,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 64,
+            "asset_supported": 25472
+          },
+          "asset_supported_in_original_fit_hull": 15951,
+          "asset_supported_model_extrapolation": 9521
+        },
+        "inside_replacement": {
+          "fixed_pixels": 11302,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 64,
+            "asset_supported": 11238
+          },
+          "asset_supported_in_original_fit_hull": 11238,
+          "asset_supported_model_extrapolation": 0
+        },
+        "K_protected": {
+          "fixed_pixels": 84441,
+          "partition": {
+            "outside_candidate_context": 84117,
+            "candidate_not_in_asset": 324,
+            "asset_supported": 0
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 0
+        },
+        "actor_protected": {
+          "fixed_pixels": 12890,
+          "partition": {
+            "outside_candidate_context": 11147,
+            "candidate_not_in_asset": 0,
+            "asset_supported": 1743
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 1743
+        }
+      },
+      "GT_bottom_contact": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.008878254402926444,
+            0.008363372684062398,
+            0.05326939356816851,
+            0.05275451184930091,
+            0.030816383126119007
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.047080287535962384,
+            0.04717588321422639,
+            0.09506011983668117,
+            0.09515571551494162,
+            0.07111800152545555
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        }
+      ],
+      "shader": "neutral geometry, no material or native alpha",
+      "context_photo_only": true,
+      "protects_only_display_not_physical_road": true
+    },
+    {
+      "raw": 198,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/198/view_cache.npz",
+        "bytes": 14958841,
+        "sha256": "396e42b1b73433b3908cd79a03764465ed9922bd3fce2132d18f7474feb36db9"
+      },
+      "scope_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/edit_footprint_masks_v2/198/scope_masks.npz",
+        "bytes": 16330,
+        "sha256": "2560faeccb346636c15cb4dcbab05ca76ce88c5836305d8000455183307b06a8"
+      },
+      "regions": {
+        "inside_allowed_edit": {
+          "fixed_pixels": 25214,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 65,
+            "asset_supported": 25149
+          },
+          "asset_supported_in_original_fit_hull": 16496,
+          "asset_supported_model_extrapolation": 8653
+        },
+        "full_original_band": {
+          "fixed_pixels": 25536,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 65,
+            "asset_supported": 25471
+          },
+          "asset_supported_in_original_fit_hull": 16496,
+          "asset_supported_model_extrapolation": 8975
+        },
+        "inside_replacement": {
+          "fixed_pixels": 11717,
+          "partition": {
+            "outside_candidate_context": 0,
+            "candidate_not_in_asset": 65,
+            "asset_supported": 11652
+          },
+          "asset_supported_in_original_fit_hull": 11652,
+          "asset_supported_model_extrapolation": 0
+        },
+        "K_protected": {
+          "fixed_pixels": 65384,
+          "partition": {
+            "outside_candidate_context": 65046,
+            "candidate_not_in_asset": 338,
+            "asset_supported": 0
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 0
+        },
+        "actor_protected": {
+          "fixed_pixels": 12939,
+          "partition": {
+            "outside_candidate_context": 11150,
+            "candidate_not_in_asset": 0,
+            "asset_supported": 1789
+          },
+          "asset_supported_in_original_fit_hull": 0,
+          "asset_supported_model_extrapolation": 1789
+        }
+      },
+      "GT_bottom_contact": [
+        {
+          "alias": "a9",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.00946803183596856,
+            0.00915603211850069,
+            0.05474468303512481,
+            0.05443268331765694,
+            0.03195035757681808
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        },
+        {
+          "alias": "a20",
+          "road_minus_GT_bottom_world_Z_m": [
+            0.05281295051873158,
+            0.053164178568472664,
+            0.10173488428352329,
+            0.10208611233326792,
+            0.07744953142599798
+          ],
+          "no_vehicle_geometry_fitted_or_moved": true
+        }
+      ],
+      "shader": "neutral geometry, no material or native alpha",
+      "context_photo_only": true,
+      "protects_only_display_not_physical_road": true
+    }
+  ],
+  "contactsheet": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/independent_audit_v1/five_view_expanded_geometry_contactsheet.png",
+    "bytes": 1585269,
+    "sha256": "24121dea1d0d52a7b7f67c0b7d9e247967247c667ce1e95a832f63c4e2c3c5d4"
+  },
+  "root_approval": "PENDING",
+  "visual_review": "PENDING",
+  "whole_scene_quality": "NOT_ASSESSED",
+  "GPU_forward": 0,
+  "backward": 0,
+  "updates": 0,
+  "seconds": 7.943925380706787
+}

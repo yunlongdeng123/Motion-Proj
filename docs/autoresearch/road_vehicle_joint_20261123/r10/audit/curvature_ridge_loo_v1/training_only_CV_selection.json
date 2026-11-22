@@ -1,0 +1,182 @@
+{
+  "schema": "R10.training_only_curvature_selection.v1",
+  "complete": true,
+  "models": [
+    {
+      "name": "plane",
+      "kind": "plane",
+      "lambda_m4": 0.0,
+      "fold_mean_absolute_height_error_m": [
+        0.13423753159735155,
+        0.07050651831445429,
+        0.035656520008363626,
+        0.011069368538847615,
+        0.03045816837861405,
+        0.014941541712058694,
+        0.02428180561887083,
+        0.0264400452601659
+      ],
+      "mean_fold_MAE_m": 0.04344893742859082,
+      "SE_fold_MAE_m": 0.014467915741717663
+    },
+    {
+      "name": "quadratic_lambda_0",
+      "kind": "quadratic",
+      "lambda_m4": 0.0,
+      "fold_mean_absolute_height_error_m": [
+        0.1331549699875028,
+        0.06885002222237199,
+        0.03227179185088706,
+        0.013881865506762424,
+        0.03102657959945227,
+        0.017284747495159125,
+        0.026023831822284193,
+        0.028030821771181835
+      ],
+      "mean_fold_MAE_m": 0.043815578781950214,
+      "SE_fold_MAE_m": 0.014060255985480387
+    },
+    {
+      "name": "quadratic_lambda_0.001",
+      "kind": "quadratic",
+      "lambda_m4": 0.001,
+      "fold_mean_absolute_height_error_m": [
+        0.13317623923016317,
+        0.06888528658647043,
+        0.03235513706510562,
+        0.01369398507109823,
+        0.030992125802287634,
+        0.017209265072674285,
+        0.02598065605926111,
+        0.027984828025340625
+      ],
+      "mean_fold_MAE_m": 0.04378469036405014,
+      "SE_fold_MAE_m": 0.01407473445447106
+    },
+    {
+      "name": "quadratic_lambda_0.01",
+      "kind": "quadratic",
+      "lambda_m4": 0.01,
+      "fold_mean_absolute_height_error_m": [
+        0.1333292260686431,
+        0.06913636305273778,
+        0.03289134578289089,
+        0.012526075065509795,
+        0.03074133834913529,
+        0.01675630487303603,
+        0.02571451693099439,
+        0.02773866523631281
+      ],
+      "mean_fold_MAE_m": 0.043604229419907506,
+      "SE_fold_MAE_m": 0.014168063548705699
+    },
+    {
+      "name": "quadratic_lambda_0.1",
+      "kind": "quadratic",
+      "lambda_m4": 0.1,
+      "fold_mean_absolute_height_error_m": [
+        0.13378585614782648,
+        0.06992730497785252,
+        0.03421339744279884,
+        0.010693011384844572,
+        0.030310188733954926,
+        0.01582411103897192,
+        0.02526758133824792,
+        0.027393540462656997
+      ],
+      "mean_fold_MAE_m": 0.04342687394089427,
+      "SE_fold_MAE_m": 0.01435780030563722
+    },
+    {
+      "name": "quadratic_lambda_1",
+      "kind": "quadratic",
+      "lambda_m4": 1.0,
+      "fold_mean_absolute_height_error_m": [
+        0.13406958017956636,
+        0.07035989526731916,
+        0.03507847654834614,
+        0.010489521824029633,
+        0.030395408777495882,
+        0.015348025108269724,
+        0.024868785971040835,
+        0.02704857144148202
+      ],
+      "mean_fold_MAE_m": 0.043457283139693714,
+      "SE_fold_MAE_m": 0.014433924322648239
+    },
+    {
+      "name": "quadratic_lambda_10",
+      "kind": "quadratic",
+      "lambda_m4": 10.0,
+      "fold_mean_absolute_height_error_m": [
+        0.13420158841030225,
+        0.07047989157423568,
+        0.03558991986096101,
+        0.010917089041579084,
+        0.030444022401594006,
+        0.015019699384252988,
+        0.02441174020868872,
+        0.026569225182408625
+      ],
+      "mean_fold_MAE_m": 0.04345414700800279,
+      "SE_fold_MAE_m": 0.01446145751636222
+    },
+    {
+      "name": "quadratic_lambda_100",
+      "kind": "quadratic",
+      "lambda_m4": 100.0,
+      "fold_mean_absolute_height_error_m": [
+        0.13423440416955496,
+        0.07050353644296219,
+        0.0356494928791163,
+        0.01105195820304282,
+        0.03045655009372825,
+        0.014948809867641643,
+        0.024296239228963873,
+        0.026454873667135493
+      ],
+      "mean_fold_MAE_m": 0.04344948306901819,
+      "SE_fold_MAE_m": 0.014467347067834549
+    },
+    {
+      "name": "quadratic_lambda_1000",
+      "kind": "quadratic",
+      "lambda_m4": 1000.0,
+      "fold_mean_absolute_height_error_m": [
+        0.13423722092791984,
+        0.07050621638833571,
+        0.03565580932723765,
+        0.011067611738998834,
+        0.03045800428410853,
+        0.014942282304948365,
+        0.024283240011800267,
+        0.026441553120937877
+      ],
+      "mean_fold_MAE_m": 0.04344899226303589,
+      "SE_fold_MAE_m": 0.01446785888074613
+    }
+  ],
+  "train_frames": [
+    60,
+    70,
+    80,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "best_mean_model": "quadratic_lambda_0.1",
+  "best_mean_plus_SE_limit_m": 0.05778467424653149,
+  "one_SE_preferred_model": "plane",
+  "best_mean_quadratic": "quadratic_lambda_0.1",
+  "one_SE_quadratic": "quadratic_lambda_1000",
+  "heldout_read_before_selection": false,
+  "selected_from_training_only": true,
+  "production_geometry_approved": false,
+  "contract": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/curvature_ridge_loo_v1/curvature_selection_contract.json",
+    "bytes": 2609,
+    "sha256": "38315fd79a356806f01477bea21149c8e1890aa05a7e9568d41a59aeda806eab"
+  }
+}

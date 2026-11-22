@@ -1,0 +1,85 @@
+{
+  "schema": "R8.DGGT_main_only_forward.v1",
+  "complete": false,
+  "phase": "failed_preserved",
+  "repository": "/root/autodl-tmp/dggt",
+  "revision": "a3276d2bbe4cbb03bcc117830b1836110a27adeb",
+  "source_pins": {
+    "dggt/models/vggt.py": "87e7a4632d30ac8aeab53fd9deea784e4747f6bd41e55be3c6cd890c88208733",
+    "dggt/heads/dpt_head.py": "051eb1507fd5288d9a7f8ffccf01bc26eb6e19d8e6f1301f010d78aeca7fac63",
+    "dggt/heads/head_act.py": "23830364fedc10ce92ba310e1c9a92f8a16cde043514d6faac075c2b3bd9a6ca",
+    "dggt/utils/pose_enc.py": "cc01606b046b2f3db5141f4e6512a61172d1df2913b2aef485d1adb88e18e342",
+    "dggt/utils/geometry.py": "1c9e624e7caf9cef7e5326e575f8d9b55fb0287278c9c28b128f81e69ca117b3"
+  },
+  "checkpoint": "/root/autodl-tmp/dggt/pretrained/model_latest_waymo.pth",
+  "checkpoint_sha256": "352652738a5480b8d3ee9dd521ce07b528e5a297bd3feca4d07427dac6d87def",
+  "checkpoint_bytes": 5411266466,
+  "input_bundle": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/inputs/forward_smoke_five_views/input_bundle.npz",
+  "input_bundle_sha256": "34754200f13a5d8f68bb969689f3ae325847f7e09fbb485400b9d994e2eae7a5",
+  "input_contract_sha256": "220c7a1c7749eeda3277ef71d8e50cf2e1a610a781d24a5331f2452d6a5f7dda",
+  "input_shape": [
+    5,
+    3,
+    350,
+    518
+  ],
+  "raw_frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "timestamp_micros": [
+    1507240556444187,
+    1507240558844353,
+    1507240561244228,
+    1507240565744244,
+    1507240567644232
+  ],
+  "elapsed_seconds": [
+    0.0,
+    2.400166,
+    4.800041,
+    9.300057,
+    11.200045
+  ],
+  "official_normalized_time": [
+    0.0,
+    0.26787459336100883,
+    0.5357167091739364,
+    1.0379486198492955,
+    1.25
+  ],
+  "model_input_fields": [
+    "images_srgb"
+  ],
+  "known_cameras_are_model_inputs": false,
+  "network_input_resized_again": false,
+  "time_semantics": "one front image per actual frame; true Unix microseconds, elapsed seconds and official N/4 normalized time are separate; no camera-count grouping",
+  "dtype": "float32",
+  "strict_checkpoint_loading": true,
+  "model_forward_attempts": 1,
+  "completed_model_forward_calls": 1,
+  "native_Gaussian_F": 0,
+  "native_Gaussian_B": 0,
+  "Gaussian_renderer_calls": 0,
+  "training_updates": 0,
+  "diffusion_calls": 0,
+  "Difix_loaded": false,
+  "LPIPS_loaded": false,
+  "GT_depth_loaded": false,
+  "TAPIP_3D_motion_loaded": false,
+  "DGGT_sky_raster_api_attempts": 1,
+  "DGGT_sky_raster_api_completed": 0,
+  "DGGT_sky_camera_raster_attempts": 4,
+  "DGGT_sky_raster_F": 0,
+  "state_tensor_keys": 1991,
+  "torch": "2.4.1+cu121",
+  "GPU_device": "NVIDIA GeForce RTX 4080 SUPER",
+  "model_forward_seconds": 1.3103725910186768,
+  "error": "RuntimeError('Ninja is required to load C++ extensions')",
+  "traceback": "Traceback (most recent call last):\n  File \"/root/autodl-tmp/envs/worldsim-v81/lib/python3.10/site-packages/gsplat/cuda/_backend.py\", line 166, in <module>\n    from gsplat import csrc as _C\nImportError: cannot import name 'csrc' from 'gsplat' (/root/autodl-tmp/envs/worldsim-v81/lib/python3.10/site-packages/gsplat/__init__.py)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/code/minimal_forward.py\", line 175, in main\n    with torch.inference_mode():sky_raw=model.sky_model(images[None],E4,intrinsic[0].float())\n  File \"/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/root/autodl-tmp/dggt/dggt/models/sky.py\", line 299, in forward\n    bg_render, _, _  = rasterization(\n  File \"/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/code/minimal_forward.py\", line 168, in counted_sky\n    result=original_raster(*positional,**kwargs)\n  File \"/root/autodl-tmp/envs/worldsim-v81/lib/python3.10/site-packages/gsplat/rendering.py\", line 409, in rasterization\n    proj_results = fully_fused_projection(\n  File \"/root/autodl-tmp/envs/worldsim-v81/lib/python3.10/site-packages/gsplat/cuda/_wrapper.py\", line 404, in fully_fused_projection\n    return _FullyFusedProjectionPacked.apply(\n  File \"/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/autograd/function.py\", line 574, in apply\n    return super().apply(*args, **kwargs)  # type: ignore[misc]\n  File \"/root/autodl-tmp/envs/worldsim-v81/lib/python3.10/site-packages/gsplat/cuda/_wrapper.py\", line 1606, in forward\n    camera_model_type = _make_lazy_cuda_obj(\n  File \"/root/autodl-tmp/envs/worldsim-v81/lib/python3.10/site-packages/gsplat/cuda/_wrapper.py\", line 24, in _make_lazy_cuda_obj\n    from ._backend import _C\n  File \"/root/autodl-tmp/envs/worldsim-v81/lib/python3.10/site-packages/gsplat/cuda/_backend.py\", line 199, in <module>\n    _C = load_extension(\n  File \"/root/autodl-tmp/envs/worldsim-v81/lib/python3.10/site-packages/gsplat/cuda/_backend.py\", line 79, in load_extension\n    compiled = _jit_compile(\n  File \"/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/utils/cpp_extension.py\", line 1722, in _jit_compile\n    _write_ninja_file_and_build_library(\n  File \"/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/utils/cpp_extension.py\", line 1804, in _write_ninja_file_and_build_library\n    verify_ninja_availability()\n  File \"/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/utils/cpp_extension.py\", line 1853, in verify_ninja_availability\n    raise RuntimeError(\"Ninja is required to load C++ extensions\")\nRuntimeError: Ninja is required to load C++ extensions\n",
+  "elapsed_seconds_total": 26.14193105697632,
+  "CUDA_initialized_on_failure": true
+}

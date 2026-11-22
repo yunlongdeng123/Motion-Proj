@@ -1,0 +1,54 @@
+{
+  "schema": "R9.independent_joint_persistent_lifecycle_gate.v1",
+  "complete": true,
+  "decision": "PASS",
+  "checks": {
+    "persisted_asset_independent_PASS": true,
+    "fresh_native_float_parity_independent_PASS": true,
+    "replay_independent_PASS": true,
+    "all_five_native_frames_read_back": true,
+    "source_field_exact": true
+  },
+  "source_field_sha256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+  "frozen_invariants": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_persistent_asset_audit_v1/frozen_invariants.json",
+    "bytes": 60599,
+    "sha256": "1b2cf3a343a5b7e7357215713f767f1b24b4a1842bfeffdf62418647f0b9f908"
+  },
+  "independent_evidence": {
+    "persisted_asset": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_persistent_asset_audit_v1/smoke6_v2_CPU_assets.json",
+      "bytes": 11188,
+      "sha256": "80efe9311d0a243d7ea0c3787a158a6d39ec4cb74c7b2dcf154c227f89f66b66"
+    },
+    "fresh_native_float_parity": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_persistent_asset_audit_v1/smoke6_v2_native_float_readback.json",
+      "bytes": 20920,
+      "sha256": "a554d36fee5a0239e9531d6f6dab87082c1ea454ac1f603a200d5cb819d79c56"
+    },
+    "replay": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_persistent_asset_audit_v1/smoke6_v2_independent_replay.json",
+      "bytes": 1226375,
+      "sha256": "8a2e05d41643ffd23481250591c0d64d04b8b356b16ee9aea4a4f593292778a5"
+    }
+  },
+  "strict_restore_leaf_count": 1290,
+  "strict_restore_all_bytes_exact": true,
+  "next_step_replay_leaf_count": 1291,
+  "next_step_replay_bitexact": false,
+  "next_step_replay_parameter_max_abs": 2.9802322387695312e-08,
+  "next_step_replay_optimizer_state_max_abs": 2.2737367544323206e-13,
+  "next_step_replay_maximum_error_over_registered_bound": 0.04790521038651312,
+  "formal400_method_configuration_unchanged": true,
+  "original_strict_replay_failure_preserved": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_smoke6_v1/restore_replay.json",
+    "bytes": 311,
+    "sha256": "d007697635990ba031848b736db01b59f1fb3a5cbc716bea45e3898004dbdaed"
+  },
+  "scope": "Independent persisted-array, measured K-freeze, exact fresh native float parity, and state restore/bounded replay checks; final fitted image quality remains a separate review.",
+  "root_GPU_scheduling_is_external": true,
+  "auditor_GPU_forward": 0,
+  "auditor_GPU_backward": 0,
+  "diffusion_calls": 0,
+  "updates": 0
+}

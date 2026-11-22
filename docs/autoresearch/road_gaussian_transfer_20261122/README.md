@@ -1,5 +1,7 @@
 # 065 相似道路高斯迁移
 
+**来源纠正（ROAD-NATIVE-SOURCE-CORRECTION-20261122）**：本组主00／02路块来自加工道路`road_surface_residual_20261121_r2/appearance_fit/asset`。原始历史数据与数值保留为加工道路对照；不作为未编辑原生重建源迁移证据。[原生来源与可见集合历史诊断](../road_native_source_transfer_20261122/README.md)。
+
 本轮完成“原资产 → 直接迁移、0步优化 → 局部接缝拟合400步”。参考路块的三维分布与颜色变化已写入持久道路资产；局部拟合改善零步版本的训练外观和覆盖指标，但覆盖仍弱于原资产，实图仍有黑色细缝、短缺口与车辆形状残留。实验保留为研究候选，未替换默认场景，human_verdict 与 problem_solved 均为 null。
 
 ![组件与数据流](architecture_components.svg)

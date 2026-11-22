@@ -1,0 +1,939 @@
+{
+  "schema": "R10.local_geometry_candidate_five_view_CPU_projection.v1",
+  "complete": true,
+  "decision": "INDEPENDENT_GEOMETRY_VISUAL_REVIEW_PENDING",
+  "candidate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/candidate_geometry.npz",
+    "bytes": 4459551,
+    "sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a"
+  },
+  "rows": [
+    {
+      "raw": 86,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/086/view_cache.npz",
+        "bytes": 14647434,
+        "sha256": "5b3ac9ce07d8a7a77f380fa893965252234076bbea16daabcc9194f72ff20c51"
+      },
+      "fixed_evaluation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/fixed_eval_v1_replay1/086/fixed_eval.npz",
+        "bytes": 3477043,
+        "sha256": "656a9919b451e567a52dd1bb206d7bfacce211f94e6408ddc00aba663f98c589"
+      },
+      "regions": {
+        "full_original_band": {
+          "fixed_pixels": 22288,
+          "candidate_context_supported": 10792,
+          "explicit_asset_scope_supported": 8312,
+          "partition": {
+            "no_candidate_context": 11496,
+            "candidate_context_outside_asset_scope": 2480,
+            "asset_behind_body_or_K": 1631,
+            "asset_display_visible": 6681
+          }
+        },
+        "ground_band_before_support": {
+          "fixed_pixels": 14155,
+          "candidate_context_supported": 8100,
+          "explicit_asset_scope_supported": 6681,
+          "partition": {
+            "no_candidate_context": 6055,
+            "candidate_context_outside_asset_scope": 1419,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 6681
+          }
+        },
+        "ground_eval": {
+          "fixed_pixels": 12844,
+          "candidate_context_supported": 7075,
+          "explicit_asset_scope_supported": 5676,
+          "partition": {
+            "no_candidate_context": 5769,
+            "candidate_context_outside_asset_scope": 1399,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 5676
+          }
+        },
+        "red_diagnostic": {
+          "fixed_pixels": 357,
+          "candidate_context_supported": 357,
+          "explicit_asset_scope_supported": 357,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 357
+          }
+        },
+        "blue_cyan_diagnostic": {
+          "fixed_pixels": 3389,
+          "candidate_context_supported": 1106,
+          "explicit_asset_scope_supported": 1008,
+          "partition": {
+            "no_candidate_context": 2283,
+            "candidate_context_outside_asset_scope": 98,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 1008
+          }
+        },
+        "dark_context_diagnostic": {
+          "fixed_pixels": 817,
+          "candidate_context_supported": 727,
+          "explicit_asset_scope_supported": 723,
+          "partition": {
+            "no_candidate_context": 90,
+            "candidate_context_outside_asset_scope": 4,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 723
+          }
+        }
+      },
+      "GT_contact": [
+        {
+          "alias": "a9",
+          "GT_bottom_world_points": [
+            [
+              2315.505674119158,
+              1365.7969722927949,
+              -20.76841798394865
+            ],
+            [
+              2315.509791268601,
+              1367.8961830944068,
+              -20.7479537787617
+            ],
+            [
+              2320.133108808509,
+              1365.7881113711987,
+              -20.790451472365476
+            ],
+            [
+              2320.137225957952,
+              1367.8873221728106,
+              -20.76998726717853
+            ],
+            [
+              2317.8214500385548,
+              1366.8421472328027,
+              -20.769202625563587
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            -0.05098358957816984,
+            -0.049224973924449245,
+            0.0005235547293871434,
+            0.0022821703831006346,
+            -0.024350709597534603
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        },
+        {
+          "alias": "a20",
+          "GT_bottom_world_points": [
+            [
+              2323.7742259771,
+              1365.9134448555717,
+              -20.776244715537658
+            ],
+            [
+              2323.849017834668,
+              1368.412210319394,
+              -20.752216922236123
+            ],
+            [
+              2328.771931693039,
+              1365.7640978482727,
+              -20.80140516627289
+            ],
+            [
+              2328.846723550607,
+              1368.262863312095,
+              -20.77737737297135
+            ],
+            [
+              2326.310474763853,
+              1367.0881540838334,
+              -20.776811044254504
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.010907239380777867,
+            0.013778636413285028,
+            0.06642175747699497,
+            0.06929315450949503,
+            0.040100196945136446
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        }
+      ],
+      "default_context_photo_is_display_only": true,
+      "geometric_grid_is_not_RGB_material": true,
+      "PNGs": {
+        "original_pinhole_photo.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/086/original_pinhole_photo.png",
+          "bytes": 1013860,
+          "sha256": "eb28e7de70d22221754d9883134860883a7db1f86b85588579c13e559592b00c"
+        },
+        "candidate_geometry_surface_only.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/086/candidate_geometry_surface_only.png",
+          "bytes": 8060,
+          "sha256": "8b2c31fa1aa5ffe15e2d82420ec22dc6f0cad0b0f8c4c7fa77d45fc2cf1739f5"
+        },
+        "candidate_geometry_photo_context.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/086/candidate_geometry_photo_context.png",
+          "bytes": 1014489,
+          "sha256": "b08d7dbeae351dd0c0934b639a8c0f678b1018a3af33b67d7f7077df5c0b3f56"
+        },
+        "candidate_geometry_depth.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/086/candidate_geometry_depth.png",
+          "bytes": 3977,
+          "sha256": "a340b1e280c9b4fa4f8f1cb2a9f1a961dd90626fa90933e84fdacdadb1aff61f"
+        }
+      }
+    },
+    {
+      "raw": 110,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/110/view_cache.npz",
+        "bytes": 15021702,
+        "sha256": "00006364e796ecc649562d72f51947b7201cb40b331339ae0d700fc05874b55a"
+      },
+      "fixed_evaluation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/fixed_eval_v1_replay1/110/fixed_eval.npz",
+        "bytes": 6591830,
+        "sha256": "dea0f926f119f7ee3b703b9258614785c39fad1a72f886cc533f60015089a3eb"
+      },
+      "regions": {
+        "full_original_band": {
+          "fixed_pixels": 24752,
+          "candidate_context_supported": 15275,
+          "explicit_asset_scope_supported": 11676,
+          "partition": {
+            "no_candidate_context": 9477,
+            "candidate_context_outside_asset_scope": 3599,
+            "asset_behind_body_or_K": 2159,
+            "asset_display_visible": 9517
+          }
+        },
+        "ground_band_before_support": {
+          "fixed_pixels": 14560,
+          "candidate_context_supported": 11514,
+          "explicit_asset_scope_supported": 9517,
+          "partition": {
+            "no_candidate_context": 3046,
+            "candidate_context_outside_asset_scope": 1997,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 9517
+          }
+        },
+        "ground_eval": {
+          "fixed_pixels": 12636,
+          "candidate_context_supported": 9835,
+          "explicit_asset_scope_supported": 7860,
+          "partition": {
+            "no_candidate_context": 2801,
+            "candidate_context_outside_asset_scope": 1975,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 7860
+          }
+        },
+        "red_diagnostic": {
+          "fixed_pixels": 692,
+          "candidate_context_supported": 692,
+          "explicit_asset_scope_supported": 692,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 692
+          }
+        },
+        "blue_cyan_diagnostic": {
+          "fixed_pixels": 4575,
+          "candidate_context_supported": 2134,
+          "explicit_asset_scope_supported": 1951,
+          "partition": {
+            "no_candidate_context": 2441,
+            "candidate_context_outside_asset_scope": 183,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 1951
+          }
+        },
+        "dark_context_diagnostic": {
+          "fixed_pixels": 1204,
+          "candidate_context_supported": 968,
+          "explicit_asset_scope_supported": 952,
+          "partition": {
+            "no_candidate_context": 236,
+            "candidate_context_outside_asset_scope": 16,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 952
+          }
+        }
+      },
+      "GT_contact": [
+        {
+          "alias": "a9",
+          "GT_bottom_world_points": [
+            [
+              2315.4867692637067,
+              1365.8129168007024,
+              -20.827630863529674
+            ],
+            [
+              2315.4875571599205,
+              1367.9120993338427,
+              -20.804097993013666
+            ],
+            [
+              2320.114256551071,
+              1365.8112767119233,
+              -20.83626278942351
+            ],
+            [
+              2320.1150444472846,
+              1367.9104592450635,
+              -20.812729918907504
+            ],
+            [
+              2317.8009068554957,
+              1366.861688022883,
+              -20.82018039121859
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.008277089095784618,
+            0.006945467997955035,
+            0.04645935818461311,
+            0.045127737086783526,
+            0.026702413091285848
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        },
+        {
+          "alias": "a20",
+          "GT_bottom_world_points": [
+            [
+              2323.777198359631,
+              1365.91503854075,
+              -20.793253814816477
+            ],
+            [
+              2323.8519909287534,
+              1368.4137640329604,
+              -20.765379342964707
+            ],
+            [
+              2328.774951622717,
+              1365.7655668250306,
+              -20.804232317153023
+            ],
+            [
+              2328.8497441918394,
+              1368.2642923172414,
+              -20.77635784530125
+            ],
+            [
+              2326.313471275735,
+              1367.0896654289957,
+              -20.784805830058865
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.02795218214218309,
+            0.02697648252146223,
+            0.06928373701115831,
+            0.06830803739043745,
+            0.048130109766312046
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        }
+      ],
+      "default_context_photo_is_display_only": true,
+      "geometric_grid_is_not_RGB_material": true,
+      "PNGs": {
+        "original_pinhole_photo.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/110/original_pinhole_photo.png",
+          "bytes": 978473,
+          "sha256": "65bf081cd8ec6944817f00d7268b13a1f5bc5bf37c53897e77c82c44db18a239"
+        },
+        "candidate_geometry_surface_only.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/110/candidate_geometry_surface_only.png",
+          "bytes": 8535,
+          "sha256": "9861e9569cc8800bd82683e61e773f9125ee5f7a422beceb3e58d99f2969986c"
+        },
+        "candidate_geometry_photo_context.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/110/candidate_geometry_photo_context.png",
+          "bytes": 981004,
+          "sha256": "ea5d438689d141f0361dd0337f5cf1390682b9c699b24daab5af5f3fd78ba498"
+        },
+        "candidate_geometry_depth.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/110/candidate_geometry_depth.png",
+          "bytes": 4160,
+          "sha256": "6f26f986cfb2d28f08cf098b7c2d584aa278a92036cdafc9720dac6130e91865"
+        }
+      }
+    },
+    {
+      "raw": 134,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/134/view_cache.npz",
+        "bytes": 14990811,
+        "sha256": "12fea1d4578624d12299a855d23a126ae71d45133587814a52cc3d8a1ff6a877"
+      },
+      "fixed_evaluation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/fixed_eval_v1_replay1/134/fixed_eval.npz",
+        "bytes": 6703503,
+        "sha256": "c2d330457538b9f6a268e4ebb88ec04fa71a174d2e175076181716a1146b1ac5"
+      },
+      "regions": {
+        "full_original_band": {
+          "fixed_pixels": 25536,
+          "candidate_context_supported": 14680,
+          "explicit_asset_scope_supported": 11129,
+          "partition": {
+            "no_candidate_context": 10856,
+            "candidate_context_outside_asset_scope": 3551,
+            "asset_behind_body_or_K": 2358,
+            "asset_display_visible": 8771
+          }
+        },
+        "ground_band_before_support": {
+          "fixed_pixels": 13769,
+          "candidate_context_supported": 10495,
+          "explicit_asset_scope_supported": 8771,
+          "partition": {
+            "no_candidate_context": 3274,
+            "candidate_context_outside_asset_scope": 1724,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 8771
+          }
+        },
+        "ground_eval": {
+          "fixed_pixels": 11743,
+          "candidate_context_supported": 8743,
+          "explicit_asset_scope_supported": 7038,
+          "partition": {
+            "no_candidate_context": 3000,
+            "candidate_context_outside_asset_scope": 1705,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 7038
+          }
+        },
+        "red_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        },
+        "blue_cyan_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        },
+        "dark_context_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        }
+      },
+      "GT_contact": [
+        {
+          "alias": "a9",
+          "GT_bottom_world_points": [
+            [
+              2315.4861596714945,
+              1365.8126628390128,
+              -20.826986717564473
+            ],
+            [
+              2315.486947566352,
+              1367.9118521281687,
+              -20.80406441989257
+            ],
+            [
+              2320.1136389918756,
+              1365.8110589985877,
+              -20.839167107190104
+            ],
+            [
+              2320.114426886733,
+              1367.9102482877438,
+              -20.8162448095182
+            ],
+            [
+              2317.8002932791137,
+              1366.8614555633783,
+              -20.821615763541338
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.007626362768917261,
+            0.006905385942896913,
+            0.049357427964640266,
+            0.04863645113862347,
+            0.028131406953772142
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        },
+        {
+          "alias": "a20",
+          "GT_bottom_world_points": [
+            [
+              2323.7764050769474,
+              1365.9147126962255,
+              -20.79896868453401
+            ],
+            [
+              2323.8511975173024,
+              1368.4134468089503,
+              -20.771877638566814
+            ],
+            [
+              2328.774149735577,
+              1365.7652796543287,
+              -20.81373666112686
+            ],
+            [
+              2328.8489421759314,
+              1368.2640137670535,
+              -20.786645615159664
+            ],
+            [
+              2326.3126736264394,
+              1367.0893632316395,
+              -20.792807149846837
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.03365853772312022,
+            0.03346635431530132,
+            0.0787799207965989,
+            0.07858773738877645,
+            0.05612313755595011
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        }
+      ],
+      "default_context_photo_is_display_only": true,
+      "geometric_grid_is_not_RGB_material": true,
+      "PNGs": {
+        "original_pinhole_photo.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/134/original_pinhole_photo.png",
+          "bytes": 966309,
+          "sha256": "33ff1f1a3611d3d0f9518fc7a85cb454ffda2b30ab918f5c81bf9e36e05bf9e6"
+        },
+        "candidate_geometry_surface_only.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/134/candidate_geometry_surface_only.png",
+          "bytes": 8750,
+          "sha256": "f25a2501d542e6b4d70d0b0512a11be58d5bcca1b19fa0791714ed83160ddb5c"
+        },
+        "candidate_geometry_photo_context.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/134/candidate_geometry_photo_context.png",
+          "bytes": 968484,
+          "sha256": "f70cc516316db61e8d5b638e64fdddf27310ab45874e6e236e1d8a17cc0c5c04"
+        },
+        "candidate_geometry_depth.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/134/candidate_geometry_depth.png",
+          "bytes": 4329,
+          "sha256": "5a44ae95a536db4dee88029e3cac1d4e09db4ac2ea5e7b8705173d5f4d81b482"
+        }
+      }
+    },
+    {
+      "raw": 179,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/179/view_cache.npz",
+        "bytes": 14979674,
+        "sha256": "ca97596c39033af9bd89098e6d9539e7a7886e027a8f0261c585f88e81ad267d"
+      },
+      "fixed_evaluation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/fixed_eval_v1_replay1/179/fixed_eval.npz",
+        "bytes": 6736502,
+        "sha256": "258067a4b59baba682b152d47034988f4ad356fc8920be86205d179b2a6a6664"
+      },
+      "regions": {
+        "full_original_band": {
+          "fixed_pixels": 25536,
+          "candidate_context_supported": 14816,
+          "explicit_asset_scope_supported": 11302,
+          "partition": {
+            "no_candidate_context": 10720,
+            "candidate_context_outside_asset_scope": 3514,
+            "asset_behind_body_or_K": 2520,
+            "asset_display_visible": 8782
+          }
+        },
+        "ground_band_before_support": {
+          "fixed_pixels": 13741,
+          "candidate_context_supported": 10486,
+          "explicit_asset_scope_supported": 8782,
+          "partition": {
+            "no_candidate_context": 3255,
+            "candidate_context_outside_asset_scope": 1704,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 8782
+          }
+        },
+        "ground_eval": {
+          "fixed_pixels": 11821,
+          "candidate_context_supported": 8833,
+          "explicit_asset_scope_supported": 7149,
+          "partition": {
+            "no_candidate_context": 2988,
+            "candidate_context_outside_asset_scope": 1684,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 7149
+          }
+        },
+        "red_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        },
+        "blue_cyan_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        },
+        "dark_context_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        }
+      },
+      "GT_contact": [
+        {
+          "alias": "a9",
+          "GT_bottom_world_points": [
+            [
+              2315.485703665201,
+              1365.8125695507904,
+              -20.828242509291304
+            ],
+            [
+              2315.4864915587377,
+              1367.9117610800477,
+              -20.80552628304874
+            ],
+            [
+              2320.113175229461,
+              1365.810993305334,
+              -20.843082730662694
+            ],
+            [
+              2320.1139631229976,
+              1367.9101848345913,
+              -20.82036650442013
+            ],
+            [
+              2317.7998333940996,
+              1366.861377192691,
+              -20.824304506855718
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.008878254402926444,
+            0.008363372684062398,
+            0.05326939356816851,
+            0.05275451184930091,
+            0.030816383126119007
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        },
+        {
+          "alias": "a20",
+          "GT_bottom_world_points": [
+            [
+              2323.77581147747,
+              1365.9145944380368,
+              -20.812395477627867
+            ],
+            [
+              2323.8506037924653,
+              1368.413331657671,
+              -20.78559217869609
+            ],
+            [
+              2328.773547759376,
+              1365.7651910418206,
+              -20.83002164350589
+            ],
+            [
+              2328.8483400743708,
+              1368.2639282614548,
+              -20.803218344574113
+            ],
+            [
+              2326.3120757759207,
+              1367.0892613497458,
+              -20.80780691110099
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.047080287535962384,
+            0.04717588321422639,
+            0.09506011983668117,
+            0.09515571551494162,
+            0.07111800152545555
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        }
+      ],
+      "default_context_photo_is_display_only": true,
+      "geometric_grid_is_not_RGB_material": true,
+      "PNGs": {
+        "original_pinhole_photo.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/179/original_pinhole_photo.png",
+          "bytes": 965230,
+          "sha256": "139df535cfffc062f68aa22b54aa86b8d7265c27452774ac9b7838bb133f48bd"
+        },
+        "candidate_geometry_surface_only.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/179/candidate_geometry_surface_only.png",
+          "bytes": 8808,
+          "sha256": "94be4adbb41157436d8fef910ceed62089928144f10477e6127927ecad155f88"
+        },
+        "candidate_geometry_photo_context.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/179/candidate_geometry_photo_context.png",
+          "bytes": 967797,
+          "sha256": "b1dca1bc1deeb4427829e3b33ccd542c93e092ec467b724cb3010c02f3e8b62c"
+        },
+        "candidate_geometry_depth.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/179/candidate_geometry_depth.png",
+          "bytes": 4354,
+          "sha256": "fb6b79893ef644f4da82b53dbd18b3c9848adf924d4ac1396639b17909b23299"
+        }
+      }
+    },
+    {
+      "raw": 198,
+      "camera": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/198/view_cache.npz",
+        "bytes": 14958841,
+        "sha256": "396e42b1b73433b3908cd79a03764465ed9922bd3fce2132d18f7474feb36db9"
+      },
+      "fixed_evaluation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/fixed_eval_v1_replay1/198/fixed_eval.npz",
+        "bytes": 6746266,
+        "sha256": "7f47011f54594ab195ca2c585020263204d9668f605e7cd1fda8d016dc4a8dc5"
+      },
+      "regions": {
+        "full_original_band": {
+          "fixed_pixels": 25536,
+          "candidate_context_supported": 15365,
+          "explicit_asset_scope_supported": 11717,
+          "partition": {
+            "no_candidate_context": 10171,
+            "candidate_context_outside_asset_scope": 3648,
+            "asset_behind_body_or_K": 2607,
+            "asset_display_visible": 9110
+          }
+        },
+        "ground_band_before_support": {
+          "fixed_pixels": 14055,
+          "candidate_context_supported": 10930,
+          "explicit_asset_scope_supported": 9110,
+          "partition": {
+            "no_candidate_context": 3125,
+            "candidate_context_outside_asset_scope": 1820,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 9110
+          }
+        },
+        "ground_eval": {
+          "fixed_pixels": 12183,
+          "candidate_context_supported": 9303,
+          "explicit_asset_scope_supported": 7503,
+          "partition": {
+            "no_candidate_context": 2880,
+            "candidate_context_outside_asset_scope": 1800,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 7503
+          }
+        },
+        "red_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        },
+        "blue_cyan_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        },
+        "dark_context_diagnostic": {
+          "fixed_pixels": 0,
+          "candidate_context_supported": 0,
+          "explicit_asset_scope_supported": 0,
+          "partition": {
+            "no_candidate_context": 0,
+            "candidate_context_outside_asset_scope": 0,
+            "asset_behind_body_or_K": 0,
+            "asset_display_visible": 0
+          }
+        }
+      },
+      "GT_contact": [
+        {
+          "alias": "a9",
+          "GT_bottom_world_points": [
+            [
+              2315.48555201557,
+              1365.8124871727446,
+              -20.828834126745523
+            ],
+            [
+              2315.4863399086094,
+              1367.9116808874198,
+              -20.80632075939949
+            ],
+            [
+              2320.1130206582484,
+              1365.8109189932115,
+              -20.844559793531506
+            ],
+            [
+              2320.1138085512875,
+              1367.9101127078866,
+              -20.822046426185473
+            ],
+            [
+              2317.799680283429,
+              1366.8612999403156,
+              -20.8254402764655
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.00946803183596856,
+            0.00915603211850069,
+            0.05474468303512481,
+            0.05443268331765694,
+            0.03195035757681808
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        },
+        {
+          "alias": "a20",
+          "GT_bottom_world_points": [
+            [
+              2323.7756140348843,
+              1365.9144883660606,
+              -20.818130523762925
+            ],
+            [
+              2323.850406302659,
+              1368.4132283158283,
+              -20.791582828636617
+            ],
+            [
+              2328.7733471614392,
+              1365.765093527487,
+              -20.836698720780074
+            ],
+            [
+              2328.848139429214,
+              1368.2638334772546,
+              -20.810151025653767
+            ],
+            [
+              2326.311876732049,
+              1367.0891609216576,
+              -20.814140774708346
+            ]
+          ],
+          "candidate_road_minus_GT_bottom_Z_m": [
+            0.05281295051873158,
+            0.053164178568472664,
+            0.10173488428352329,
+            0.10208611233326792,
+            0.07744953142599798
+          ],
+          "GT_bottom_is_indirect_crosscheck_not_dense_road_truth": true
+        }
+      ],
+      "default_context_photo_is_display_only": true,
+      "geometric_grid_is_not_RGB_material": true,
+      "PNGs": {
+        "original_pinhole_photo.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/198/original_pinhole_photo.png",
+          "bytes": 952102,
+          "sha256": "062ed97346517015dff49c899179e472dbbec91cb01b6a410b789002ae1eca2b"
+        },
+        "candidate_geometry_surface_only.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/198/candidate_geometry_surface_only.png",
+          "bytes": 8656,
+          "sha256": "0cc0214ddcab0e895b3ae0a6f505d8b00c0f7aa23e886bb9b58510b341a44182"
+        },
+        "candidate_geometry_photo_context.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/198/candidate_geometry_photo_context.png",
+          "bytes": 954412,
+          "sha256": "498c685b0ac2cef47b904ef373095964b07ccdc54d67d76b8efcd02f60fe8020"
+        },
+        "candidate_geometry_depth.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/198/candidate_geometry_depth.png",
+          "bytes": 4362,
+          "sha256": "18e0fb5c3a08f70ca0dfd04a87c596fbe06550873eb87872e68d94a1b91ecf49"
+        }
+      }
+    }
+  ],
+  "contactsheet": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/five_view_geometry_v1/five_view_geometry_contactsheet.png",
+    "bytes": 1518818,
+    "sha256": "e9f9d824062a23abb24b36bdfde5be975aaec94531986f281c6e6af9af2a4db6"
+  },
+  "shader": "neutral geometric grid only, no teacher/photo RGB used as new material",
+  "overlay": "original pinhole photo as context; body/K only excluded in display, actual projected geometry scope and all fixed denominators preserved",
+  "root_geometry_acceptance": "PENDING",
+  "new_Gaussian_asset_created": false,
+  "new_GPU_forward": 0,
+  "updates": 0,
+  "elapsed_seconds": 52.4879891872406
+}

@@ -1,5 +1,7 @@
 # 源块质量核查与源颜色修复对照
 
+**来源纠正（ROAD-NATIVE-SOURCE-CORRECTION-20261122）**：本组主00／02路块来自加工道路`road_surface_residual_20261121_r2/appearance_fit/asset`。原始历史数据与数值保留为加工道路对照；不作为未编辑原生重建源迁移证据。[原生来源与可见集合历史诊断](../road_native_source_transfer_20261122/README.md)。
+
 当前“直接搬运现成源高斯”的版本未成功。进一步固定几何、尺度与不透明度，只用真实照片重拟合源块颜色400步，仍未恢复跨视角细纹理。因此停止搬运这份修复候选，不增加目标区拟合步骤。
 
 ![本次组件与数据流](architecture_components.svg)

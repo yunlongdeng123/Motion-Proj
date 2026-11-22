@@ -1,0 +1,246 @@
+{
+  "schema": "R10.noncolour_ground_unowned_zero_step_scope.v1",
+  "complete": true,
+  "decision": "SCOPE_VALID_DIAGNOSTIC_ONLY",
+  "policy": "ground_band_all_unowned_Kfree_oldguardfree_body_overlap_allowed",
+  "baseline_contract_sha256": "fd95066c0ae9cffe33080e64619d24a9466dcfa6ec61ab92aa5f1c980ef00f4d",
+  "measurement_contract": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_measure_contract_v2.json",
+    "sha256": "79b03ab5ef0a76e9e45824f275471aded417a4cbcb913a93f4df951046b7d17a",
+    "bytes": 4818
+  },
+  "actual_attribution_receipt": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/receipt.json",
+    "sha256": "947696307a5e6c92f9a468256dc6b8634fa7cd23bc8ef33bae8591b71439813e",
+    "bytes": 29213
+  },
+  "actual_attribution_receipt_sha256": "947696307a5e6c92f9a468256dc6b8634fa7cd23bc8ef33bae8591b71439813e",
+  "context_plan": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/context_plan.json",
+    "sha256": "b272ba45023960011f68132b595d594a0fa55d84f08e3a01a745b8c51a42a271",
+    "bytes": 393836
+  },
+  "diagnostic_candidates": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/ground_unowned_policy_v1/diagnostic_native_candidates.npz",
+    "sha256": "d9a8db863bbddba3dc8bf4ee397262184dad28d2cb603c72ea7d31cdba8431eb",
+    "bytes": 1033272
+  },
+  "candidate_npz_sha256": "d9a8db863bbddba3dc8bf4ee397262184dad28d2cb603c72ea7d31cdba8431eb",
+  "diagnostic_gate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/ground_unowned_policy_v1/diagnostic_gate0.npz",
+    "sha256": "95d0af2a82f76c1de36546c51bd89b03a35c15f350c63cd89f5ba397a9a846d7",
+    "bytes": 39519
+  },
+  "gate_npz_sha256": "95d0af2a82f76c1de36546c51bd89b03a35c15f350c63cd89f5ba397a9a846d7",
+  "input_packets": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/086/all_context_rows.npz",
+      "sha256": "f7a9d46e1e12776f74f3db74c7d18ed51d49b2605f754cf963e61b1cb6ba56f0",
+      "bytes": 3168057
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/110/all_context_rows.npz",
+      "sha256": "ad9c5a4144af0bd1706564dec00454f8b1fc0fdb3528107f57083d575f62a55b",
+      "bytes": 3032127
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/134/all_context_rows.npz",
+      "sha256": "e05d81fa9a94f1a5690e4253efbd76fef208f5f654a4a464f728c198eb0cba35",
+      "bytes": 2863951
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/179/all_context_rows.npz",
+      "sha256": "5a334e510c6196d8ce399a890b5614767782bc77692a785a1b169d1c38cf79a7",
+      "bytes": 2665937
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/measure_v1/198/all_context_rows.npz",
+      "sha256": "390ee3de196b85a53361f9bcd4773fdaca536c1d35fd4ed33fbed8999fea77b9",
+      "bytes": 2485133
+    }
+  ],
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "candidate_rows": 22816,
+  "initial_noncolour_union_rows": 24850,
+  "native_owner_values": [
+    -1
+  ],
+  "rule": "native prefix; present all 5 views; every measured owner<=0; exact all-5 K mass zero; permanent old guard excluded; any positive contribution to registered full non-colour ground band; body overlap allowed solely for actual zero-step readout",
+  "ground_band_definition": {
+    "x_pad": 30,
+    "bottom_start": -12,
+    "bottom_end": 100
+  },
+  "selection_uses_RGB_or_red_blue_masks": false,
+  "selection_uses_source_target_residual": false,
+  "K_exact_zero": true,
+  "old_permanent_guard_preserved": true,
+  "body_overlap_allowed_only_for_counterfactual": true,
+  "canonical_native21_and_other_positive_owners_fixed": true,
+  "rows": [
+    {
+      "raw": 86,
+      "K_alphaT_mass": 0.0,
+      "body_alphaT_mass": 1566.3462081472253,
+      "ground_alphaT_mass": 3129.7547246197287,
+      "certified_ground_alphaT_mass": 2215.3372913119097,
+      "red_alphaT_mass": 318.42959936940275,
+      "blue_alphaT_mass": 1429.4986909354034,
+      "dark_alphaT_mass": 641.7230169026726,
+      "body_touch_rows": 9747,
+      "ground_touch_rows": 16460
+    },
+    {
+      "raw": 110,
+      "K_alphaT_mass": 0.0,
+      "body_alphaT_mass": 1738.3314040202563,
+      "ground_alphaT_mass": 4689.946950713733,
+      "certified_ground_alphaT_mass": 3323.776412919934,
+      "red_alphaT_mass": 606.5378703894239,
+      "blue_alphaT_mass": 2085.001110419157,
+      "dark_alphaT_mass": 849.4064551465985,
+      "body_touch_rows": 9908,
+      "ground_touch_rows": 15817
+    },
+    {
+      "raw": 134,
+      "K_alphaT_mass": 0.0,
+      "body_alphaT_mass": 1730.4403408676199,
+      "ground_alphaT_mass": 4658.860884473441,
+      "certified_ground_alphaT_mass": 3264.5977392026216,
+      "red_alphaT_mass": 0.0,
+      "blue_alphaT_mass": 0.0,
+      "dark_alphaT_mass": 0.0,
+      "body_touch_rows": 10081,
+      "ground_touch_rows": 15393
+    },
+    {
+      "raw": 179,
+      "K_alphaT_mass": 0.0,
+      "body_alphaT_mass": 1866.311804697575,
+      "ground_alphaT_mass": 4747.8843348776245,
+      "certified_ground_alphaT_mass": 3337.646862789775,
+      "red_alphaT_mass": 0.0,
+      "blue_alphaT_mass": 0.0,
+      "dark_alphaT_mass": 0.0,
+      "body_touch_rows": 10279,
+      "ground_touch_rows": 15113
+    },
+    {
+      "raw": 198,
+      "K_alphaT_mass": 0.0,
+      "body_alphaT_mass": 1994.911744236388,
+      "ground_alphaT_mass": 4715.335819526491,
+      "certified_ground_alphaT_mass": 3310.137096106425,
+      "red_alphaT_mass": 0.0,
+      "blue_alphaT_mass": 0.0,
+      "dark_alphaT_mass": 0.0,
+      "body_touch_rows": 10529,
+      "ground_touch_rows": 15388
+    }
+  ],
+  "overlapping_rejection_ledger": {
+    "missing_from_any_view": {
+      "rows": 1065,
+      "ground_alphaT_by_view": [
+        654.8475431037024,
+        133.92838859599942,
+        90.45056338399644,
+        40.46926686678353,
+        40.87595611278573
+      ],
+      "blue_alphaT_by_view": [
+        211.98557751570456,
+        57.72446445191815,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "not_native_in_any_view": {
+      "rows": 1065,
+      "ground_alphaT_by_view": [
+        654.8475431037024,
+        133.92838859599942,
+        90.45056338399644,
+        40.46926686678353,
+        40.87595611278573
+      ],
+      "blue_alphaT_by_view": [
+        211.98557751570456,
+        57.72446445191815,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "retained_positive_owner": {
+      "rows": 0,
+      "ground_alphaT_by_view": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "blue_alphaT_by_view": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "any_K_positive": {
+      "rows": 1033,
+      "ground_alphaT_by_view": [
+        1193.4127435013793,
+        1267.8953933363562,
+        1306.3441625006924,
+        1472.8851737152495,
+        1462.9237489533784
+      ],
+      "blue_alphaT_by_view": [
+        577.2926926923889,
+        565.5727905860044,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "permanent_old_guard": {
+      "rows": 0,
+      "ground_alphaT_by_view": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "blue_alphaT_by_view": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "CPU_only": true,
+  "nativeF": 0,
+  "nativeB": 0,
+  "updates": 0,
+  "new_geometry": false,
+  "production_asset_ready": false,
+  "quality_accepted": false,
+  "optimization_allowed": false,
+  "original_native_identity_gate_not_modified": true,
+  "actual_zero_step_all_five_K_strictV_body_unknown_coverage_required": true,
+  "seconds": 0.9890768527984619
+}

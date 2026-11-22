@@ -1,0 +1,113 @@
+{
+  "schema": "R10.expanded_training_LOO_curvature_contract.v1",
+  "complete": true,
+  "written_before_training_read_and_fit": true,
+  "unchanged_family_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/select_curvature_ridge_loo_cpu.py",
+    "bytes": 9359,
+    "sha256": "3901517bc7671c8cfe968c40a7b2a32358634081b857e8f05109f75c393b3122"
+  },
+  "parent_expansion_scope": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/expanded_candidate_geometry.npz",
+    "bytes": 26316748,
+    "sha256": "1844e3596414a7cbe128167db615bece0f6ff7ec7a638f5ebb6163d60aee848d"
+  },
+  "input_official_road_evidence": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/ground_contact_prior_raw_GT_v2/GT_bottom_and_road_evidence.npz",
+    "bytes": 7924322,
+    "sha256": "51e1988c1ea817ccff86eca0376c1dc52889f6555e40ec8f4b740638a9f9115b"
+  },
+  "train_frames": [
+    60,
+    70,
+    80,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "sealed_heldout_frames": [
+    134,
+    179,
+    198
+  ],
+  "requested_mask_key": "requested_cell_asset_mask",
+  "requested_before_old_credibility_screen": true,
+  "fit_context": "XY Euclidean distance <=.4m from pre-screen requested cell centres, whose footprint already includes .2m blend ring",
+  "context_m": 0.4,
+  "medoid_origin_XY_m": [
+    2318.9315742523454,
+    1364.0710364404392
+  ],
+  "fit_centre_XY_m": [
+    2328.097190956565,
+    1367.0906853716008
+  ],
+  "point_filter": "Original official ROAD18/LANE19; finite worldXYZ and declared XY context only. No Z, residual, OBB or 2D semantic pruning.",
+  "models": [
+    {
+      "name": "plane",
+      "kind": "plane",
+      "lambda_m4": 0.0
+    },
+    {
+      "name": "quadratic_lambda_0",
+      "kind": "quadratic",
+      "lambda_m4": 0.0
+    },
+    {
+      "name": "quadratic_lambda_0.001",
+      "kind": "quadratic",
+      "lambda_m4": 0.001
+    },
+    {
+      "name": "quadratic_lambda_0.01",
+      "kind": "quadratic",
+      "lambda_m4": 0.01
+    },
+    {
+      "name": "quadratic_lambda_0.1",
+      "kind": "quadratic",
+      "lambda_m4": 0.1
+    },
+    {
+      "name": "quadratic_lambda_1",
+      "kind": "quadratic",
+      "lambda_m4": 1.0
+    },
+    {
+      "name": "quadratic_lambda_10",
+      "kind": "quadratic",
+      "lambda_m4": 10.0
+    },
+    {
+      "name": "quadratic_lambda_100",
+      "kind": "quadratic",
+      "lambda_m4": 100.0
+    },
+    {
+      "name": "quadratic_lambda_1000",
+      "kind": "quadratic",
+      "lambda_m4": 1000.0
+    }
+  ],
+  "loss": "Unchanged mean Huber.03m IRLS8, actual0.1m medoids; lambda*(4*bxx^2+2*bxy^2+4*byy^2), affine terms unpenalized",
+  "CV": "Leave one of8 training frames out; medoids reselected from remaining points; ALL original held-out-training-frame points untrimmed MAE, equal frame weight",
+  "selection": "Minimum mean fold MAE; oneSE bound then prefer plane, else largest lambda; retain best quadratic separately",
+  "bootstrap": "512 frame-cluster draws seed20261123, fixed selected lambda; medoid rows weighted by sampled frame counts, same prior implementation",
+  "heldout": "No heldout input read in select phase. Evaluate phase uses finite originalLiDAR within identical XY context, original OBB margin and original-photo road0 erode2; no Z/residual trim.",
+  "fixed_heldout_thresholds": {
+    "min_points_per_view": 50,
+    "absolute_height_median_max_m": 0.04,
+    "absolute_height_p95_max_m": 0.1,
+    "min_normals_per_view": 20,
+    "min_normals_total": 100,
+    "normal_median_max_deg": 10.0,
+    "normal_p95_max_deg": 20.0
+  },
+  "all_geometry_is_model_inferred": true,
+  "activation": false,
+  "GPU_forward": 0,
+  "updates": 0
+}

@@ -1,0 +1,706 @@
+{
+  "schema": "R10.expanded_LOO_independent_CPU_integrity.v1",
+  "complete": true,
+  "decision": "PIPELINE_INTEGRITY_PASS_PHYSICAL_GEOMETRY_NOT_ACCEPTED",
+  "CPU_only": true,
+  "nativeF": 0,
+  "nativeB": 0,
+  "updates": 0,
+  "new_models_fitted": 0,
+  "inputs": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/training_points.npz",
+      "sha256": "c9f4fca210c550ca849af36c37bb787d76fab736b193850b65479577c82ced50",
+      "bytes": 102243
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/all_training_model_coefficients.npz",
+      "sha256": "09902565bf236f40bcc34380723f4364f0322f55c4817459ce0085da62ded15f",
+      "bytes": 11346
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/training_original_point_predictions.npz",
+      "sha256": "90407568afb3cfe6c793869f395965035c23337932721c6fb7d425cc22a59bb0",
+      "bytes": 466911
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/training_only_CV_selection.json",
+      "sha256": "158720e70b3ac2d77c7738b466f0a0297e9a4a1ca23a564d6f9e394a077821a8",
+      "bytes": 54998
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/training_data_receipt.json",
+      "sha256": "141b6b336338c1bd5d8d6c7998b0dc3d1f14da9557f2f4377a28412f36135df3",
+      "bytes": 2743
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/curvature_selection_contract.json",
+      "sha256": "78f1842364a9cb01ec1a30b0454c0a115f12c0cb37eb93c3f3aca8f34ffa2469",
+      "bytes": 3786
+    }
+  ],
+  "code": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/select_expanded_curvature_loo_cpu.py",
+    "sha256": "af500dba0a07c1a01369b1b09698df0655eb245093b017219d76786753af4a56",
+    "bytes": 14629
+  },
+  "original_fit_family": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/select_curvature_ridge_loo_cpu.py",
+    "sha256": "3901517bc7671c8cfe968c40a7b2a32358634081b857e8f05109f75c393b3122",
+    "bytes": 9359
+  },
+  "official_original_points": 385161,
+  "actual_XY_context_selected_points": 3276,
+  "medoids": 1289,
+  "finite_and_XY_only_selection_independently_reproduced": true,
+  "point_IDs_world_values_exact": true,
+  "medoids_independently_recomputed": true,
+  "all_original_leftout_points_untrimmed": true,
+  "fold_denominators": [
+    {
+      "leftout_raw": 60,
+      "original_eval_points": 204,
+      "training_medoids": 1175,
+      "heldout_frame_not_in_fit_medoids": true
+    },
+    {
+      "leftout_raw": 70,
+      "original_eval_points": 252,
+      "training_medoids": 1172,
+      "heldout_frame_not_in_fit_medoids": true
+    },
+    {
+      "leftout_raw": 80,
+      "original_eval_points": 334,
+      "training_medoids": 1149,
+      "heldout_frame_not_in_fit_medoids": true
+    },
+    {
+      "leftout_raw": 95,
+      "original_eval_points": 472,
+      "training_medoids": 1078,
+      "heldout_frame_not_in_fit_medoids": true
+    },
+    {
+      "leftout_raw": 110,
+      "original_eval_points": 498,
+      "training_medoids": 1122,
+      "heldout_frame_not_in_fit_medoids": true
+    },
+    {
+      "leftout_raw": 125,
+      "original_eval_points": 510,
+      "training_medoids": 1229,
+      "heldout_frame_not_in_fit_medoids": true
+    },
+    {
+      "leftout_raw": 145,
+      "original_eval_points": 506,
+      "training_medoids": 1276,
+      "heldout_frame_not_in_fit_medoids": true
+    },
+    {
+      "leftout_raw": 165,
+      "original_eval_points": 500,
+      "training_medoids": 1264,
+      "heldout_frame_not_in_fit_medoids": true
+    }
+  ],
+  "models": [
+    {
+      "name": "plane",
+      "kind": "plane",
+      "lambda_m4": 0.0,
+      "mean": 0.043569466214590874,
+      "SE": 0.014228099808194918,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.13067179304476895,
+          "p95_abs_m": 0.14793437043983457,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.06459603833721772,
+          "p95_abs_m": 0.08149280038463295,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.031914628105667475,
+          "p95_abs_m": 0.0514398039870059,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.009995146319415227,
+          "p95_abs_m": 0.032140184996190854,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.03598670959716799,
+          "p95_abs_m": 0.04786350937980045,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.01615192619461503,
+          "p95_abs_m": 0.030593102320752043,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.029059524619043486,
+          "p95_abs_m": 0.04341903923513968,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.03217567974396118,
+          "p95_abs_m": 0.0547577735096409,
+          "old_height_band_pass": true
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_0",
+      "kind": "quadratic",
+      "lambda_m4": 0.0,
+      "mean": 0.04256708143513892,
+      "SE": 0.014017230486178308,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.13006294098980575,
+          "p95_abs_m": 0.14666226998103152,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.0653103641822419,
+          "p95_abs_m": 0.08257089401999486,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.03224579321848964,
+          "p95_abs_m": 0.050297200254895105,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.008671060355275984,
+          "p95_abs_m": 0.027426485857574064,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.03557190334555216,
+          "p95_abs_m": 0.052498913868591,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.016766784745495755,
+          "p95_abs_m": 0.033865342422059,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.02749285966057613,
+          "p95_abs_m": 0.04425080340407206,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.03134782175271589,
+          "p95_abs_m": 0.05449918535049729,
+          "old_height_band_pass": true
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_0.001",
+      "kind": "quadratic",
+      "lambda_m4": 0.001,
+      "mean": 0.04256677190727653,
+      "SE": 0.014017677453477333,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.13006850838453943,
+          "p95_abs_m": 0.146665359627449,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.06531208369088404,
+          "p95_abs_m": 0.08257469412991404,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.03225519744968608,
+          "p95_abs_m": 0.05030107362518947,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.008661252778836115,
+          "p95_abs_m": 0.02744160253456015,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.03556353906968823,
+          "p95_abs_m": 0.05247824134128502,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.01676290821185944,
+          "p95_abs_m": 0.0338342297876764,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.027485159790632707,
+          "p95_abs_m": 0.04422608768009262,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.031342602382903095,
+          "p95_abs_m": 0.05448301838501414,
+          "old_height_band_pass": true
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_0.01",
+      "kind": "quadratic",
+      "lambda_m4": 0.01,
+      "mean": 0.042564253737844455,
+      "SE": 0.014021489046932735,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.1301165849677588,
+          "p95_abs_m": 0.14669205515649428,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.06532689270164482,
+          "p95_abs_m": 0.0826074576284391,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.03233176712258512,
+          "p95_abs_m": 0.05033422841520689,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.008577765213477306,
+          "p95_abs_m": 0.027575068200602702,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.03549200395815433,
+          "p95_abs_m": 0.052301391968713015,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.016702446466535292,
+          "p95_abs_m": 0.03356885758495575,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.02745940449078077,
+          "p95_abs_m": 0.04401537578559456,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.031298104459127174,
+          "p95_abs_m": 0.054345655852536895,
+          "old_height_band_pass": true
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_0.1",
+      "kind": "quadratic",
+      "lambda_m4": 0.1,
+      "mean": 0.042559410292685076,
+      "SE": 0.01404507385585529,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.13043994408272042,
+          "p95_abs_m": 0.1468799610921106,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.06560029307147275,
+          "p95_abs_m": 0.08283549457811965,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.032671779112980914,
+          "p95_abs_m": 0.05055486733093204,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.0082115076241287,
+          "p95_abs_m": 0.028479699003278822,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.0348493450230869,
+          "p95_abs_m": 0.05114649564178106,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.01603797051940603,
+          "p95_abs_m": 0.031786654833910424,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.02702808338575835,
+          "p95_abs_m": 0.04284332842470029,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.03068244016916033,
+          "p95_abs_m": 0.05340055004536968,
+          "old_height_band_pass": true
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_1",
+      "kind": "quadratic",
+      "lambda_m4": 1.0,
+      "mean": 0.04259813238623912,
+      "SE": 0.014089178609175999,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.1310923364406058,
+          "p95_abs_m": 0.14727657094910035,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.06640978489492966,
+          "p95_abs_m": 0.08320684528559674,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.033641483052910814,
+          "p95_abs_m": 0.05106564279561354,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.007811800527523616,
+          "p95_abs_m": 0.02845795962838124,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.03387487839074055,
+          "p95_abs_m": 0.050324112386434895,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.015278209897223505,
+          "p95_abs_m": 0.029623572457844638,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.026556280989510128,
+          "p95_abs_m": 0.0411857543280334,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.02983459526569021,
+          "p95_abs_m": 0.05245326979568538,
+          "old_height_band_pass": true
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_10",
+      "kind": "quadratic",
+      "lambda_m4": 10.0,
+      "mean": 0.042729692709476484,
+      "SE": 0.014162682819072752,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.13111753113659574,
+          "p95_abs_m": 0.14755453959992834,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.0661500161743227,
+          "p95_abs_m": 0.08261642878531461,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.03331571489623997,
+          "p95_abs_m": 0.05116635747952783,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.00825770546324378,
+          "p95_abs_m": 0.02986635065669745,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.034359618561335736,
+          "p95_abs_m": 0.04928615178375394,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.015160236626840629,
+          "p95_abs_m": 0.029430048534598897,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.026231618030600146,
+          "p95_abs_m": 0.04145004838683164,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.029654623282315384,
+          "p95_abs_m": 0.05300548061256513,
+          "old_height_band_pass": true
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_100",
+      "kind": "quadratic",
+      "lambda_m4": 100.0,
+      "mean": 0.0432403718423454,
+      "SE": 0.01422846877344127,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.13083175425914462,
+          "p95_abs_m": 0.1473014277141292,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.06493806047716788,
+          "p95_abs_m": 0.08164386293076475,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.0324126422696267,
+          "p95_abs_m": 0.05134265492312549,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.009332217456663017,
+          "p95_abs_m": 0.03168897288421134,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.03522112984156678,
+          "p95_abs_m": 0.04881320398488782,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.015883729835119098,
+          "p95_abs_m": 0.03053801622941474,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.02799770994694839,
+          "p95_abs_m": 0.042846942872563076,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.03175549714715231,
+          "p95_abs_m": 0.0542179485379961,
+          "old_height_band_pass": true
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_1000",
+      "kind": "quadratic",
+      "lambda_m4": 1000.0,
+      "mean": 0.043524006328940906,
+      "SE": 0.01422914562315607,
+      "actual_requested_height": [
+        {
+          "raw": 60,
+          "actual_requested_original_points": 103,
+          "median_abs_m": 0.13072014519033814,
+          "p95_abs_m": 0.14793003434803395,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 70,
+          "actual_requested_original_points": 115,
+          "median_abs_m": 0.06462715692614651,
+          "p95_abs_m": 0.08151502915363303,
+          "old_height_band_pass": false
+        },
+        {
+          "raw": 80,
+          "actual_requested_original_points": 145,
+          "median_abs_m": 0.03197469004879494,
+          "p95_abs_m": 0.05142597651101253,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 95,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.009937278711596775,
+          "p95_abs_m": 0.03209193188121303,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 110,
+          "actual_requested_original_points": 213,
+          "median_abs_m": 0.03593230848496631,
+          "p95_abs_m": 0.04797694429217429,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 125,
+          "actual_requested_original_points": 214,
+          "median_abs_m": 0.016080282336018215,
+          "p95_abs_m": 0.030584510411689428,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 145,
+          "actual_requested_original_points": 211,
+          "median_abs_m": 0.02891885585012588,
+          "p95_abs_m": 0.04334948366497571,
+          "old_height_band_pass": true
+        },
+        {
+          "raw": 165,
+          "actual_requested_original_points": 212,
+          "median_abs_m": 0.03206780824937461,
+          "p95_abs_m": 0.054697942093070925,
+          "old_height_band_pass": true
+        }
+      ]
+    }
+  ],
+  "best_mean_model": "quadratic_lambda_0.1",
+  "oneSE_bound_m": 0.056604484148540364,
+  "oneSE_preferred": "plane",
+  "all_nine_models_fail_some_actual_requested_height_band": true,
+  "heldout_clouds_images_semantics_not_read_by_this_checker": true,
+  "GT_boxes_not_used_for_fit_or_verification": true,
+  "no_OS_open_tracing_claim": true,
+  "interpretation": "Selection/fold implementation integrity is separate from geometry acceptance. Saved original-point predictions, fixed denominators and one-SE selection were independently replayed; no heldout generalization or pose-bias conclusion is inferred.",
+  "geometry_approved": false,
+  "seconds": 2.398456573486328
+}

@@ -20,16 +20,10 @@
 
 远端现场：/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/。代码为scripts/worldsim_v82/road_material_field/独立通用实验入口，原生30K与既有008/029/065结果保留。沿用V82-F06；后续重点由本轮候选和生成图像决定，不把少量拟合收益写成通用方法成立。AutoDL保持开机，无关机动作。
 
-## ROAD-GAUSSIAN-TRANSFER-20261122
+## ROAD-VEHICLE-JOINT-20261123
 
-065相似路面高斯迁移已完成原资产/零步迁移/局部拟合400步及五视角公共重载。[算法、组件、结果与来源](autoresearch/road_gaussian_transfer_20261122/README.md)。采用局部保距三维路块与完整协方差旋转，新增扩散0次；smoke10和恢复探针2次丢弃。零步到拟合的固定C/S覆盖改善、保护区RGB/alpha差0；覆盖仍弱于原资产，细裂缝、短缺口和joint车形残留仍在，未晋升默认资产，human_verdict/problem_solved=null。原报告增加实验组，资产/完整状态取回，GPU按用户要求保持开机。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+更新：2026-11-23（Asia/Singapore）。065保留原A20车辆，完成相机与时间对齐、共享道路外观、局部新高斯及五视角联合对照。[交付导航](autoresearch/road_vehicle_joint_20261123/README.md)与[固定评价和资源](autoresearch/road_vehicle_joint_20261123/compact_result.json)。当前仍有明显蓝灰残影，整场景未通过，未晋升资产。
 
-源质量补充 `ROAD-GAUSSIAN-SOURCE-QUALITY-20261122`：[原尺寸核查与固定源RGB控制](autoresearch/road_gaussian_source_quality_20261122/README.md)。1920原生核心确认当前源块存在弱纹理对应；仅核心RGB、真实照片98/137训练400步后，本次未拟合的86/110/173查询细高频对应均下降，86颜色误差也回退。因此暂停搬运这份源修复候选，不增加目标更新或扩散；完整源几何/尺度重建尚未测试，不据此物理否定全部搬运方法。最终资格掩码重放与旧工程臂分账、资产取回验证完成，人工verdict/problem_solved保持null，GPU按用户要求开机。
+共享输入的颜色与接缝检查通过；独立高斯核心平均色偏低，但高频纹理保真尚未建立。按旧二维范围及独立道路覆盖进行整核替换，均未得到合格联合画面。两次全局不透明度短程分别在2、3次更新后触发各自保护读出，未进入正式优化；结论仅限本轮合同。旧表示正式预算仍400/2000，本阶段新增正式更新0。下一技术重点为局部混合足迹的支撑分解，以及预滤取样与高斯纹理转换的独立对照。无待启动GPU控制器；实例按用户要求保持开机。
 
-源材质优先 `ROAD-SOURCE-FIDELITY-20261122`：[00／02实拍与固定高斯颜色链路](autoresearch/road_source_fidelity_20261122/README.md)。同物理面积、原生像素人工核验选02／115实拍、117复核，00／137对照；本次保存加载和常色渲染未引入偏色，历史RGB拟合与原照片Brown／原生针孔相机不一致分别核验。固定几何实测颜色算子、有界求解及相机校正改善参考色调，但跨视角纹理与86色调仍有退化，未找到通过本轮检查的可迁移源高斯；目标迁移／融合和新扩散均0。918F／1B中反向仅为贡献测量，12通道RGB求解、梯度优化更新0；完整包、CPU恢复和原报告同页对照保留。原资产不改，GPU保持开机；human_verdict/problem_solved=null，沿用V82-F06。
-
-本轮七臂仅覆盖单参考与链路诊断，未测试多帧参考池；对应400步随机训练对照另在road_source_multiframe_20261122_r3记录。
-
-参考数量配对 `ROAD-SOURCE-MULTIFRAME-20261122`：[source02两帧／八帧各400步及恢复入口](autoresearch/road_source_multiframe_20261122/README.md)。共同原始900核心RGB、固定形状与halo、共享核心外真实道路曝光，seed0均衡每步两帧；主QUERY100／110／117的原始Brown域平均MAE .008283→.007765，HF相关 .1250→.1977，117略回退且纹理能量下降。说明多帧参考池有可测收益，不能用此前单／双参考诊断提前否定；本轮限固定核心颜色对照，干净核心单独原生渲染与后续搬运另记。1684F／1612B、正式800更新与smoke6分列，QUERY核心未入loss或曝光，86单列曝光较弱stress；目标迁移／融合和新扩散均0，沿用V82-F06，human_verdict/problem_solved=null。
-
-干净核心验证 `ROAD-CLEAN-CORE-TRANSFER-20261122`：[独立组件、零步迁移与恢复](autoresearch/road_clean_core_transfer_20261122/README.md)。实际导出00／02核心1598／900行，原生黑／灰底彩图无二维遮图mask；4版本共12源视角、20目标视角。原始02五目标视角内缩3px∩alpha≥.95的RGB/alpha色度>.15像素均0；110帧评分3483像素，完整物理投影5585中3896达到alpha≥.95、其中2像素高色度，保存裁片外部中alpha仍有灰底彩尾。全部源RGB／sigma／opacity及刚体结构保留，NPZ重载渲染差0。107F／0B，优化与新扩散0，父道路未修改或叠加。旧r1/r2迁移本已只复制core，不能把彩边全归halo；覆盖和边界仍待后续处理。沿用V82-F06，human_verdict/problem_solved=null，GPU保持开机。
+历史[00／02来源纠正与原生对照](autoresearch/road_native_source_transfer_20261122/README.md)保留。旧R7未通过结论、原版DGGT原场景控制和各代失败均在交付索引中分别记录；人工verdict与problem_solved保持null。

@@ -1,0 +1,122 @@
+{
+  "schema": "R9.independent_shared_field_numeric_acceptance.v1",
+  "complete": true,
+  "decision": "PASS",
+  "final_atlas_sha256": "8ad4b9594ef5e14f9f77ebf57a395ebf3da410bb435eb2170f6b2558de9886dd",
+  "contract": {
+    "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/acceptance_contract_v1.json",
+    "bytes": 1974,
+    "sha256": "19ca13e479d743bd2c196d09836d38db572d386b26e53b7a42c4cc5a166eb07a"
+  },
+  "independent_metrics": {
+    "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/cpu_review/joint_shared_v1/independent_metrics.json",
+    "bytes": 11704,
+    "sha256": "df1ab3f0e73a05593d8b30b3191161a641c1013b51c06ccc32947ae640056a3a"
+  },
+  "source_sampling_qualification": {
+    "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/cpu_review/joint_shared_v1/source_sampling_qualification_audit.json",
+    "bytes": 6349,
+    "sha256": "542728568b387fefb07f64b0d1cc44fe3cc9b4956e602b5cd3eaab4da7a15470"
+  },
+  "fixed_pairs": [
+    {
+      "raw_frames": [
+        86,
+        110
+      ],
+      "fixed_pair_texels": 43624,
+      "fixed_channel_samples": 130872,
+      "full_RGB_before": 0.017454931961560692,
+      "full_RGB_after": 0.0129451817241474,
+      "full_RGB_improvement": 0.25836538620400695,
+      "LF_sigma_m": 0.12,
+      "LF_before": 0.012434109307805318,
+      "LF_after": 0.005145700899908604,
+      "LF_improvement": 0.5861624847805971,
+      "LF_pass": true,
+      "real_overlap_texels": 4030,
+      "robust_zero_weight_samples_not_removed": 0
+    }
+  ],
+  "boundary_LF_jump": {
+    "count": 88248,
+    "mean": 0.0005099534288029086,
+    "p50": 0.00021044242228408783,
+    "p95": 0.0020777197468857785,
+    "p99": 0.004703088292790325,
+    "max": 0.013250454778354293
+  },
+  "seed_boundary_LF_jump": {
+    "count": 88248,
+    "mean": 0.00034728742441460713,
+    "p50": 0.00011371589378007807,
+    "p95": 0.0016207945462680866,
+    "p99": 0.004193008416322154,
+    "max": 0.011542245226367737
+  },
+  "checks": {
+    "contract_SHA": true,
+    "field_SHA": true,
+    "state_SHA": true,
+    "seed_SHA": true,
+    "real_6407": true,
+    "real_RGB_byteexact_seed": true,
+    "real_RGB_byteexact_actual_observation": true,
+    "outside_permission_RGB_byteexact": true,
+    "permission_exact_seed": true,
+    "real_locks_exact_seed": true,
+    "source1_exact_real": true,
+    "all_RGB_finite": true,
+    "linear_RGB_range": true,
+    "permission_unknown_zero": true,
+    "teacher_support_exact": true,
+    "teacher_adoption_exact": true,
+    "kind3_exact_adoption": true,
+    "all_fixed_pairs_LF_contract_pass": true,
+    "fixed_denominator_matches_producer": true,
+    "full_RGB_fusion_replay_with_float32_export_tolerance": true,
+    "boundary_LF_contract_pass": true,
+    "fixed1792_partition_complete": true,
+    "all_view_authorized_unknown_zero": true
+  },
+  "fixed1792": {
+    "fixed_mask": {
+      "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/road_shared_appearance_20261122_r7/cpu_review/black_rim_domain_diagnostic_v1/fixed_primary1792_masks.npz",
+      "bytes": 10397,
+      "sha256": "e61ed417890f471094756818d2c852ae11e4af1db9e78a17584b131d4348de28"
+    },
+    "fixed_denominator": 1792,
+    "counts": {
+      "covered_new_field_RGB": 1632,
+      "unsupported_existing_geometry": 160,
+      "unsupported_UV": 0,
+      "outside_permission": 0,
+      "permission_bilinear_border": 0,
+      "authorized_material_unknown": 0
+    },
+    "partition_complete": true,
+    "covered_encoded_RGB_max_below_40_255": 0,
+    "covered_new_linear_RGB": {
+      "count": 4896,
+      "mean": 0.09665786232407708,
+      "p50": 0.0948282176068132,
+      "p95": 0.12212292407816983,
+      "p99": 0.13186565705654377,
+      "max": 0.141437301964074
+    },
+    "unsupported_pixels_are_not_teacher_black": true,
+    "original_photo_not_used_to_fill_new_material": true,
+    "geometry_or_alpha_fixed_by_this_CPU_atlas": false
+  },
+  "scope": "Original fixed overlap, exact source/camera/permission/real-lock checks, LF boundary jumps and legal unknown classification; actual-surface material only.",
+  "confidence_metadata_is_uncalibrated_and_unused": true,
+  "visual_gate_is_separate": true,
+  "full_scene_restoration_accepted_by_this_numeric_review": false,
+  "new_Gaussian_fit_authorized_by_numeric_alone": false,
+  "CPU_only": true,
+  "GPU_forward": 0,
+  "native_F": 0,
+  "native_B": 0,
+  "Gaussian_updates": 0,
+  "diffusion_calls": 0
+}

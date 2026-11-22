@@ -1,0 +1,1913 @@
+{
+  "schema": "R10.official_ground_physical_point_evidence.v1",
+  "complete": true,
+  "decision": "POINT_EVIDENCE_ONLY_NO_GEOMETRY_APPROVAL",
+  "point_contract": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/point_evidence_contract.json",
+    "bytes": 2372,
+    "sha256": "36b653b7dc7c76dc4430ddc533be22ee2f86dabc71f9cfbeea4a80fb15fe9684"
+  },
+  "original_TFRecord_reference": "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/validation/segment-15021599536622641101_556_150_576_150_with_camera_labels.tfrecord",
+  "original_TFRecord_sha256": "286c3b2f627234a85a67005589b577bf4358e9a6a947aef2c42587807d1a1912",
+  "train_frames": [
+    60,
+    70,
+    80,
+    86,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "heldout_frames": [
+    134,
+    179,
+    198
+  ],
+  "frame_records": [
+    {
+      "raw": 60,
+      "train_or_heldout": "train",
+      "official_labels_present": true,
+      "timestamp_micros": 1507240553844252,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 18667,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 138610,
+          "official_class_counts": {
+            "0": 125,
+            "1": 6253,
+            "2": 127,
+            "7": 35,
+            "8": 284,
+            "9": 128,
+            "10": 1612,
+            "14": 35235,
+            "15": 22053,
+            "16": 1783,
+            "17": 3586,
+            "18": 49118,
+            "19": 3074,
+            "20": 407,
+            "21": 10134,
+            "22": 4656
+          }
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 8685,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 8345,
+          "official_class_counts": {
+            "0": 51,
+            "1": 135,
+            "2": 1,
+            "8": 68,
+            "10": 20,
+            "14": 2521,
+            "15": 4214,
+            "16": 201,
+            "17": 56,
+            "18": 381,
+            "19": 42,
+            "20": 14,
+            "21": 625,
+            "22": 16
+          }
+        }
+      ],
+      "input_rows": 161932,
+      "local_broad_region_points": 151,
+      "local_TOP_points_with_semantic_entry": 151,
+      "local_defined_official_semantic_points": 151,
+      "local_semantic_undefined_or_nonTOP": 0,
+      "local_official_class_counts": {
+        "1": 61,
+        "18": 71,
+        "19": 19
+      },
+      "official_road_points": 71,
+      "official_lane_marker_points": 19,
+      "official_ground_union_points": 90,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 8,
+        "inside_expanded_OBB": 12,
+        "photo_bounded": 90,
+        "photo_road0": 85,
+        "photo_road0_erode2": 82,
+        "parent_geometry_all4": 90
+      },
+      "ground_photo_nonroad_inbounds": 5,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 78,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 90,
+        "min": 0.048385272270081714,
+        "mean": 0.10916737550285191,
+        "median": 0.10679995518817265,
+        "p05": 0.06278013274834535,
+        "p95": 0.15261290613503978,
+        "max": 0.16804205501549774
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065060.bin",
+        "bytes": 3886368,
+        "sha256": "92d8dd786edc202137286b8edf1b32fc901b8bb7ca2e09d987c9a0e6713037bc"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/060.json",
+        "bytes": 39996,
+        "sha256": "b2866a276eeec4ca8a3f3601ab95ab23c1b46f9302bdc4cc4af592b8b160223b"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/060.png",
+        "bytes": 18471,
+        "sha256": "ec5adab2cf5a23194d38e8e467446efe31b3c0df3a2bcfde681478c3460f1429"
+      },
+      "official_point_alignment_verified": true,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 70,
+      "train_or_heldout": "train",
+      "official_labels_present": true,
+      "timestamp_micros": 1507240554844413,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 19673,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 138455,
+          "official_class_counts": {
+            "0": 102,
+            "1": 8019,
+            "2": 161,
+            "7": 48,
+            "8": 272,
+            "9": 158,
+            "10": 1642,
+            "14": 35315,
+            "15": 21212,
+            "16": 1489,
+            "17": 3565,
+            "18": 47838,
+            "19": 3589,
+            "20": 625,
+            "21": 9805,
+            "22": 4615
+          }
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 8844,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 8083,
+          "official_class_counts": {
+            "0": 13,
+            "1": 145,
+            "8": 47,
+            "10": 17,
+            "14": 2423,
+            "15": 3988,
+            "16": 318,
+            "17": 31,
+            "18": 389,
+            "19": 26,
+            "20": 14,
+            "21": 650,
+            "22": 22
+          }
+        }
+      ],
+      "input_rows": 161502,
+      "local_broad_region_points": 247,
+      "local_TOP_points_with_semantic_entry": 247,
+      "local_defined_official_semantic_points": 247,
+      "local_semantic_undefined_or_nonTOP": 0,
+      "local_official_class_counts": {
+        "1": 123,
+        "18": 95,
+        "19": 29
+      },
+      "official_road_points": 95,
+      "official_lane_marker_points": 29,
+      "official_ground_union_points": 124,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 8,
+        "inside_expanded_OBB": 14,
+        "photo_bounded": 124,
+        "photo_road0": 117,
+        "photo_road0_erode2": 110,
+        "parent_geometry_all4": 124
+      },
+      "ground_photo_nonroad_inbounds": 7,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 110,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 124,
+        "min": -0.0020977250472142828,
+        "mean": 0.04809695831094921,
+        "median": 0.04732341418513819,
+        "p05": 0.016110930553054813,
+        "p95": 0.08154778703721222,
+        "max": 0.09904773755575391
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065070.bin",
+        "bytes": 3876048,
+        "sha256": "a2aa70f8c3f3458aa8e9f08ffba301401f96dc4e9ebb30ba13e02db8f2228f45"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/070.json",
+        "bytes": 40295,
+        "sha256": "df528b76c20750afd0c6183c9ca29ce122f9d2d955d71f46464f140f666d028c"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/070.png",
+        "bytes": 19622,
+        "sha256": "ea88383c78e44df7ec5ea4abf8edf848e6fbb9608c0f60368f2b51b89910211f"
+      },
+      "official_point_alignment_verified": true,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 80,
+      "train_or_heldout": "train",
+      "official_labels_present": true,
+      "timestamp_micros": 1507240555844459,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 19660,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 138167,
+          "official_class_counts": {
+            "0": 124,
+            "1": 10612,
+            "2": 231,
+            "7": 58,
+            "8": 246,
+            "9": 175,
+            "10": 1507,
+            "14": 35079,
+            "15": 21112,
+            "16": 1895,
+            "17": 3212,
+            "18": 46398,
+            "19": 3562,
+            "20": 792,
+            "21": 8725,
+            "22": 4439
+          }
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 8753,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 7809,
+          "official_class_counts": {
+            "0": 26,
+            "1": 162,
+            "8": 30,
+            "10": 30,
+            "14": 2285,
+            "15": 3933,
+            "16": 272,
+            "17": 71,
+            "18": 440,
+            "19": 43,
+            "20": 10,
+            "21": 485,
+            "22": 22
+          }
+        }
+      ],
+      "input_rows": 160985,
+      "local_broad_region_points": 388,
+      "local_TOP_points_with_semantic_entry": 388,
+      "local_defined_official_semantic_points": 388,
+      "local_semantic_undefined_or_nonTOP": 0,
+      "local_official_class_counts": {
+        "1": 247,
+        "18": 92,
+        "19": 49
+      },
+      "official_road_points": 92,
+      "official_lane_marker_points": 49,
+      "official_ground_union_points": 141,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 13,
+        "inside_expanded_OBB": 21,
+        "photo_bounded": 141,
+        "photo_road0": 130,
+        "photo_road0_erode2": 126,
+        "parent_geometry_all4": 141
+      },
+      "ground_photo_nonroad_inbounds": 11,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 120,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 141,
+        "min": -0.06793968867953026,
+        "mean": 0.014873163357279747,
+        "median": 0.01511979340472891,
+        "p05": -0.019796525530026088,
+        "p95": 0.05067358103912056,
+        "max": 0.06420826772258081
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065080.bin",
+        "bytes": 3863640,
+        "sha256": "298076f8456ed55b8610c05fdf204ae82b16ec63d3be41188e70a31dec1fcb87"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/080.json",
+        "bytes": 41154,
+        "sha256": "da123830286fa1ef8d4a311b3a8bd8ff9df966ddf806bc7a30807452b026c5ab"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/080.png",
+        "bytes": 19684,
+        "sha256": "ff90bb21b5beeb546d01b18262bd8a7b143de815bef25be7f30df3256ad45955"
+      },
+      "official_point_alignment_verified": true,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 86,
+      "train_or_heldout": "train",
+      "official_labels_present": false,
+      "timestamp_micros": 1507240556444187,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 0
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 0
+        }
+      ],
+      "input_rows": 160510,
+      "local_broad_region_points": 471,
+      "local_TOP_points_with_semantic_entry": 0,
+      "local_defined_official_semantic_points": 0,
+      "local_semantic_undefined_or_nonTOP": 471,
+      "local_official_class_counts": {
+        "-1": 471
+      },
+      "official_road_points": 0,
+      "official_lane_marker_points": 0,
+      "official_ground_union_points": 0,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 0,
+        "inside_expanded_OBB": 0,
+        "photo_bounded": 0,
+        "photo_road0": 0,
+        "photo_road0_erode2": 0,
+        "parent_geometry_all4": 0
+      },
+      "ground_photo_nonroad_inbounds": 0,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 0,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 0
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065086.bin",
+        "bytes": 3852240,
+        "sha256": "5eab04ff0fbba0e95f7e75f712d4044eda48ab4f3c432edd074584afb88e9094"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/086.json",
+        "bytes": 40630,
+        "sha256": "f3cf942844cbf41c67b078f7e23a9dd84d97c058e10122faf204be8b7aa13f3f"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/086.png",
+        "bytes": 20437,
+        "sha256": "18735fa6dc56e5d924d2ddfbcd6956cf2f2a8a2588fa921643b9e495919801b1"
+      },
+      "official_point_alignment_verified": false,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 95,
+      "train_or_heldout": "train",
+      "official_labels_present": true,
+      "timestamp_micros": 1507240557344224,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 19520,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 137727,
+          "official_class_counts": {
+            "0": 135,
+            "1": 13894,
+            "2": 250,
+            "7": 60,
+            "8": 277,
+            "9": 163,
+            "10": 1304,
+            "14": 34635,
+            "15": 20322,
+            "16": 1781,
+            "17": 3236,
+            "18": 44620,
+            "19": 3704,
+            "20": 732,
+            "21": 8432,
+            "22": 4182
+          }
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 8519,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 7318,
+          "official_class_counts": {
+            "0": 49,
+            "1": 244,
+            "2": 8,
+            "8": 23,
+            "9": 4,
+            "10": 15,
+            "14": 1945,
+            "15": 3698,
+            "16": 299,
+            "17": 46,
+            "18": 408,
+            "19": 57,
+            "20": 9,
+            "21": 480,
+            "22": 33
+          }
+        }
+      ],
+      "input_rows": 160191,
+      "local_broad_region_points": 580,
+      "local_TOP_points_with_semantic_entry": 578,
+      "local_defined_official_semantic_points": 578,
+      "local_semantic_undefined_or_nonTOP": 2,
+      "local_official_class_counts": {
+        "-1": 2,
+        "1": 367,
+        "18": 132,
+        "19": 79
+      },
+      "official_road_points": 132,
+      "official_lane_marker_points": 79,
+      "official_ground_union_points": 211,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 13,
+        "inside_expanded_OBB": 23,
+        "photo_bounded": 211,
+        "photo_road0": 190,
+        "photo_road0_erode2": 183,
+        "parent_geometry_all4": 211
+      },
+      "ground_photo_nonroad_inbounds": 21,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 188,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 211,
+        "min": -0.09558006907245087,
+        "mean": -0.011979985059456688,
+        "median": -0.011065314304772755,
+        "p05": -0.04078202690347155,
+        "p95": 0.018152819894952543,
+        "max": 0.036684790873362516
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065095.bin",
+        "bytes": 3844584,
+        "sha256": "a18338f46dd903800b8546541f4fc3aa81305727da96e9674a028e7e3f7e9a06"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/095.json",
+        "bytes": 39660,
+        "sha256": "123debc4a4a9b0c3fa591c42a9882f43641dbea3dd50354eaa6c4401d0353298"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/095.png",
+        "bytes": 19721,
+        "sha256": "d899258d21d314ffebdb1e5229c4fb235441681e347bdf95cc997f7032b29017"
+      },
+      "official_point_alignment_verified": true,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 110,
+      "train_or_heldout": "train",
+      "official_labels_present": true,
+      "timestamp_micros": 1507240558844353,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 19647,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 137146,
+          "official_class_counts": {
+            "0": 174,
+            "1": 15998,
+            "2": 378,
+            "7": 62,
+            "8": 285,
+            "9": 167,
+            "10": 1265,
+            "14": 33836,
+            "15": 19935,
+            "16": 1909,
+            "17": 3138,
+            "18": 42795,
+            "19": 3728,
+            "20": 838,
+            "21": 8765,
+            "22": 3873
+          }
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 8374,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 7219,
+          "official_class_counts": {
+            "0": 51,
+            "1": 169,
+            "2": 20,
+            "8": 20,
+            "9": 2,
+            "10": 28,
+            "14": 1936,
+            "15": 3642,
+            "16": 264,
+            "17": 40,
+            "18": 459,
+            "19": 76,
+            "20": 18,
+            "21": 453,
+            "22": 41
+          }
+        }
+      ],
+      "input_rows": 159587,
+      "local_broad_region_points": 661,
+      "local_TOP_points_with_semantic_entry": 656,
+      "local_defined_official_semantic_points": 655,
+      "local_semantic_undefined_or_nonTOP": 6,
+      "local_official_class_counts": {
+        "-1": 5,
+        "0": 1,
+        "1": 437,
+        "18": 128,
+        "19": 90
+      },
+      "official_road_points": 128,
+      "official_lane_marker_points": 90,
+      "official_ground_union_points": 218,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 8,
+        "inside_expanded_OBB": 20,
+        "photo_bounded": 218,
+        "photo_road0": 191,
+        "photo_road0_erode2": 182,
+        "parent_geometry_all4": 218
+      },
+      "ground_photo_nonroad_inbounds": 27,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 198,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 218,
+        "min": -0.1292243652975067,
+        "mean": -0.027494284910493792,
+        "median": -0.02595396155145835,
+        "p05": -0.06127714669170796,
+        "p95": 0.007621614824519252,
+        "max": 0.016106177365436736
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065110.bin",
+        "bytes": 3830088,
+        "sha256": "280708e87b263f76e58183c8cd7218e1cab8ec5df35d4ad6741498739b1354b3"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+        "bytes": 36675,
+        "sha256": "67ab85c64bca56b2d309f7c2fccef021b9749cd0bbb196d0573cfcad4ed6a300"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/110.png",
+        "bytes": 20480,
+        "sha256": "6cb66bf557c26d630c82460ed3bf7e6c9ca5cab6a79540fd99b56e8f65aeb0a2"
+      },
+      "official_point_alignment_verified": true,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 125,
+      "train_or_heldout": "train",
+      "official_labels_present": true,
+      "timestamp_micros": 1507240560344366,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 19853,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 137271,
+          "official_class_counts": {
+            "0": 169,
+            "1": 17115,
+            "4": 1228,
+            "7": 76,
+            "8": 192,
+            "9": 327,
+            "10": 1218,
+            "14": 33264,
+            "15": 21015,
+            "16": 1547,
+            "17": 3184,
+            "18": 41545,
+            "19": 3986,
+            "20": 755,
+            "21": 7847,
+            "22": 3803
+          }
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 8376,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 7297,
+          "official_class_counts": {
+            "0": 61,
+            "1": 256,
+            "4": 29,
+            "8": 20,
+            "9": 3,
+            "10": 26,
+            "14": 1813,
+            "15": 3818,
+            "16": 191,
+            "17": 40,
+            "18": 552,
+            "19": 77,
+            "20": 14,
+            "21": 359,
+            "22": 38
+          }
+        }
+      ],
+      "input_rows": 159855,
+      "local_broad_region_points": 759,
+      "local_TOP_points_with_semantic_entry": 753,
+      "local_defined_official_semantic_points": 751,
+      "local_semantic_undefined_or_nonTOP": 8,
+      "local_official_class_counts": {
+        "-1": 6,
+        "0": 2,
+        "1": 501,
+        "18": 106,
+        "19": 144
+      },
+      "official_road_points": 106,
+      "official_lane_marker_points": 144,
+      "official_ground_union_points": 250,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 9,
+        "inside_expanded_OBB": 22,
+        "photo_bounded": 250,
+        "photo_road0": 205,
+        "photo_road0_erode2": 197,
+        "parent_geometry_all4": 250
+      },
+      "ground_photo_nonroad_inbounds": 45,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 228,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 250,
+        "min": -0.10740727368398595,
+        "mean": -0.021244338205155897,
+        "median": -0.018462265799838562,
+        "p05": -0.06764305626089354,
+        "p95": 0.01533053105703707,
+        "max": 0.023546909985267206
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065125.bin",
+        "bytes": 3836520,
+        "sha256": "0fb7f3dc3050b029dabd99c3202a43ecd44309ada5f950f2190dc446d2db7389"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/125.json",
+        "bytes": 39334,
+        "sha256": "7e33b738f3fd80650976d3dc58b4a6b2423b5b1dd70099c1f819b6228e6bcdd7"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/125.png",
+        "bytes": 20692,
+        "sha256": "b67775aabeea68a324e7e4ad524cc8cf95d666bb9d35f78ac94437ae7833a913"
+      },
+      "official_point_alignment_verified": true,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 134,
+      "train_or_heldout": "heldout",
+      "official_labels_present": false,
+      "timestamp_micros": 1507240561244228,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 0
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 0
+        }
+      ],
+      "input_rows": 159677,
+      "local_broad_region_points": 751,
+      "local_TOP_points_with_semantic_entry": 0,
+      "local_defined_official_semantic_points": 0,
+      "local_semantic_undefined_or_nonTOP": 751,
+      "local_official_class_counts": {
+        "-1": 751
+      },
+      "official_road_points": 0,
+      "official_lane_marker_points": 0,
+      "official_ground_union_points": 0,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 0,
+        "inside_expanded_OBB": 0,
+        "photo_bounded": 0,
+        "photo_road0": 0,
+        "photo_road0_erode2": 0,
+        "parent_geometry_all4": 0
+      },
+      "ground_photo_nonroad_inbounds": 0,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 0,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 0
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065134.bin",
+        "bytes": 3832248,
+        "sha256": "78c38ac3d861474e1d387663161cd0018e2311c0e7d94391a7ed4ae88bb7a563"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/134.json",
+        "bytes": 39126,
+        "sha256": "a84dcdea787a6504257c90cf9647bfae8f57141fca73cc83406cfedda2be093a"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/134.png",
+        "bytes": 21128,
+        "sha256": "b8a5cc6f2c0fe85c57c2a81b5b95384656286f90fd43faf18e01779058d281da"
+      },
+      "official_point_alignment_verified": false,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 145,
+      "train_or_heldout": "train",
+      "official_labels_present": true,
+      "timestamp_micros": 1507240562344093,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 19818,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 137112,
+          "official_class_counts": {
+            "0": 136,
+            "1": 19679,
+            "4": 2210,
+            "7": 2,
+            "8": 173,
+            "9": 328,
+            "10": 1206,
+            "14": 32804,
+            "15": 20465,
+            "16": 1554,
+            "17": 2980,
+            "18": 40320,
+            "19": 3824,
+            "20": 791,
+            "21": 7144,
+            "22": 3496
+          }
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 8251,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 7012,
+          "official_class_counts": {
+            "0": 46,
+            "1": 187,
+            "4": 61,
+            "8": 3,
+            "10": 22,
+            "14": 1671,
+            "15": 3770,
+            "16": 164,
+            "17": 27,
+            "18": 551,
+            "19": 92,
+            "20": 14,
+            "21": 363,
+            "22": 41
+          }
+        }
+      ],
+      "input_rows": 159347,
+      "local_broad_region_points": 753,
+      "local_TOP_points_with_semantic_entry": 742,
+      "local_defined_official_semantic_points": 742,
+      "local_semantic_undefined_or_nonTOP": 11,
+      "local_official_class_counts": {
+        "-1": 11,
+        "1": 494,
+        "18": 103,
+        "19": 145
+      },
+      "official_road_points": 103,
+      "official_lane_marker_points": 145,
+      "official_ground_union_points": 248,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 9,
+        "inside_expanded_OBB": 22,
+        "photo_bounded": 248,
+        "photo_road0": 200,
+        "photo_road0_erode2": 191,
+        "parent_geometry_all4": 248
+      },
+      "ground_photo_nonroad_inbounds": 48,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 226,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 248,
+        "min": -0.11534030460861189,
+        "mean": -0.03048647381593872,
+        "median": -0.027516094451916828,
+        "p05": -0.0764607043323677,
+        "p95": 0.007332452235883634,
+        "max": 0.01343268852309265
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065145.bin",
+        "bytes": 3824328,
+        "sha256": "0b95d1e4464713c58d9b538b26fb969723e781f4c922b28d9a6d917b446a0a5a"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/145.json",
+        "bytes": 38777,
+        "sha256": "82541747775bfb6c2da54672099e1798f04f6c5f1130ef35ac4d6c33321fa805"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/145.png",
+        "bytes": 19296,
+        "sha256": "632dd01b1e279393f3a42869e3bff362b5321285bf1f140a985797c89cd4f547"
+      },
+      "official_point_alignment_verified": true,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 165,
+      "train_or_heldout": "train",
+      "official_labels_present": true,
+      "timestamp_micros": 1507240564344416,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 19758,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 137280,
+          "official_class_counts": {
+            "0": 168,
+            "1": 22331,
+            "4": 3557,
+            "7": 50,
+            "8": 167,
+            "9": 329,
+            "10": 1127,
+            "14": 32015,
+            "15": 20113,
+            "16": 1658,
+            "17": 2676,
+            "18": 39264,
+            "19": 3533,
+            "20": 543,
+            "21": 6718,
+            "22": 3031
+          }
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 8436,
+          "actual_valid_NLZ_row_order_and_semantic_labels_exact": true,
+          "TOP_retained_points": 7094,
+          "official_class_counts": {
+            "0": 58,
+            "1": 193,
+            "4": 97,
+            "7": 7,
+            "8": 3,
+            "9": 2,
+            "10": 34,
+            "14": 1665,
+            "15": 3767,
+            "16": 166,
+            "17": 31,
+            "18": 571,
+            "19": 99,
+            "20": 15,
+            "21": 342,
+            "22": 44
+          }
+        }
+      ],
+      "input_rows": 159792,
+      "local_broad_region_points": 755,
+      "local_TOP_points_with_semantic_entry": 748,
+      "local_defined_official_semantic_points": 748,
+      "local_semantic_undefined_or_nonTOP": 7,
+      "local_official_class_counts": {
+        "-1": 7,
+        "1": 499,
+        "18": 106,
+        "19": 143
+      },
+      "official_road_points": 106,
+      "official_lane_marker_points": 143,
+      "official_ground_union_points": 249,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 9,
+        "inside_expanded_OBB": 22,
+        "photo_bounded": 249,
+        "photo_road0": 204,
+        "photo_road0_erode2": 195,
+        "parent_geometry_all4": 249
+      },
+      "ground_photo_nonroad_inbounds": 45,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 227,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 249,
+        "min": -0.12779061050095564,
+        "mean": -0.03299773717901694,
+        "median": -0.029555718282889387,
+        "p05": -0.08214988976914697,
+        "p95": 0.006342637863518517,
+        "max": 0.013016583045196484
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065165.bin",
+        "bytes": 3835008,
+        "sha256": "7e3171f2beda33e8e2d1c2ea874199cae17e1936cfad95bb0cafaf9ca35b3605"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/165.json",
+        "bytes": 38168,
+        "sha256": "5c6a0e6a7eee5d79d39c6bc4ecc05a6d482e15738382c0d4879d47cb33ff0ada"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/165.png",
+        "bytes": 21338,
+        "sha256": "1c2ef9634bd67e218076aa6035d2e96986f7304f2f4288a4f58fa6ef3ababdf0"
+      },
+      "official_point_alignment_verified": true,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 179,
+      "train_or_heldout": "heldout",
+      "official_labels_present": false,
+      "timestamp_micros": 1507240565744244,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 0
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 0
+        }
+      ],
+      "input_rows": 159476,
+      "local_broad_region_points": 749,
+      "local_TOP_points_with_semantic_entry": 0,
+      "local_defined_official_semantic_points": 0,
+      "local_semantic_undefined_or_nonTOP": 749,
+      "local_official_class_counts": {
+        "-1": 749
+      },
+      "official_road_points": 0,
+      "official_lane_marker_points": 0,
+      "official_ground_union_points": 0,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 0,
+        "inside_expanded_OBB": 0,
+        "photo_bounded": 0,
+        "photo_road0": 0,
+        "photo_road0_erode2": 0,
+        "parent_geometry_all4": 0
+      },
+      "ground_photo_nonroad_inbounds": 0,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 0,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 0
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065179.bin",
+        "bytes": 3827424,
+        "sha256": "1e0f45e2040b0836159e374642226d9482e22f66dda5264dacbdfa5dac9eaec0"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/179.json",
+        "bytes": 38066,
+        "sha256": "3fe98ac23d3af6a01a78773f830e839b8965666ab06aa7aefd6cd7f74f9e0ab6"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/179.png",
+        "bytes": 19818,
+        "sha256": "451dbf3516f096079529a3f0f69d9e9974e98812f5d6204a587d1e19782912c2"
+      },
+      "official_point_alignment_verified": false,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    },
+    {
+      "raw": 198,
+      "train_or_heldout": "heldout",
+      "official_labels_present": false,
+      "timestamp_micros": 1507240567644232,
+      "TOP_returns": [
+        {
+          "return_index": 0,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 0
+        },
+        {
+          "return_index": 1,
+          "range_image_HW": [
+            64,
+            2650
+          ],
+          "compressed_semantic_bytes": 0
+        }
+      ],
+      "input_rows": 160490,
+      "local_broad_region_points": 756,
+      "local_TOP_points_with_semantic_entry": 0,
+      "local_defined_official_semantic_points": 0,
+      "local_semantic_undefined_or_nonTOP": 756,
+      "local_official_class_counts": {
+        "-1": 756
+      },
+      "official_road_points": 0,
+      "official_lane_marker_points": 0,
+      "official_ground_union_points": 0,
+      "official_ground_independent_flag_counts": {
+        "inside_original_OBB": 0,
+        "inside_expanded_OBB": 0,
+        "photo_bounded": 0,
+        "photo_road0": 0,
+        "photo_road0_erode2": 0,
+        "parent_geometry_all4": 0
+      },
+      "ground_photo_nonroad_inbounds": 0,
+      "ground_photo_outside": 0,
+      "official_ground_outside_expanded_OBB": 0,
+      "official_ground_in_parent_missing_quad": 0,
+      "ground_height_minus_old_profile_m": {
+        "count": 0
+      },
+      "source_lidar": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065198.bin",
+        "bytes": 3851760,
+        "sha256": "1bb64ff902e6d41e99a39f02c60fd0809a3eb0232fbc931e970a9eccf3f7bbfa"
+      },
+      "source_observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/198.json",
+        "bytes": 37187,
+        "sha256": "22d854ddd744cb79c6892412e0e2a2e635a8fc2fc032f38420f48e142911676f"
+      },
+      "source_real_photo_semantic_proxy": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/198.png",
+        "bytes": 19370,
+        "sha256": "cd328e802917ae01e18ec52572d31b8f2c50d4964f6c5a3ebc46d46d20ea9226"
+      },
+      "official_point_alignment_verified": false,
+      "no_ground_point_rejected_by_OBB_or_photo": true
+    }
+  ],
+  "official_ground_training_points": 1531,
+  "official_ground_heldout_points": 0,
+  "original_parent_missing_texels": 11907,
+  "missing_parent_independent_support_counts": {
+    "missing_parent_inside_official_ground_hull": 11907,
+    "missing_parent_nearest_official_ground_le0p8m": 979,
+    "missing_parent_three_frames_le0p8m": 158,
+    "missing_parent_three_quadrants_le1m": 0
+  },
+  "target_rows": [
+    {
+      "raw": 86,
+      "regions": {
+        "red_diagnostic": {
+          "fixed_pixels": 357,
+          "proposed_profile_locus_pixels": 357,
+          "point_evidence_hull_inside": 357,
+          "nearest_official_ground_le0p8m": 30,
+          "at_least3_official_ground_frames_within0p8m": 16,
+          "at_least3_quadrants_within1m": 0,
+          "factors": {
+            "nearest_medoid_m": {
+              "count": 357,
+              "min": 0.6403591819122297,
+              "mean": 1.1300651690499603,
+              "median": 1.1745393463436495,
+              "p05": 0.758262602816067,
+              "p95": 1.4188334929530904,
+              "max": 1.4782120075250946
+            },
+            "nearest_training_point_m": {
+              "count": 357,
+              "min": 0.6403591819122297,
+              "mean": 1.1300651690499603,
+              "median": 1.1745393463436495,
+              "p05": 0.758262602816067,
+              "p95": 1.4188334929530904,
+              "max": 1.4782120075250946
+            },
+            "distinct_frames_within_0.8m": {
+              "count": 357,
+              "min": 0.0,
+              "mean": 0.19047619047619047,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 2.0,
+              "max": 3.0
+            },
+            "distinct_frames_within_1.5m": {
+              "count": 357,
+              "min": 2.0,
+              "mean": 6.717086834733894,
+              "median": 8.0,
+              "p05": 3.0,
+              "p95": 8.0,
+              "max": 8.0
+            },
+            "support_quadrants_within_1m": {
+              "count": 357,
+              "min": 0.0,
+              "mean": 0.5266106442577031,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 2.0,
+              "max": 2.0
+            },
+            "largest_angular_gap_within_1m_deg": {
+              "count": 357,
+              "min": 251.06579375662366,
+              "mean": 347.48351361089266,
+              "median": 360.0,
+              "p05": 283.6786633776975,
+              "p95": 360.0,
+              "max": 360.00000000000006
+            },
+            "medoid_count_within_1m": {
+              "count": 357,
+              "min": 0.0,
+              "mean": 3.2829131652661063,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 21.0,
+              "max": 45.0
+            },
+            "support_quadrants_within_2m": {
+              "count": 357,
+              "min": 2.0,
+              "mean": 3.619047619047619,
+              "median": 4.0,
+              "p05": 2.0,
+              "p95": 4.0,
+              "max": 4.0
+            },
+            "largest_angular_gap_within_2m_deg": {
+              "count": 357,
+              "min": 92.95876663901494,
+              "mean": 123.66636286758619,
+              "median": 106.58381123102815,
+              "p05": 98.46447593784553,
+              "p95": 227.3963792985422,
+              "max": 237.06939199154655
+            },
+            "medoid_count_within_2m": {
+              "count": 357,
+              "min": 181.0,
+              "mean": 239.6106442577031,
+              "median": 233.0,
+              "p05": 194.0,
+              "p95": 294.0,
+              "max": 385.0
+            }
+          },
+          "conditional_XY_locus": "Only uses prior unapproved profile ray intersection to locate diagnostic pixel; this is not a depth/geometry coverage PASS"
+        },
+        "focused_residual_candidate": {
+          "fixed_pixels": 1923,
+          "proposed_profile_locus_pixels": 1921,
+          "point_evidence_hull_inside": 1921,
+          "nearest_official_ground_le0p8m": 410,
+          "at_least3_official_ground_frames_within0p8m": 223,
+          "at_least3_quadrants_within1m": 0,
+          "factors": {
+            "nearest_medoid_m": {
+              "count": 1921,
+              "min": 0.22998927345288672,
+              "mean": 0.9906119611728927,
+              "median": 1.0332605084791957,
+              "p05": 0.4560303159666998,
+              "p95": 1.3537350848144838,
+              "max": 1.4927498684605267
+            },
+            "nearest_training_point_m": {
+              "count": 1921,
+              "min": 0.22998927345288672,
+              "mean": 0.9906119611728927,
+              "median": 1.0332605084791957,
+              "p05": 0.4560303159666998,
+              "p95": 1.3537350848144838,
+              "max": 1.4927498684605267
+            },
+            "distinct_frames_within_0.8m": {
+              "count": 1921,
+              "min": 0.0,
+              "mean": 0.8875585632483082,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 8.0,
+              "max": 8.0
+            },
+            "distinct_frames_within_1.5m": {
+              "count": 1921,
+              "min": 1.0,
+              "mean": 7.6902654867256635,
+              "median": 8.0,
+              "p05": 5.0,
+              "p95": 8.0,
+              "max": 8.0
+            },
+            "support_quadrants_within_1m": {
+              "count": 1921,
+              "min": 0.0,
+              "mean": 0.7704320666319625,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 2.0,
+              "max": 2.0
+            },
+            "largest_angular_gap_within_1m_deg": {
+              "count": 1921,
+              "min": 211.93605472191473,
+              "mean": 337.8827803997366,
+              "median": 360.0,
+              "p05": 254.1438168981367,
+              "p95": 360.0,
+              "max": 360.00000000000006
+            },
+            "medoid_count_within_1m": {
+              "count": 1921,
+              "min": 0.0,
+              "mean": 14.365434669443,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 105.0,
+              "max": 198.0
+            },
+            "support_quadrants_within_2m": {
+              "count": 1921,
+              "min": 2.0,
+              "mean": 3.68558042686101,
+              "median": 4.0,
+              "p05": 2.0,
+              "p95": 4.0,
+              "max": 4.0
+            },
+            "largest_angular_gap_within_2m_deg": {
+              "count": 1921,
+              "min": 87.10334241440374,
+              "mean": 116.04004875090081,
+              "median": 101.67047762339513,
+              "p05": 90.54622315789267,
+              "p95": 212.9337071628324,
+              "max": 237.06939199154655
+            },
+            "medoid_count_within_2m": {
+              "count": 1921,
+              "min": 143.0,
+              "mean": 437.97917751171263,
+              "median": 439.0,
+              "p05": 201.0,
+              "p95": 685.0,
+              "max": 758.0
+            }
+          },
+          "conditional_XY_locus": "Only uses prior unapproved profile ray intersection to locate diagnostic pixel; this is not a depth/geometry coverage PASS"
+        }
+      },
+      "original_target": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_inference_v1_replay1/086_target_coverage_DIAGNOSTIC.npz",
+        "bytes": 233808,
+        "sha256": "73afac18caee61ee271108f63d0c3c5a98385cfaa6f08971ca151e4bc512b295"
+      }
+    },
+    {
+      "raw": 110,
+      "regions": {
+        "red_diagnostic": {
+          "fixed_pixels": 692,
+          "proposed_profile_locus_pixels": 692,
+          "point_evidence_hull_inside": 692,
+          "nearest_official_ground_le0p8m": 79,
+          "at_least3_official_ground_frames_within0p8m": 39,
+          "at_least3_quadrants_within1m": 0,
+          "factors": {
+            "nearest_medoid_m": {
+              "count": 692,
+              "min": 0.5957172735537053,
+              "mean": 1.1016463591189982,
+              "median": 1.1420069345483115,
+              "p05": 0.7448885595003722,
+              "p95": 1.4201330917776194,
+              "max": 1.4924138449561062
+            },
+            "nearest_training_point_m": {
+              "count": 692,
+              "min": 0.5957172735537053,
+              "mean": 1.1016463591189982,
+              "median": 1.1420069345483115,
+              "p05": 0.7448885595003722,
+              "p95": 1.4201330917776194,
+              "max": 1.4924138449561062
+            },
+            "distinct_frames_within_0.8m": {
+              "count": 692,
+              "min": 0.0,
+              "mean": 0.27890173410404623,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 3.0,
+              "max": 7.0
+            },
+            "distinct_frames_within_1.5m": {
+              "count": 692,
+              "min": 2.0,
+              "mean": 6.877167630057803,
+              "median": 8.0,
+              "p05": 3.0,
+              "p95": 8.0,
+              "max": 8.0
+            },
+            "support_quadrants_within_1m": {
+              "count": 692,
+              "min": 0.0,
+              "mean": 0.6040462427745664,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 2.0,
+              "max": 2.0
+            },
+            "largest_angular_gap_within_1m_deg": {
+              "count": 692,
+              "min": 251.34161375173053,
+              "mean": 344.2447720433311,
+              "median": 360.0,
+              "p05": 282.29972538451244,
+              "p95": 360.0,
+              "max": 360.00000000000006
+            },
+            "medoid_count_within_1m": {
+              "count": 692,
+              "min": 0.0,
+              "mean": 5.0491329479768785,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 28.0,
+              "max": 68.0
+            },
+            "support_quadrants_within_2m": {
+              "count": 692,
+              "min": 2.0,
+              "mean": 3.6054913294797686,
+              "median": 4.0,
+              "p05": 2.0,
+              "p95": 4.0,
+              "max": 4.0
+            },
+            "largest_angular_gap_within_2m_deg": {
+              "count": 692,
+              "min": 90.87542063313526,
+              "mean": 122.78743943463208,
+              "median": 107.41679416422095,
+              "p05": 97.95112987671588,
+              "p95": 226.32510228165137,
+              "max": 238.28881779426834
+            },
+            "medoid_count_within_2m": {
+              "count": 692,
+              "min": 180.0,
+              "mean": 251.1907514450867,
+              "median": 242.5,
+              "p05": 191.55,
+              "p95": 339.44999999999993,
+              "max": 393.0
+            }
+          },
+          "conditional_XY_locus": "Only uses prior unapproved profile ray intersection to locate diagnostic pixel; this is not a depth/geometry coverage PASS"
+        },
+        "focused_residual_candidate": {
+          "fixed_pixels": 3288,
+          "proposed_profile_locus_pixels": 3286,
+          "point_evidence_hull_inside": 3286,
+          "nearest_official_ground_le0p8m": 686,
+          "at_least3_official_ground_frames_within0p8m": 310,
+          "at_least3_quadrants_within1m": 0,
+          "factors": {
+            "nearest_medoid_m": {
+              "count": 3286,
+              "min": 0.24647506300259217,
+              "mean": 0.984847305673019,
+              "median": 0.9973031332897545,
+              "p05": 0.5293901671600483,
+              "p95": 1.3457037659181503,
+              "max": 1.4978850544035083
+            },
+            "nearest_training_point_m": {
+              "count": 3286,
+              "min": 0.24647506300259217,
+              "mean": 0.984847305673019,
+              "median": 0.9973031332897545,
+              "p05": 0.5293901671600483,
+              "p95": 1.3457037659181503,
+              "max": 1.4978850544035083
+            },
+            "distinct_frames_within_0.8m": {
+              "count": 3286,
+              "min": 0.0,
+              "mean": 0.6993304930006087,
+              "median": 0.0,
+              "p05": 0.0,
+              "p95": 6.0,
+              "max": 8.0
+            },
+            "distinct_frames_within_1.5m": {
+              "count": 3286,
+              "min": 2.0,
+              "mean": 7.723676202069385,
+              "median": 8.0,
+              "p05": 5.0,
+              "p95": 8.0,
+              "max": 8.0
+            },
+            "support_quadrants_within_1m": {
+              "count": 3286,
+              "min": 0.0,
+              "mean": 0.8484479610468655,
+              "median": 1.0,
+              "p05": 0.0,
+              "p95": 2.0,
+              "max": 2.0
+            },
+            "largest_angular_gap_within_1m_deg": {
+              "count": 3286,
+              "min": 217.20576280128722,
+              "mean": 339.0312777102176,
+              "median": 360.0,
+              "p05": 265.2306755452569,
+              "p95": 360.0,
+              "max": 360.00000000000006
+            },
+            "medoid_count_within_1m": {
+              "count": 3286,
+              "min": 0.0,
+              "mean": 11.054473524041388,
+              "median": 1.0,
+              "p05": 0.0,
+              "p95": 74.0,
+              "max": 115.0
+            },
+            "support_quadrants_within_2m": {
+              "count": 3286,
+              "min": 2.0,
+              "mean": 3.7242848447961046,
+              "median": 4.0,
+              "p05": 2.0,
+              "p95": 4.0,
+              "max": 4.0
+            },
+            "largest_angular_gap_within_2m_deg": {
+              "count": 3286,
+              "min": 86.56203340191357,
+              "mean": 114.62145127408807,
+              "median": 101.76580886961465,
+              "p05": 90.18367644958741,
+              "p95": 216.6394309903746,
+              "max": 238.28881779426834
+            },
+            "medoid_count_within_2m": {
+              "count": 3286,
+              "min": 139.0,
+              "mean": 430.3125380401704,
+              "median": 434.0,
+              "p05": 207.25,
+              "p95": 659.0,
+              "max": 757.0
+            }
+          },
+          "conditional_XY_locus": "Only uses prior unapproved profile ray intersection to locate diagnostic pixel; this is not a depth/geometry coverage PASS"
+        }
+      },
+      "original_target": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_inference_v1_replay1/110_target_coverage_DIAGNOSTIC.npz",
+        "bytes": 352201,
+        "sha256": "bf7951be88591929eb693a665685b609a460f18bf2c04eb2038e5026aaf4fcaa"
+      }
+    }
+  ],
+  "point_evidence": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/local_original_point_evidence.npz",
+    "bytes": 261780,
+    "sha256": "cf340a7bce7f5e51fd42d60a81eb1911cb9e17d56d1ebed23f0c87aa4890e4f4"
+  },
+  "exact_TOP_semantic_arrays": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/official_TOP_range_labels.npz",
+    "bytes": 235942,
+    "sha256": "c5137d608f83699c43c5ccac379666e6b6cbd6aa140824450c77d37e8064a3e7"
+  },
+  "support_diagnostic": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/official_ground_support_DIAGNOSTIC.npz",
+    "bytes": 1851021,
+    "sha256": "5299939ca5124b2429c5a0cc16dc00c2edb6e03f4d71d8f8196f44725fea6910"
+  },
+  "strict837_or_old_profile_modified": false,
+  "new_fitted_geometry": false,
+  "new_renderable_geometry": false,
+  "geometry_confidence_is_calibrated_probability": false,
+  "heldout_fitted": false,
+  "actual_readback_inputs": [
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065060.bin",
+      "bytes": 3886368,
+      "sha256": "92d8dd786edc202137286b8edf1b32fc901b8bb7ca2e09d987c9a0e6713037bc"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/060.json",
+      "bytes": 39996,
+      "sha256": "b2866a276eeec4ca8a3f3601ab95ab23c1b46f9302bdc4cc4af592b8b160223b"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/060.png",
+      "bytes": 18471,
+      "sha256": "ec5adab2cf5a23194d38e8e467446efe31b3c0df3a2bcfde681478c3460f1429"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/060.npz",
+      "bytes": 573446,
+      "sha256": "338ec8c9cb6d28c8f975922fb21fdbb62837f9c1ceb806b4c27b7d128b21c580"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065070.bin",
+      "bytes": 3876048,
+      "sha256": "a2aa70f8c3f3458aa8e9f08ffba301401f96dc4e9ebb30ba13e02db8f2228f45"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/070.json",
+      "bytes": 40295,
+      "sha256": "df528b76c20750afd0c6183c9ca29ce122f9d2d955d71f46464f140f666d028c"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/070.png",
+      "bytes": 19622,
+      "sha256": "ea88383c78e44df7ec5ea4abf8edf848e6fbb9608c0f60368f2b51b89910211f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/070.npz",
+      "bytes": 1734697,
+      "sha256": "04291e8d42c6721c28aab0d3e6a6979623e178986ec2adcd66f7b30e7a35e13a"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065080.bin",
+      "bytes": 3863640,
+      "sha256": "298076f8456ed55b8610c05fdf204ae82b16ec63d3be41188e70a31dec1fcb87"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/080.json",
+      "bytes": 41154,
+      "sha256": "da123830286fa1ef8d4a311b3a8bd8ff9df966ddf806bc7a30807452b026c5ab"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/080.png",
+      "bytes": 19684,
+      "sha256": "ff90bb21b5beeb546d01b18262bd8a7b143de815bef25be7f30df3256ad45955"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/080.npz",
+      "bytes": 569948,
+      "sha256": "135681b419c6918b297f574fa9df2ff0f15f5c20dbb2a36a3f7c526af4e8f9e6"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065086.bin",
+      "bytes": 3852240,
+      "sha256": "5eab04ff0fbba0e95f7e75f712d4044eda48ab4f3c432edd074584afb88e9094"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/086.json",
+      "bytes": 40630,
+      "sha256": "f3cf942844cbf41c67b078f7e23a9dd84d97c058e10122faf204be8b7aa13f3f"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/086.png",
+      "bytes": 20437,
+      "sha256": "18735fa6dc56e5d924d2ddfbcd6956cf2f2a8a2588fa921643b9e495919801b1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/086.npz",
+      "bytes": 353888,
+      "sha256": "cc22bed6bab05413d675f4b28c0b9bd79bc88e59f0282737c03b1ce52b35cdb6"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065095.bin",
+      "bytes": 3844584,
+      "sha256": "a18338f46dd903800b8546541f4fc3aa81305727da96e9674a028e7e3f7e9a06"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/095.json",
+      "bytes": 39660,
+      "sha256": "123debc4a4a9b0c3fa591c42a9882f43641dbea3dd50354eaa6c4401d0353298"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/095.png",
+      "bytes": 19721,
+      "sha256": "d899258d21d314ffebdb1e5229c4fb235441681e347bdf95cc997f7032b29017"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/095.npz",
+      "bytes": 234663,
+      "sha256": "c8409b19297d45b41887efc10318e1e445c088baa72d37e87ae03f1e5c6c9112"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065110.bin",
+      "bytes": 3830088,
+      "sha256": "280708e87b263f76e58183c8cd7218e1cab8ec5df35d4ad6741498739b1354b3"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+      "bytes": 36675,
+      "sha256": "67ab85c64bca56b2d309f7c2fccef021b9749cd0bbb196d0573cfcad4ed6a300"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/110.png",
+      "bytes": 20480,
+      "sha256": "6cb66bf557c26d630c82460ed3bf7e6c9ca5cab6a79540fd99b56e8f65aeb0a2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/110.npz",
+      "bytes": 127295,
+      "sha256": "e4a6917db4fe95ce024138bc026812053551a926760f8660b7b449d0b85000f8"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065125.bin",
+      "bytes": 3836520,
+      "sha256": "0fb7f3dc3050b029dabd99c3202a43ecd44309ada5f950f2190dc446d2db7389"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/125.json",
+      "bytes": 39334,
+      "sha256": "7e33b738f3fd80650976d3dc58b4a6b2423b5b1dd70099c1f819b6228e6bcdd7"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/125.png",
+      "bytes": 20692,
+      "sha256": "b67775aabeea68a324e7e4ad524cc8cf95d666bb9d35f78ac94437ae7833a913"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/125.npz",
+      "bytes": 76218,
+      "sha256": "e75b746adf8e3ee9263782420efb756daa745ed9689358420072a5c1f23bbb71"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065134.bin",
+      "bytes": 3832248,
+      "sha256": "78c38ac3d861474e1d387663161cd0018e2311c0e7d94391a7ed4ae88bb7a563"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/134.json",
+      "bytes": 39126,
+      "sha256": "a84dcdea787a6504257c90cf9647bfae8f57141fca73cc83406cfedda2be093a"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/134.png",
+      "bytes": 21128,
+      "sha256": "b8a5cc6f2c0fe85c57c2a81b5b95384656286f90fd43faf18e01779058d281da"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/134.npz",
+      "bytes": 70125,
+      "sha256": "76115d6b99b4430e32fdbb99b4f317066c2f0d029036afd8f018bbbc959a8b37"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065145.bin",
+      "bytes": 3824328,
+      "sha256": "0b95d1e4464713c58d9b538b26fb969723e781f4c922b28d9a6d917b446a0a5a"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/145.json",
+      "bytes": 38777,
+      "sha256": "82541747775bfb6c2da54672099e1798f04f6c5f1130ef35ac4d6c33321fa805"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/145.png",
+      "bytes": 19296,
+      "sha256": "632dd01b1e279393f3a42869e3bff362b5321285bf1f140a985797c89cd4f547"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/145.npz",
+      "bytes": 79847,
+      "sha256": "20e9659ae87ce894d9bcbd90c8efa870e0116592c811440a757d1ee339278b8a"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065165.bin",
+      "bytes": 3835008,
+      "sha256": "7e3171f2beda33e8e2d1c2ea874199cae17e1936cfad95bb0cafaf9ca35b3605"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/165.json",
+      "bytes": 38168,
+      "sha256": "5c6a0e6a7eee5d79d39c6bc4ecc05a6d482e15738382c0d4879d47cb33ff0ada"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/165.png",
+      "bytes": 21338,
+      "sha256": "1c2ef9634bd67e218076aa6035d2e96986f7304f2f4288a4f58fa6ef3ababdf0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/165.npz",
+      "bytes": 73382,
+      "sha256": "a728f9a34f6db96ae7aeec20808c4ccdf939df1b8c72f1dec9e8d92f20cb1d04"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065179.bin",
+      "bytes": 3827424,
+      "sha256": "1e0f45e2040b0836159e374642226d9482e22f66dda5264dacbdfa5dac9eaec0"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/179.json",
+      "bytes": 38066,
+      "sha256": "3fe98ac23d3af6a01a78773f830e839b8965666ab06aa7aefd6cd7f74f9e0ab6"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/179.png",
+      "bytes": 19818,
+      "sha256": "451dbf3516f096079529a3f0f69d9e9974e98812f5d6204a587d1e19782912c2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/179.npz",
+      "bytes": 65374,
+      "sha256": "6ffd939f94b9409ef55f5c8590cea720432f06fa7f72acb57441e383a8df01dd"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065198.bin",
+      "bytes": 3851760,
+      "sha256": "1bb64ff902e6d41e99a39f02c60fd0809a3eb0232fbc931e970a9eccf3f7bbfa"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/198.json",
+      "bytes": 37187,
+      "sha256": "22d854ddd744cb79c6892412e0e2a2e635a8fc2fc032f38420f48e142911676f"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/198.png",
+      "bytes": 19370,
+      "sha256": "cd328e802917ae01e18ec52572d31b8f2c50d4964f6c5a3ebc46d46d20ea9226"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/qualified_observations/198.npz",
+      "bytes": 73190,
+      "sha256": "2eee530ef1f7e6891d8e44da425b489c489f17f284c6756ab1b05c6db1b4076d"
+    }
+  ],
+  "CPU_only": true,
+  "GPU_forward": 0,
+  "updates": 0,
+  "elapsed_seconds": 18.97670555114746
+}

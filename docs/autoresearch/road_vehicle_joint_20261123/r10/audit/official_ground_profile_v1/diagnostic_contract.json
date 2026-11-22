@@ -1,0 +1,40 @@
+{
+  "schema": "R10.official_ground_height_profile_diagnostic_contract.v1",
+  "complete": true,
+  "written_before_fitting": true,
+  "decision": "READ_ONLY_PROFILE_DIAGNOSTIC_NOT_GEOMETRY_ACCEPTANCE",
+  "point_evidence": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/official_ground_point_receipt.json",
+    "bytes": 65910,
+    "sha256": "b558ec83f0e095c407d0bdba451731cf2bb1e12f91594c3d86434911b824efc2"
+  },
+  "train_raw": [
+    60,
+    70,
+    80,
+    86,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "heldout_raw": [
+    134,
+    179,
+    198
+  ],
+  "fit": "Only official ROAD18/LANE_MARKER19 original XYZ; every OBB/photo category retained; same0.1m medoid and quadratic IRLS8 Huber.03m rules as initial strict protocol",
+  "heldout": "Original134/179/198 strict raw physical points; photo-road0 erode2 proxy qualification only, no official point labels available; never fit or trim using prediction",
+  "heldout_height_median_max_m": 0.04,
+  "heldout_height_p95_max_m": 0.1,
+  "heldout_normal_median_max_deg": 10.0,
+  "heldout_normal_p95_max_deg": 20.0,
+  "normal_evidence": "PCA nearest20/.5m >=10/eigenfraction<=.05; same untrimmed fixed heldout set",
+  "uncertainty": "512 training-frame cluster bootstraps at fixed actual medoids seed20261123, plus leave-one-frame-out with reselected medoids; conditional model sensitivity, not calibrated probability",
+  "interpolation": "global measured hull, nearest official point, multi-frame/multi-direction support all reported; no inferred-domain PASS threshold or renderable activation",
+  "boundary": "Actual parent XYZ triangle/finite-difference normals; no pull-to-parent correction, no C0/C1 claim",
+  "source_points_or_geometry_modified": false,
+  "GPU_forward": 0,
+  "updates": 0
+}

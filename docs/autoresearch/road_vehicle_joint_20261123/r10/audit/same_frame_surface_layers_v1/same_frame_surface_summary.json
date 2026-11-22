@@ -1,0 +1,919 @@
+{
+  "schema": "R10.same_frame_surface_layer_and_normal_diagnostic.v1",
+  "complete": true,
+  "decision": "DIAGNOSTIC_CAUSE_UNDETERMINED",
+  "training_points": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/training_points.npz",
+    "bytes": 102243,
+    "sha256": "c9f4fca210c550ca849af36c37bb787d76fab736b193850b65479577c82ced50"
+  },
+  "candidate_scope": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/expanded_candidate_geometry.npz",
+    "bytes": 26316748,
+    "sha256": "1844e3596414a7cbe128167db615bece0f6ff7ec7a638f5ebb6163d60aee848d"
+  },
+  "official_labels": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/official_TOP_range_labels.npz",
+    "bytes": 235942,
+    "sha256": "c5137d608f83699c43c5ccac379666e6b6cbd6aa140824450c77d37e8064a3e7"
+  },
+  "official_enum": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_ground_geometry_v1/point_evidence_contract.json",
+    "bytes": 2372,
+    "sha256": "36b653b7dc7c76dc4430ddc533be22ee2f86dabc71f9cfbeea4a80fb15fe9684"
+  },
+  "rows": [
+    {
+      "raw": 60,
+      "training_points": 204,
+      "training_semantic_counts": {
+        "18": 162,
+        "19": 42
+      },
+      "all_context_class_counts": {
+        "0": 2,
+        "1": 139,
+        "18": 162,
+        "19": 42,
+        "20": 12
+      },
+      "same_frame_road_pair_steps": [
+        {
+          "max_XY_m": 0.02,
+          "pairs": 0,
+          "absolute_deltaZ_m": {
+            "count": 0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.05,
+          "pairs": 0,
+          "absolute_deltaZ_m": {
+            "count": 0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.1,
+          "pairs": 123,
+          "absolute_deltaZ_m": {
+            "count": 123,
+            "min": 1.4250473579835443e-05,
+            "mean": 0.002241274185105872,
+            "median": 0.00192153074240764,
+            "p05": 0.00011511491210214331,
+            "p95": 0.0049833847316719465,
+            "max": 0.007729239543639466
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        }
+      ],
+      "valid_local_PCA_normals": 87,
+      "local_normal_tilt_from_worldZ_deg": {
+        "count": 87,
+        "min": 3.079801200706811,
+        "mean": 4.194467026845542,
+        "median": 4.216139316933942,
+        "p05": 3.0986453391702895,
+        "p95": 5.107361273150748,
+        "max": 5.165953242570742
+      },
+      "official_surface_neighbours": {
+        "TYPE_CURB": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        },
+        "TYPE_LANE_MARKER": {
+          "context_points": 42,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 204,
+            "min": 0.0,
+            "mean": 1.6656958521795053,
+            "median": 0.38980798272479666,
+            "p05": 0.0,
+            "p95": 5.6840909011527865,
+            "max": 6.086002522057933
+          },
+          "training_points_within0p10m": 51,
+          "training_points_within0p50m": 110
+        },
+        "TYPE_SIDEWALK": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        }
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065060.bin",
+        "bytes": 3886368,
+        "sha256": "92d8dd786edc202137286b8edf1b32fc901b8bb7ca2e09d987c9a0e6713037bc"
+      },
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/060.json",
+        "bytes": 39996,
+        "sha256": "b2866a276eeec4ca8a3f3601ab95ab23c1b46f9302bdc4cc4af592b8b160223b"
+      },
+      "no_Z_filter": true,
+      "no_model_residual_filter": true
+    },
+    {
+      "raw": 70,
+      "training_points": 252,
+      "training_semantic_counts": {
+        "18": 188,
+        "19": 64
+      },
+      "all_context_class_counts": {
+        "0": 1,
+        "1": 268,
+        "18": 188,
+        "19": 64,
+        "20": 25
+      },
+      "same_frame_road_pair_steps": [
+        {
+          "max_XY_m": 0.02,
+          "pairs": 0,
+          "absolute_deltaZ_m": {
+            "count": 0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.05,
+          "pairs": 28,
+          "absolute_deltaZ_m": {
+            "count": 28,
+            "min": 0.00014542029314057459,
+            "mean": 0.0012152795916050404,
+            "median": 0.0011756247380372287,
+            "p05": 0.00014775033896299305,
+            "p95": 0.00268612031564821,
+            "max": 0.002785771729541864
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.1,
+          "pairs": 215,
+          "absolute_deltaZ_m": {
+            "count": 215,
+            "min": 4.066799795054976e-05,
+            "mean": 0.002440074117769127,
+            "median": 0.002130111859681705,
+            "p05": 0.00018887202244037836,
+            "p95": 0.005787872356684785,
+            "max": 0.008354884507856042
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        }
+      ],
+      "valid_local_PCA_normals": 137,
+      "local_normal_tilt_from_worldZ_deg": {
+        "count": 137,
+        "min": 4.039841008805019,
+        "mean": 5.251430945101412,
+        "median": 5.315097570270877,
+        "p05": 4.093983595605005,
+        "p95": 6.380783635910185,
+        "max": 6.657787317292429
+      },
+      "official_surface_neighbours": {
+        "TYPE_CURB": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        },
+        "TYPE_LANE_MARKER": {
+          "context_points": 64,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 252,
+            "min": 0.0,
+            "mean": 1.4036674293297227,
+            "median": 0.24529665616280766,
+            "p05": 0.0,
+            "p95": 4.976425028270408,
+            "max": 5.477275264778497
+          },
+          "training_points_within0p10m": 79,
+          "training_points_within0p50m": 159
+        },
+        "TYPE_SIDEWALK": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        }
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065070.bin",
+        "bytes": 3876048,
+        "sha256": "a2aa70f8c3f3458aa8e9f08ffba301401f96dc4e9ebb30ba13e02db8f2228f45"
+      },
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/070.json",
+        "bytes": 40295,
+        "sha256": "df528b76c20750afd0c6183c9ca29ce122f9d2d955d71f46464f140f666d028c"
+      },
+      "no_Z_filter": true,
+      "no_model_residual_filter": true
+    },
+    {
+      "raw": 80,
+      "training_points": 334,
+      "training_semantic_counts": {
+        "18": 249,
+        "19": 85
+      },
+      "all_context_class_counts": {
+        "1": 361,
+        "18": 249,
+        "19": 85,
+        "20": 28
+      },
+      "same_frame_road_pair_steps": [
+        {
+          "max_XY_m": 0.02,
+          "pairs": 0,
+          "absolute_deltaZ_m": {
+            "count": 0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.05,
+          "pairs": 90,
+          "absolute_deltaZ_m": {
+            "count": 90,
+            "min": 0.00017539138611510907,
+            "mean": 0.0015616622840989279,
+            "median": 0.0015804552347642442,
+            "p05": 0.00018985463973653083,
+            "p95": 0.0035665230116453724,
+            "max": 0.005043916400090609
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.1,
+          "pairs": 367,
+          "absolute_deltaZ_m": {
+            "count": 367,
+            "min": 0.00017539138611510907,
+            "mean": 0.00277271171119376,
+            "median": 0.002279121147044094,
+            "p05": 0.0002846672977110387,
+            "p95": 0.006936760461929481,
+            "max": 0.011107939566791458
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        }
+      ],
+      "valid_local_PCA_normals": 225,
+      "local_normal_tilt_from_worldZ_deg": {
+        "count": 225,
+        "min": 3.5790354958836934,
+        "mean": 5.870849003908548,
+        "median": 5.9497018989158805,
+        "p05": 3.672247083492733,
+        "p95": 7.769248982397716,
+        "max": 8.154021735577764
+      },
+      "official_surface_neighbours": {
+        "TYPE_CURB": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        },
+        "TYPE_LANE_MARKER": {
+          "context_points": 85,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 334,
+            "min": 0.0,
+            "mean": 0.9948444594858797,
+            "median": 0.1995913541488627,
+            "p05": 0.0,
+            "p95": 3.9042669615840087,
+            "max": 6.3148792215630545
+          },
+          "training_points_within0p10m": 113,
+          "training_points_within0p50m": 233
+        },
+        "TYPE_SIDEWALK": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        }
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065080.bin",
+        "bytes": 3863640,
+        "sha256": "298076f8456ed55b8610c05fdf204ae82b16ec63d3be41188e70a31dec1fcb87"
+      },
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/080.json",
+        "bytes": 41154,
+        "sha256": "da123830286fa1ef8d4a311b3a8bd8ff9df966ddf806bc7a30807452b026c5ab"
+      },
+      "no_Z_filter": true,
+      "no_model_residual_filter": true
+    },
+    {
+      "raw": 95,
+      "training_points": 472,
+      "training_semantic_counts": {
+        "18": 343,
+        "19": 129
+      },
+      "all_context_class_counts": {
+        "-1": 4,
+        "0": 2,
+        "1": 541,
+        "18": 343,
+        "19": 129,
+        "20": 1
+      },
+      "same_frame_road_pair_steps": [
+        {
+          "max_XY_m": 0.02,
+          "pairs": 0,
+          "absolute_deltaZ_m": {
+            "count": 0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.05,
+          "pairs": 216,
+          "absolute_deltaZ_m": {
+            "count": 216,
+            "min": 0.00018028994794505593,
+            "mean": 0.0018334155968765078,
+            "median": 0.0015503087304686858,
+            "p05": 0.00019865321060397179,
+            "p95": 0.004968728945252465,
+            "max": 0.007427604346691652
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.1,
+          "pairs": 672,
+          "absolute_deltaZ_m": {
+            "count": 672,
+            "min": 1.8349492087565977e-05,
+            "mean": 0.002828206094074166,
+            "median": 0.0022577672367845025,
+            "p05": 0.00021975476696933782,
+            "p95": 0.00759976968385878,
+            "max": 0.011540306600174688
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        }
+      ],
+      "valid_local_PCA_normals": 380,
+      "local_normal_tilt_from_worldZ_deg": {
+        "count": 380,
+        "min": 2.3285051562945243,
+        "mean": 6.716435246151187,
+        "median": 6.568435050850601,
+        "p05": 4.230111624461763,
+        "p95": 9.739269787809322,
+        "max": 9.904430244695822
+      },
+      "official_surface_neighbours": {
+        "TYPE_CURB": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        },
+        "TYPE_LANE_MARKER": {
+          "context_points": 129,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 472,
+            "min": 0.0,
+            "mean": 1.0317983781702256,
+            "median": 0.17175110478089903,
+            "p05": 0.0,
+            "p95": 4.537065183013408,
+            "max": 5.851450063636363
+          },
+          "training_points_within0p10m": 179,
+          "training_points_within0p50m": 325
+        },
+        "TYPE_SIDEWALK": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        }
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065095.bin",
+        "bytes": 3844584,
+        "sha256": "a18338f46dd903800b8546541f4fc3aa81305727da96e9674a028e7e3f7e9a06"
+      },
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/095.json",
+        "bytes": 39660,
+        "sha256": "123debc4a4a9b0c3fa591c42a9882f43641dbea3dd50354eaa6c4401d0353298"
+      },
+      "no_Z_filter": true,
+      "no_model_residual_filter": true
+    },
+    {
+      "raw": 110,
+      "training_points": 498,
+      "training_semantic_counts": {
+        "18": 347,
+        "19": 151
+      },
+      "all_context_class_counts": {
+        "-1": 9,
+        "0": 1,
+        "1": 596,
+        "18": 347,
+        "19": 151,
+        "20": 31
+      },
+      "same_frame_road_pair_steps": [
+        {
+          "max_XY_m": 0.02,
+          "pairs": 0,
+          "absolute_deltaZ_m": {
+            "count": 0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.05,
+          "pairs": 276,
+          "absolute_deltaZ_m": {
+            "count": 276,
+            "min": 0.00015458793380318525,
+            "mean": 0.0021352000951777453,
+            "median": 0.0017762383791897207,
+            "p05": 0.0001854446969824508,
+            "p95": 0.005280421984626749,
+            "max": 0.007302220762834821
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.1,
+          "pairs": 810,
+          "absolute_deltaZ_m": {
+            "count": 810,
+            "min": 2.7644961040351745e-05,
+            "mean": 0.003034574562815921,
+            "median": 0.0023719753447686287,
+            "p05": 0.0002567414807035817,
+            "p95": 0.008384702741617643,
+            "max": 0.013462348081308306
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        }
+      ],
+      "valid_local_PCA_normals": 404,
+      "local_normal_tilt_from_worldZ_deg": {
+        "count": 404,
+        "min": 0.6390741281420017,
+        "mean": 7.033195323474871,
+        "median": 6.9706228034216515,
+        "p05": 2.5865777537606927,
+        "p95": 10.51632128090372,
+        "max": 12.528809272441494
+      },
+      "official_surface_neighbours": {
+        "TYPE_CURB": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        },
+        "TYPE_LANE_MARKER": {
+          "context_points": 151,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 498,
+            "min": 0.0,
+            "mean": 0.8040860681938871,
+            "median": 0.14701034739442775,
+            "p05": 0.0,
+            "p95": 3.8248134690947637,
+            "max": 5.894099895299968
+          },
+          "training_points_within0p10m": 213,
+          "training_points_within0p50m": 374
+        },
+        "TYPE_SIDEWALK": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        }
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065110.bin",
+        "bytes": 3830088,
+        "sha256": "280708e87b263f76e58183c8cd7218e1cab8ec5df35d4ad6741498739b1354b3"
+      },
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+        "bytes": 36675,
+        "sha256": "67ab85c64bca56b2d309f7c2fccef021b9749cd0bbb196d0573cfcad4ed6a300"
+      },
+      "no_Z_filter": true,
+      "no_model_residual_filter": true
+    },
+    {
+      "raw": 125,
+      "training_points": 510,
+      "training_semantic_counts": {
+        "18": 254,
+        "19": 256
+      },
+      "all_context_class_counts": {
+        "-1": 11,
+        "0": 4,
+        "1": 684,
+        "18": 254,
+        "19": 256,
+        "20": 61
+      },
+      "same_frame_road_pair_steps": [
+        {
+          "max_XY_m": 0.02,
+          "pairs": 0,
+          "absolute_deltaZ_m": {
+            "count": 0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.05,
+          "pairs": 330,
+          "absolute_deltaZ_m": {
+            "count": 330,
+            "min": 0.00014325829160100056,
+            "mean": 0.002016542347558311,
+            "median": 0.0016053135853795197,
+            "p05": 0.00016684277933656232,
+            "p95": 0.005435174831818835,
+            "max": 0.008029379525634539
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.1,
+          "pairs": 908,
+          "absolute_deltaZ_m": {
+            "count": 908,
+            "min": 6.1551839074525105e-06,
+            "mean": 0.0030810285564062487,
+            "median": 0.0024504696743132826,
+            "p05": 0.00020810109409765686,
+            "p95": 0.008614259412766856,
+            "max": 0.01463768634575402
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        }
+      ],
+      "valid_local_PCA_normals": 399,
+      "local_normal_tilt_from_worldZ_deg": {
+        "count": 399,
+        "min": 1.6808481302154266,
+        "mean": 7.376174239332203,
+        "median": 7.249783413650924,
+        "p05": 3.52533337957109,
+        "p95": 10.993934761021837,
+        "max": 11.37807942479253
+      },
+      "official_surface_neighbours": {
+        "TYPE_CURB": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        },
+        "TYPE_LANE_MARKER": {
+          "context_points": 256,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 510,
+            "min": 0.0,
+            "mean": 0.6876732798088355,
+            "median": 0.0,
+            "p05": 0.0,
+            "p95": 3.8026144195840628,
+            "max": 5.9115259851679705
+          },
+          "training_points_within0p10m": 328,
+          "training_points_within0p50m": 406
+        },
+        "TYPE_SIDEWALK": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        }
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065125.bin",
+        "bytes": 3836520,
+        "sha256": "0fb7f3dc3050b029dabd99c3202a43ecd44309ada5f950f2190dc446d2db7389"
+      },
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/125.json",
+        "bytes": 39334,
+        "sha256": "7e33b738f3fd80650976d3dc58b4a6b2423b5b1dd70099c1f819b6228e6bcdd7"
+      },
+      "no_Z_filter": true,
+      "no_model_residual_filter": true
+    },
+    {
+      "raw": 145,
+      "training_points": 506,
+      "training_semantic_counts": {
+        "18": 249,
+        "19": 257
+      },
+      "all_context_class_counts": {
+        "-1": 14,
+        "0": 1,
+        "1": 667,
+        "7": 2,
+        "18": 249,
+        "19": 257,
+        "20": 63
+      },
+      "same_frame_road_pair_steps": [
+        {
+          "max_XY_m": 0.02,
+          "pairs": 1,
+          "absolute_deltaZ_m": {
+            "count": 1,
+            "min": 0.0,
+            "mean": 0.0,
+            "median": 0.0,
+            "p05": 0.0,
+            "p95": 0.0,
+            "max": 0.0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.05,
+          "pairs": 312,
+          "absolute_deltaZ_m": {
+            "count": 312,
+            "min": 0.0,
+            "mean": 0.0019295952563334335,
+            "median": 0.0014748449499588645,
+            "p05": 0.00016870064290230857,
+            "p95": 0.005407317963286217,
+            "max": 0.008045222869888846
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.1,
+          "pairs": 887,
+          "absolute_deltaZ_m": {
+            "count": 887,
+            "min": 0.0,
+            "mean": 0.003230580935975852,
+            "median": 0.002406513862943882,
+            "p05": 0.00020617443637362953,
+            "p95": 0.00935522938060593,
+            "max": 0.016003974619035688
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        }
+      ],
+      "valid_local_PCA_normals": 398,
+      "local_normal_tilt_from_worldZ_deg": {
+        "count": 398,
+        "min": 1.277142817448384,
+        "mean": 7.3155271343848165,
+        "median": 7.210890882433031,
+        "p05": 3.6102106920384283,
+        "p95": 10.981462260793181,
+        "max": 11.419699577116504
+      },
+      "official_surface_neighbours": {
+        "TYPE_CURB": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        },
+        "TYPE_LANE_MARKER": {
+          "context_points": 257,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 506,
+            "min": 0.0,
+            "mean": 0.6665076525015724,
+            "median": 0.0,
+            "p05": 0.0,
+            "p95": 3.764737883173061,
+            "max": 5.879633043064232
+          },
+          "training_points_within0p10m": 327,
+          "training_points_within0p50m": 412
+        },
+        "TYPE_SIDEWALK": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        }
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065145.bin",
+        "bytes": 3824328,
+        "sha256": "0b95d1e4464713c58d9b538b26fb969723e781f4c922b28d9a6d917b446a0a5a"
+      },
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/145.json",
+        "bytes": 38777,
+        "sha256": "82541747775bfb6c2da54672099e1798f04f6c5f1130ef35ac4d6c33321fa805"
+      },
+      "no_Z_filter": true,
+      "no_model_residual_filter": true
+    },
+    {
+      "raw": 165,
+      "training_points": 500,
+      "training_semantic_counts": {
+        "18": 249,
+        "19": 251
+      },
+      "all_context_class_counts": {
+        "-1": 11,
+        "0": 2,
+        "1": 673,
+        "7": 41,
+        "18": 249,
+        "19": 251,
+        "20": 66
+      },
+      "same_frame_road_pair_steps": [
+        {
+          "max_XY_m": 0.02,
+          "pairs": 0,
+          "absolute_deltaZ_m": {
+            "count": 0
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.05,
+          "pairs": 311,
+          "absolute_deltaZ_m": {
+            "count": 311,
+            "min": 0.0001378515946726111,
+            "mean": 0.002012278353376999,
+            "median": 0.001542957830345415,
+            "p05": 0.0001941026739409324,
+            "p95": 0.004968928060645084,
+            "max": 0.00805108267253729
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        },
+        {
+          "max_XY_m": 0.1,
+          "pairs": 862,
+          "absolute_deltaZ_m": {
+            "count": 862,
+            "min": 1.116609300311211e-05,
+            "mean": 0.003113722552214204,
+            "median": 0.0023943861086888063,
+            "p05": 0.00024027217264457334,
+            "p95": 0.008694842447135365,
+            "max": 0.014518448870067147
+          },
+          "pairs_abs_dZ_ge0p08m": 0
+        }
+      ],
+      "valid_local_PCA_normals": 399,
+      "local_normal_tilt_from_worldZ_deg": {
+        "count": 399,
+        "min": 0.9741335314025528,
+        "mean": 7.33165860674944,
+        "median": 7.225269327610149,
+        "p05": 3.52724372859764,
+        "p95": 11.01077503567498,
+        "max": 13.625539922493271
+      },
+      "official_surface_neighbours": {
+        "TYPE_CURB": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        },
+        "TYPE_LANE_MARKER": {
+          "context_points": 251,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 500,
+            "min": 0.0,
+            "mean": 0.6873628221194331,
+            "median": 0.0,
+            "p05": 0.0,
+            "p95": 3.8268046189533926,
+            "max": 5.917291302897426
+          },
+          "training_points_within0p10m": 319,
+          "training_points_within0p50m": 405
+        },
+        "TYPE_SIDEWALK": {
+          "context_points": 0,
+          "training_ROAD_or_LANE_nearest_distanceXY_m": {
+            "count": 0
+          },
+          "training_points_within0p10m": 0,
+          "training_points_within0p50m": 0
+        }
+      },
+      "original_bin": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065165.bin",
+        "bytes": 3835008,
+        "sha256": "7e3171f2beda33e8e2d1c2ea874199cae17e1936cfad95bb0cafaf9ca35b3605"
+      },
+      "observation": {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/165.json",
+        "bytes": 38168,
+        "sha256": "5c6a0e6a7eee5d79d39c6bc4ecc05a6d482e15738382c0d4879d47cb33ff0ada"
+      },
+      "no_Z_filter": true,
+      "no_model_residual_filter": true
+    }
+  ],
+  "semantic_mapping": "Exact original cloud column6 return/row/column -> saved official range label. No class guessed from image/height.",
+  "ground_classes": [
+    18,
+    19
+  ],
+  "other_classes_shown_not_added_to_fit": true,
+  "lane_marker_is_official_point_semantic_not_vector_lane_geometry": true,
+  "no_TFRecord_rescan": true,
+  "no_heldout_read": true,
+  "no_model_fit_or_asset_update": true,
+  "context_points": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/same_frame_surface_layers_v1/context_semantic_points.npz",
+    "bytes": 406132,
+    "sha256": "96080a5604c3fad762181077d96df2b5ae4892f7dfb612bed893c3615230e8b2"
+  },
+  "pairs": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/same_frame_surface_layers_v1/same_frame_ROAD_step_pairs.npz",
+    "bytes": 125462,
+    "sha256": "cbc35d554c0039a860e9e3eeb0125f5fa7e8faa6c57ef2deccac954eaf3da20f"
+  },
+  "figure": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/same_frame_surface_layers_v1/same_frame_surface_layers.png",
+    "bytes": 418826,
+    "sha256": "eb5c16e06aa9a51c2d958775336bf03461624d76089e4150dbbedbf7c651602d"
+  },
+  "curb_vs_pose_cause_not_resolved_by_nearest_XY_alone": true,
+  "GPU_forward": 0,
+  "backward": 0,
+  "updates": 0,
+  "seconds": 5.866975545883179
+}

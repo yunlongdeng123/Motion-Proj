@@ -1,0 +1,1459 @@
+{
+  "schema": "R8.independent_corrected_mask_coverage_occlusion_CPU.v1",
+  "complete": true,
+  "CPU_only": true,
+  "new_nativeF": 0,
+  "new_nativeB": 0,
+  "optimizer_updates": 0,
+  "new_teacher_calls": 0,
+  "thresholds": [
+    0.5,
+    0.95
+  ],
+  "frames": [
+    {
+      "raw": 86,
+      "scopes": [
+        {
+          "scope": "original_C",
+          "pixels": 32390,
+          "RGB_valid_pixels": 32390,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 5934,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.33681416511535645,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6298,
+              "road_isolated_low_scene_sufficient": 6298,
+              "road_low_scene_sufficient_context_dominant": 1891,
+              "actor_isolated_alpha_low": 25981,
+              "actor_isolated_sufficient_joint_actor_low": 369,
+              "actor_sufficient_joint_low_context_dominant": 329
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6595,
+              "road_isolated_low_scene_sufficient": 6595,
+              "road_low_scene_sufficient_context_dominant": 2034,
+              "actor_isolated_alpha_low": 26181,
+              "actor_isolated_sufficient_joint_actor_low": 1479,
+              "actor_sufficient_joint_low_context_dominant": 273
+            }
+          }
+        },
+        {
+          "scope": "original_S",
+          "pixels": 6286,
+          "RGB_valid_pixels": 6286,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 5,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.23964647948741913,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 6286,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 6286,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        },
+        {
+          "scope": "original_CS",
+          "pixels": 38676,
+          "RGB_valid_pixels": 38676,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 5939,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.32102152705192566,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6298,
+              "road_isolated_low_scene_sufficient": 6298,
+              "road_low_scene_sufficient_context_dominant": 1891,
+              "actor_isolated_alpha_low": 32267,
+              "actor_isolated_sufficient_joint_actor_low": 369,
+              "actor_sufficient_joint_low_context_dominant": 329
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6595,
+              "road_isolated_low_scene_sufficient": 6595,
+              "road_low_scene_sufficient_context_dominant": 2034,
+              "actor_isolated_alpha_low": 32467,
+              "actor_isolated_sufficient_joint_actor_low": 1479,
+              "actor_sufficient_joint_low_context_dominant": 273
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8",
+          "pixels": 46784,
+          "RGB_valid_pixels": 46784,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 8017,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.2838575541973114,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 8573,
+              "road_isolated_low_scene_sufficient": 8573,
+              "road_low_scene_sufficient_context_dominant": 3030,
+              "actor_isolated_alpha_low": 39006,
+              "actor_isolated_sufficient_joint_actor_low": 376,
+              "actor_sufficient_joint_low_context_dominant": 334
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 9285,
+              "road_isolated_low_scene_sufficient": 9285,
+              "road_low_scene_sufficient_context_dominant": 3275,
+              "actor_isolated_alpha_low": 39238,
+              "actor_isolated_sufficient_joint_actor_low": 2027,
+              "actor_sufficient_joint_low_context_dominant": 273
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8_Kfree",
+          "pixels": 46784,
+          "RGB_valid_pixels": 46784,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 8017,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.2838575541973114,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 8573,
+              "road_isolated_low_scene_sufficient": 8573,
+              "road_low_scene_sufficient_context_dominant": 3030,
+              "actor_isolated_alpha_low": 39006,
+              "actor_isolated_sufficient_joint_actor_low": 376,
+              "actor_sufficient_joint_low_context_dominant": 334
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 9285,
+              "road_isolated_low_scene_sufficient": 9285,
+              "road_low_scene_sufficient_context_dominant": 3275,
+              "actor_isolated_alpha_low": 39238,
+              "actor_isolated_sufficient_joint_actor_low": 2027,
+              "actor_sufficient_joint_low_context_dominant": 273
+            }
+          }
+        },
+        {
+          "scope": "K_rectified",
+          "pixels": 76057,
+          "RGB_valid_pixels": 76057,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 74347,
+          "K_pixels": 76057,
+          "joint_RGB_L1_on_correct_pinhole": 0.047151464968919754,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 74942,
+              "road_isolated_low_scene_sufficient": 74942,
+              "road_low_scene_sufficient_context_dominant": 74831,
+              "actor_isolated_alpha_low": 75940,
+              "actor_isolated_sufficient_joint_actor_low": 6,
+              "actor_sufficient_joint_low_context_dominant": 6
+            },
+            "0.95": {
+              "scene_total_alpha_low": 82,
+              "road_isolated_alpha_low": 75060,
+              "road_isolated_low_scene_sufficient": 74978,
+              "road_low_scene_sufficient_context_dominant": 74864,
+              "actor_isolated_alpha_low": 75970,
+              "actor_isolated_sufficient_joint_actor_low": 69,
+              "actor_sufficient_joint_low_context_dominant": 6
+            }
+          }
+        },
+        {
+          "scope": "actor_visible_proxy",
+          "pixels": 7542,
+          "RGB_valid_pixels": 7542,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 6124,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.034367311745882034,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 7455,
+              "road_isolated_low_scene_sufficient": 7455,
+              "road_low_scene_sufficient_context_dominant": 1635,
+              "actor_isolated_alpha_low": 40,
+              "actor_isolated_sufficient_joint_actor_low": 1610,
+              "actor_sufficient_joint_low_context_dominant": 1607
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 7516,
+              "road_isolated_low_scene_sufficient": 7516,
+              "road_low_scene_sufficient_context_dominant": 1639,
+              "actor_isolated_alpha_low": 84,
+              "actor_isolated_sufficient_joint_actor_low": 6073,
+              "actor_sufficient_joint_low_context_dominant": 1602
+            }
+          }
+        },
+        {
+          "scope": "actor_visible_frozen_V",
+          "pixels": 6498,
+          "RGB_valid_pixels": 6498,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 5420,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.02693149261176586,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6466,
+              "road_isolated_low_scene_sufficient": 6466,
+              "road_low_scene_sufficient_context_dominant": 1581,
+              "actor_isolated_alpha_low": 9,
+              "actor_isolated_sufficient_joint_actor_low": 1573,
+              "actor_sufficient_joint_low_context_dominant": 1572
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6491,
+              "road_isolated_low_scene_sufficient": 6491,
+              "road_low_scene_sufficient_context_dominant": 1581,
+              "actor_isolated_alpha_low": 13,
+              "actor_isolated_sufficient_joint_actor_low": 5478,
+              "actor_sufficient_joint_low_context_dominant": 1570
+            }
+          }
+        },
+        {
+          "scope": "observed_road_semantic0_CS8",
+          "pixels": 12539,
+          "RGB_valid_pixels": 12539,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 1441,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.17014780640602112,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1137,
+              "road_isolated_low_scene_sufficient": 1137,
+              "road_low_scene_sufficient_context_dominant": 1137,
+              "actor_isolated_alpha_low": 12539,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1485,
+              "road_isolated_low_scene_sufficient": 1485,
+              "road_low_scene_sufficient_context_dominant": 1230,
+              "actor_isolated_alpha_low": 12539,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        }
+      ],
+      "visible_evidence": "frozen conservative V",
+      "proposal_counts": {
+        "road_scene_alpha95": 0,
+        "actor_frozenV_isolated_alpha95": 13,
+        "actor_proxy_isolated_alpha95": 84
+      },
+      "owner_alpha_sum_max_abs": 1.3113021850585938e-06,
+      "source_native_render_unchanged": true
+    },
+    {
+      "raw": 110,
+      "scopes": [
+        {
+          "scope": "original_C",
+          "pixels": 60377,
+          "RGB_valid_pixels": 60377,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 7077,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.2926023006439209,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6848,
+              "road_isolated_low_scene_sufficient": 6848,
+              "road_low_scene_sufficient_context_dominant": 2618,
+              "actor_isolated_alpha_low": 53160,
+              "actor_isolated_sufficient_joint_actor_low": 381,
+              "actor_sufficient_joint_low_context_dominant": 334
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 7259,
+              "road_isolated_low_scene_sufficient": 7259,
+              "road_low_scene_sufficient_context_dominant": 2775,
+              "actor_isolated_alpha_low": 53417,
+              "actor_isolated_sufficient_joint_actor_low": 1518,
+              "actor_sufficient_joint_low_context_dominant": 291
+            }
+          }
+        },
+        {
+          "scope": "original_S",
+          "pixels": 12783,
+          "RGB_valid_pixels": 12783,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 20,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.26362669467926025,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 12783,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 4,
+              "road_isolated_low_scene_sufficient": 4,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 12783,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        },
+        {
+          "scope": "original_CS",
+          "pixels": 73160,
+          "RGB_valid_pixels": 73160,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 7097,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.28753945231437683,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6848,
+              "road_isolated_low_scene_sufficient": 6848,
+              "road_low_scene_sufficient_context_dominant": 2618,
+              "actor_isolated_alpha_low": 65943,
+              "actor_isolated_sufficient_joint_actor_low": 381,
+              "actor_sufficient_joint_low_context_dominant": 334
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 7263,
+              "road_isolated_low_scene_sufficient": 7263,
+              "road_low_scene_sufficient_context_dominant": 2775,
+              "actor_isolated_alpha_low": 66200,
+              "actor_isolated_sufficient_joint_actor_low": 1518,
+              "actor_sufficient_joint_low_context_dominant": 291
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8",
+          "pixels": 82942,
+          "RGB_valid_pixels": 82693,
+          "Brown_invalid_pixels": 249,
+          "original_mesh_unprojectable_pixels": 8443,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.26966047286987305,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 8580,
+              "road_isolated_low_scene_sufficient": 8580,
+              "road_low_scene_sufficient_context_dominant": 3127,
+              "actor_isolated_alpha_low": 74260,
+              "actor_isolated_sufficient_joint_actor_low": 385,
+              "actor_sufficient_joint_low_context_dominant": 337
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 10213,
+              "road_isolated_low_scene_sufficient": 10213,
+              "road_low_scene_sufficient_context_dominant": 3343,
+              "actor_isolated_alpha_low": 74564,
+              "actor_isolated_sufficient_joint_actor_low": 1853,
+              "actor_sufficient_joint_low_context_dominant": 291
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8_Kfree",
+          "pixels": 82942,
+          "RGB_valid_pixels": 82693,
+          "Brown_invalid_pixels": 249,
+          "original_mesh_unprojectable_pixels": 8443,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.26966047286987305,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 8580,
+              "road_isolated_low_scene_sufficient": 8580,
+              "road_low_scene_sufficient_context_dominant": 3127,
+              "actor_isolated_alpha_low": 74260,
+              "actor_isolated_sufficient_joint_actor_low": 385,
+              "actor_sufficient_joint_low_context_dominant": 337
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 10213,
+              "road_isolated_low_scene_sufficient": 10213,
+              "road_low_scene_sufficient_context_dominant": 3343,
+              "actor_isolated_alpha_low": 74564,
+              "actor_isolated_sufficient_joint_actor_low": 1853,
+              "actor_sufficient_joint_low_context_dominant": 291
+            }
+          }
+        },
+        {
+          "scope": "K_rectified",
+          "pixels": 79186,
+          "RGB_valid_pixels": 79186,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 76533,
+          "K_pixels": 79186,
+          "joint_RGB_L1_on_correct_pinhole": 0.04673417657613754,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 77674,
+              "road_isolated_low_scene_sufficient": 77674,
+              "road_low_scene_sufficient_context_dominant": 77424,
+              "actor_isolated_alpha_low": 78908,
+              "actor_isolated_sufficient_joint_actor_low": 28,
+              "actor_sufficient_joint_low_context_dominant": 28
+            },
+            "0.95": {
+              "scene_total_alpha_low": 235,
+              "road_isolated_alpha_low": 77839,
+              "road_isolated_low_scene_sufficient": 77604,
+              "road_low_scene_sufficient_context_dominant": 77339,
+              "actor_isolated_alpha_low": 78953,
+              "actor_isolated_sufficient_joint_actor_low": 172,
+              "actor_sufficient_joint_low_context_dominant": 18
+            }
+          }
+        },
+        {
+          "scope": "actor_visible_proxy",
+          "pixels": 11484,
+          "RGB_valid_pixels": 11484,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 8532,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.04225172847509384,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 11191,
+              "road_isolated_low_scene_sufficient": 11191,
+              "road_low_scene_sufficient_context_dominant": 2462,
+              "actor_isolated_alpha_low": 154,
+              "actor_isolated_sufficient_joint_actor_low": 2352,
+              "actor_sufficient_joint_low_context_dominant": 2348
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 11364,
+              "road_isolated_low_scene_sufficient": 11364,
+              "road_low_scene_sufficient_context_dominant": 2472,
+              "actor_isolated_alpha_low": 254,
+              "actor_isolated_sufficient_joint_actor_low": 7090,
+              "actor_sufficient_joint_low_context_dominant": 2341
+            }
+          }
+        },
+        {
+          "scope": "actor_visible_frozen_V",
+          "pixels": 10238,
+          "RGB_valid_pixels": 10238,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 7769,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.03827955201268196,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 10039,
+              "road_isolated_low_scene_sufficient": 10039,
+              "road_low_scene_sufficient_context_dominant": 2356,
+              "actor_isolated_alpha_low": 25,
+              "actor_isolated_sufficient_joint_actor_low": 2331,
+              "actor_sufficient_joint_low_context_dominant": 2331
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 10170,
+              "road_isolated_low_scene_sufficient": 10170,
+              "road_low_scene_sufficient_context_dominant": 2356,
+              "actor_isolated_alpha_low": 51,
+              "actor_isolated_sufficient_joint_actor_low": 6667,
+              "actor_sufficient_joint_low_context_dominant": 2328
+            }
+          }
+        },
+        {
+          "scope": "observed_road_semantic0_CS8",
+          "pixels": 18811,
+          "RGB_valid_pixels": 18811,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 450,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.20867161452770233,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 304,
+              "road_isolated_low_scene_sufficient": 304,
+              "road_low_scene_sufficient_context_dominant": 304,
+              "actor_isolated_alpha_low": 18800,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1171,
+              "road_isolated_low_scene_sufficient": 1171,
+              "road_low_scene_sufficient_context_dominant": 345,
+              "actor_isolated_alpha_low": 18801,
+              "actor_isolated_sufficient_joint_actor_low": 10,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        }
+      ],
+      "visible_evidence": "frozen conservative V",
+      "proposal_counts": {
+        "road_scene_alpha95": 0,
+        "actor_frozenV_isolated_alpha95": 51,
+        "actor_proxy_isolated_alpha95": 254
+      },
+      "owner_alpha_sum_max_abs": 1.3709068298339844e-06,
+      "source_native_render_unchanged": true
+    },
+    {
+      "raw": 134,
+      "scopes": [
+        {
+          "scope": "original_C",
+          "pixels": 77468,
+          "RGB_valid_pixels": 77057,
+          "Brown_invalid_pixels": 411,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.2666383385658264,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 246,
+              "road_isolated_low_scene_sufficient": 246,
+              "road_low_scene_sufficient_context_dominant": 68,
+              "actor_isolated_alpha_low": 74406,
+              "actor_isolated_sufficient_joint_actor_low": 217,
+              "actor_sufficient_joint_low_context_dominant": 177
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1978,
+              "road_isolated_low_scene_sufficient": 1978,
+              "road_low_scene_sufficient_context_dominant": 191,
+              "actor_isolated_alpha_low": 74574,
+              "actor_isolated_sufficient_joint_actor_low": 1336,
+              "actor_sufficient_joint_low_context_dominant": 120
+            }
+          }
+        },
+        {
+          "scope": "original_S",
+          "pixels": 0,
+          "RGB_valid_pixels": 0,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": null,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 0,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 0,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        },
+        {
+          "scope": "original_CS",
+          "pixels": 77468,
+          "RGB_valid_pixels": 77057,
+          "Brown_invalid_pixels": 411,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.2666383385658264,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 246,
+              "road_isolated_low_scene_sufficient": 246,
+              "road_low_scene_sufficient_context_dominant": 68,
+              "actor_isolated_alpha_low": 74406,
+              "actor_isolated_sufficient_joint_actor_low": 217,
+              "actor_sufficient_joint_low_context_dominant": 177
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1978,
+              "road_isolated_low_scene_sufficient": 1978,
+              "road_low_scene_sufficient_context_dominant": 191,
+              "actor_isolated_alpha_low": 74574,
+              "actor_isolated_sufficient_joint_actor_low": 1336,
+              "actor_sufficient_joint_low_context_dominant": 120
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8",
+          "pixels": 86825,
+          "RGB_valid_pixels": 86388,
+          "Brown_invalid_pixels": 437,
+          "original_mesh_unprojectable_pixels": 2551,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.251629114151001,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 3362,
+              "road_isolated_low_scene_sufficient": 3362,
+              "road_low_scene_sufficient_context_dominant": 1428,
+              "actor_isolated_alpha_low": 81284,
+              "actor_isolated_sufficient_joint_actor_low": 320,
+              "actor_sufficient_joint_low_context_dominant": 266
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6034,
+              "road_isolated_low_scene_sufficient": 6034,
+              "road_low_scene_sufficient_context_dominant": 1849,
+              "actor_isolated_alpha_low": 81567,
+              "actor_isolated_sufficient_joint_actor_low": 1834,
+              "actor_sufficient_joint_low_context_dominant": 197
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8_Kfree",
+          "pixels": 86825,
+          "RGB_valid_pixels": 86388,
+          "Brown_invalid_pixels": 437,
+          "original_mesh_unprojectable_pixels": 2551,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.251629114151001,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 3362,
+              "road_isolated_low_scene_sufficient": 3362,
+              "road_low_scene_sufficient_context_dominant": 1428,
+              "actor_isolated_alpha_low": 81284,
+              "actor_isolated_sufficient_joint_actor_low": 320,
+              "actor_sufficient_joint_low_context_dominant": 266
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 6034,
+              "road_isolated_low_scene_sufficient": 6034,
+              "road_low_scene_sufficient_context_dominant": 1849,
+              "actor_isolated_alpha_low": 81567,
+              "actor_isolated_sufficient_joint_actor_low": 1834,
+              "actor_sufficient_joint_low_context_dominant": 197
+            }
+          }
+        },
+        {
+          "scope": "K_rectified",
+          "pixels": 83975,
+          "RGB_valid_pixels": 83975,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 81030,
+          "K_pixels": 83975,
+          "joint_RGB_L1_on_correct_pinhole": 0.04732303321361542,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 82407,
+              "road_isolated_low_scene_sufficient": 82407,
+              "road_low_scene_sufficient_context_dominant": 82407,
+              "actor_isolated_alpha_low": 83975,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 652,
+              "road_isolated_alpha_low": 82603,
+              "road_isolated_low_scene_sufficient": 81951,
+              "road_low_scene_sufficient_context_dominant": 81922,
+              "actor_isolated_alpha_low": 83975,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        },
+        {
+          "scope": "actor_visible_proxy",
+          "pixels": 12694,
+          "RGB_valid_pixels": 12694,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 9408,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.041864581406116486,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 12376,
+              "road_isolated_low_scene_sufficient": 12376,
+              "road_low_scene_sufficient_context_dominant": 2670,
+              "actor_isolated_alpha_low": 196,
+              "actor_isolated_sufficient_joint_actor_low": 2513,
+              "actor_sufficient_joint_low_context_dominant": 2509
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 12549,
+              "road_isolated_low_scene_sufficient": 12549,
+              "road_low_scene_sufficient_context_dominant": 2685,
+              "actor_isolated_alpha_low": 316,
+              "actor_isolated_sufficient_joint_actor_low": 8042,
+              "actor_sufficient_joint_low_context_dominant": 2493
+            }
+          }
+        },
+        {
+          "scope": "observed_road_semantic0_CS8",
+          "pixels": 17911,
+          "RGB_valid_pixels": 17911,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.1545373797416687,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 458,
+              "road_isolated_low_scene_sufficient": 458,
+              "road_low_scene_sufficient_context_dominant": 458,
+              "actor_isolated_alpha_low": 17884,
+              "actor_isolated_sufficient_joint_actor_low": 1,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1742,
+              "road_isolated_low_scene_sufficient": 1742,
+              "road_low_scene_sufficient_context_dominant": 664,
+              "actor_isolated_alpha_low": 17889,
+              "actor_isolated_sufficient_joint_actor_low": 18,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        }
+      ],
+      "visible_evidence": "instance proxy only, not frozen V",
+      "proposal_counts": {
+        "road_scene_alpha95": 0,
+        "actor_frozenV_isolated_alpha95": 0,
+        "actor_proxy_isolated_alpha95": 316
+      },
+      "owner_alpha_sum_max_abs": 1.4901161193847656e-06,
+      "source_native_render_unchanged": true
+    },
+    {
+      "raw": 179,
+      "scopes": [
+        {
+          "scope": "original_C",
+          "pixels": 77535,
+          "RGB_valid_pixels": 77133,
+          "Brown_invalid_pixels": 402,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.26720982789993286,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 146,
+              "road_isolated_low_scene_sufficient": 146,
+              "road_low_scene_sufficient_context_dominant": 65,
+              "actor_isolated_alpha_low": 74552,
+              "actor_isolated_sufficient_joint_actor_low": 240,
+              "actor_sufficient_joint_low_context_dominant": 202
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1958,
+              "road_isolated_low_scene_sufficient": 1958,
+              "road_low_scene_sufficient_context_dominant": 179,
+              "actor_isolated_alpha_low": 74687,
+              "actor_isolated_sufficient_joint_actor_low": 1364,
+              "actor_sufficient_joint_low_context_dominant": 165
+            }
+          }
+        },
+        {
+          "scope": "original_S",
+          "pixels": 0,
+          "RGB_valid_pixels": 0,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": null,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 0,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 0,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        },
+        {
+          "scope": "original_CS",
+          "pixels": 77535,
+          "RGB_valid_pixels": 77133,
+          "Brown_invalid_pixels": 402,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.26720982789993286,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 146,
+              "road_isolated_low_scene_sufficient": 146,
+              "road_low_scene_sufficient_context_dominant": 65,
+              "actor_isolated_alpha_low": 74552,
+              "actor_isolated_sufficient_joint_actor_low": 240,
+              "actor_sufficient_joint_low_context_dominant": 202
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1958,
+              "road_isolated_low_scene_sufficient": 1958,
+              "road_low_scene_sufficient_context_dominant": 179,
+              "actor_isolated_alpha_low": 74687,
+              "actor_isolated_sufficient_joint_actor_low": 1364,
+              "actor_sufficient_joint_low_context_dominant": 165
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8",
+          "pixels": 86964,
+          "RGB_valid_pixels": 86532,
+          "Brown_invalid_pixels": 432,
+          "original_mesh_unprojectable_pixels": 2490,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.2511039972305298,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 3214,
+              "road_isolated_low_scene_sufficient": 3214,
+              "road_low_scene_sufficient_context_dominant": 1422,
+              "actor_isolated_alpha_low": 81502,
+              "actor_isolated_sufficient_joint_actor_low": 348,
+              "actor_sufficient_joint_low_context_dominant": 299
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 5958,
+              "road_isolated_low_scene_sufficient": 5958,
+              "road_low_scene_sufficient_context_dominant": 1846,
+              "actor_isolated_alpha_low": 81752,
+              "actor_isolated_sufficient_joint_actor_low": 1908,
+              "actor_sufficient_joint_low_context_dominant": 249
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8_Kfree",
+          "pixels": 86964,
+          "RGB_valid_pixels": 86532,
+          "Brown_invalid_pixels": 432,
+          "original_mesh_unprojectable_pixels": 2490,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.2511039972305298,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 3214,
+              "road_isolated_low_scene_sufficient": 3214,
+              "road_low_scene_sufficient_context_dominant": 1422,
+              "actor_isolated_alpha_low": 81502,
+              "actor_isolated_sufficient_joint_actor_low": 348,
+              "actor_sufficient_joint_low_context_dominant": 299
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 5958,
+              "road_isolated_low_scene_sufficient": 5958,
+              "road_low_scene_sufficient_context_dominant": 1846,
+              "actor_isolated_alpha_low": 81752,
+              "actor_isolated_sufficient_joint_actor_low": 1908,
+              "actor_sufficient_joint_low_context_dominant": 249
+            }
+          }
+        },
+        {
+          "scope": "K_rectified",
+          "pixels": 84441,
+          "RGB_valid_pixels": 84441,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 81393,
+          "K_pixels": 84441,
+          "joint_RGB_L1_on_correct_pinhole": 0.03917599841952324,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 1,
+              "road_isolated_alpha_low": 82780,
+              "road_isolated_low_scene_sufficient": 82779,
+              "road_low_scene_sufficient_context_dominant": 82779,
+              "actor_isolated_alpha_low": 84441,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 1798,
+              "road_isolated_alpha_low": 82988,
+              "road_isolated_low_scene_sufficient": 81190,
+              "road_low_scene_sufficient_context_dominant": 81146,
+              "actor_isolated_alpha_low": 84441,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        },
+        {
+          "scope": "actor_visible_proxy",
+          "pixels": 12890,
+          "RGB_valid_pixels": 12890,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 9378,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.044026438146829605,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 12547,
+              "road_isolated_low_scene_sufficient": 12547,
+              "road_low_scene_sufficient_context_dominant": 2542,
+              "actor_isolated_alpha_low": 247,
+              "actor_isolated_sufficient_joint_actor_low": 2348,
+              "actor_sufficient_joint_low_context_dominant": 2347
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 12757,
+              "road_isolated_low_scene_sufficient": 12757,
+              "road_low_scene_sufficient_context_dominant": 2566,
+              "actor_isolated_alpha_low": 389,
+              "actor_isolated_sufficient_joint_actor_low": 7690,
+              "actor_sufficient_joint_low_context_dominant": 2328
+            }
+          }
+        },
+        {
+          "scope": "observed_road_semantic0_CS8",
+          "pixels": 17634,
+          "RGB_valid_pixels": 17634,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.15024983882904053,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 461,
+              "road_isolated_low_scene_sufficient": 461,
+              "road_low_scene_sufficient_context_dominant": 461,
+              "actor_isolated_alpha_low": 17607,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1602,
+              "road_isolated_low_scene_sufficient": 1602,
+              "road_low_scene_sufficient_context_dominant": 667,
+              "actor_isolated_alpha_low": 17612,
+              "actor_isolated_sufficient_joint_actor_low": 20,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        }
+      ],
+      "visible_evidence": "instance proxy only, not frozen V",
+      "proposal_counts": {
+        "road_scene_alpha95": 0,
+        "actor_frozenV_isolated_alpha95": 0,
+        "actor_proxy_isolated_alpha95": 389
+      },
+      "owner_alpha_sum_max_abs": 1.4901161193847656e-06,
+      "source_native_render_unchanged": true
+    },
+    {
+      "raw": 198,
+      "scopes": [
+        {
+          "scope": "original_C",
+          "pixels": 77701,
+          "RGB_valid_pixels": 77322,
+          "Brown_invalid_pixels": 379,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.26671943068504333,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 149,
+              "road_isolated_low_scene_sufficient": 149,
+              "road_low_scene_sufficient_context_dominant": 71,
+              "actor_isolated_alpha_low": 74669,
+              "actor_isolated_sufficient_joint_actor_low": 247,
+              "actor_sufficient_joint_low_context_dominant": 203
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1826,
+              "road_isolated_low_scene_sufficient": 1826,
+              "road_low_scene_sufficient_context_dominant": 195,
+              "actor_isolated_alpha_low": 74799,
+              "actor_isolated_sufficient_joint_actor_low": 1383,
+              "actor_sufficient_joint_low_context_dominant": 174
+            }
+          }
+        },
+        {
+          "scope": "original_S",
+          "pixels": 0,
+          "RGB_valid_pixels": 0,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": null,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 0,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 0,
+              "road_isolated_low_scene_sufficient": 0,
+              "road_low_scene_sufficient_context_dominant": 0,
+              "actor_isolated_alpha_low": 0,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        },
+        {
+          "scope": "original_CS",
+          "pixels": 77701,
+          "RGB_valid_pixels": 77322,
+          "Brown_invalid_pixels": 379,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.26671943068504333,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 149,
+              "road_isolated_low_scene_sufficient": 149,
+              "road_low_scene_sufficient_context_dominant": 71,
+              "actor_isolated_alpha_low": 74669,
+              "actor_isolated_sufficient_joint_actor_low": 247,
+              "actor_sufficient_joint_low_context_dominant": 203
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1826,
+              "road_isolated_low_scene_sufficient": 1826,
+              "road_low_scene_sufficient_context_dominant": 195,
+              "actor_isolated_alpha_low": 74799,
+              "actor_isolated_sufficient_joint_actor_low": 1383,
+              "actor_sufficient_joint_low_context_dominant": 174
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8",
+          "pixels": 87080,
+          "RGB_valid_pixels": 86649,
+          "Brown_invalid_pixels": 431,
+          "original_mesh_unprojectable_pixels": 2491,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.25043290853500366,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 3209,
+              "road_isolated_low_scene_sufficient": 3209,
+              "road_low_scene_sufficient_context_dominant": 1409,
+              "actor_isolated_alpha_low": 81566,
+              "actor_isolated_sufficient_joint_actor_low": 366,
+              "actor_sufficient_joint_low_context_dominant": 309
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 5832,
+              "road_isolated_low_scene_sufficient": 5832,
+              "road_low_scene_sufficient_context_dominant": 1842,
+              "actor_isolated_alpha_low": 81818,
+              "actor_isolated_sufficient_joint_actor_low": 1984,
+              "actor_sufficient_joint_low_context_dominant": 271
+            }
+          }
+        },
+        {
+          "scope": "full_CS_dilation8_Kfree",
+          "pixels": 87080,
+          "RGB_valid_pixels": 86649,
+          "Brown_invalid_pixels": 431,
+          "original_mesh_unprojectable_pixels": 2491,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.25043290853500366,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 3209,
+              "road_isolated_low_scene_sufficient": 3209,
+              "road_low_scene_sufficient_context_dominant": 1409,
+              "actor_isolated_alpha_low": 81566,
+              "actor_isolated_sufficient_joint_actor_low": 366,
+              "actor_sufficient_joint_low_context_dominant": 309
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 5832,
+              "road_isolated_low_scene_sufficient": 5832,
+              "road_low_scene_sufficient_context_dominant": 1842,
+              "actor_isolated_alpha_low": 81818,
+              "actor_isolated_sufficient_joint_actor_low": 1984,
+              "actor_sufficient_joint_low_context_dominant": 271
+            }
+          }
+        },
+        {
+          "scope": "K_rectified",
+          "pixels": 65384,
+          "RGB_valid_pixels": 65384,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 62245,
+          "K_pixels": 65384,
+          "joint_RGB_L1_on_correct_pinhole": 0.033635012805461884,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 63668,
+              "road_isolated_low_scene_sufficient": 63668,
+              "road_low_scene_sufficient_context_dominant": 63668,
+              "actor_isolated_alpha_low": 65384,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 357,
+              "road_isolated_alpha_low": 63841,
+              "road_isolated_low_scene_sufficient": 63484,
+              "road_low_scene_sufficient_context_dominant": 63456,
+              "actor_isolated_alpha_low": 65384,
+              "actor_isolated_sufficient_joint_actor_low": 0,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        },
+        {
+          "scope": "actor_visible_proxy",
+          "pixels": 12939,
+          "RGB_valid_pixels": 12939,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 9401,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.04509325698018074,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 12605,
+              "road_isolated_low_scene_sufficient": 12605,
+              "road_low_scene_sufficient_context_dominant": 2292,
+              "actor_isolated_alpha_low": 208,
+              "actor_isolated_sufficient_joint_actor_low": 2124,
+              "actor_sufficient_joint_low_context_dominant": 2121
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 12784,
+              "road_isolated_low_scene_sufficient": 12784,
+              "road_low_scene_sufficient_context_dominant": 2308,
+              "actor_isolated_alpha_low": 354,
+              "actor_isolated_sufficient_joint_actor_low": 7618,
+              "actor_sufficient_joint_low_context_dominant": 2101
+            }
+          }
+        },
+        {
+          "scope": "observed_road_semantic0_CS8",
+          "pixels": 17754,
+          "RGB_valid_pixels": 17754,
+          "Brown_invalid_pixels": 0,
+          "original_mesh_unprojectable_pixels": 0,
+          "K_pixels": 0,
+          "joint_RGB_L1_on_correct_pinhole": 0.15017478168010712,
+          "RGB_metric_role": "same-frame disagreement; original C/S may intentionally remove actor10, not road ground truth",
+          "thresholds": {
+            "0.5": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 461,
+              "road_isolated_low_scene_sufficient": 461,
+              "road_low_scene_sufficient_context_dominant": 461,
+              "actor_isolated_alpha_low": 17721,
+              "actor_isolated_sufficient_joint_actor_low": 2,
+              "actor_sufficient_joint_low_context_dominant": 0
+            },
+            "0.95": {
+              "scene_total_alpha_low": 0,
+              "road_isolated_alpha_low": 1607,
+              "road_isolated_low_scene_sufficient": 1607,
+              "road_low_scene_sufficient_context_dominant": 668,
+              "actor_isolated_alpha_low": 17729,
+              "actor_isolated_sufficient_joint_actor_low": 22,
+              "actor_sufficient_joint_low_context_dominant": 0
+            }
+          }
+        }
+      ],
+      "visible_evidence": "instance proxy only, not frozen V",
+      "proposal_counts": {
+        "road_scene_alpha95": 0,
+        "actor_frozenV_isolated_alpha95": 0,
+        "actor_proxy_isolated_alpha95": 354
+      },
+      "owner_alpha_sum_max_abs": 1.7881393432617188e-06,
+      "source_native_render_unchanged": true
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/086/joint_render.npz",
+      "sha256": "fb0d78cb3550172f0feedd32f9f7e63fe960f8fc83d7b18c8cc3be972ab3a263"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/086/component_render.npz",
+      "sha256": "818b42c9e91d5c6f51820e898b5082e21cb9a07bc738a474dd055b56a2413478"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1/086/rectified_masks.npz",
+      "sha256": "cfc64974036c6bdad60655da309a5c48761bb32c92701fb92112155407c3760e"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/086/view_cache.npz",
+      "sha256": "5b3ac9ce07d8a7a77f380fa893965252234076bbea16daabcc9194f72ff20c51"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/086.png",
+      "sha256": "18735fa6dc56e5d924d2ddfbcd6956cf2f2a8a2588fa921643b9e495919801b1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/110/joint_render.npz",
+      "sha256": "8389b4f0d3f4ff0736ce9f8eaa83f4b9778198952a4b8f1839ca69948ed6f522"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/110/component_render.npz",
+      "sha256": "7e6d64114dd7f00b7ad440ad3999663fad230fdfcced1083288ad3b954b788ab"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1/110/rectified_masks.npz",
+      "sha256": "e75f1684b3805952cfc8c877a6f6722928e48b1041f4d0db74c8272c27c59895"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/110/view_cache.npz",
+      "sha256": "00006364e796ecc649562d72f51947b7201cb40b331339ae0d700fc05874b55a"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/110.png",
+      "sha256": "6cb66bf557c26d630c82460ed3bf7e6c9ca5cab6a79540fd99b56e8f65aeb0a2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/134/joint_render.npz",
+      "sha256": "7e632c244532c066dcaed773c6fb5c057a34b944492f06d391dbf43fe4c816b4"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/134/component_render.npz",
+      "sha256": "e978b7c1b8fab922af5362458d9ecb8526ee7d3f77db3abd110382fdb0a26901"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1/134/rectified_masks.npz",
+      "sha256": "96f2a735c2e2fb73d391258e7e85490f4e5ba519793959a979f700ece710c711"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/134/view_cache.npz",
+      "sha256": "12fea1d4578624d12299a855d23a126ae71d45133587814a52cc3d8a1ff6a877"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/134.png",
+      "sha256": "b8a5cc6f2c0fe85c57c2a81b5b95384656286f90fd43faf18e01779058d281da"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/179/joint_render.npz",
+      "sha256": "efce784e4a1fcc2e54339a30c4d50c9477060e9f11a43f087e7fa2fc64657ac3"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/179/component_render.npz",
+      "sha256": "196d90e264f8b2f99dae5cc5fd7cd261f008ada326f6d3697c5323dd5f149585"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1/179/rectified_masks.npz",
+      "sha256": "3e26a43f62b1619f227dc32f9ead495c452e9a23126a67071f338b3fb6020386"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/179/view_cache.npz",
+      "sha256": "ca97596c39033af9bd89098e6d9539e7a7886e027a8f0261c585f88e81ad267d"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/179.png",
+      "sha256": "451dbf3516f096079529a3f0f69d9e9974e98812f5d6204a587d1e19782912c2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/198/joint_render.npz",
+      "sha256": "942399384b66aa5c49444d8dfa6a9a32c30bf6f0adaed2614fbb366c1aa808e9"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/198/component_render.npz",
+      "sha256": "77bfb6457c99e572753f6e97250040b3aaef36881c955697a99545ec9e3ef05c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1/198/rectified_masks.npz",
+      "sha256": "17365546088fe8d8cdbbd66c67ce3480708a29dd10f6c6166fcb2475b54d22ae"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/198/view_cache.npz",
+      "sha256": "396e42b1b73433b3908cd79a03764465ed9922bd3fce2132d18f7474feb36db9"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics/198.png",
+      "sha256": "cd328e802917ae01e18ec52572d31b8f2c50d4964f6c5a3ebc46d46d20ea9226"
+    }
+  ],
+  "reason_legend": {
+    "1": "Brown invalid",
+    "2": "scene alpha .5-.95",
+    "3": "scene alpha below .5",
+    "4": "actor-only alpha .5-.95",
+    "5": "actor-only alpha below .5",
+    "6": "actor only sufficient but joint actor below .95",
+    "7": "actor sufficient but joint actor below .5",
+    "8": "road-only .5-.95 while scene sufficient",
+    "9": "road-only below .5 while scene sufficient",
+    "10": "other inspected pixels"
+  },
+  "denominator_policy": "All original requested and CS8 denominators retained. Mesh-unprojectable and Brown-invalid counted explicitly. L1 alone uses valid Brown-corrected target pixels.",
+  "StageB_proposals": "pixel domains only; no change applied. Must wait R9 shared-input acceptance and root hole/occlusion review. K actual unified-render contribution protection must be recomputed before updates.",
+  "black_rim_not_used_for_sigma_selection": true,
+  "not_claimed_3D_restoration": true,
+  "seconds": 10.119428873062134
+}

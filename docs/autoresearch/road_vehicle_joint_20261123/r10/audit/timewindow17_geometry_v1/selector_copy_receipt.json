@@ -1,0 +1,40 @@
+{
+  "schema": "R10.timewindow17_minimal_selector_copy.v1",
+  "complete": true,
+  "old_source_sha256": "af500dba0a07c1a01369b1b09698df0655eb245093b017219d76786753af4a56",
+  "new_source_sha256": "42ead81437910a0962747713a0bbf415318124b2fe70224373edc3bdc06d3507",
+  "replacements": [
+    {
+      "old": "TRAIN = [60, 70, 80, 95, 110, 125, 145, 165]",
+      "new": "TRAIN = list(range(90, 171, 5))"
+    },
+    {
+      "old": "evidence_path=R/'audit/ground_contact_prior_raw_GT_v2/GT_bottom_and_road_evidence.npz'",
+      "new": "evidence_path=R/'audit/timewindow17_geometry_v1/training_points.npz'"
+    },
+    {
+      "old": "X=e['official_training_road_worldXYZ']; raw=e['official_training_road_source_raw']; rowid=e['official_training_road_lidar_row_id']",
+      "new": "X=e['world_xyz']; raw=e['source_raw']; rowid=e['source_lidar_row_id']"
+    },
+    {
+      "old": "Leave one of8 training frames out",
+      "new": "Leave one of17 time-window training frames out"
+    },
+    {
+      "old": "R10.expanded_training_LOO_curvature_contract.v1",
+      "new": "R10.timewindow17_training_LOO_curvature_contract.v1"
+    },
+    {
+      "old": "R10.expanded_official_ground_training_data.v1",
+      "new": "R10.timewindow17_official_ground_training_data.v1"
+    },
+    {
+      "old": "R10.expanded_training_only_curvature_selection.v1",
+      "new": "R10.timewindow17_training_only_curvature_selection.v1"
+    }
+  ],
+  "loss_family_CV_math_oneSE_bootstrap_unchanged": true,
+  "only_training_input_and_frame_set_and_schema_labels_changed": true,
+  "old_source_not_modified": true,
+  "GPU_calls": 0
+}

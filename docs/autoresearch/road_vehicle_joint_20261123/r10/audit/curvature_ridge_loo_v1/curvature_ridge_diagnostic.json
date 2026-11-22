@@ -1,0 +1,472 @@
+{
+  "schema": "R10.LOO_selected_plane_quadratic_diagnostic.v1",
+  "complete": true,
+  "decision": "PENDING_PHYSICAL_PRIOR_AND_ROOT_REVIEW_NOT_RENDERABLE",
+  "training_selection": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/curvature_ridge_loo_v1/training_only_CV_selection.json",
+    "bytes": 5126,
+    "sha256": "4c117c39c50a0db066db093f3993eba56112dbd2c8576b51038c6d68eec9ba42"
+  },
+  "selection": {
+    "schema": "R10.training_only_curvature_selection.v1",
+    "complete": true,
+    "models": [
+      {
+        "name": "plane",
+        "kind": "plane",
+        "lambda_m4": 0.0,
+        "fold_mean_absolute_height_error_m": [
+          0.13423753159735155,
+          0.07050651831445429,
+          0.035656520008363626,
+          0.011069368538847615,
+          0.03045816837861405,
+          0.014941541712058694,
+          0.02428180561887083,
+          0.0264400452601659
+        ],
+        "mean_fold_MAE_m": 0.04344893742859082,
+        "SE_fold_MAE_m": 0.014467915741717663
+      },
+      {
+        "name": "quadratic_lambda_0",
+        "kind": "quadratic",
+        "lambda_m4": 0.0,
+        "fold_mean_absolute_height_error_m": [
+          0.1331549699875028,
+          0.06885002222237199,
+          0.03227179185088706,
+          0.013881865506762424,
+          0.03102657959945227,
+          0.017284747495159125,
+          0.026023831822284193,
+          0.028030821771181835
+        ],
+        "mean_fold_MAE_m": 0.043815578781950214,
+        "SE_fold_MAE_m": 0.014060255985480387
+      },
+      {
+        "name": "quadratic_lambda_0.001",
+        "kind": "quadratic",
+        "lambda_m4": 0.001,
+        "fold_mean_absolute_height_error_m": [
+          0.13317623923016317,
+          0.06888528658647043,
+          0.03235513706510562,
+          0.01369398507109823,
+          0.030992125802287634,
+          0.017209265072674285,
+          0.02598065605926111,
+          0.027984828025340625
+        ],
+        "mean_fold_MAE_m": 0.04378469036405014,
+        "SE_fold_MAE_m": 0.01407473445447106
+      },
+      {
+        "name": "quadratic_lambda_0.01",
+        "kind": "quadratic",
+        "lambda_m4": 0.01,
+        "fold_mean_absolute_height_error_m": [
+          0.1333292260686431,
+          0.06913636305273778,
+          0.03289134578289089,
+          0.012526075065509795,
+          0.03074133834913529,
+          0.01675630487303603,
+          0.02571451693099439,
+          0.02773866523631281
+        ],
+        "mean_fold_MAE_m": 0.043604229419907506,
+        "SE_fold_MAE_m": 0.014168063548705699
+      },
+      {
+        "name": "quadratic_lambda_0.1",
+        "kind": "quadratic",
+        "lambda_m4": 0.1,
+        "fold_mean_absolute_height_error_m": [
+          0.13378585614782648,
+          0.06992730497785252,
+          0.03421339744279884,
+          0.010693011384844572,
+          0.030310188733954926,
+          0.01582411103897192,
+          0.02526758133824792,
+          0.027393540462656997
+        ],
+        "mean_fold_MAE_m": 0.04342687394089427,
+        "SE_fold_MAE_m": 0.01435780030563722
+      },
+      {
+        "name": "quadratic_lambda_1",
+        "kind": "quadratic",
+        "lambda_m4": 1.0,
+        "fold_mean_absolute_height_error_m": [
+          0.13406958017956636,
+          0.07035989526731916,
+          0.03507847654834614,
+          0.010489521824029633,
+          0.030395408777495882,
+          0.015348025108269724,
+          0.024868785971040835,
+          0.02704857144148202
+        ],
+        "mean_fold_MAE_m": 0.043457283139693714,
+        "SE_fold_MAE_m": 0.014433924322648239
+      },
+      {
+        "name": "quadratic_lambda_10",
+        "kind": "quadratic",
+        "lambda_m4": 10.0,
+        "fold_mean_absolute_height_error_m": [
+          0.13420158841030225,
+          0.07047989157423568,
+          0.03558991986096101,
+          0.010917089041579084,
+          0.030444022401594006,
+          0.015019699384252988,
+          0.02441174020868872,
+          0.026569225182408625
+        ],
+        "mean_fold_MAE_m": 0.04345414700800279,
+        "SE_fold_MAE_m": 0.01446145751636222
+      },
+      {
+        "name": "quadratic_lambda_100",
+        "kind": "quadratic",
+        "lambda_m4": 100.0,
+        "fold_mean_absolute_height_error_m": [
+          0.13423440416955496,
+          0.07050353644296219,
+          0.0356494928791163,
+          0.01105195820304282,
+          0.03045655009372825,
+          0.014948809867641643,
+          0.024296239228963873,
+          0.026454873667135493
+        ],
+        "mean_fold_MAE_m": 0.04344948306901819,
+        "SE_fold_MAE_m": 0.014467347067834549
+      },
+      {
+        "name": "quadratic_lambda_1000",
+        "kind": "quadratic",
+        "lambda_m4": 1000.0,
+        "fold_mean_absolute_height_error_m": [
+          0.13423722092791984,
+          0.07050621638833571,
+          0.03565580932723765,
+          0.011067611738998834,
+          0.03045800428410853,
+          0.014942282304948365,
+          0.024283240011800267,
+          0.026441553120937877
+        ],
+        "mean_fold_MAE_m": 0.04344899226303589,
+        "SE_fold_MAE_m": 0.01446785888074613
+      }
+    ],
+    "train_frames": [
+      60,
+      70,
+      80,
+      95,
+      110,
+      125,
+      145,
+      165
+    ],
+    "best_mean_model": "quadratic_lambda_0.1",
+    "best_mean_plus_SE_limit_m": 0.05778467424653149,
+    "one_SE_preferred_model": "plane",
+    "best_mean_quadratic": "quadratic_lambda_0.1",
+    "one_SE_quadratic": "quadratic_lambda_1000",
+    "heldout_read_before_selection": false,
+    "selected_from_training_only": true,
+    "production_geometry_approved": false,
+    "contract": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/curvature_ridge_loo_v1/curvature_selection_contract.json",
+      "bytes": 2609,
+      "sha256": "38315fd79a356806f01477bea21149c8e1890aa05a7e9568d41a59aeda806eab"
+    }
+  },
+  "finalists": [
+    {
+      "name": "plane",
+      "kind": "plane",
+      "lambda_m4": 0.0,
+      "fit_coefficients": [
+        -20.75472980080378,
+        0.006389576725966838,
+        0.010573742275602024,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "training_medoids": 477,
+      "bootstrap_valid": 512,
+      "bootstrap_SD_in_parent_missing_m": {
+        "count": 11907,
+        "min": 0.014936656715903184,
+        "mean": 0.019855234786427797,
+        "median": 0.019862030860676002,
+        "p05": 0.017645031012993855,
+        "p95": 0.022144689493846247,
+        "max": 0.02295545322482345
+      },
+      "bootstrap_95pct_width_in_parent_missing_m": {
+        "count": 11907,
+        "min": 0.051728381971212656,
+        "mean": 0.07143276258229046,
+        "median": 0.07153633382551661,
+        "p05": 0.0622376335175268,
+        "p95": 0.07994081300723685,
+        "max": 0.0829125052467532
+      },
+      "fixed_original_heldout_checks_pass": true,
+      "heldout": [
+        {
+          "raw": 134,
+          "signed_height_error_m": {
+            "count": 187,
+            "min": -0.013435033186716794,
+            "mean": 0.012009970444032163,
+            "median": 0.011819068562697765,
+            "p05": -0.006065067510956723,
+            "p95": 0.02528655516554181,
+            "max": 0.09755080187749599
+          },
+          "absolute_height_error_m": {
+            "count": 187,
+            "min": 8.690392094834465e-05,
+            "mean": 0.013654478167566347,
+            "median": 0.011822510309638545,
+            "p05": 0.0014561155927292901,
+            "p95": 0.02528655516554181,
+            "max": 0.09755080187749599
+          },
+          "normal_error_deg": {
+            "count": 169,
+            "min": 0.7605457834892888,
+            "mean": 6.676989953925247,
+            "median": 6.313736642636679,
+            "p05": 0.9879220988816828,
+            "p95": 13.7831089674442,
+            "max": 21.029418071814284
+          },
+          "threshold_checks_pass": true,
+          "points_trimmed": false
+        },
+        {
+          "raw": 179,
+          "signed_height_error_m": {
+            "count": 181,
+            "min": 0.0011418073890432368,
+            "mean": 0.021020958359852862,
+            "median": 0.020491632632150925,
+            "p05": 0.005514380811899144,
+            "p95": 0.03577054163561755,
+            "max": 0.06493772978512169
+          },
+          "absolute_height_error_m": {
+            "count": 181,
+            "min": 0.0011418073890432368,
+            "mean": 0.021020958359852862,
+            "median": 0.020491632632150925,
+            "p05": 0.005514380811899144,
+            "p95": 0.03577054163561755,
+            "max": 0.06493772978512169
+          },
+          "normal_error_deg": {
+            "count": 148,
+            "min": 0.592610277088903,
+            "mean": 6.587627878798585,
+            "median": 8.465295396067559,
+            "p05": 2.250553107505154,
+            "p95": 9.923591580953916,
+            "max": 11.10750696991282
+          },
+          "threshold_checks_pass": true,
+          "points_trimmed": false
+        },
+        {
+          "raw": 198,
+          "signed_height_error_m": {
+            "count": 185,
+            "min": -0.00105241432949299,
+            "mean": 0.02187925247143072,
+            "median": 0.022005942516631904,
+            "p05": 0.004603415659665444,
+            "p95": 0.03704970801304412,
+            "max": 0.10347154142683479
+          },
+          "absolute_height_error_m": {
+            "count": 185,
+            "min": 0.00105241432949299,
+            "mean": 0.021890629923641453,
+            "median": 0.022005942516631904,
+            "p05": 0.004603415659665444,
+            "p95": 0.03704970801304412,
+            "max": 0.10347154142683479
+          },
+          "normal_error_deg": {
+            "count": 150,
+            "min": 0.8149397917734605,
+            "mean": 7.0419730848336695,
+            "median": 4.2672091917234845,
+            "p05": 1.3437846635910846,
+            "p95": 12.894520246566884,
+            "max": 21.688734935251297
+          },
+          "threshold_checks_pass": true,
+          "points_trimmed": false
+        }
+      ],
+      "production_geometry_approved": false
+    },
+    {
+      "name": "quadratic_lambda_1000",
+      "kind": "quadratic",
+      "lambda_m4": 1000.0,
+      "fit_coefficients": [
+        -20.754734987463337,
+        0.006391906972539683,
+        0.010575204672429199,
+        1.9746351774658983e-06,
+        1.1731328833202788e-06,
+        -5.077121246821577e-07
+      ],
+      "training_medoids": 477,
+      "bootstrap_valid": 512,
+      "bootstrap_SD_in_parent_missing_m": {
+        "count": 11907,
+        "min": 0.014938646217398354,
+        "mean": 0.0198564013108945,
+        "median": 0.01986178796541542,
+        "p05": 0.017642730015228203,
+        "p95": 0.022150799751973715,
+        "max": 0.022963368093925445
+      },
+      "bootstrap_95pct_width_in_parent_missing_m": {
+        "count": 11907,
+        "min": 0.05173521332054065,
+        "mean": 0.07143704691610703,
+        "median": 0.07153462694177293,
+        "p05": 0.062224516285150244,
+        "p95": 0.07996649599237707,
+        "max": 0.08294986023720341
+      },
+      "fixed_original_heldout_checks_pass": true,
+      "heldout": [
+        {
+          "raw": 134,
+          "signed_height_error_m": {
+            "count": 187,
+            "min": -0.013439931961997331,
+            "mean": 0.012009925721758585,
+            "median": 0.011819238381761465,
+            "p05": -0.006069583795671463,
+            "p95": 0.025277266196889414,
+            "max": 0.09755056143985286
+          },
+          "absolute_height_error_m": {
+            "count": 187,
+            "min": 8.781175013439224e-05,
+            "mean": 0.013654466073190973,
+            "median": 0.011822722800562957,
+            "p05": 0.0014594630562612565,
+            "p95": 0.025277266196889414,
+            "max": 0.09755056143985286
+          },
+          "normal_error_deg": {
+            "count": 169,
+            "min": 0.7613149713148321,
+            "mean": 6.677025418407366,
+            "median": 6.31417415123704,
+            "p05": 0.9886302048703941,
+            "p95": 13.782442382335299,
+            "max": 21.028938525024568
+          },
+          "threshold_checks_pass": true,
+          "points_trimmed": false
+        },
+        {
+          "raw": 179,
+          "signed_height_error_m": {
+            "count": 181,
+            "min": 0.0011393034951119319,
+            "mean": 0.021021154292076884,
+            "median": 0.020493315738722373,
+            "p05": 0.005516808530096284,
+            "p95": 0.03576109487487855,
+            "max": 0.06494768234450987
+          },
+          "absolute_height_error_m": {
+            "count": 181,
+            "min": 0.0011393034951119319,
+            "mean": 0.021021154292076884,
+            "median": 0.020493315738722373,
+            "p05": 0.005516808530096284,
+            "p95": 0.03576109487487855,
+            "max": 0.06494768234450987
+          },
+          "normal_error_deg": {
+            "count": 148,
+            "min": 0.5925952837469811,
+            "mean": 6.587514144728445,
+            "median": 8.46451905992891,
+            "p05": 2.2510548863546096,
+            "p95": 9.92299410163238,
+            "max": 11.106719888056219
+          },
+          "threshold_checks_pass": true,
+          "points_trimmed": false
+        },
+        {
+          "raw": 198,
+          "signed_height_error_m": {
+            "count": 185,
+            "min": -0.0010549685705001366,
+            "mean": 0.02187928972966022,
+            "median": 0.022004749961592296,
+            "p05": 0.004608392226518987,
+            "p95": 0.037040811674497576,
+            "max": 0.10347783085734719
+          },
+          "absolute_height_error_m": {
+            "count": 185,
+            "min": 0.0010549685705001366,
+            "mean": 0.021890694795287248,
+            "median": 0.022004749961592296,
+            "p05": 0.004608392226518987,
+            "p95": 0.037040811674497576,
+            "max": 0.10347783085734719
+          },
+          "normal_error_deg": {
+            "count": 150,
+            "min": 0.815444719674605,
+            "mean": 7.041917239291506,
+            "median": 4.26748822012588,
+            "p05": 1.3431696965245425,
+            "p95": 12.895014072514154,
+            "max": 21.68807266572294
+          },
+          "threshold_checks_pass": true,
+          "points_trimmed": false
+        }
+      ],
+      "production_geometry_approved": false
+    }
+  ],
+  "candidate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/curvature_ridge_loo_v1/plane_and_selected_ridge_DIAGNOSTIC.npz",
+    "bytes": 4802598,
+    "sha256": "804387854968069290793dc9ca5c1936225587faeb3478c0029a4a494e803040"
+  },
+  "heldout_never_used_to_select": true,
+  "physical_box_contact_prior_fitted": false,
+  "original_geometry_edited": false,
+  "new_renderable_texels": 0,
+  "GPU_forward": 0,
+  "updates": 0,
+  "elapsed_seconds": 6.5038368701934814
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "R9.continuous_shared_field.contract.v2",
+  "reason": "v1 fixed-overlap radiometric scores passed but its pointwise support/feather writing introduced visible stripes; preserve v1 and replace shared-field writing",
+  "unchanged": ["original raw teacher source bytes", "qualified world observations", "v1 joint radiometric candidate corrections", "actual world geometry", "real6407 hard locks"],
+  "unknown": "one world-surface RGB residual field relative to the complete real-photo texture seed",
+  "objective": "all qualified view RGB residual data with robust weights + reference-gradient smoothness + weak seed-colour prior, with exact observed-real and outside-scope Dirichlet values",
+  "grid_texel_m": 0.02,
+  "smoothing_length_m": 0.4,
+  "laplacian_lambda": 400.0,
+  "seed_residual_prior": 0.05,
+  "IRLS_iterations": 4,
+  "Huber_delta_linear_RGB": 0.01,
+  "CG_relative_tolerance": 0.000001,
+  "CG_max_iterations": 600,
+  "output_support": "continuous variational field; data visibility does not directly multiply the output RGB",
+  "source_interpretation": "teacher supplies a smooth colour correction; complete similar-photo texture supplies the gradient/detail reference; inferred teacher influence is recorded separately from direct teacher observations",
+  "acceptance": "v1 source/geometry, real-lock, fixed-pair and seam checks retained; independent five-view visual PASS required before Gaussian fitting",
+  "new_diffusion_calls": 0,
+  "Gaussian_updates": 0
+}

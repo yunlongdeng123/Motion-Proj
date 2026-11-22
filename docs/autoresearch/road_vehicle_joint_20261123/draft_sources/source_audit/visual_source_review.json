@@ -1,0 +1,64 @@
+{
+  "schema": "R9.raw_teacher_visual_source_review.v1",
+  "complete": true,
+  "reviewer": "independent assistant visual inspection of exact raw_model and mapped pinhole previews",
+  "source_manifest": {
+    "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/audit/raw_teacher_sources.json",
+    "bytes": 33394,
+    "sha256": "1571faa70d273afd5a916cd792269f2e0a3cc69c16e23e07cb8a375879320db5"
+  },
+  "coordinate_audit": {
+    "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/audit/brown_mapping_audit.json",
+    "bytes": 10058,
+    "sha256": "7eb4f4fe8dc5dd2d7553ec9ef70f8a8bbbdc65a76331cbcacfe2534979e5b7e4"
+  },
+  "selection": {
+    "frames": [
+      86,
+      110
+    ],
+    "prompt_id": "legacy",
+    "seed": 101,
+    "post_hoc_seed_search": false
+  },
+  "decision": "SOURCE_CANDIDATES_REQUIRE_SURFACE_QUALIFICATION",
+  "whole_image_road_teacher_accepted": false,
+  "shared_surface_acceptance": "NOT_EVALUATED",
+  "new_Gaussian_fit_authorized_by_this_review": false,
+  "frames": [
+    {
+      "raw": 86,
+      "raw_model": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/audit/source_inputs/086/raw_model.png",
+        "bytes": 1165563,
+        "sha256": "eb813f4d2a9ab4035413dd4fe929656e8f3841f7e3d243d9ed9a85597eee802c"
+      },
+      "notes": [
+        "Road texture is continuous at full-view scale without the regular R7 quilt/teacher lattice.",
+        "Central A20 black pickup, nearby vehicles, lane markings, real shadows, and background remain visible.",
+        "The new R8 protected overlay intentionally omits the target A20 body. Its visible/unknown masks and source-specific road qualification must be handled separately.",
+        "No whole-frame road label is valid for this output. Inspect only independently certified world-surface support after foreground exclusion."
+      ]
+    },
+    {
+      "raw": 110,
+      "raw_model": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/old_raw_teacher_joint_20261123_r9/audit/source_inputs/110/raw_model.png",
+        "bytes": 1132654,
+        "sha256": "fb3dc7b2da3308a8b74c2c93dd5e66f2882a8a77d13b031806eedafa18d8be2e"
+      },
+      "notes": [
+        "Lower road texture and lighting are legible; no regular R7 teacher lattice is apparent at full-view scale.",
+        "Central A20 black pickup body and bumper remain in the original raw output, along with the white pickup and traffic.",
+        "A few black pixels at the pinhole preview border are invalid inverse-warp support, not demonstrated road material or Gaussian alpha loss.",
+        "Source-specific road qualification is needed for generated pixels; original-photo semantics alone cannot certify generated contours."
+      ]
+    }
+  ],
+  "hard_final_role": "audit-only composite with real photo outside old W and inside old K; not RGB supervision",
+  "pinhole_previews_role": "explicit coordinate conversion for review; raw_model remains canonical source",
+  "CPU_only": true,
+  "new_GPU_forward": 0,
+  "new_diffusion_calls": 0,
+  "training_updates": 0
+}

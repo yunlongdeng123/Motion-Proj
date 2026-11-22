@@ -1,0 +1,22 @@
+{
+  "schema": "R10.independent_shared_input_contract.v1",
+  "complete": true,
+  "written_before_independent_metric_recomputation": true,
+  "field_sha256": "eb86cb6d61b711366d8c30052fd02b823433a6e940b80d6f4e0463685e38a5dd",
+  "geometry_sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a",
+  "scope": "Only shared RGB input to local zero-step control, not final joint scene quality",
+  "invariant_hard_gates": [
+    "SHA pins",
+    "exact parent RGB outside declared12328 extension",
+    "real6407 mask and RGB exact",
+    "finite in-range RGB",
+    "geometry/permission/source kind correct",
+    "direct Brown raw source RGB replay, no hard-final"
+  ],
+  "local_fixed_pair": "all local observation overlap, no robust/influence/permission denominator reduction",
+  "frequency": "LF normalized sigma6texel=.12m; HF separate normalized2cm/4cm correlation, amplitude and delta; no blur or colour scaling to chase metrics",
+  "seam": "LF boundary .005004 is descriptive, not a preregistered .005 hard rejection; do not tune solver to the number",
+  "joint": "both original raw views jointly affine-corrected and world-bias updated synchronously; only accepted parent/real held fixed, no first-writer teacher lock",
+  "source_order_affine_check": "reverse source axis, map back, compare actual corrected values; bounded float tolerance1e-5 linear RGB",
+  "no_new_GPU": true
+}

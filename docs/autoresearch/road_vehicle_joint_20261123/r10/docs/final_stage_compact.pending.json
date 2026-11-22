@@ -1,0 +1,89 @@
+{
+  "schema": "R10.final_diagnostic_stage_compact.pending.v1",
+  "complete": true,
+  "ready": false,
+  "finalized_by_root": false,
+  "prepared_UTC": "2026-11-22T23:21:12.745621+00:00",
+  "method_stage_frozen": false,
+  "whole_scene_restoration_accepted": false,
+  "human_verdict": null,
+  "problem_solved": null,
+  "formal_existing_budget": {
+    "prior_formal_updates": 400,
+    "cap": 2000,
+    "R10_classified_additional_formal_updates": 0,
+    "classified_used": 400,
+    "unclassified_updates_requiring_root": 0,
+    "smoke_excluded_from_formal_cap": true,
+    "budget_not_reset": true
+  },
+  "resources": {
+    "nativeF": 127,
+    "nativeB": 76,
+    "actual_optimizer_updates": 5,
+    "failed_engineering_nativeF": 21,
+    "failed_engineering_nativeB": 6,
+    "formal_updates": 0,
+    "smoke_updates": 5,
+    "unclassified_updates": 0
+  },
+  "resource_ledger": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/docs/current_resource_ledger.json",
+    "bytes": 56635,
+    "sha256": "ea8f4f5f37b8c04736c5eb6f9b53f86f4f9210fda0817a2a9f3b167dfbf01af8"
+  },
+  "original_selected_A20": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/provenance/original_A20_r3/actor.npz",
+    "bytes": 24031638,
+    "sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7"
+  },
+  "geometry": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/candidate_reprojected_v1/candidate_geometry.npz",
+    "bytes": 26546830,
+    "sha256": "0d62e87abddd3017a40b06d80c485d331c0feb5c13a433be7f50f6933cda269b"
+  },
+  "source_field": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/timewindow17_shared_requalified_v2/final_atlas.npz",
+    "bytes": 4738607,
+    "sha256": "45b4b9d752f1584019e6687008de489de071a81907ab2c3c1b61b20964f64d32"
+  },
+  "whole_field_unaffected_ancestor_real_locks": 6332,
+  "actual_patch_strict_new_real_vertices": 0,
+  "full_source_candidate_records": 2999905,
+  "source_qualification_note": "Conservative qualification result, not proof that all photos were physically invisible; ancestry and current-XYZ certification are separate.",
+  "final_control": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/intrinsic_component_replacement_zero_v4_v1/receipt.json",
+    "bytes": 52060,
+    "sha256": "b1c2b8dab887a1631771eb4b178b01f20829168eda8afd3da04aeaf74078a26d"
+  },
+  "failed_opacity_smokes": [
+    {
+      "path": "opacity_gate_smoke6_v1/resources.json",
+      "sha256": "b7c2d3251a923b6b8d88d943c7f5e8ed2dd702f181c9fe9f7599be9d60374a6e",
+      "original_complete": false,
+      "error": {
+        "type": "AssertionError",
+        "message": "('Pre-update actual joint guard', 86, {'finite': True, 'K_car_RGB_exact': True, 'K_car_alpha_exact': True, 'outside_RGB_max': 0.0036968588829040527, 'outside_alpha_max': 0.0034766793251037598, 'new_full_band_alpha95_holes': 0, 'unknown_inside_alpha95_holes': 0, 'outside_changed_RGB_pixels_above1e6': 11321, 'decision': 'FAIL'})"
+      }
+    },
+    {
+      "path": "opacity_gate_smoke6_coverage_v2/resources.json",
+      "sha256": "2bb1a4e3ed5c7bad1b38d6c0104e8c46749cc1ace15b9d8543f9d92b2b70ac35",
+      "original_complete": false,
+      "error": {
+        "type": "AssertionError",
+        "message": "('Pre-update actual joint guard', 110, {'finite': True, 'K_car_RGB_exact': True, 'K_car_alpha_exact': True, 'outside_RGB_max': 0.009076714515686035, 'outside_alpha_max': 0.007402539253234863, 'new_full_band_alpha95_holes': 0, 'unknown_inside_alpha95_holes': 0, 'outside_changed_RGB_pixels_above1e6': 23338, 'decision': 'FAIL', 'v1_absolute_alpha_readout_decision': 'FAIL', 'outside_alpha_decrease_max': 7.551908493041992e-05, 'outside_alpha_increase_max': 0.007402539253234863, 'outside_original_alpha_ge95_pixels': 398570, 'outside_new_alpha95_holes': 0, 'alpha_finite_and_in_0_1': True, 'protection_readout_version': 'v2_coverage_decrease_only_no_new_holes'})"
+      }
+    }
+  ],
+  "technical_status": "Root all-five whole-image review FAIL. This diagnostic phase has ended; archive freeze/delivery remains explicit. No further experiment is queued.",
+  "root_review": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/root_final_stage_review_v1.json",
+    "bytes": 4822,
+    "sha256": "71067791397e157e895f11300ee254fc3f27ed0999457939705c5cbd5f552cfb"
+  },
+  "full_archive_required": true,
+  "light_takeback_not_a_substitute": true,
+  "HTML_snapshot_separate": true,
+  "default_assets_not_promoted": true
+}

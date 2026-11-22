@@ -1,0 +1,88 @@
+{
+  "schema": "R10.new_local_wiring_CPU_audit.v1",
+  "complete": true,
+  "decision": "PASS",
+  "scope": "CPU arithmetic and reviewed wiring only; actual native zero-step guard and imagery required separately",
+  "CPU_only": true,
+  "nativeF": 0,
+  "nativeB": 0,
+  "optimizer_updates": 0,
+  "asset_written": false,
+  "pins": {
+    "geometry": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_candidate_v2/candidate_geometry.npz",
+      "sha256": "b5df7c8cb2b99723e1fabf3b2ca4c958c88003d38f4f528bb6dd8f14e97a011a",
+      "bytes": 4459551
+    },
+    "source_field": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/local_shared_continuous_v1/final_atlas.npz",
+      "sha256": "eb86cb6d61b711366d8c30052fd02b823433a6e940b80d6f4e0463685e38a5dd",
+      "bytes": 4219825
+    },
+    "code": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/local_gaussian_asset.py",
+        "sha256": "f0670e184f81115993bb8df835f3c61d800bc4ff68d805f1e89f57a9565a0a24",
+        "bytes": 25165
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/local_joint_adapter.py",
+        "sha256": "96b65315833d55ce2fa4305a39c71f0eb5a4d3b4c011b733ae8031d2af5bade4",
+        "bytes": 9633
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/render_new_local_zero.py",
+        "sha256": "194149b7d3355e08c543badf3d22cecd08676660357bb0ebc0f72ff7d3c06a99",
+        "bytes": 10686
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/code/fit_new_local_rgb.py",
+        "sha256": "8cd5b9afc249e7816df01cc9ef06be52dfb0e90a6cce7f9a9415d346bb8795b7",
+        "bytes": 17588
+      }
+    ]
+  },
+  "asset_cells": 34793,
+  "cell_shape": [
+    150,
+    333
+  ],
+  "SH_layout": [
+    34793,
+    16,
+    3
+  ],
+  "world_local_roundtrip_max_m": 1.1920883480343036e-07,
+  "quaternion_normal_max_abs": 3.4535580645256303e-10,
+  "quaternion_orthogonality_max_abs": 1.0662581928500003e-12,
+  "cell_uv_vs_vertex_average_max_texel": 0.0,
+  "all_four_source_support": true,
+  "source_linear_to_DC_to_linear_max_abs": 3.725290298461914e-08,
+  "tangent_sigma_m": 0.013672369053048824,
+  "normal_sigma_m": 0.0015,
+  "channel_mapping": {
+    "depth_feature": 0,
+    "alpha_feature": 1,
+    "road_feature": 2,
+    "canonical_feature": 3,
+    "context_feature": 4,
+    "unified_actor_feature": 5,
+    "local_feature": 6,
+    "local_extra": 4,
+    "K_guard_feature": 7,
+    "body_guard_feature": 8
+  },
+  "single_shared_depth_sort": true,
+  "native_identity_gate_preserves_original_packet": true,
+  "exposure_contract": "F is canonical linear; zero asset DC encodes OETF(F) once; RGB fit uses EOTF(native RGB)*gain(raw) versus F once, with no global output exposure change",
+  "accepted_actor_sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+  "old_native_near_preserved": true,
+  "new_local_near_m": 0.2,
+  "deferred_findings": [
+    "Nonempty retirement branch expects native_global_row_count; current accepted identity gate has no IDs and does not enter that branch.",
+    "Blend ring labels define cell scope; initialization does not implement an opacity taper. Rendered boundary quality remains an actual zero-step check.",
+    "Theoretical four-kernel cell-midpoint coverage is not actual scene coverage certification."
+  ],
+  "actual_render_acceptance": "PENDING separate root-scheduled zero-step render and all-view K/body measurements",
+  "production_or_fit_authorized_by_this_audit": false
+}

@@ -1,0 +1,405 @@
+{
+  "schema": "R10.expanded_LOO_geometry_diagnostic.v1",
+  "complete": true,
+  "decision": "MODEL_SELECTION_COMPLETE_GEOMETRY_APPROVAL_PENDING",
+  "selection": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/loo_selection/training_only_CV_selection.json",
+    "bytes": 113036,
+    "sha256": "704249b8733531d4853afd2e075f55d86acf0b994b72d1c5cf2814a3f3c79e06"
+  },
+  "training_data": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/loo_selection/training_points.npz",
+    "bytes": 257529,
+    "sha256": "a719847e1d35b6d3ff8874f45f0548fd1c227e0af9efe41b629890db17e42f28"
+  },
+  "heldout_data": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/loo_selection/expanded_heldout_measurements.npz",
+    "bytes": 29614,
+    "sha256": "86ab1d3a7783fcaaab96b20001b1eddaced0e495406ab7fa88c65df6f39af2a8"
+  },
+  "selected_name": "plane",
+  "models": [
+    {
+      "name": "plane",
+      "coefficients": [
+        -20.75090016994689,
+        0.00449859064219891,
+        0.0160157337895527,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "training_medoids": 1545,
+      "conditional_bootstrap_SD_context_m": {
+        "count": 236376,
+        "min": 0.0026711207877531955,
+        "mean": 0.0030731511636298363,
+        "median": 0.003006972635981307,
+        "p05": 0.0027200810370473253,
+        "p95": 0.0035885370174880264,
+        "max": 0.003887024301931519
+      },
+      "fixed_expanded_heldout_pass": true,
+      "heldout": [
+        {
+          "raw": 134,
+          "original_points": 458,
+          "signed_height_error_m": {
+            "count": 458,
+            "min": -1.0913944607468515,
+            "mean": 0.00039919155810179267,
+            "median": 0.003651493772627745,
+            "p05": -0.012945527009717317,
+            "p95": 0.014800132334211824,
+            "max": 0.0920168001993531
+          },
+          "absolute_height_error_m": {
+            "count": 458,
+            "min": 1.7609710507571208e-05,
+            "mean": 0.009916725395582708,
+            "median": 0.006077261029842518,
+            "p05": 0.0009183617214356233,
+            "p95": 0.017036956382661117,
+            "max": 1.0913944607468515
+          },
+          "normal_error_deg": {
+            "count": 388,
+            "min": 0.9051134776597156,
+            "mean": 7.6382768226789075,
+            "median": 6.650151773899689,
+            "p05": 3.8607963972056885,
+            "p95": 13.60434611615922,
+            "max": 19.906062472602677
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        },
+        {
+          "raw": 179,
+          "original_points": 452,
+          "signed_height_error_m": {
+            "count": 452,
+            "min": -0.021960325719444285,
+            "mean": 0.015398573015835176,
+            "median": 0.016220666651967974,
+            "p05": 0.0005264592248195755,
+            "p95": 0.028267994223540246,
+            "max": 0.08215642186295113
+          },
+          "absolute_height_error_m": {
+            "count": 452,
+            "min": 0.00045025936085352214,
+            "mean": 0.016109044847769757,
+            "median": 0.016345119182513912,
+            "p05": 0.0027186166851851826,
+            "p95": 0.028267994223540246,
+            "max": 0.08215642186295113
+          },
+          "normal_error_deg": {
+            "count": 386,
+            "min": 0.5363852441237108,
+            "mean": 6.267937622198953,
+            "median": 5.9347638785614025,
+            "p05": 2.0088042694981656,
+            "p95": 9.866468587081407,
+            "max": 19.51851576037531
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        },
+        {
+          "raw": 198,
+          "original_points": 456,
+          "signed_height_error_m": {
+            "count": 456,
+            "min": -0.019626756699526737,
+            "mean": 0.016318080582505112,
+            "median": 0.017337513927213166,
+            "p05": -0.0002027441142420372,
+            "p95": 0.029006309303615474,
+            "max": 0.09534119733813284
+          },
+          "absolute_height_error_m": {
+            "count": 456,
+            "min": 0.00012164964742567008,
+            "mean": 0.01694572621686044,
+            "median": 0.017425314557437233,
+            "p05": 0.0020429555663907806,
+            "p95": 0.029006309303615474,
+            "max": 0.09534119733813284
+          },
+          "normal_error_deg": {
+            "count": 382,
+            "min": 1.258299696395289,
+            "mean": 7.627509500813813,
+            "median": 6.668669003191603,
+            "p05": 2.811853261481464,
+            "p95": 17.09456206033988,
+            "max": 19.335618540605388
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_0",
+      "coefficients": [
+        -20.75374783438357,
+        0.004099510620466027,
+        0.015655136941301533,
+        4.968383920889448e-07,
+        0.0003740255727833143,
+        0.0008904169317627834
+      ],
+      "training_medoids": 1545,
+      "conditional_bootstrap_SD_context_m": {
+        "count": 236376,
+        "min": 0.0013296934646167828,
+        "mean": 0.0039025652934474714,
+        "median": 0.004023118248851534,
+        "p05": 0.0020044928226825506,
+        "p95": 0.005280341330883535,
+        "max": 0.005427360245027684
+      },
+      "fixed_expanded_heldout_pass": true,
+      "heldout": [
+        {
+          "raw": 134,
+          "original_points": 458,
+          "signed_height_error_m": {
+            "count": 458,
+            "min": -1.0835081818815233,
+            "mean": -0.00012523295957946742,
+            "median": 0.0031208918553495835,
+            "p05": -0.014158512787213872,
+            "p95": 0.014840645002162308,
+            "max": 0.08962917679204097
+          },
+          "absolute_height_error_m": {
+            "count": 458,
+            "min": 8.21873599790024e-05,
+            "mean": 0.00977048101818004,
+            "median": 0.006151836688887968,
+            "p05": 0.0007401387008847849,
+            "p95": 0.01723413367219084,
+            "max": 1.0835081818815233
+          },
+          "normal_error_deg": {
+            "count": 388,
+            "min": 0.886853297709177,
+            "mean": 7.666539588957976,
+            "median": 6.698021628089066,
+            "p05": 3.914430466199054,
+            "p95": 13.625482970102881,
+            "max": 19.89081229878883
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        },
+        {
+          "raw": 179,
+          "original_points": 452,
+          "signed_height_error_m": {
+            "count": 452,
+            "min": -0.02426152302014728,
+            "mean": 0.014824642902765254,
+            "median": 0.014588455602591921,
+            "p05": -0.0010097683786270293,
+            "p95": 0.029988481622673823,
+            "max": 0.0796230174449768
+          },
+          "absolute_height_error_m": {
+            "count": 452,
+            "min": 1.8156081925013723e-05,
+            "mean": 0.015453990540330595,
+            "median": 0.01460805051774905,
+            "p05": 0.0019909061534654883,
+            "p95": 0.029988481622673823,
+            "max": 0.0796230174449768
+          },
+          "normal_error_deg": {
+            "count": 386,
+            "min": 0.5354773077797037,
+            "mean": 6.296030138933934,
+            "median": 6.014180901040873,
+            "p05": 2.0209342531403442,
+            "p95": 9.864741603231415,
+            "max": 19.508400194703857
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        },
+        {
+          "raw": 198,
+          "original_points": 456,
+          "signed_height_error_m": {
+            "count": 456,
+            "min": -0.011774949926934397,
+            "mean": 0.015780408293390603,
+            "median": 0.01614770998413917,
+            "p05": -0.0017340529112255254,
+            "p95": 0.031632501113440625,
+            "max": 0.09288250197502279
+          },
+          "absolute_height_error_m": {
+            "count": 456,
+            "min": 0.000373068606403848,
+            "mean": 0.016363827421378013,
+            "median": 0.01614770998413917,
+            "p05": 0.001993909344760958,
+            "p95": 0.031632501113440625,
+            "max": 0.09288250197502279
+          },
+          "normal_error_deg": {
+            "count": 382,
+            "min": 1.2297149534723484,
+            "mean": 7.658152848172215,
+            "median": 6.704506835538423,
+            "p05": 2.8427622181736796,
+            "p95": 17.09877904504091,
+            "max": 19.335308373069672
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        }
+      ]
+    },
+    {
+      "name": "quadratic_lambda_1000",
+      "coefficients": [
+        -20.75083258264884,
+        0.004490128060475206,
+        0.015991775145348212,
+        -1.5594465748310035e-06,
+        1.4326078126580373e-05,
+        4.665605958223499e-07
+      ],
+      "training_medoids": 1545,
+      "conditional_bootstrap_SD_context_m": {
+        "count": 236376,
+        "min": 0.0024489960313962694,
+        "mean": 0.0030819001701309075,
+        "median": 0.0031034300063634388,
+        "p05": 0.0026259024209701063,
+        "p95": 0.0035058474315474305,
+        "max": 0.003746685365641671
+      },
+      "fixed_expanded_heldout_pass": true,
+      "heldout": [
+        {
+          "raw": 134,
+          "original_points": 458,
+          "signed_height_error_m": {
+            "count": 458,
+            "min": -1.091244988759513,
+            "mean": 0.00036477162788720757,
+            "median": 0.0035781915828145827,
+            "p05": -0.013069011856997114,
+            "p95": 0.014758389958491236,
+            "max": 0.0919101262254749
+          },
+          "absolute_height_error_m": {
+            "count": 458,
+            "min": 1.103265375945739e-05,
+            "mean": 0.009890003294698416,
+            "median": 0.005989698843515967,
+            "p05": 0.0009302172191238967,
+            "p95": 0.016899038589300194,
+            "max": 1.091244988759513
+          },
+          "normal_error_deg": {
+            "count": 388,
+            "min": 0.9011595659019078,
+            "mean": 7.638974229201477,
+            "median": 6.6508914256889025,
+            "p05": 3.8686676239109787,
+            "p95": 13.606512359359689,
+            "max": 19.905711112570902
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        },
+        {
+          "raw": 179,
+          "original_points": 452,
+          "signed_height_error_m": {
+            "count": 452,
+            "min": -0.022065800662726787,
+            "mean": 0.015362348165207186,
+            "median": 0.016140968842295322,
+            "p05": 0.00040757878991737334,
+            "p95": 0.028334732692026774,
+            "max": 0.0820054752262287
+          },
+          "absolute_height_error_m": {
+            "count": 452,
+            "min": 0.0003510292142614446,
+            "mean": 0.016069062177430416,
+            "median": 0.016184094237651436,
+            "p05": 0.0027223423706773885,
+            "p95": 0.028334732692026774,
+            "max": 0.0820054752262287
+          },
+          "normal_error_deg": {
+            "count": 386,
+            "min": 0.5427405993174544,
+            "mean": 6.269004874401934,
+            "median": 5.935832444508305,
+            "p05": 2.013617789049405,
+            "p95": 9.867239669334355,
+            "max": 19.518360210752967
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        },
+        {
+          "raw": 198,
+          "original_points": 456,
+          "signed_height_error_m": {
+            "count": 456,
+            "min": -0.019351524427673183,
+            "mean": 0.01628393947276723,
+            "median": 0.01721191888993623,
+            "p05": -0.00020797589310461717,
+            "p95": 0.02909322540467496,
+            "max": 0.0952044018595366
+          },
+          "absolute_height_error_m": {
+            "count": 456,
+            "min": 6.43679269423103e-05,
+            "mean": 0.016911171410742137,
+            "median": 0.017274128401782107,
+            "p05": 0.0022077500530039984,
+            "p95": 0.02909322540467496,
+            "max": 0.0952044018595366
+          },
+          "normal_error_deg": {
+            "count": 382,
+            "min": 1.2504688511733895,
+            "mean": 7.628283479068355,
+            "median": 6.669246833098638,
+            "p05": 2.8125304330429803,
+            "p95": 17.095923180130274,
+            "max": 19.335567802225736
+          },
+          "fixed_thresholds_pass": true,
+          "points_residual_trimmed": false
+        }
+      ]
+    }
+  ],
+  "candidate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/loo_selection/expanded_geometry_DIAGNOSTIC.npz",
+    "bytes": 27232359,
+    "sha256": "19a1866a353c7c65ba00be562fb572c058c4989fa1dcbedce2d61c0930ad9c0e"
+  },
+  "no_heldout_used_for_model_selection": true,
+  "no_Z_or_residual_point_filter": true,
+  "all_geometry_is_inferred": true,
+  "old_geometry_A20_camera_appearance_unchanged": true,
+  "GPU_forward": 0,
+  "backward": 0,
+  "updates": 0,
+  "elapsed_seconds": 5.630848407745361
+}

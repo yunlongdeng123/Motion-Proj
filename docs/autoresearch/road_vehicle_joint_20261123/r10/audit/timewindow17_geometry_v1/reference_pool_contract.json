@@ -1,0 +1,56 @@
+{
+  "schema": "R10.timewindow17_reference_pool_contract.v1",
+  "complete": true,
+  "written_before_pool_point_heights_read": true,
+  "fixed_evaluation_window_inclusive": [
+    86,
+    198
+  ],
+  "selection_rule": "Every available official TOP semantic frame inside time window, all17 included, no height/colour selection",
+  "frames": [
+    90,
+    95,
+    100,
+    105,
+    110,
+    115,
+    120,
+    125,
+    130,
+    135,
+    140,
+    145,
+    150,
+    155,
+    160,
+    165,
+    170
+  ],
+  "availability": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/official_TOP_availability_199_v1/TOP_segmentation_availability.json",
+    "bytes": 268906,
+    "sha256": "93d6238e8bfa0ff923fb3386ebe69392d779b096ea8e51b691845a145c680f87"
+  },
+  "geometry_heldout_do_not_fit": [
+    134,
+    179,
+    198
+  ],
+  "comparison_scope": "Time-window change plus additional valid annotated observations; not a count-only ablation, not a declaration that raw60/70 or their poses are invalid",
+  "XY_scope": "Same1844 pre-screen requested_cell_asset_mask footprint plus .4m Euclidean XY context",
+  "scope_geometry": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/expanded_candidate_geometry.npz",
+    "bytes": 26316748,
+    "sha256": "1844e3596414a7cbe128167db615bece0f6ff7ec7a638f5ebb6163d60aee848d"
+  },
+  "point_filter": "All original official ROAD18/LANE19 points finite and in declared XY context; no Z/residual/OBB/photo filter",
+  "initial_audit": "All17 cross-frame nearest XY consistency with anchor110 and eps .02/.05/.10m, retaining original denominators/mutual matches; no offset synchronization or point rejection",
+  "later_model_family": "Unchanged plane/quadratic curvature ridge family, frame LOO/oneSE and fixed physical gates; no extra models to hide correspondence conflict",
+  "old8_reference_and_failed_models_unchanged": true,
+  "heldout_not_used_for_pool_selection": true,
+  "A20_camera_oldroad_and_sourceRGB_unchanged": true,
+  "model_fitted": false,
+  "GPU_forward": 0,
+  "backward": 0,
+  "updates": 0
+}

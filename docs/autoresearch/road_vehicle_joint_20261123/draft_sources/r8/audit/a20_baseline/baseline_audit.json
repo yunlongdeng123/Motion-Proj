@@ -1,0 +1,1288 @@
+{
+  "schema": "R8.A20_selected_baseline_readonly_audit.v1",
+  "complete": true,
+  "CPU_only": true,
+  "GPU_context_created": false,
+  "parameter_updates": 0,
+  "selected_UI": {
+    "current_group": "r3_ablation",
+    "default_camera": "raw110",
+    "URL_hash_overrides_group": true,
+    "inline_D_equals_result_json": true,
+    "HTML": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\outputs\\a20_joint_reconstruction_20261122\\index.html",
+      "sha256": "175c3bd03a01a531ebfcb3e43047949d43952eff9971f46b14a0d19ded415cb2",
+      "bytes": 113825
+    },
+    "result": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\outputs\\a20_joint_reconstruction_20261122\\result.json",
+      "sha256": "0619530299d701a12c8c462af3aa056074e8931ed098ebebeaa20cf5f8bea6f0",
+      "bytes": 145966
+    },
+    "historical_scene_qualified": false,
+    "user_baseline_choice_preserved": true
+  },
+  "actor": {
+    "local": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\a20_joint_reconstruction_20261122\\assets\\a20_geometry_candidate.npz",
+      "sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+      "bytes": 24031638
+    },
+    "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/assets/geometry_ablation/actor.npz",
+    "sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "rows": 419005,
+    "active_rows": 418194,
+    "active_by_source": {
+      "0": 8114,
+      "1": 410080
+    },
+    "inactive_rows": 811,
+    "inactive_opacity_exact_zero": true,
+    "fields": {
+      "xyz": {
+        "shape": [
+          419005,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "scales": {
+        "shape": [
+          419005,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "rotation": {
+        "shape": [
+          419005,
+          4
+        ],
+        "dtype": "float32"
+      },
+      "coefficients": {
+        "shape": [
+          419005,
+          16,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "opacity": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "source_id": {
+        "shape": [
+          419005
+        ],
+        "dtype": "int8"
+      },
+      "source_row_id": {
+        "shape": [
+          419005
+        ],
+        "dtype": "int64"
+      },
+      "native_global_row_id": {
+        "shape": [
+          419005
+        ],
+        "dtype": "int64"
+      },
+      "original_source_row_id": {
+        "shape": [
+          419005
+        ],
+        "dtype": "int64"
+      },
+      "original_source_branch": {
+        "shape": [
+          419005
+        ],
+        "dtype": "int8"
+      },
+      "source_raw": {
+        "shape": [
+          419005
+        ],
+        "dtype": "int16"
+      },
+      "geometry_confidence": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "appearance_confidence": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "opacity_confidence": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "is_observed": {
+        "shape": [
+          419005
+        ],
+        "dtype": "bool"
+      },
+      "has_native_source_evidence": {
+        "shape": [
+          419005
+        ],
+        "dtype": "bool"
+      },
+      "geometry_is_generated_prior": {
+        "shape": [
+          419005
+        ],
+        "dtype": "bool"
+      },
+      "opaque_geometry_high_confidence": {
+        "shape": [
+          419005
+        ],
+        "dtype": "bool"
+      },
+      "observed_surface": {
+        "shape": [
+          419005
+        ],
+        "dtype": "bool"
+      },
+      "observed_surface_confidence": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "distance_to_T_direct_observed_surface_m": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "nearest_T_direct_observed_source_row_id": {
+        "shape": [
+          419005
+        ],
+        "dtype": "int64"
+      },
+      "teacher_unknown": {
+        "shape": [
+          419005
+        ],
+        "dtype": "bool"
+      },
+      "teacher_prior_weight": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "teacher_reference_row_id": {
+        "shape": [
+          419005
+        ],
+        "dtype": "int64"
+      },
+      "high_frequency_permission": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "real_V_supervision_weight": {
+        "shape": [
+          419005
+        ],
+        "dtype": "float32"
+      },
+      "active": {
+        "shape": [
+          419005
+        ],
+        "dtype": "bool"
+      }
+    },
+    "frame": "canonical actor metres: x forward, y left, z up",
+    "scales": "activated metre standard deviations",
+    "rotation": "wxyz",
+    "opacity": "activated [0,1]",
+    "colour": "SH [N,16,3], view direction evaluated in actor coordinates",
+    "contains_trajectory_or_model_clock": false
+  },
+  "defaults": {
+    "original_native_replacement_plan_applied": true,
+    "original_a9_identity_guard_applied": true,
+    "guard_sidecar": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\a20_sd15_sameview_20261122\\audit\\reference\\a9_ownership_sidecar.npz",
+      "sha256": "c38e4b8b47e21c05d5db30280fb1935f43661ac70e68567b0765b23e6cb87943",
+      "bytes": 1862,
+      "runtime_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/a9_ownership_sidecar.npz"
+    },
+    "native_remove_union_rows": 26437,
+    "mapped_actor_copy_rows": 8925,
+    "certified_DELETE_rows": 24449,
+    "K_preserved_union_rows": 1922,
+    "remove_K_intersection": 0,
+    "later_scene_cleanup_sidecar_applied": false,
+    "cleanup_candidate": {
+      "group_id": "scene_cleanup_visible_red_r1",
+      "rows": 959,
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_visible_red_r1/context_inactive_sidecar.npz",
+        "sha256": "fe24d7f47e419adb82b6e11a71e28cee42bf831f9768d881c1a18ec393376256",
+        "bytes": 3261
+      },
+      "default_upgraded": false
+    },
+    "default_upgraded": false
+  },
+  "coordinates": {
+    "world_to_model": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_vehicle_joint_dggt_20261123_r8\\audit\\a20_baseline\\road_handoff\\transform_matrix.txt",
+      "sha256": "0c4731e2d3b60d88570ec9e9744fa5b518654fc9afcfe3afa20d2c5e3d700ce6",
+      "bytes": 267
+    },
+    "model_from_actor": "world_to_model @ observations.box[track].world_from_actor",
+    "track": "bzFbWRrSGOgEaXxnuGV0tw",
+    "actor_id": 21,
+    "delete_actor_id": 10,
+    "meter_to_model": 0.018849925866127503,
+    "native_model_times": {
+      "86": -0.26,
+      "110": 0.22,
+      "134": 0.7000000000000001,
+      "179": 1.6,
+      "198": 1.98
+    },
+    "native_clock_rule": "Use scene.camera_provider(raw).timestamp; Unix microseconds are metadata, not native model time"
+  },
+  "frames": {
+    "86": {
+      "raw": 86,
+      "image_name": "0065086",
+      "timestamp_micros": 1507240556444187,
+      "source_time_s": 1507240556.444187,
+      "native_model_time": -0.26,
+      "world_from_actor": [
+        [
+          0.9995411432,
+          0.029916743,
+          0.0047425269,
+          2326.3154069918
+        ],
+        [
+          -0.0298694015,
+          0.9995061855,
+          -0.0097572509,
+          1367.0780065429
+        ],
+        [
+          -0.0050320901,
+          0.0096111173,
+          0.9999411505,
+          -19.7368722477
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_from_actor": [
+        [
+          0.01883457787334919,
+          0.0007587443105876446,
+          -5.211199095356278e-05,
+          0.5479757785797119
+        ],
+        [
+          0.000748557155020535,
+          -0.018266158178448677,
+          0.004594219382852316,
+          -0.0032638786360621452
+        ],
+        [
+          0.0001344276824966073,
+          -0.004592547658830881,
+          -0.018281415104866028,
+          0.01635800115764141
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_pose_world": [
+        [
+          0.9999783764793326,
+          -0.004555766927790638,
+          0.004742526906384606,
+          2304.4921900133672
+        ],
+        [
+          0.004601875351130327,
+          0.9999418077054844,
+          -0.00975725094177855,
+          1366.9530751995499
+        ],
+        [
+          -0.004697799166715411,
+          0.009778864473333718,
+          0.9999411505146698,
+          -20.817
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          0.9998422115945026,
+          0.00037180750013298097,
+          -0.017759889442137543,
+          1.5444373518820733
+        ],
+        [
+          -0.00035684106158265916,
+          0.9999995785827032,
+          0.0008458716646450704,
+          -0.024495479018263978
+        ],
+        [
+          0.017760196459242004,
+          -0.0008394007381017275,
+          0.9998419229198834,
+          2.1165579041407794
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_intrinsic_Brown": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_size": [
+        1920,
+        1280
+      ],
+      "image_path": "image/image_0/0065086.png",
+      "R7_pinhole_K": [
+        [
+          1249.0180314341999,
+          0.0,
+          572.9751983248201
+        ],
+        [
+          0.0,
+          1249.0180314342,
+          395.4769760703
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "saved_model_from_actor_max_abs": 0.0,
+      "saved_native_camera": {
+        "world_view_transform": [
+          [
+            -0.006159564014524221,
+            0.020518766716122627,
+            0.9997705221176147,
+            0.0
+          ],
+          [
+            0.9700255990028381,
+            -0.24275562167167664,
+            0.010958495549857616,
+            0.0
+          ],
+          [
+            0.242924764752388,
+            0.9698704481124878,
+            -0.018408458679914474,
+            0.0
+          ],
+          [
+            0.001270891516469419,
+            -0.0035022608935832977,
+            -0.16528654098510742,
+            1.0
+          ]
+        ],
+        "full_proj_transform": [
+          [
+            -0.018606796860694885,
+            0.09662149846553802,
+            0.999780535697937,
+            0.9997705221176147
+          ],
+          [
+            2.103379249572754,
+            -0.7892718315124512,
+            0.010958605445921421,
+            0.010958495549857616
+          ],
+          [
+            0.5268630385398865,
+            3.154099941253662,
+            -0.01840864308178425,
+            -0.018408458679914474
+          ],
+          [
+            0.0036238287575542927,
+            -0.016331709921360016,
+            -0.17528828978538513,
+            -0.16528654098510742
+          ]
+        ],
+        "camera_center": [
+          0.16532830893993378,
+          -0.00027169863460585475,
+          4.5337368646869436e-05
+        ],
+        "model_from_actor": [
+          [
+            0.01883457787334919,
+            0.0007587443105876446,
+            -5.211199095356278e-05,
+            0.5479757785797119
+          ],
+          [
+            0.000748557155020535,
+            -0.018266158178448677,
+            0.004594219382852316,
+            -0.0032638786360621452
+          ],
+          [
+            0.0001344276824966073,
+            -0.004592547658830881,
+            -0.018281415104866028,
+            0.01635800115764141
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "fx": 1249.0180314341999,
+        "fy": 1249.0180314342,
+        "cx": 572.9751983248201,
+        "cy": 395.4769760703,
+        "model_units_per_meter": 0.018849925866127503,
+        "image_size": [
+          1152,
+          768
+        ]
+      },
+      "pinhole_target_png": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_shared_appearance_20261122_r7\\projection_cache_v1\\086\\photo_pinhole1152.png"
+    },
+    "110": {
+      "raw": 110,
+      "image_name": "0065110",
+      "timestamp_micros": 1507240558844353,
+      "source_time_s": 1507240558.844353,
+      "native_model_time": 0.22,
+      "world_from_actor": [
+        [
+          0.9995506526,
+          0.0299170276,
+          0.0018612655,
+          2326.3154069918
+        ],
+        [
+          -0.0298943431,
+          0.9994901969,
+          -0.0112104674,
+          1367.0780065429
+        ],
+        [
+          -0.0021957005,
+          0.0111497887,
+          0.9999354285,
+          -19.7448729844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_from_actor": [
+        [
+          0.01883435621857643,
+          0.0007585317944176495,
+          -0.0001067035918822512,
+          0.5479769110679626
+        ],
+        [
+          0.0007615379290655255,
+          -0.018259072676301003,
+          0.004620179068297148,
+          -0.0032991988118737936
+        ],
+        [
+          8.255969441961497e-05,
+          -0.004620673600584269,
+          -0.018274635076522827,
+          0.016504617407917976
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_pose_world": [
+        [
+          0.9999917044321078,
+          -0.003622534431824771,
+          0.0018623402637601672,
+          2307.168198251937
+        ],
+        [
+          0.003643190354236326,
+          0.9999305258795714,
+          -0.011210288945720822,
+          1366.962806467355
+        ],
+        [
+          -0.0018216012216118254,
+          0.011216980810093018,
+          0.9999354284705064,
+          -20.834
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          0.9998422115945026,
+          0.00037180750013298097,
+          -0.017759889442137543,
+          1.5444373518820733
+        ],
+        [
+          -0.00035684106158265916,
+          0.9999995785827032,
+          0.0008458716646450704,
+          -0.024495479018263978
+        ],
+        [
+          0.017760196459242004,
+          -0.0008394007381017275,
+          0.9998419229198834,
+          2.1165579041407794
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_intrinsic_Brown": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_size": [
+        1920,
+        1280
+      ],
+      "image_path": "image/image_0/0065110.png",
+      "R7_pinhole_K": [
+        [
+          1249.0180314341999,
+          0.0,
+          572.9751983248201
+        ],
+        [
+          0.0,
+          1249.0180314342,
+          395.4769760703
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "saved_model_from_actor_max_abs": 0.0,
+      "saved_native_camera": {
+        "world_view_transform": [
+          [
+            -0.007180239539593458,
+            0.02341323345899582,
+            0.9997000694274902,
+            0.0
+          ],
+          [
+            0.9696664810180664,
+            -0.24410271644592285,
+            0.012681474909186363,
+            0.0
+          ],
+          [
+            0.2443264275789261,
+            0.9694666862487793,
+            -0.020950311794877052,
+            0.0
+          ],
+          [
+            0.0013738925335928798,
+            -0.0050259362906217575,
+            -0.21596390008926392,
+            1.0
+          ]
+        ],
+        "full_proj_transform": [
+          [
+            -0.02081969380378723,
+            0.10603407770395279,
+            0.9997100830078125,
+            0.9997000694274902
+          ],
+          [
+            2.1025912761688232,
+            -0.7936019897460938,
+            0.012681601569056511,
+            0.012681474909186363
+          ],
+          [
+            0.5299158096313477,
+            3.1527109146118164,
+            -0.020950522273778915,
+            -0.020950311794877052
+          ],
+          [
+            0.004113306291401386,
+            -0.022802338004112244,
+            -0.22596615552902222,
+            -0.21596390008926392
+          ]
+        ],
+        "camera_center": [
+          0.2160266935825348,
+          0.00017967892927117646,
+          1.2288296602491755e-05
+        ],
+        "model_from_actor": [
+          [
+            0.01883435621857643,
+            0.0007585317944176495,
+            -0.0001067035918822512,
+            0.5479769110679626
+          ],
+          [
+            0.0007615379290655255,
+            -0.018259072676301003,
+            0.004620179068297148,
+            -0.0032991988118737936
+          ],
+          [
+            8.255969441961497e-05,
+            -0.004620673600584269,
+            -0.018274635076522827,
+            0.016504617407917976
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "fx": 1249.0180314341999,
+        "fy": 1249.0180314342,
+        "cx": 572.9751983248201,
+        "cy": 395.4769760703,
+        "model_units_per_meter": 0.018849925866127503,
+        "image_size": [
+          1152,
+          768
+        ]
+      },
+      "pinhole_target_png": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_shared_appearance_20261122_r7\\projection_cache_v1\\110\\photo_pinhole1152.png"
+    },
+    "134": {
+      "raw": 134,
+      "image_name": "0065134",
+      "timestamp_micros": 1507240561244228,
+      "source_time_s": 1507240561.244228,
+      "native_model_time": 0.7000000000000001,
+      "world_from_actor": [
+        [
+          0.9995489317,
+          0.0299169761,
+          0.002628236,
+          2326.3154069918
+        ],
+        [
+          -0.0298866084,
+          0.9994936451,
+          -0.0109198931,
+          1367.0780065429
+        ],
+        [
+          -0.0029535953,
+          0.0108364184,
+          0.9999369222,
+          -19.7528727508
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_from_actor": [
+        [
+          0.0188344307243824,
+          0.000758575217332691,
+          -9.219060302712023e-05,
+          0.5479780435562134
+        ],
+        [
+          0.0007580499514006078,
+          -0.018260518088936806,
+          0.004615032579749823,
+          -0.003334514796733856
+        ],
+        [
+          9.641423093853518e-05,
+          -0.004614946432411671,
+          -0.018276013433933258,
+          0.0166512131690979
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_pose_world": [
+        [
+          0.9999899028545495,
+          -0.0037116025657376564,
+          0.0025334157461185097,
+          2307.7383736540423
+        ],
+        [
+          0.0037390579672379677,
+          0.9999333843095014,
+          -0.0109199994901459,
+          1366.9625265820341
+        ],
+        [
+          -0.002492716282753782,
+          0.010929361817652578,
+          0.9999371657338239,
+          -20.834
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          0.9998422115945026,
+          0.00037180750013298097,
+          -0.017759889442137543,
+          1.5444373518820733
+        ],
+        [
+          -0.00035684106158265916,
+          0.9999995785827032,
+          0.0008458716646450704,
+          -0.024495479018263978
+        ],
+        [
+          0.017760196459242004,
+          -0.0008394007381017275,
+          0.9998419229198834,
+          2.1165579041407794
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_intrinsic_Brown": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_size": [
+        1920,
+        1280
+      ],
+      "image_path": "image/image_0/0065134.png",
+      "R7_pinhole_K": [
+        [
+          1249.0180314341999,
+          0.0,
+          572.9751983248201
+        ],
+        [
+          0.0,
+          1249.0180314342,
+          395.4769760703
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "pinhole_target_png": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_shared_appearance_20261122_r7\\projection_cache_v1\\134\\photo_pinhole1152.png"
+    },
+    "179": {
+      "raw": 179,
+      "image_name": "0065179",
+      "timestamp_micros": 1507240565744244,
+      "source_time_s": 1507240565.744244,
+      "native_model_time": 1.6,
+      "world_from_actor": [
+        [
+          0.9995472564,
+          0.029916926,
+          0.0032030922,
+          2326.3154069918
+        ],
+        [
+          -0.0298806792,
+          0.9994948879,
+          -0.0108219297,
+          1367.0780065429
+        ],
+        [
+          -0.0035252332,
+          0.0107213196,
+          0.999936311,
+          -19.7678731477
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_from_actor": [
+        [
+          0.01883447915315628,
+          0.0007585905841551721,
+          -8.13361766631715e-05,
+          0.5479801297187805
+        ],
+        [
+          0.0007554173935204744,
+          -0.018261048942804337,
+          0.004613363184034824,
+          -0.0034007360227406025
+        ],
+        [
+          0.00010686355381039903,
+          -0.004612842574715614,
+          -0.018276486545801163,
+          0.016926098614931107
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_pose_world": [
+        [
+          0.999988358647835,
+          -0.0036087073861500066,
+          0.0032030922262924187,
+          2307.718490216168
+        ],
+        [
+          0.0036431781648062177,
+          0.9999348044199418,
+          -0.010821929703728375,
+          1366.962399530384
+        ],
+        [
+          -0.003163830221182504,
+          0.01083347315749228,
+          0.9999363109906938,
+          -20.833000000000002
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          0.9998422115945026,
+          0.00037180750013298097,
+          -0.017759889442137543,
+          1.5444373518820733
+        ],
+        [
+          -0.00035684106158265916,
+          0.9999995785827032,
+          0.0008458716646450704,
+          -0.024495479018263978
+        ],
+        [
+          0.017760196459242004,
+          -0.0008394007381017275,
+          0.9998419229198834,
+          2.1165579041407794
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_intrinsic_Brown": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_size": [
+        1920,
+        1280
+      ],
+      "image_path": "image/image_0/0065179.png",
+      "R7_pinhole_K": [
+        [
+          1249.0180314341999,
+          0.0,
+          572.9751983248201
+        ],
+        [
+          0.0,
+          1249.0180314342,
+          395.4769760703
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "pinhole_target_png": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_shared_appearance_20261122_r7\\projection_cache_v1\\179\\photo_pinhole1152.png"
+    },
+    "198": {
+      "raw": 198,
+      "image_name": "0065198",
+      "timestamp_micros": 1507240567644232,
+      "source_time_s": 1507240567.644232,
+      "native_model_time": 1.98,
+      "world_from_actor": [
+        [
+          0.9995466253,
+          0.0299169071,
+          0.0033944806,
+          2326.3154069918
+        ],
+        [
+          -0.0298789677,
+          0.9994959799,
+          -0.0107253642,
+          1367.0780065429
+        ],
+        [
+          -0.0037136394,
+          0.0106190781,
+          0.99993672,
+          -19.7742065859
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_from_actor": [
+        [
+          0.018834494054317474,
+          0.0007586047286167741,
+          -7.770991214783862e-05,
+          0.5479810237884521
+        ],
+        [
+          0.0007545541157014668,
+          -0.018261520192027092,
+          0.0046116383746266365,
+          -0.003428695723414421
+        ],
+        [
+          0.0001103086251532659,
+          -0.004610973875969648,
+          -0.018276937305927277,
+          0.017042160034179688
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_pose_world": [
+        [
+          0.999987733611399,
+          -0.003606955563357603,
+          0.003394480564321222,
+          2307.7182319992844
+        ],
+        [
+          0.003643175887660613,
+          0.9999358448578045,
+          -0.010725364234386353,
+          1366.9621496208545
+        ],
+        [
+          -0.0033555768787436814,
+          0.010737599362643836,
+          0.9999367200296918,
+          -20.833000000000002
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          0.9998422115945026,
+          0.00037180750013298097,
+          -0.017759889442137543,
+          1.5444373518820733
+        ],
+        [
+          -0.00035684106158265916,
+          0.9999995785827032,
+          0.0008458716646450704,
+          -0.024495479018263978
+        ],
+        [
+          0.017760196459242004,
+          -0.0008394007381017275,
+          0.9998419229198834,
+          2.1165579041407794
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_intrinsic_Brown": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_size": [
+        1920,
+        1280
+      ],
+      "image_path": "image/image_0/0065198.png",
+      "R7_pinhole_K": [
+        [
+          1249.0180314341999,
+          0.0,
+          572.9751983248201
+        ],
+        [
+          0.0,
+          1249.0180314342,
+          395.4769760703
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "pinhole_target_png": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_shared_appearance_20261122_r7\\projection_cache_v1\\198\\photo_pinhole1152.png"
+    }
+  },
+  "renderer": {
+    "source_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source",
+    "joint_gpu_SHA256": "ac44a59fae6ab4c6a9f5c48be825a13c83e92d6f9864123f7c6f45ceb8f3b328",
+    "joint_core_SHA256": "bde889e6ddd00ed4dea55ac4bfe11497faad719bdaac8086ec1cd7d41501b869",
+    "remote_sources_fresh_SHA_verified": true,
+    "legacy": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\a20_sd15_sameview_20261122\\audit\\reference\\run_joint_frozen_reference.py",
+      "sha256": "2bc5cfd9f5cf67c9aad2252a73de34228b525eecf6cb4ec3f673f22f4eef400b",
+      "bytes": 40674,
+      "runtime_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/frozen_formal_r2/run_joint.py"
+    },
+    "road_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset",
+    "road": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz",
+      "sha256": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+      "total_rows": 596100,
+      "active_rows": 162348,
+      "meter_to_model": 0.018849925866127503
+    },
+    "native_models": [
+      {
+        "role": "static",
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth",
+        "sha256": "23d7f2c74f7ac96211795223c2b07910eadf52a3813105644d24a2189763b548"
+      },
+      {
+        "role": "dynamic",
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/dynamic_chkpnt30000.pth",
+        "sha256": "260d5b87b7abb7b85afbcc9a546439afd6ac4cdfe86e1e1c1a1c853edc002611"
+      },
+      {
+        "role": "environment",
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/env_light_chkpnt30000.pth",
+        "sha256": "83e066d9a4d83d33c110361bced915962c2d0b1305d5948a390ad19d1e5e70ae"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1/ownership/semantic_ownership.npz",
+        "sha256": "9828e1ce6cc1d6ff59ba3508d1bea4f7f950619f3779b75a6b5b2dcf56af93fb"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz",
+        "sha256": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+        "total_rows": 596100,
+        "active_rows": 162348,
+        "meter_to_model": 0.018849925866127503
+      }
+    ],
+    "public_handoff": "drivingeditor_dynamic_edit.persistent_road_handoff.load_persistent_handoff(scene.json, proof.json)",
+    "shared_raster": "Runtime.render -> scene._bindings().merge_rows -> scene._bindings().raster",
+    "raster_units": {
+      "unit_scale": 53.05060651707689,
+      "legacy_native_near": 0.2
+    },
+    "native_legacy_near_preserved": true,
+    "target_actor_physical_near_m": 0.2,
+    "old_runtime_BUILD": [
+      86,
+      110
+    ],
+    "new_R8_forward_opened_pool": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "old_runtime_rejects_other_raws": true,
+    "final_actor_loading": "load original initialization/source/context into Runtime, then rt.actor=JointField(bank(selected_actor)); CLI --mode evaluate --asset selected_actor",
+    "final_actor_is_not_original_init": "core.load_inputs validates immutable TRELLIS init exactly; do not pass optimized final_actor as --init"
+  },
+  "target_image_mapping": {
+    "historical_legacy": "Brown source PNG resized with BOX directly to 1152x768 (run_joint.py line113); historical metrics preserved",
+    "R8": "Use R7 correct Brown->pinhole view-cache targets with the exact native K; reevaluate A20+road baseline on this unified mapping",
+    "K1152": [
+      [
+        1249.0180314341999,
+        0.0,
+        572.9751983248201
+      ],
+      [
+        0.0,
+        1249.0180314342,
+        395.4769760703
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "historical_metrics_are_not_rewritten": true
+  },
+  "loading_helper": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_vehicle_joint_dggt_20261123_r8\\audit\\a20_baseline\\load_a20_baseline.py",
+  "A20_HTML_modified": false,
+  "mask_coordinate_audit": {
+    "receipt": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_vehicle_joint_dggt_20261123_r8\\audit\\mask_coordinate_audit\\rectified_masks\\receipt.json",
+    "QA": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_vehicle_joint_dggt_20261123_r8\\audit\\mask_coordinate_audit\\mask_coordinate_QA.json",
+    "helper": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\work\\road_vehicle_joint_dggt_20261123_r8\\audit\\mask_coordinate_audit\\rectify_a20_masks_cpu.py",
+    "fixed_K_V_B_are_Brown_domain": true,
+    "native_raster_and_3D_row_sidecars_not_warped": true
+  }
+}

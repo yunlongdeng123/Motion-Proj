@@ -1,0 +1,51 @@
+{
+  "schema": "R10.root_requalified_shared_surface_input_review.v1",
+  "complete": true,
+  "decision": "PASS",
+  "approval_scope": "limited_new_local_initialization_and_actual_zero_step_joint_control",
+  "final_atlas_sha256": "45b4b9d752f1584019e6687008de489de071a81907ab2c3c1b61b20964f64d32",
+  "geometry_npz_sha256": "0d62e87abddd3017a40b06d80c485d331c0feb5c13a433be7f50f6933cda269b",
+  "local_patch_appearance_accepted": true,
+  "student_fit_authorized": true,
+  "student_fit_authorization_scope": "CPU initialization and zero-step actual joint rendering only; optimizer run requires review of actual joint results",
+  "independent_numeric_and_visual_PASS_required_by_builder": true,
+  "reviewed_views": [86,110,134,179,198],
+  "reviewed_contact": "five_view_direct_surface_context.png",
+  "reviewed_full_resolution_detail": "110/direct_surface_material.png",
+  "observations": [
+    "All five shared-surface projections show continuous asphalt with no restored original-car lower outline or conspicuous internal colour patch boundary.",
+    "The direct-surface context illustration is a diagnostic overlay on the original photograph, not actual joint Gaussian rendering; the overlay intentionally covers the removed original vehicle.",
+    "Material is relatively low contrast. This gate permits testing its conversion and occlusion behaviour; it does not certify native photographic detail or the final joint result."
+  ],
+  "reviewed_numeric_evidence": {
+    "new_geometry_fixed_overlap_texels": 50251,
+    "LF_before_MAE": 0.018155959438986576,
+    "LF_after_MAE": 0.009284779407685942,
+    "photo_grain_correlation_2cm": 0.9999991239605998,
+    "boundary_LF_p95": 0.005599626969817537,
+    "boundary_interpretation": "reported diagnostic, not a newly invented hard pass threshold",
+    "all_five_unavailable_material_pixels": 0,
+    "all_five_surface_maxRGB_below40_pixels": 0
+  },
+  "current_real_qualification": {
+    "ancestor_real_lock_count": 6407,
+    "unaffected_current_real_lock_count": 6332,
+    "displaced_addresses_requalified": 75,
+    "fresh_certified_real_count": 0,
+    "mutable_domain_texels": 46911,
+    "new_extent_texels": 46836,
+    "all_other_parent_RGB_and_6332_locks_byteexact_required": true,
+    "full_new_asset_search_candidates": 2999905,
+    "full_new_asset_search_frames": 17,
+    "full_new_asset_search_strict_certified": 0,
+    "interpretation": "Conservative qualification did not certify clean same-world photo supervision here. GT OBB ray intersection is a potential-occlusion proxy, not actual alpha visibility ground truth; zero certification does not prove the positions were never visible. Inference labels and complete candidates are retained."
+  },
+  "approved_original_A20_sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+  "all_old_native_and_road_components_retained_for_first_zero": true,
+  "whole_scene_quality_accepted": false,
+  "new_diffusion_calls": 0,
+  "GPU_forward": 0,
+  "GPU_backward": 0,
+  "optimizer_updates": 0,
+  "GPU_keep_on": true
+}

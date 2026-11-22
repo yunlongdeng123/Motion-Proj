@@ -1,0 +1,56 @@
+{
+  "schema": "R10.expanded_geometry_first_family_status.v1",
+  "complete": true,
+  "decision": "FAIL",
+  "scope": "Expanded geometry source qualification, not appearance or Gaussian optimization",
+  "candidate_geometry": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/expanded_candidate_geometry.npz",
+    "bytes": 26316748,
+    "sha256": "1844e3596414a7cbe128167db615bece0f6ff7ec7a638f5ebb6163d60aee848d"
+  },
+  "candidate_integrity_audit": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/independent_audit_v1/independent_geometry_audit.json",
+    "bytes": 27712,
+    "sha256": "f96d3966bece4408a576671f32468c05b2d63d2b0ffd872d8d20380ff6aa9ab9"
+  },
+  "actual_scope_before_rejection_audit": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/actual_scope_residual_v1/actual_scope_residual_diagnostic.json",
+    "bytes": 136082,
+    "sha256": "e2b00227d7a9b7fd2a686c65c3de0b96f1661a3a91e2c5d47fbe7b2e817aa843"
+  },
+  "training_only_selection": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/training_only_CV_selection.json",
+    "bytes": 54998,
+    "sha256": "158720e70b3ac2d77c7738b466f0a0297e9a4a1ca23a564d6f9e394a077821a8"
+  },
+  "original_point_fold_audit": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/expanded_curvature_loo_v1/training_fold_original_height_audit.json",
+    "bytes": 1844825,
+    "sha256": "8bd763ae0d91d11144a4ac6c86f33d7a8a66f02eca6f5e53f851bde24c38b403"
+  },
+  "matched_spatial_height_evidence": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/matched_spatial_height_cpu_v1/summary.json",
+    "bytes": 21143,
+    "sha256": "dcde3b302e0ba8988e04a5e868146bbcfb9dd178b21f4e5f778b84749493fc44"
+  },
+  "original_official_training_points": 3276,
+  "actual_requested_original_points": 1426,
+  "training_medoids": 1289,
+  "best_mean_model": "quadratic_lambda_0.1",
+  "one_SE_preferred_model": "plane",
+  "all9_fail_fixed_per_frame_actual_height_bands": true,
+  "fixed_absolute_height_median_max_m": 0.04,
+  "fixed_absolute_height_p95_max_m": 0.1,
+  "one_SE_does_not_authorize_physically_failing_model": true,
+  "expanded_heldout_inputs_opened": false,
+  "heldout_not_used_for_model_or_lambda_selection": true,
+  "geometry_accepted_for_zero_step": false,
+  "new_renderable_asset_authorized": false,
+  "first_family_selection_and_failure_preserved": true,
+  "next_diagnostic": "Independent TOP pixel-pose / timestamp / sensor-to-ego-to-world height-chain audit before fitting more flexible static heightfield",
+  "no_additional_heightfield_fit": true,
+  "old_geometry_cameras_A20_appearance_unchanged": true,
+  "GPU_forward": 0,
+  "backward": 0,
+  "updates": 0
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "R9.original_raw_shared_appearance.acceptance_contract.v1",
+  "written_before_first_R9_joint_solve": true,
+  "source_views": [86, 110],
+  "source_prompt_seed": "legacy / 101, fixed from user-recognized historical outputs",
+  "source_RGB": "original raw_model only; never hard final_native",
+  "source_visibility": "true nonplanar XYZ; direct Brown projection; four valid road/retained-mask samples; UV error <= 1 texel and depth error <= 0.03 + 0.002*z metres",
+  "real_priority": "all6407 source1 locks byte exact; teacher views have no first-writer locks",
+  "joint_solver": {
+    "affine_IRLS_steps": 8,
+    "affine_gain_bounds": [0.8, 1.25],
+    "affine_bias_bounds_linear": [-0.025, 0.025],
+    "Huber_delta_linear": 0.01,
+    "real_anchor_weight_per_view": 2.0,
+    "pair_weight": 1.0,
+    "synchronous_world_bias_steps": 8,
+    "world_bias_sigma_m": 0.3,
+    "world_bias_bounds_linear": [-0.025, 0.025],
+    "world_bias_relaxation": 0.75,
+    "shared_tone_sigma_m": 0.12,
+    "teacher_to_seed_boundary_feather_m": 0.2
+  },
+  "numeric_acceptance": {
+    "fixed_geometric_overlap_LF_mean_linear": "after <= 0.005 OR improvement >= 20%; all original overlap samples retained",
+    "full_RGB_overlap": "reported on the same fixed domain, with generated detail differences retained",
+    "boundary_LF_jump": "p95 <= 0.005 OR no more than seed baseline + 0.0025 linear",
+    "real_locks_and_outside_permission": "byte exact",
+    "source_and_camera_pins": "all exact",
+    "black_rim": "report all1792 historical pinhole pixels with unsupported geometry separate; do not restore original-photo pixels as road truth"
+  },
+  "visual_acceptance": "independent and root review of the shared field and five actual-surface views for tone blocks, seams, black rims and source artifacts",
+  "student_fit_gate": "numeric and visual shared-input acceptance first; native alpha/ownership are separate checks",
+  "new_diffusion_calls": 0,
+  "Gaussian_centers": "fixed"
+}

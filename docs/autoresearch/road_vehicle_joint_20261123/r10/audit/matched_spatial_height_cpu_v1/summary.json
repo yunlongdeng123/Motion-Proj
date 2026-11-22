@@ -1,0 +1,609 @@
+{
+  "schema": "R10.same_XY_cross_frame_height_CPU_diagnostic.v1",
+  "complete": true,
+  "CPU_only": true,
+  "nativeF": 0,
+  "nativeB": 0,
+  "updates": 0,
+  "original_road_cache": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/ground_contact_prior_raw_GT_v2/GT_bottom_and_road_evidence.npz",
+    "sha256": "51e1988c1ea817ccff86eca0376c1dc52889f6555e40ec8f4b740638a9f9115b",
+    "bytes": 7924322
+  },
+  "actual_scope_points": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/actual_scope_residual_v1/actual_scope_point_residuals.npz",
+    "sha256": "e31edd10e68eb60a9a45d61328ae8287ded783b984b721b9d0e0152c17d465c0",
+    "bytes": 16606444
+  },
+  "input_bins": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/local_surface_expanded_candidate_v1/actual_scope_residual_v1/frame_spatial_2m_bins.csv",
+    "sha256": "76b624e4b79c1f2a1f6da822697a860894caf29c02640b209997c7a496fbab98",
+    "bytes": 12250
+  },
+  "official_points": 385161,
+  "requested_points": 1426,
+  "target_frames": [
+    60,
+    70
+  ],
+  "reference_frames": [
+    80,
+    95,
+    110,
+    125,
+    145,
+    165
+  ],
+  "fixed_XY_nearest_radius_m": 0.1,
+  "no_Z_or_residual_filter": true,
+  "no_models_fitted": true,
+  "GT_boxes_and_sealed_heldout_not_read": true,
+  "pairs": [
+    {
+      "target_raw": 60,
+      "reference_raw": 80,
+      "target_requested_points": 103,
+      "matched_points": 10,
+      "matched_fraction": 0.0970873786407767,
+      "reference_in_requested_points": 8,
+      "XY_distance_m": {
+        "count": 10,
+        "median": 0.08156701562024585,
+        "mean": 0.07536908378121744,
+        "p05": 0.03995046600366099,
+        "p95": 0.09555804320032721,
+        "abs_median": 0.08156701562024585,
+        "abs_p95": 0.09555804320032721
+      },
+      "target_minus_reference_Z_m": {
+        "count": 10,
+        "median": 0.10318115349563328,
+        "mean": 0.11642613541343572,
+        "p05": 0.0986712937507038,
+        "p95": 0.17765087720807018,
+        "abs_median": 0.10318115349563328,
+        "abs_p95": 0.17765087720807018
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 10,
+        "median": -0.10365056678923246,
+        "mean": -0.1166874884608358,
+        "p05": -0.17770028226588525,
+        "p95": -0.09875902637616214,
+        "abs_median": 0.10365056678923246,
+        "abs_p95": 0.17770028226588513
+      },
+      "mutual_nearest_points": 10,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 10,
+        "median": 0.10318115349563328,
+        "mean": 0.11642613541343572,
+        "p05": 0.0986712937507038,
+        "p95": 0.17765087720807018,
+        "abs_median": 0.10318115349563328,
+        "abs_p95": 0.17765087720807018
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 60,
+      "reference_raw": 95,
+      "target_requested_points": 103,
+      "matched_points": 20,
+      "matched_fraction": 0.1941747572815534,
+      "reference_in_requested_points": 20,
+      "XY_distance_m": {
+        "count": 20,
+        "median": 0.05647290860102175,
+        "mean": 0.05692775179320213,
+        "p05": 0.018816366747377862,
+        "p95": 0.0947110699603741,
+        "abs_median": 0.05647290860102175,
+        "abs_p95": 0.0947110699603741
+      },
+      "target_minus_reference_Z_m": {
+        "count": 20,
+        "median": 0.1321951307884799,
+        "mean": 0.1331101176098116,
+        "p05": 0.12521888308116172,
+        "p95": 0.14474553798653728,
+        "abs_median": 0.1321951307884799,
+        "abs_p95": 0.14474553798653728
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 20,
+        "median": -0.1323471881449816,
+        "mean": -0.1332807351422959,
+        "p05": -0.14529299050353012,
+        "p95": -0.12470202904596163,
+        "abs_median": 0.1323471881449816,
+        "abs_p95": 0.14529299050353012
+      },
+      "mutual_nearest_points": 15,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 15,
+        "median": 0.13132494774131587,
+        "mean": 0.13249106455451123,
+        "p05": 0.1263310414403623,
+        "p95": 0.14183883933826102,
+        "abs_median": 0.13132494774131587,
+        "abs_p95": 0.14183883933826102
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 60,
+      "reference_raw": 110,
+      "target_requested_points": 103,
+      "matched_points": 18,
+      "matched_fraction": 0.17475728155339806,
+      "reference_in_requested_points": 16,
+      "XY_distance_m": {
+        "count": 18,
+        "median": 0.06553998198171784,
+        "mean": 0.0591787438313807,
+        "p05": 0.017414742486952697,
+        "p95": 0.09709924818327156,
+        "abs_median": 0.06553998198171784,
+        "abs_p95": 0.09709924818327156
+      },
+      "target_minus_reference_Z_m": {
+        "count": 18,
+        "median": 0.15833747662914455,
+        "mean": 0.1588973914437434,
+        "p05": 0.1477032876737999,
+        "p95": 0.17075883224104135,
+        "abs_median": 0.15833747662914455,
+        "abs_p95": 0.17075883224104135
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 18,
+        "median": -0.15874949500399183,
+        "mean": -0.15923366637637257,
+        "p05": -0.17097701905712218,
+        "p95": -0.14787312728252772,
+        "abs_median": 0.15874949500399183,
+        "abs_p95": 0.1709770190571221
+      },
+      "mutual_nearest_points": 15,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 15,
+        "median": 0.158248408091616,
+        "mean": 0.1585380753726516,
+        "p05": 0.14430189908904828,
+        "p95": 0.1792332708500122,
+        "abs_median": 0.158248408091616,
+        "abs_p95": 0.1792332708500122
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 60,
+      "reference_raw": 125,
+      "target_requested_points": 103,
+      "matched_points": 13,
+      "matched_fraction": 0.1262135922330097,
+      "reference_in_requested_points": 13,
+      "XY_distance_m": {
+        "count": 13,
+        "median": 0.034743041143130135,
+        "mean": 0.041109507273054575,
+        "p05": 0.012189298218240661,
+        "p95": 0.08510783447239184,
+        "abs_median": 0.034743041143130135,
+        "abs_p95": 0.08510783447239184
+      },
+      "target_minus_reference_Z_m": {
+        "count": 13,
+        "median": 0.14005523022171218,
+        "mean": 0.13952386506031325,
+        "p05": 0.13366172312188523,
+        "p95": 0.145284206761427,
+        "abs_median": 0.14005523022171218,
+        "abs_p95": 0.145284206761427
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 13,
+        "median": -0.13999069942049047,
+        "mean": -0.13959820890241714,
+        "p05": -0.14551883975697635,
+        "p95": -0.13344671233514446,
+        "abs_median": 0.13999069942049047,
+        "abs_p95": 0.14551883975697635
+      },
+      "mutual_nearest_points": 10,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 10,
+        "median": 0.1402333401607141,
+        "mean": 0.13974128034165467,
+        "p05": 0.13331086101788917,
+        "p95": 0.14582642917704583,
+        "abs_median": 0.1402333401607141,
+        "abs_p95": 0.14582642917704583
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 60,
+      "reference_raw": 145,
+      "target_requested_points": 103,
+      "matched_points": 20,
+      "matched_fraction": 0.1941747572815534,
+      "reference_in_requested_points": 20,
+      "XY_distance_m": {
+        "count": 20,
+        "median": 0.04246540991185646,
+        "mean": 0.046982164363912504,
+        "p05": 0.0196402135054235,
+        "p95": 0.0774080806424528,
+        "abs_median": 0.04246540991185646,
+        "abs_p95": 0.0774080806424528
+      },
+      "target_minus_reference_Z_m": {
+        "count": 20,
+        "median": 0.15457327977726187,
+        "mean": 0.1543137507204248,
+        "p05": 0.1426982449433682,
+        "p95": 0.17170550462983947,
+        "abs_median": 0.15457327977726187,
+        "abs_p95": 0.17170550462983947
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 20,
+        "median": -0.1543613986129575,
+        "mean": -0.15420761580254716,
+        "p05": -0.1714842050073523,
+        "p95": -0.142416416439624,
+        "abs_median": 0.1543613986129575,
+        "abs_p95": 0.1714842050073523
+      },
+      "mutual_nearest_points": 18,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 18,
+        "median": 0.15457327977726187,
+        "mean": 0.154398936613749,
+        "p05": 0.14405736982586514,
+        "p95": 0.17229998933314228,
+        "abs_median": 0.15457327977726187,
+        "abs_p95": 0.17229998933314228
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 60,
+      "reference_raw": 165,
+      "target_requested_points": 103,
+      "matched_points": 23,
+      "matched_fraction": 0.22330097087378642,
+      "reference_in_requested_points": 23,
+      "XY_distance_m": {
+        "count": 23,
+        "median": 0.06220748083576923,
+        "mean": 0.05702639294087189,
+        "p05": 0.014631865945164971,
+        "p95": 0.09770418343192969,
+        "abs_median": 0.06220748083576923,
+        "abs_p95": 0.09770418343192969
+      },
+      "target_minus_reference_Z_m": {
+        "count": 23,
+        "median": 0.15521441308272443,
+        "mean": 0.15726494366242944,
+        "p05": 0.14738447527466753,
+        "p95": 0.1714919016220179,
+        "abs_median": 0.15521441308272443,
+        "abs_p95": 0.1714919016220179
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 23,
+        "median": -0.15508984538615778,
+        "mean": -0.1572887476685688,
+        "p05": -0.1706556364417402,
+        "p95": -0.14697727502822142,
+        "abs_median": 0.15508984538615778,
+        "abs_p95": 0.1706556364417402
+      },
+      "mutual_nearest_points": 18,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 18,
+        "median": 0.1553187060008394,
+        "mean": 0.15801304599616944,
+        "p05": 0.1470141484147991,
+        "p95": 0.1730321355486655,
+        "abs_median": 0.1553187060008394,
+        "abs_p95": 0.1730321355486655
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 70,
+      "reference_raw": 80,
+      "target_requested_points": 115,
+      "matched_points": 13,
+      "matched_fraction": 0.11304347826086956,
+      "reference_in_requested_points": 13,
+      "XY_distance_m": {
+        "count": 13,
+        "median": 0.04691299504527349,
+        "mean": 0.04671762377210365,
+        "p05": 0.021177393488827974,
+        "p95": 0.08283534772625428,
+        "abs_median": 0.04691299504527349,
+        "abs_p95": 0.08283534772625428
+      },
+      "target_minus_reference_Z_m": {
+        "count": 13,
+        "median": 0.03827388061035464,
+        "mean": 0.03431907645388376,
+        "p05": 0.006557637700769448,
+        "p95": 0.04526662083837251,
+        "abs_median": 0.03827388061035464,
+        "abs_p95": 0.04526662083837251
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 13,
+        "median": -0.0381305064884323,
+        "mean": -0.034278171047138366,
+        "p05": -0.045787625885554205,
+        "p95": -0.00729518652343588,
+        "abs_median": 0.0381305064884323,
+        "abs_p95": 0.0457876258855542
+      },
+      "mutual_nearest_points": 11,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 11,
+        "median": 0.03827388061035464,
+        "mean": 0.03342431132586105,
+        "p05": 0.005159968230405099,
+        "p95": 0.04574559784633969,
+        "abs_median": 0.03827388061035464,
+        "abs_p95": 0.04574559784633969
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 70,
+      "reference_raw": 95,
+      "target_requested_points": 115,
+      "matched_points": 17,
+      "matched_fraction": 0.14782608695652175,
+      "reference_in_requested_points": 14,
+      "XY_distance_m": {
+        "count": 17,
+        "median": 0.07563733746064215,
+        "mean": 0.0716385347258264,
+        "p05": 0.049477669918782316,
+        "p95": 0.09074417150207674,
+        "abs_median": 0.07563733746064215,
+        "abs_p95": 0.09074417150207674
+      },
+      "target_minus_reference_Z_m": {
+        "count": 17,
+        "median": 0.06275241456362579,
+        "mean": 0.06727823303295487,
+        "p05": 0.04174502172763468,
+        "p95": 0.0838124310990004,
+        "abs_median": 0.06275241456362579,
+        "abs_p95": 0.0838124310990004
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 17,
+        "median": -0.0627683293398853,
+        "mean": -0.06709950658834467,
+        "p05": -0.08312991183230097,
+        "p95": -0.04236545403704213,
+        "abs_median": 0.0627683293398853,
+        "abs_p95": 0.08312991183230097
+      },
+      "mutual_nearest_points": 14,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 14,
+        "median": 0.06798404171178163,
+        "mean": 0.06852980988114991,
+        "p05": 0.052230590051323134,
+        "p95": 0.08426567335928255,
+        "abs_median": 0.06798404171178163,
+        "abs_p95": 0.08426567335928255
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 70,
+      "reference_raw": 110,
+      "target_requested_points": 115,
+      "matched_points": 30,
+      "matched_fraction": 0.2608695652173913,
+      "reference_in_requested_points": 27,
+      "XY_distance_m": {
+        "count": 30,
+        "median": 0.056225711521146096,
+        "mean": 0.05956171646344262,
+        "p05": 0.009201357801083847,
+        "p95": 0.097144417022032,
+        "abs_median": 0.056225711521146096,
+        "abs_p95": 0.097144417022032
+      },
+      "target_minus_reference_Z_m": {
+        "count": 30,
+        "median": 0.08210830336668273,
+        "mean": 0.0819487344341938,
+        "p05": 0.06451515908220884,
+        "p95": 0.10181152953589921,
+        "abs_median": 0.08210830336668273,
+        "abs_p95": 0.10181152953589921
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 30,
+        "median": -0.0827715975295451,
+        "mean": -0.08234332797492444,
+        "p05": -0.10184380151171624,
+        "p95": -0.06467547714027583,
+        "abs_median": 0.0827715975295451,
+        "abs_p95": 0.10184380151171622
+      },
+      "mutual_nearest_points": 20,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 20,
+        "median": 0.08127057121847159,
+        "mean": 0.08122963108321671,
+        "p05": 0.06259197179494258,
+        "p95": 0.10538901513523646,
+        "abs_median": 0.08127057121847159,
+        "abs_p95": 0.10538901513523646
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 70,
+      "reference_raw": 125,
+      "target_requested_points": 115,
+      "matched_points": 34,
+      "matched_fraction": 0.2956521739130435,
+      "reference_in_requested_points": 34,
+      "XY_distance_m": {
+        "count": 34,
+        "median": 0.036021190893901635,
+        "mean": 0.04590769793285398,
+        "p05": 0.012648978818148119,
+        "p95": 0.09135019124422963,
+        "abs_median": 0.036021190893901635,
+        "abs_p95": 0.09135019124422963
+      },
+      "target_minus_reference_Z_m": {
+        "count": 34,
+        "median": 0.08068038607891204,
+        "mean": 0.08187818175462513,
+        "p05": 0.06698968247915893,
+        "p95": 0.10527252620324443,
+        "abs_median": 0.08068038607891204,
+        "abs_p95": 0.10527252620324443
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 34,
+        "median": -0.08018347280161464,
+        "mean": -0.08174534199416125,
+        "p05": -0.10518757822301286,
+        "p95": -0.06704067191383593,
+        "abs_median": 0.08018347280161464,
+        "abs_p95": 0.10518757822301285
+      },
+      "mutual_nearest_points": 25,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 25,
+        "median": 0.08106595872421707,
+        "mean": 0.08054091061555624,
+        "p05": 0.06723171886099877,
+        "p95": 0.09527959340786935,
+        "abs_median": 0.08106595872421707,
+        "abs_p95": 0.09527959340786935
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 70,
+      "reference_raw": 145,
+      "target_requested_points": 115,
+      "matched_points": 39,
+      "matched_fraction": 0.3391304347826087,
+      "reference_in_requested_points": 38,
+      "XY_distance_m": {
+        "count": 39,
+        "median": 0.05082021777784528,
+        "mean": 0.04961284930349636,
+        "p05": 0.008971093950993901,
+        "p95": 0.09580198855700822,
+        "abs_median": 0.05082021777784528,
+        "abs_p95": 0.09580198855700822
+      },
+      "target_minus_reference_Z_m": {
+        "count": 39,
+        "median": 0.09267029869892696,
+        "mean": 0.091298855017079,
+        "p05": 0.07583745610143033,
+        "p95": 0.10197629489112074,
+        "abs_median": 0.09267029869892696,
+        "abs_p95": 0.10197629489112074
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 39,
+        "median": -0.09296836409648535,
+        "mean": -0.09122055483885479,
+        "p05": -0.10160591952986238,
+        "p95": -0.07619940324126873,
+        "abs_median": 0.09296836409648535,
+        "abs_p95": 0.10160591952986238
+      },
+      "mutual_nearest_points": 27,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 27,
+        "median": 0.09267029869892696,
+        "mean": 0.09158811651768746,
+        "p05": 0.07592467864490296,
+        "p95": 0.10205495209541623,
+        "abs_median": 0.09267029869892696,
+        "abs_p95": 0.10205495209541623
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    },
+    {
+      "target_raw": 70,
+      "reference_raw": 165,
+      "target_requested_points": 115,
+      "matched_points": 44,
+      "matched_fraction": 0.3826086956521739,
+      "reference_in_requested_points": 43,
+      "XY_distance_m": {
+        "count": 44,
+        "median": 0.048116034661500745,
+        "mean": 0.04799551862790882,
+        "p05": 0.013971086911437655,
+        "p95": 0.0929934160159389,
+        "abs_median": 0.048116034661500745,
+        "abs_p95": 0.0929934160159389
+      },
+      "target_minus_reference_Z_m": {
+        "count": 44,
+        "median": 0.09530941153361638,
+        "mean": 0.09629085445080127,
+        "p05": 0.07886744685647393,
+        "p95": 0.120707654402832,
+        "abs_median": 0.09530941153361638,
+        "abs_p95": 0.120707654402832
+      },
+      "target_minus_reference_old_plane_residual_m": {
+        "count": 44,
+        "median": -0.09513260844822113,
+        "mean": -0.09618839467262609,
+        "p05": -0.12070434576186226,
+        "p95": -0.07920756108629305,
+        "abs_median": 0.09513260844822113,
+        "abs_p95": 0.12070434576186227
+      },
+      "mutual_nearest_points": 31,
+      "mutual_target_minus_reference_Z_m": {
+        "count": 31,
+        "median": 0.09529266841577311,
+        "mean": 0.09471972918805911,
+        "p05": 0.07868716311546109,
+        "p95": 0.10948716706298,
+        "abs_median": 0.09529266841577311,
+        "abs_p95": 0.10948716706298
+      },
+      "matching": "nearest XY within fixed 0.10m; no Z, residual, RGB, OBB or per-frame offset filtering"
+    }
+  ],
+  "matched_2m_bins": 122,
+  "matched_pairs": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/matched_spatial_height_cpu_v1/matched_pairs.npz",
+    "sha256": "68445dc4d30750b00d119b445c489cff582498faadde1af26dfde5e1805418e7",
+    "bytes": 10213
+  },
+  "matched_bins": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_underbody_local_20261123_r10/audit/matched_spatial_height_cpu_v1/matched_2m_bins.csv",
+    "sha256": "fb98f7f410e0cf1cbf8148b42b2b362b7380935de70023b0d39e25fa6b145c4e",
+    "bytes": 10309
+  },
+  "interpretation": "Matched XY pairs reduce confounding from different road positions. Remaining height disagreement can include measurement geometry, scan/time effects or calibration; it is not a proof of a unique cause or an automatic correction. 2m buckets are a coarser supplementary comparison.",
+  "geometry_approval": false,
+  "seconds": 0.4902205467224121
+}

@@ -1,0 +1,689 @@
+{
+  "raw": 110,
+  "actual_group_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/residual_rgb_groups_v1/110/rgb_groups.npz",
+    "bytes": 44708202,
+    "sha256": "6fdca2fdee4fd85073d7fff9b9da0681046200f5fffb25f3f83322f9f37ef060"
+  },
+  "expected_formal_native": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/final_readout/110/joint_render.npz",
+    "bytes": 17818423,
+    "sha256": "2ff900b7f299a762cf5689673921a2965ac95252467a99f9094e677a1984917b"
+  },
+  "camera_cache": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/110/view_cache.npz",
+    "bytes": 15021702,
+    "sha256": "00006364e796ecc649562d72f51947b7201cb40b331339ae0d700fc05874b55a"
+  },
+  "source_map": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/maps/110.npz",
+    "bytes": 9186334,
+    "sha256": "71fc46f815a6a1e39a2713612368d4f6da96256242a5654de8f798593021754a"
+  },
+  "body_component_alpha_for_protection_only": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/final_readout/110/component_render.npz",
+    "bytes": 3603008,
+    "sha256": "5ed71196913383cc5c8c9a143630de28254421042552fae5c6658bb2756b16fb"
+  },
+  "protection_masks": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1/110/rectified_masks.npz",
+    "bytes": 22497,
+    "sha256": "e75f1684b3805952cfc8c877a6f6722928e48b1041f4d0db74c8272c27c59895"
+  },
+  "additive_RGB_max_abs_error": 7.934868335723877e-07,
+  "additive_alphaT_max_abs_error": 1.3709068298339844e-06,
+  "full_native_RGBA_byteexact": true,
+  "group_names": [
+    "trainable_road",
+    "fixed_old_road",
+    "retained_native_owner21",
+    "other_native_context",
+    "canonical_actor"
+  ],
+  "ROI_xyxy": [
+    457,
+    511,
+    678,
+    623
+  ],
+  "original_ROI_denominator": 24752,
+  "body_protection_definition": "isolated canonical alpha>.05 OR strict real V, dilate3; used only to exclude body from ground candidates, never to synthesize contributions",
+  "diagnostic_colour_thresholds": {
+    "red": "R>.2 and R>max(G,B)+.12",
+    "blue_cyan": "B>R+.03 and B>G+.015 and maxRGB>.08",
+    "dark": "maxRGB<.22 and other_native_context alphaT>.25"
+  },
+  "focused_ground_envelope_definition": "red diagnostic bbox x[-8,+55] y[-4,+50], clip original ROI, exclude body/K; candidate envelope only, not automatic retirement",
+  "colour_masks_are_posthoc_diagnostics_not_truth_or_acceptance_denominators": true,
+  "regions": {
+    "original_proxy_lower_edge_ROI": {
+      "pixels": 24752,
+      "bbox_xyxy": [
+        457,
+        511,
+        678,
+        623
+      ],
+      "group_RGB_channel_sum": [
+        [
+          2412.448990594765,
+          2210.9639883083714,
+          2352.0176215389884
+        ],
+        [
+          464.662136784514,
+          481.7803956816071,
+          581.5000749447104
+        ],
+        [
+          0.0006078140513636754,
+          0.0006358565456707765,
+          0.0006909357009448058
+        ],
+        [
+          2903.26416937942,
+          2529.241863628527,
+          3050.080677323848
+        ],
+        [
+          1309.6695433896082,
+          1312.5942171205527,
+          1327.7251258716265
+        ]
+      ],
+      "group_RGB_absolute_mass_fraction": [
+        0.33317954781917486,
+        0.07298176359155877,
+        9.240594430514466e-08,
+        0.4051684500030943,
+        0.18867014618022765
+      ],
+      "group_alphaT_sum": [
+        6861.553395022653,
+        1952.7816524768623,
+        9.08442790235901,
+        9015.92321245896,
+        6906.299089708206
+      ],
+      "group_alphaT_fraction": [
+        0.27728330736778,
+        0.07891416476605521,
+        0.0003671122367330837,
+        0.3643438829956532,
+        0.2790915326337787
+      ],
+      "canonical_isolated_body_excluded": false,
+      "reliable_existing_road_XYZ_and_legal_material_pixels": 17001,
+      "existing_geometry_or_legal_material_unsupported_pixels": 7751,
+      "reliable_road_world_XYZ_min": [
+        2319.879071564968,
+        1364.9006956105823,
+        -20.898483765846905
+      ],
+      "reliable_road_world_XYZ_max": [
+        2335.0715398492853,
+        1369.1712328795047,
+        -20.495436633517414
+      ],
+      "reliable_road_atlas_UV_min": [
+        202.71774291992188,
+        43.34680938720703
+      ],
+      "reliable_road_atlas_UV_max": [
+        962.0806884765625,
+        256.9757080078125
+      ]
+    },
+    "protected_ground_candidate": {
+      "pixels": 14560,
+      "bbox_xyxy": [
+        457,
+        511,
+        678,
+        623
+      ],
+      "group_RGB_channel_sum": [
+        [
+          2283.728218795285,
+          2097.2967702548526,
+          2235.8748284647545
+        ],
+        [
+          336.1348147424793,
+          351.65997741650625,
+          425.76571324678144
+        ],
+        [
+          0.00029814870967470597,
+          0.0003030324626820402,
+          0.00032294773562568935
+        ],
+        [
+          2176.914526432928,
+          1880.068488014705,
+          2247.9577121577063
+        ],
+        [
+          0.48258760225622765,
+          0.5861986238510895,
+          0.6211534825637983
+        ]
+      ],
+      "group_RGB_absolute_mass_fraction": [
+        0.47138679851597165,
+        0.07932985779950884,
+        6.583478356386961e-08,
+        0.4491628868371886,
+        0.00012039101254742521
+      ],
+      "group_alphaT_sum": [
+        6548.2142088483715,
+        1388.9059305323453,
+        2.300406802711194,
+        6613.962385033721,
+        2.661847435028335
+      ],
+      "group_alphaT_fraction": [
+        0.4498621918539265,
+        0.09541781106426024,
+        0.00015803790368142858,
+        0.4543790903098708,
+        0.0001828688682609844
+      ],
+      "canonical_isolated_body_excluded": true,
+      "reliable_existing_road_XYZ_and_legal_material_pixels": 12636,
+      "existing_geometry_or_legal_material_unsupported_pixels": 1924,
+      "reliable_road_world_XYZ_min": [
+        2319.879071564968,
+        1364.9006956105823,
+        -20.898483765846905
+      ],
+      "reliable_road_world_XYZ_max": [
+        2335.0715398492853,
+        1369.1712328795047,
+        -20.495436633517414
+      ],
+      "reliable_road_atlas_UV_min": [
+        202.71774291992188,
+        43.34680938720703
+      ],
+      "reliable_road_atlas_UV_max": [
+        962.0806884765625,
+        256.9757080078125
+      ]
+    },
+    "red_diagnostic": {
+      "pixels": 692,
+      "bbox_xyxy": [
+        528,
+        557,
+        613,
+        582
+      ],
+      "group_RGB_channel_sum": [
+        [
+          4.289724678726088,
+          3.8820800048308683,
+          4.107967562991689
+        ],
+        [
+          0.6244444931668056,
+          0.6189886930120707,
+          0.8241268735391998
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          499.1359808295965,
+          193.9932690039277,
+          173.98984027653933
+        ],
+        [
+          0.16919334547128528,
+          0.2819889119709842,
+          0.3081736252934206
+        ]
+      ],
+      "group_RGB_absolute_mass_fraction": [
+        0.013919081201893788,
+        0.002343572485157188,
+        0.0,
+        0.9828766189329355,
+        0.0008607273800134593
+      ],
+      "group_alphaT_sum": [
+        10.616385529296167,
+        5.941174260414982,
+        0.1347180494061604,
+        673.1686847805977,
+        2.0544907464645803
+      ],
+      "group_alphaT_fraction": [
+        0.015343472208414026,
+        0.008586561019140525,
+        0.00019470305042437622,
+        0.9729059836799734,
+        0.002969280042047696
+      ],
+      "canonical_isolated_body_excluded": true,
+      "reliable_existing_road_XYZ_and_legal_material_pixels": 83,
+      "existing_geometry_or_legal_material_unsupported_pixels": 609,
+      "reliable_road_world_XYZ_min": [
+        2323.239584064232,
+        1367.2804750598093,
+        -20.807984848187473
+      ],
+      "reliable_road_world_XYZ_max": [
+        2326.8249772188747,
+        1367.6331104786113,
+        -20.62363524566527
+      ],
+      "reliable_road_atlas_UV_min": [
+        370.73822021484375,
+        163.78024291992188
+      ],
+      "reliable_road_atlas_UV_max": [
+        550.1029052734375,
+        180.92002868652344
+      ]
+    },
+    "blue_cyan_diagnostic": {
+      "pixels": 4575,
+      "bbox_xyxy": [
+        457,
+        511,
+        678,
+        623
+      ],
+      "group_RGB_channel_sum": [
+        [
+          258.92440761035846,
+          237.35243085720435,
+          247.9015130445703
+        ],
+        [
+          162.59934125490457,
+          190.54027056262265,
+          245.56531530058965
+        ],
+        [
+          0.0002019182565504707,
+          0.00022142396022672983,
+          0.0002247373949444409
+        ],
+        [
+          852.8790327301249,
+          932.897613841109,
+          1212.2974567143247
+        ],
+        [
+          0.29143364416476913,
+          0.2678015255396531,
+          0.2731282928274794
+        ]
+      ],
+      "group_RGB_absolute_mass_fraction": [
+        0.17139895851108639,
+        0.13789355838555062,
+        1.492655225130498e-07,
+        0.6905156241081892,
+        0.00019170972965117702
+      ],
+      "group_alphaT_sum": [
+        726.7667981957504,
+        807.5471048334073,
+        1.9493514601348636,
+        3037.249821256846,
+        0.34001216149914626
+      ],
+      "group_alphaT_fraction": [
+        0.15889596456807456,
+        0.1765572897320209,
+        0.0004261945940696178,
+        0.6640462128717544,
+        7.43382340805985e-05
+      ],
+      "canonical_isolated_body_excluded": true,
+      "reliable_existing_road_XYZ_and_legal_material_pixels": 3703,
+      "existing_geometry_or_legal_material_unsupported_pixels": 872,
+      "reliable_road_world_XYZ_min": [
+        2321.315638845536,
+        1364.9006956105823,
+        -20.88945349278689
+      ],
+      "reliable_road_world_XYZ_max": [
+        2335.0715398492853,
+        1369.026071099038,
+        -20.528366510557376
+      ],
+      "reliable_road_atlas_UV_min": [
+        274.353759765625,
+        43.34680938720703
+      ],
+      "reliable_road_atlas_UV_max": [
+        962.0806884765625,
+        250.12423706054688
+      ]
+    },
+    "dark_context_diagnostic": {
+      "pixels": 1204,
+      "bbox_xyxy": [
+        457,
+        539,
+        672,
+        603
+      ],
+      "group_RGB_channel_sum": [
+        [
+          20.775129255932598,
+          18.755054486424186,
+          19.483303250496206
+        ],
+        [
+          18.411403080531272,
+          22.95815752246108,
+          31.802925665937437
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          120.56705165375024,
+          115.80004106089473,
+          148.87368715927005
+        ],
+        [
+          2.2028980239952034e-06,
+          3.675967839456007e-06,
+          4.019807349209259e-06
+        ]
+      ],
+      "group_RGB_absolute_mass_fraction": [
+        0.1140518643581119,
+        0.14141612204173748,
+        0.0,
+        0.7445319944695723,
+        1.913057831529857e-08
+      ],
+      "group_alphaT_sum": [
+        55.25246660522453,
+        137.6778825564179,
+        0.0,
+        1010.8738842606544,
+        0.0004531254389235073
+      ],
+      "group_alphaT_fraction": [
+        0.04589819862196851,
+        0.11436895378040912,
+        0.0,
+        0.8397324711865284,
+        3.7641109391505844e-07
+      ],
+      "canonical_isolated_body_excluded": true,
+      "reliable_existing_road_XYZ_and_legal_material_pixels": 1027,
+      "existing_geometry_or_legal_material_unsupported_pixels": 177,
+      "reliable_road_world_XYZ_min": [
+        2322.461445993636,
+        1365.7997385600643,
+        -20.865035985706704
+      ],
+      "reliable_road_world_XYZ_max": [
+        2328.250036508665,
+        1368.7756134404522,
+        -20.604838033744468
+      ],
+      "reliable_road_atlas_UV_min": [
+        331.85589599609375,
+        89.65443420410156
+      ],
+      "reliable_road_atlas_UV_max": [
+        621.4559936523438,
+        237.98809814453125
+      ]
+    },
+    "union_diagnostic": {
+      "pixels": 6103,
+      "bbox_xyxy": [
+        457,
+        511,
+        678,
+        623
+      ],
+      "group_RGB_channel_sum": [
+        [
+          280.39553657558474,
+          256.8359012294291,
+          268.4061550123463
+        ],
+        [
+          166.61725603607107,
+          194.50814150226626,
+          250.34435647536978
+        ],
+        [
+          0.0002019182565504707,
+          0.00022142396022672983,
+          0.0002247373949444409
+        ],
+        [
+          1452.030027047731,
+          1219.5143758030608,
+          1498.3225487498567
+        ],
+        [
+          0.4606290673275879,
+          0.5497939003299166,
+          0.581305702488109
+        ]
+      ],
+      "group_RGB_absolute_mass_fraction": [
+        0.1441581785890028,
+        0.10941441510024597,
+        1.1596526433150175e-07,
+        0.7461424715784112,
+        0.00028481876707571474
+      ],
+      "group_alphaT_sum": [
+        786.2325193842105,
+        829.0187035839858,
+        2.084069509541024,
+        4481.922553103417,
+        2.3945281370770886
+      ],
+      "group_alphaT_fraction": [
+        0.12885567240289947,
+        0.13586790148105363,
+        0.00034155821765883903,
+        0.734542428606469,
+        0.0003924392919188721
+      ],
+      "canonical_isolated_body_excluded": true,
+      "reliable_existing_road_XYZ_and_legal_material_pixels": 4510,
+      "existing_geometry_or_legal_material_unsupported_pixels": 1593,
+      "reliable_road_world_XYZ_min": [
+        2321.315638845536,
+        1364.9006956105823,
+        -20.88945349278689
+      ],
+      "reliable_road_world_XYZ_max": [
+        2335.0715398492853,
+        1369.026071099038,
+        -20.528366510557376
+      ],
+      "reliable_road_atlas_UV_min": [
+        274.353759765625,
+        43.34680938720703
+      ],
+      "reliable_road_atlas_UV_max": [
+        962.0806884765625,
+        250.12423706054688
+      ]
+    },
+    "focused_ground_envelope": {
+      "pixels": 7898,
+      "bbox_xyxy": [
+        520,
+        553,
+        668,
+        623
+      ],
+      "group_RGB_channel_sum": [
+        [
+          1077.1910674776345,
+          994.2752390388996,
+          1066.396935749527
+        ],
+        [
+          88.18980743385352,
+          80.11218045039743,
+          91.10110526021158
+        ],
+        [
+          0.00025158166872074617,
+          0.00026992648366785943,
+          0.0002748487702035618
+        ],
+        [
+          1570.5763418904971,
+          1211.1980041507632,
+          1382.3762665507384
+        ],
+        [
+          0.1943614979249162,
+          0.32393598179771743,
+          0.3540163029735268
+        ]
+      ],
+      "group_RGB_absolute_mass_fraction": [
+        0.41493558408112063,
+        0.03430218771695609,
+        1.053063181218166e-07,
+        0.5506467724163204,
+        0.00011535047928463951
+      ],
+      "group_alphaT_sum": [
+        3111.896299980436,
+        355.38702977500236,
+        0.9610825406617494,
+        4425.458505145274,
+        2.360129336257444
+      ],
+      "group_alphaT_fraction": [
+        0.3941073268469399,
+        0.0450081297058583,
+        0.00012171667512887518,
+        0.5604639272670568,
+        0.0002988995050160609
+      ],
+      "canonical_isolated_body_excluded": true,
+      "reliable_existing_road_XYZ_and_legal_material_pixels": 6276,
+      "existing_geometry_or_legal_material_unsupported_pixels": 1622,
+      "reliable_road_world_XYZ_min": [
+        2320.3703450911066,
+        1365.668412387715,
+        -20.898483765846905
+      ],
+      "reliable_road_world_XYZ_max": [
+        2327.1562693584756,
+        1367.7652249076305,
+        -20.61985185555779
+      ],
+      "reliable_road_atlas_UV_min": [
+        227.2590789794922,
+        82.82585144042969
+      ],
+      "reliable_road_atlas_UV_max": [
+        566.6506958007812,
+        187.4932098388672
+      ]
+    },
+    "focused_residual_candidate": {
+      "pixels": 3288,
+      "bbox_xyxy": [
+        520,
+        553,
+        668,
+        623
+      ],
+      "group_RGB_channel_sum": [
+        [
+          59.45062933174624,
+          55.0069376590247,
+          58.412760692493606
+        ],
+        [
+          13.631155641234166,
+          13.656057002910629,
+          17.3801974984855
+        ],
+        [
+          0.0002019182565504707,
+          0.00022142396022672983,
+          0.0002247373949444409
+        ],
+        [
+          1087.7822185028344,
+          779.6869119554758,
+          892.1243313811719
+        ],
+        [
+          0.1762054611972701,
+          0.2936766409144411,
+          0.320947130335675
+        ]
+      ],
+      "group_RGB_absolute_mass_fraction": [
+        0.05805064349713954,
+        0.0149995197954459,
+        2.1762808575655706e-07,
+        0.9266840550206777,
+        0.0002655640586511368
+      ],
+      "group_alphaT_sum": [
+        166.55238141064478,
+        82.71346912559522,
+        0.7756422260199258,
+        3035.265516139567,
+        2.139664771837772
+      ],
+      "group_alphaT_fraction": [
+        0.05066314314523174,
+        0.02516039873375782,
+        0.00023594062596706978,
+        0.9232896583377003,
+        0.0006508591573431468
+      ],
+      "canonical_isolated_body_excluded": true,
+      "reliable_existing_road_XYZ_and_legal_material_pixels": 1957,
+      "existing_geometry_or_legal_material_unsupported_pixels": 1331,
+      "reliable_road_world_XYZ_min": [
+        2321.717173188663,
+        1365.7997385600643,
+        -20.88945349278689
+      ],
+      "reliable_road_world_XYZ_max": [
+        2326.8249772188747,
+        1367.7580127346328,
+        -20.62363524566527
+      ],
+      "reliable_road_atlas_UV_min": [
+        294.6136169433594,
+        89.65443420410156
+      ],
+      "reliable_road_atlas_UV_max": [
+        550.1029052734375,
+        187.14572143554688
+      ]
+    }
+  },
+  "small_float_packet": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/residual_rgb_groups_v1/CPU_attribution_v2_focus/110/ROI_attribution.npz",
+    "bytes": 1064074,
+    "sha256": "bf90223c12041651b27892770b6cd215dbded8d5f0fbf34b0f6a2233c5e0cef2"
+  }
+}

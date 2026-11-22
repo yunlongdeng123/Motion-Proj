@@ -1,0 +1,1321 @@
+{
+  "raw": 86,
+  "train_view": true,
+  "gain": 0.9878631234169006,
+  "scopes": {
+    "all_material_support": {
+      "fixed_denominator": 67675,
+      "paired_material_target_pixels": 67675,
+      "no_certified_shared_target_pixels": 0,
+      "material_alpha95_pixels": 63199,
+      "joint_road_alphaT95_pixels": 25631,
+      "protected_K_pixels": 0,
+      "Brown_invalid_pixels": 0,
+      "cached_geometry_unprojected_pixels": 0,
+      "stages": {
+        "A0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.03770389407873154,
+          "joint_road_dominant_target_linear_MAE": 0.028330447152256966,
+          "road_alpha_normalized_material_linear_MAE": 0.03148789331316948,
+          "joint_sRGB_mean": [
+            0.35346367955207825,
+            0.32708853483200073,
+            0.36929425597190857
+          ],
+          "road_premult_sRGB_mean": [
+            0.347793847322464,
+            0.3191732168197632,
+            0.3580286204814911
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 2344,
+          "native_road_premult_dark_max_sRGB_below40_255": 2635,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 4476,
+          "road_only_lt95_scene_ge95": 4476,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.17010043561458588,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 7373.9501953125,
+              "MAE": 0.01989593543112278
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 37699.09375,
+              "MAE": 0.039591457694768906
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 18125.955078125,
+              "MAE": 0.019349602982401848
+            }
+          }
+        },
+        "atlas0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.03342822939157486,
+          "joint_road_dominant_target_linear_MAE": 0.02341465651988983,
+          "road_alpha_normalized_material_linear_MAE": 0.024277903139591217,
+          "joint_sRGB_mean": [
+            0.3547854721546173,
+            0.33368992805480957,
+            0.3729756474494934
+          ],
+          "road_premult_sRGB_mean": [
+            0.35056689381599426,
+            0.3267914950847626,
+            0.3612377941608429
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 2226,
+          "native_road_premult_dark_max_sRGB_below40_255": 2459,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 4476,
+          "road_only_lt95_scene_ge95": 4476,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.17102278769016266,
+          "joint_RGB_max_delta_A0": 0.27386099100112915,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 7373.9501953125,
+              "MAE": 0.019635528326034546
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 37699.09375,
+              "MAE": 0.03178362175822258
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 18125.955078125,
+              "MAE": 0.010555789805948734
+            }
+          }
+        },
+        "formal400": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.032977394759655,
+          "joint_road_dominant_target_linear_MAE": 0.022721795365214348,
+          "road_alpha_normalized_material_linear_MAE": 0.02306176722049713,
+          "joint_sRGB_mean": [
+            0.3547287881374359,
+            0.33376172184944153,
+            0.3725922405719757
+          ],
+          "road_premult_sRGB_mean": [
+            0.351504921913147,
+            0.327554851770401,
+            0.361164391040802
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 2227,
+          "native_road_premult_dark_max_sRGB_below40_255": 2427,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 4476,
+          "road_only_lt95_scene_ge95": 4476,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.17111819982528687,
+          "joint_RGB_max_delta_A0": 0.476809024810791,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 7373.9501953125,
+              "MAE": 0.019518518820405006
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 37699.09375,
+              "MAE": 0.030104920268058777
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 18125.955078125,
+              "MAE": 0.009854577481746674
+            }
+          }
+        }
+      },
+      "same_actual_final_depth_order_contributions": {
+        "native_road_alphaT": {
+          "mass": 50224.24979487846,
+          "mean": 0.7421389818191528
+        },
+        "native_actor_alphaT": {
+          "mass": 2776.0682632834996,
+          "mean": 0.04102059081196785
+        },
+        "native_context_alphaT": {
+          "mass": 14656.428598660463,
+          "mean": 0.21657079458236694
+        },
+        "trainable_road_alphaT": {
+          "mass": 22840.005692381168,
+          "mean": 0.33749547600746155
+        },
+        "fixed_old_road_alphaT": {
+          "mass": 27384.244102283003,
+          "mean": 0.4046434164047241
+        },
+        "retained_excluded_native_owner_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_selected_instance_alphaT": {
+          "mass": 51.35641585626939,
+          "mean": 0.0007588683511130512
+        },
+        "unified_actor_alphaT": {
+          "mass": 2827.42468000972,
+          "mean": 0.04177945852279663
+        }
+      }
+    },
+    "original_C": {
+      "fixed_denominator": 32390,
+      "paired_material_target_pixels": 26144,
+      "no_certified_shared_target_pixels": 6246,
+      "material_alpha95_pixels": 25342,
+      "joint_road_alphaT95_pixels": 9619,
+      "protected_K_pixels": 0,
+      "Brown_invalid_pixels": 0,
+      "cached_geometry_unprojected_pixels": 5934,
+      "stages": {
+        "A0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.030117422342300415,
+          "joint_road_dominant_target_linear_MAE": 0.013547547161579132,
+          "road_alpha_normalized_material_linear_MAE": 0.019964279606938362,
+          "joint_sRGB_mean": [
+            0.32303735613822937,
+            0.2888467311859131,
+            0.3224448263645172
+          ],
+          "road_premult_sRGB_mean": [
+            0.28448593616485596,
+            0.2519150376319885,
+            0.27981507778167725
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4477,
+          "native_road_premult_dark_max_sRGB_below40_255": 6639,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6595,
+          "road_only_lt95_scene_ge95": 6595,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.33681416511535645,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 15014.8046875,
+              "MAE": 0.023748796433210373
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 10327.1962890625,
+              "MAE": 0.014461933635175228
+            }
+          }
+        },
+        "atlas0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.02131205052137375,
+          "joint_road_dominant_target_linear_MAE": 0.0035511706955730915,
+          "road_alpha_normalized_material_linear_MAE": 0.006723201368004084,
+          "joint_sRGB_mean": [
+            0.3237099349498749,
+            0.29957547783851624,
+            0.3286091387271881
+          ],
+          "road_premult_sRGB_mean": [
+            0.2852873206138611,
+            0.26328951120376587,
+            0.28486230969429016
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4347,
+          "native_road_premult_dark_max_sRGB_below40_255": 6389,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6595,
+          "road_only_lt95_scene_ge95": 6595,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.33761540055274963,
+          "joint_RGB_max_delta_A0": 0.23683378100395203,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 15014.8046875,
+              "MAE": 0.009131231345236301
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 10327.1962890625,
+              "MAE": 0.003222142579033971
+            }
+          }
+        },
+        "formal400": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.020778600126504898,
+          "joint_road_dominant_target_linear_MAE": 0.0025582602247595787,
+          "road_alpha_normalized_material_linear_MAE": 0.005154601763933897,
+          "joint_sRGB_mean": [
+            0.3234326243400574,
+            0.29923170804977417,
+            0.327959805727005
+          ],
+          "road_premult_sRGB_mean": [
+            0.2863750755786896,
+            0.2640528380870819,
+            0.2849535346031189
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4372,
+          "native_road_premult_dark_max_sRGB_below40_255": 6346,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6595,
+          "road_only_lt95_scene_ge95": 6595,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.33781692385673523,
+          "joint_RGB_max_delta_A0": 0.2631949782371521,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 15014.8046875,
+              "MAE": 0.006634463556110859
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 10327.1962890625,
+              "MAE": 0.0030030175112187862
+            }
+          }
+        }
+      },
+      "same_actual_final_depth_order_contributions": {
+        "native_road_alphaT": {
+          "mass": 20111.16326195502,
+          "mean": 0.6209065914154053
+        },
+        "native_actor_alphaT": {
+          "mass": 5837.794403457227,
+          "mean": 0.18023447692394257
+        },
+        "native_context_alphaT": {
+          "mass": 6431.970597896066,
+          "mean": 0.19857892394065857
+        },
+        "trainable_road_alphaT": {
+          "mass": 18998.657241430497,
+          "mean": 0.5865592956542969
+        },
+        "fixed_old_road_alphaT": {
+          "mass": 1112.5060205607028,
+          "mean": 0.034347206354141235
+        },
+        "retained_excluded_native_owner_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_selected_instance_alphaT": {
+          "mass": 23.3785773656424,
+          "mean": 0.0007217838428914547
+        },
+        "unified_actor_alphaT": {
+          "mass": 5861.172980670574,
+          "mean": 0.18095624446868896
+        }
+      }
+    },
+    "original_S": {
+      "fixed_denominator": 6286,
+      "paired_material_target_pixels": 6281,
+      "no_certified_shared_target_pixels": 5,
+      "material_alpha95_pixels": 6281,
+      "joint_road_alphaT95_pixels": 4542,
+      "protected_K_pixels": 0,
+      "Brown_invalid_pixels": 0,
+      "cached_geometry_unprojected_pixels": 5,
+      "stages": {
+        "A0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.02833949774503708,
+          "joint_road_dominant_target_linear_MAE": 0.01791951432824135,
+          "road_alpha_normalized_material_linear_MAE": 0.025496702641248703,
+          "joint_sRGB_mean": [
+            0.38817745447158813,
+            0.3388333320617676,
+            0.37876999378204346
+          ],
+          "road_premult_sRGB_mean": [
+            0.40394139289855957,
+            0.3489139676094055,
+            0.38599470257759094
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 0,
+          "native_road_premult_dark_max_sRGB_below40_255": 0,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 0,
+          "road_only_lt95_scene_ge95": 0,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.23964647948741913,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.10931354016065598,
+              "MAE": 0.02975788153707981
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 2299.662353515625,
+              "MAE": 0.038787465542554855
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 3981.228515625,
+              "MAE": 0.017819486558437347
+            }
+          }
+        },
+        "atlas0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.025289906188845634,
+          "joint_road_dominant_target_linear_MAE": 0.01406433992087841,
+          "road_alpha_normalized_material_linear_MAE": 0.021920232102274895,
+          "joint_sRGB_mean": [
+            0.3883751928806305,
+            0.3445574939250946,
+            0.38169166445732117
+          ],
+          "road_premult_sRGB_mean": [
+            0.40380358695983887,
+            0.3546571433544159,
+            0.38873088359832764
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 0,
+          "native_road_premult_dark_max_sRGB_below40_255": 0,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 0,
+          "road_only_lt95_scene_ge95": 0,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.2425944060087204,
+          "joint_RGB_max_delta_A0": 0.2229221761226654,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.10931354016065598,
+              "MAE": 0.02975788153707981
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 2299.662353515625,
+              "MAE": 0.03602821007370949
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 3981.228515625,
+              "MAE": 0.013770876452326775
+            }
+          }
+        },
+        "formal400": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.024144092574715614,
+          "joint_road_dominant_target_linear_MAE": 0.012562657706439495,
+          "road_alpha_normalized_material_linear_MAE": 0.020320367068052292,
+          "joint_sRGB_mean": [
+            0.38679659366607666,
+            0.345676064491272,
+            0.381318062543869
+          ],
+          "road_premult_sRGB_mean": [
+            0.40195873379707336,
+            0.35570329427719116,
+            0.3881584405899048
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 0,
+          "native_road_premult_dark_max_sRGB_below40_255": 0,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 0,
+          "road_only_lt95_scene_ge95": 0,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.2423558533191681,
+          "joint_RGB_max_delta_A0": 0.39022257924079895,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.10931354016065598,
+              "MAE": 0.02975788153707981
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 2299.662353515625,
+              "MAE": 0.03433556854724884
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 3981.228515625,
+              "MAE": 0.012224557809531689
+            }
+          }
+        }
+      },
+      "same_actual_final_depth_order_contributions": {
+        "native_road_alphaT": {
+          "mass": 5885.507467746735,
+          "mean": 0.9362881779670715
+        },
+        "native_actor_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_context_alphaT": {
+          "mass": 399.2097348744121,
+          "mean": 0.06350775063037872
+        },
+        "trainable_road_alphaT": {
+          "mass": 1717.8635447827887,
+          "mean": 0.27328407764434814
+        },
+        "fixed_old_road_alphaT": {
+          "mass": 4167.643923551998,
+          "mean": 0.6630040407180786
+        },
+        "retained_excluded_native_owner_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_selected_instance_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "unified_actor_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        }
+      }
+    },
+    "original_CS": {
+      "fixed_denominator": 38676,
+      "paired_material_target_pixels": 32425,
+      "no_certified_shared_target_pixels": 6251,
+      "material_alpha95_pixels": 31623,
+      "joint_road_alphaT95_pixels": 14161,
+      "protected_K_pixels": 0,
+      "Brown_invalid_pixels": 0,
+      "cached_geometry_unprojected_pixels": 5939,
+      "stages": {
+        "A0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.02977302297949791,
+          "joint_road_dominant_target_linear_MAE": 0.01494981162250042,
+          "road_alpha_normalized_material_linear_MAE": 0.02106313407421112,
+          "joint_sRGB_mean": [
+            0.33362507820129395,
+            0.29697099328041077,
+            0.33159899711608887
+          ],
+          "road_premult_sRGB_mean": [
+            0.3039015531539917,
+            0.2676801383495331,
+            0.29707151651382446
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4477,
+          "native_road_premult_dark_max_sRGB_below40_255": 6639,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6595,
+          "road_only_lt95_scene_ge95": 6595,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.32102152705192566,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.10931354016065598,
+              "MAE": 0.02975788153707981
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 17314.466796875,
+              "MAE": 0.025746192783117294
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 14308.423828125,
+              "MAE": 0.01539615262299776
+            }
+          }
+        },
+        "atlas0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.02208259515464306,
+          "joint_road_dominant_target_linear_MAE": 0.006923165172338486,
+          "road_alpha_normalized_material_linear_MAE": 0.009741655550897121,
+          "joint_sRGB_mean": [
+            0.3342200517654419,
+            0.30688634514808655,
+            0.33723610639572144
+          ],
+          "road_premult_sRGB_mean": [
+            0.30455055832862854,
+            0.27813977003097534,
+            0.30174463987350464
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4347,
+          "native_road_premult_dark_max_sRGB_below40_255": 6389,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6595,
+          "road_only_lt95_scene_ge95": 6595,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.322171688079834,
+          "joint_RGB_max_delta_A0": 0.23683378100395203,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.10931354016065598,
+              "MAE": 0.02975788153707981
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 17314.466796875,
+              "MAE": 0.01270361803472042
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 14308.423828125,
+              "MAE": 0.006157261785119772
+            }
+          }
+        },
+        "formal400": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.021430524066090584,
+          "joint_road_dominant_target_linear_MAE": 0.00576707161962986,
+          "road_alpha_normalized_material_linear_MAE": 0.008166844956576824,
+          "joint_sRGB_mean": [
+            0.3337310552597046,
+            0.30678078532218933,
+            0.33663105964660645
+          ],
+          "road_premult_sRGB_mean": [
+            0.30516085028648376,
+            0.27894845604896545,
+            0.3017269968986511
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4372,
+          "native_road_premult_dark_max_sRGB_below40_255": 6346,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6595,
+          "road_only_lt95_scene_ge95": 6595,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.3223016560077667,
+          "joint_RGB_max_delta_A0": 0.39022257924079895,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.10931354016065598,
+              "MAE": 0.02975788153707981
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 17314.466796875,
+              "MAE": 0.010313651524484158
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 14308.423828125,
+              "MAE": 0.005568853113800287
+            }
+          }
+        }
+      },
+      "same_actual_final_depth_order_contributions": {
+        "native_road_alphaT": {
+          "mass": 25996.670729701753,
+          "mean": 0.6721653938293457
+        },
+        "native_actor_alphaT": {
+          "mass": 5837.794403457227,
+          "mean": 0.15094101428985596
+        },
+        "native_context_alphaT": {
+          "mass": 6831.180332770477,
+          "mean": 0.1766258329153061
+        },
+        "trainable_road_alphaT": {
+          "mass": 20716.520786213285,
+          "mean": 0.5356428027153015
+        },
+        "fixed_old_road_alphaT": {
+          "mass": 5280.149944112702,
+          "mean": 0.13652265071868896
+        },
+        "retained_excluded_native_owner_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_selected_instance_alphaT": {
+          "mass": 23.3785773656424,
+          "mean": 0.000604472472332418
+        },
+        "unified_actor_alphaT": {
+          "mass": 5861.172980670574,
+          "mean": 0.1515454798936844
+        }
+      }
+    },
+    "full_CS_dilation8": {
+      "fixed_denominator": 46784,
+      "paired_material_target_pixels": 38024,
+      "no_certified_shared_target_pixels": 8760,
+      "material_alpha95_pixels": 36587,
+      "joint_road_alphaT95_pixels": 16430,
+      "protected_K_pixels": 0,
+      "Brown_invalid_pixels": 0,
+      "cached_geometry_unprojected_pixels": 8017,
+      "stages": {
+        "A0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.03230062872171402,
+          "joint_road_dominant_target_linear_MAE": 0.017764000222086906,
+          "road_alpha_normalized_material_linear_MAE": 0.02383928745985031,
+          "joint_sRGB_mean": [
+            0.33236363530158997,
+            0.29817190766334534,
+            0.3342406749725342
+          ],
+          "road_premult_sRGB_mean": [
+            0.2961384654045105,
+            0.2629210352897644,
+            0.29274898767471313
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4708,
+          "native_road_premult_dark_max_sRGB_below40_255": 8873,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 9285,
+          "road_only_lt95_scene_ge95": 9285,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.2838575541973114,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 19.892078399658203,
+              "MAE": 0.06608380377292633
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 20200.609375,
+              "MAE": 0.02919447049498558
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 16366.5,
+              "MAE": 0.01717822253704071
+            }
+          }
+        },
+        "atlas0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.02505180612206459,
+          "joint_road_dominant_target_linear_MAE": 0.010095293633639812,
+          "road_alpha_normalized_material_linear_MAE": 0.012603810988366604,
+          "joint_sRGB_mean": [
+            0.33362048864364624,
+            0.3075171709060669,
+            0.3396235406398773
+          ],
+          "road_premult_sRGB_mean": [
+            0.2984384596347809,
+            0.2733851969242096,
+            0.2975897490978241
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4574,
+          "native_road_premult_dark_max_sRGB_below40_255": 8621,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 9285,
+          "road_only_lt95_scene_ge95": 9285,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.28507593274116516,
+          "joint_RGB_max_delta_A0": 0.27386099100112915,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 19.892078399658203,
+              "MAE": 0.06498623639345169
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 20200.609375,
+              "MAE": 0.016489164903759956
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 16366.5,
+              "MAE": 0.0077445851638913155
+            }
+          }
+        },
+        "formal400": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.024453366175293922,
+          "joint_road_dominant_target_linear_MAE": 0.009014550596475601,
+          "road_alpha_normalized_material_linear_MAE": 0.011092061176896095,
+          "joint_sRGB_mean": [
+            0.33296284079551697,
+            0.30723631381988525,
+            0.33895376324653625
+          ],
+          "road_premult_sRGB_mean": [
+            0.2989104390144348,
+            0.27406731247901917,
+            0.29744699597358704
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 4633,
+          "native_road_premult_dark_max_sRGB_below40_255": 8577,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 9285,
+          "road_only_lt95_scene_ge95": 9285,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.2851443290710449,
+          "joint_RGB_max_delta_A0": 0.39022257924079895,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 19.892078399658203,
+              "MAE": 0.06482025235891342
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 20200.609375,
+              "MAE": 0.01425954233855009
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 16366.5,
+              "MAE": 0.007117241155356169
+            }
+          }
+        }
+      },
+      "same_actual_final_depth_order_contributions": {
+        "native_road_alphaT": {
+          "mass": 30316.33313353386,
+          "mean": 0.6480064392089844
+        },
+        "native_actor_alphaT": {
+          "mass": 7108.871554131996,
+          "mean": 0.1519509106874466
+        },
+        "native_context_alphaT": {
+          "mass": 9346.287291470364,
+          "mean": 0.19977529346942902
+        },
+        "trainable_road_alphaT": {
+          "mass": 22569.555282882342,
+          "mean": 0.482420414686203
+        },
+        "fixed_old_road_alphaT": {
+          "mass": 7746.777851228013,
+          "mean": 0.16558606922626495
+        },
+        "retained_excluded_native_owner_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_selected_instance_alphaT": {
+          "mass": 35.559249587980304,
+          "mean": 0.0007600729004479945
+        },
+        "unified_actor_alphaT": {
+          "mass": 7144.430802870736,
+          "mean": 0.15271098911762238
+        }
+      }
+    },
+    "strict_train_V": {
+      "fixed_denominator": 6498,
+      "paired_material_target_pixels": 293,
+      "no_certified_shared_target_pixels": 6205,
+      "material_alpha95_pixels": 0,
+      "joint_road_alphaT95_pixels": 0,
+      "protected_K_pixels": 0,
+      "Brown_invalid_pixels": 0,
+      "cached_geometry_unprojected_pixels": 5420,
+      "stages": {
+        "A0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.0581745021045208,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": null,
+          "joint_sRGB_mean": [
+            0.1319376826286316,
+            0.17589448392391205,
+            0.25834232568740845
+          ],
+          "road_premult_sRGB_mean": [
+            0.001710695680230856,
+            0.001668502576649189,
+            0.001954687526449561
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 179,
+          "native_road_premult_dark_max_sRGB_below40_255": 6463,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6491,
+          "road_only_lt95_scene_ge95": 6491,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.02693149261176586,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            }
+          }
+        },
+        "atlas0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.0581745021045208,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": null,
+          "joint_sRGB_mean": [
+            0.1319376826286316,
+            0.17589448392391205,
+            0.25834232568740845
+          ],
+          "road_premult_sRGB_mean": [
+            0.001710695680230856,
+            0.001668502576649189,
+            0.001954687526449561
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 179,
+          "native_road_premult_dark_max_sRGB_below40_255": 6463,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6491,
+          "road_only_lt95_scene_ge95": 6491,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.02693149261176586,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            }
+          }
+        },
+        "formal400": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.06363128870725632,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": null,
+          "joint_sRGB_mean": [
+            0.1448284089565277,
+            0.18039470911026,
+            0.24637371301651
+          ],
+          "road_premult_sRGB_mean": [
+            0.001710695680230856,
+            0.001668502576649189,
+            0.001954687526449561
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 368,
+          "native_road_premult_dark_max_sRGB_below40_255": 6463,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 6491,
+          "road_only_lt95_scene_ge95": 6491,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.020265521481633186,
+          "joint_RGB_max_delta_A0": 0.3467048406600952,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            }
+          }
+        }
+      },
+      "same_actual_final_depth_order_contributions": {
+        "native_road_alphaT": {
+          "mass": 0.07757452737382664,
+          "mean": 1.1938216630369425e-05
+        },
+        "native_actor_alphaT": {
+          "mass": 4566.552889239043,
+          "mean": 0.7027627825737
+        },
+        "native_context_alphaT": {
+          "mass": 1929.7814335562289,
+          "mean": 0.2969808280467987
+        },
+        "trainable_road_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "fixed_old_road_alphaT": {
+          "mass": 0.07757452737382664,
+          "mean": 1.1938216630369425e-05
+        },
+        "retained_excluded_native_owner_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_selected_instance_alphaT": {
+          "mass": 1821.8199909929237,
+          "mean": 0.28036627173423767
+        },
+        "unified_actor_alphaT": {
+          "mass": 6388.372883796692,
+          "mean": 0.9831290245056152
+        }
+      }
+    },
+    "actor_proxy": {
+      "fixed_denominator": 7542,
+      "paired_material_target_pixels": 487,
+      "no_certified_shared_target_pixels": 7055,
+      "material_alpha95_pixels": 6,
+      "joint_road_alphaT95_pixels": 0,
+      "protected_K_pixels": 0,
+      "Brown_invalid_pixels": 0,
+      "cached_geometry_unprojected_pixels": 6124,
+      "stages": {
+        "A0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.06256357580423355,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": 0.027924103662371635,
+          "joint_sRGB_mean": [
+            0.13967400789260864,
+            0.17577075958251953,
+            0.253889262676239
+          ],
+          "road_premult_sRGB_mean": [
+            0.0038207133766263723,
+            0.0037443742621690035,
+            0.004415659233927727
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 359,
+          "native_road_premult_dark_max_sRGB_below40_255": 7447,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 7516,
+          "road_only_lt95_scene_ge95": 7516,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.034367311745882034,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 5.9997100830078125,
+              "MAE": 0.027924124151468277
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.00028958189068362117,
+              "MAE": 0.02754584141075611
+            }
+          }
+        },
+        "atlas0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.06256357580423355,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": 0.027924103662371635,
+          "joint_sRGB_mean": [
+            0.13967400789260864,
+            0.17577075958251953,
+            0.253889262676239
+          ],
+          "road_premult_sRGB_mean": [
+            0.0038207133766263723,
+            0.0037443742621690035,
+            0.004415659233927727
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 359,
+          "native_road_premult_dark_max_sRGB_below40_255": 7447,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 7516,
+          "road_only_lt95_scene_ge95": 7516,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.034367311745882034,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 5.9997100830078125,
+              "MAE": 0.027924124151468277
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.00028958189068362117,
+              "MAE": 0.02754584141075611
+            }
+          }
+        },
+        "formal400": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": 0.06568930298089981,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": 0.027924103662371635,
+          "joint_sRGB_mean": [
+            0.15046779811382294,
+            0.1794702410697937,
+            0.243685781955719
+          ],
+          "road_premult_sRGB_mean": [
+            0.0038207133766263723,
+            0.0037443742621690035,
+            0.004415659233927727
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 546,
+          "native_road_premult_dark_max_sRGB_below40_255": 7447,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 0,
+          "road_only_alpha_lt95": 7516,
+          "road_only_lt95_scene_ge95": 7516,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.028861355036497116,
+          "joint_RGB_max_delta_A0": 0.476809024810791,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 5.9997100830078125,
+              "MAE": 0.027924124151468277
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.00028958189068362117,
+              "MAE": 0.02754584141075611
+            }
+          }
+        }
+      },
+      "same_actual_final_depth_order_contributions": {
+        "native_road_alphaT": {
+          "mass": 4.571599285571438,
+          "mean": 0.0006061521708033979
+        },
+        "native_actor_alphaT": {
+          "mass": 5482.908989287913,
+          "mean": 0.7269834280014038
+        },
+        "native_context_alphaT": {
+          "mass": 2052.712947332766,
+          "mean": 0.27217090129852295
+        },
+        "trainable_road_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "fixed_old_road_alphaT": {
+          "mass": 4.571599285571438,
+          "mean": 0.0006061521708033979
+        },
+        "retained_excluded_native_owner_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_selected_instance_alphaT": {
+          "mass": 1884.2663196346928,
+          "mean": 0.24983642995357513
+        },
+        "unified_actor_alphaT": {
+          "mass": 7367.1753125190735,
+          "mean": 0.9768197536468506
+        }
+      }
+    },
+    "corrected_K": {
+      "fixed_denominator": 76057,
+      "paired_material_target_pixels": 0,
+      "no_certified_shared_target_pixels": 76057,
+      "material_alpha95_pixels": 0,
+      "joint_road_alphaT95_pixels": 0,
+      "protected_K_pixels": 76057,
+      "Brown_invalid_pixels": 0,
+      "cached_geometry_unprojected_pixels": 74347,
+      "stages": {
+        "A0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": null,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": null,
+          "joint_sRGB_mean": [
+            0.23882509768009186,
+            0.2732856273651123,
+            0.33655890822410583
+          ],
+          "road_premult_sRGB_mean": [
+            0.002880475949496031,
+            0.0030615029390901327,
+            0.00387175171636045
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 16161,
+          "native_road_premult_dark_max_sRGB_below40_255": 74963,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 82,
+          "road_only_alpha_lt95": 75060,
+          "road_only_lt95_scene_ge95": 74978,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.047151464968919754,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            }
+          }
+        },
+        "atlas0": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": null,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": null,
+          "joint_sRGB_mean": [
+            0.23882509768009186,
+            0.2732856273651123,
+            0.33655890822410583
+          ],
+          "road_premult_sRGB_mean": [
+            0.002880475949496031,
+            0.0030615029390901327,
+            0.00387175171636045
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 16161,
+          "native_road_premult_dark_max_sRGB_below40_255": 74963,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 82,
+          "road_only_alpha_lt95": 75060,
+          "road_only_lt95_scene_ge95": 74978,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.047151464968919754,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            }
+          }
+        },
+        "formal400": {
+          "joint_RGB_vs_shared_target_linear_MAE_all_supported": null,
+          "joint_road_dominant_target_linear_MAE": null,
+          "road_alpha_normalized_material_linear_MAE": null,
+          "joint_sRGB_mean": [
+            0.23882509768009186,
+            0.2732856273651123,
+            0.33655890822410583
+          ],
+          "road_premult_sRGB_mean": [
+            0.002880475949496031,
+            0.0030615029390901327,
+            0.00387175171636045
+          ],
+          "native_joint_dark_max_sRGB_below40_255": 16161,
+          "native_road_premult_dark_max_sRGB_below40_255": 74963,
+          "scene_alpha_lt50": 0,
+          "scene_alpha_lt95": 82,
+          "road_only_alpha_lt95": 75060,
+          "road_only_lt95_scene_ge95": 74978,
+          "joint_sRGB_L1_original_photo_diagnostic": 0.047151464968919754,
+          "joint_RGB_max_delta_A0": 0.0,
+          "source_weighted_material_MAE": {
+            "same_world": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "similar_reference": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            },
+            "teacher_continuous": {
+              "effective_pixel_weight_mass": 0.0,
+              "MAE": null
+            }
+          }
+        }
+      },
+      "same_actual_final_depth_order_contributions": {
+        "native_road_alphaT": {
+          "mass": 99.03039615712527,
+          "mean": 0.0013020549667999148
+        },
+        "native_actor_alphaT": {
+          "mass": 112.87656742194667,
+          "mean": 0.0014841050142422318
+        },
+        "native_context_alphaT": {
+          "mass": 75818.03038574383,
+          "mean": 0.9968580603599548
+        },
+        "trainable_road_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "fixed_old_road_alphaT": {
+          "mass": 99.03039615712527,
+          "mean": 0.0013020549667999148
+        },
+        "retained_excluded_native_owner_alphaT": {
+          "mass": 0.0,
+          "mean": 0.0
+        },
+        "native_selected_instance_alphaT": {
+          "mass": 127.93166705768078,
+          "mean": 0.0016820498276501894
+        },
+        "unified_actor_alphaT": {
+          "mass": 240.80823548280534,
+          "mean": 0.0031661547254770994
+        }
+      }
+    }
+  },
+  "files": {
+    "A0": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/086/joint_render.npz",
+        "sha256": "fb0d78cb3550172f0feedd32f9f7e63fe960f8fc83d7b18c8cc3be972ab3a263",
+        "bytes": 17428091
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/baseline_A0_five_views/086/component_render.npz",
+        "sha256": "818b42c9e91d5c6f51820e898b5082e21cb9a07bc738a474dd055b56a2413478",
+        "bytes": 2002551
+      }
+    ],
+    "atlas0": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/atlas_assignment_0/086/joint_render.npz",
+        "sha256": "9404c19d7a69fce8d7f911018951696b6d1a2f0ddebb951012f5abad6fd4156b",
+        "bytes": 17521182
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/atlas_assignment_0/086/component_render.npz",
+        "sha256": "1d1f75c40c3826d018a7366c56dc96ab69eea83b47eb37fca94533efcf0c5ea0",
+        "bytes": 1999977
+      }
+    ],
+    "formal400": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/final_readout/086/joint_render.npz",
+        "sha256": "982a4d5bdcd5022dde705292c6941466311368a25aba2acc6c748ffad26ad18e",
+        "bytes": 17521434
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/final_readout/086/component_render.npz",
+        "sha256": "b7cbb5d586bff0be368218bcabe72363475db428eb6f12253bddf0e9e95b9681",
+        "bytes": 2000816
+      }
+    ]
+  },
+  "target": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/final_readout/086/source_target.npz",
+    "sha256": "d5160efb2bf1dd42200b4d89ba6f104115e74753ebe0d5b467c398ca5f931b2a",
+    "bytes": 1492143
+  },
+  "photo_cache": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_shared_appearance_20261122_r7/projection_cache_v1/086/view_cache.npz",
+    "sha256": "5b3ac9ce07d8a7a77f380fa893965252234076bbea16daabcc9194f72ff20c51",
+    "bytes": 14647434
+  },
+  "corrected_masks": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/audit/rectified_masks_v1/086/rectified_masks.npz",
+    "sha256": "cfc64974036c6bdad60655da309a5c48761bb32c92701fb92112155407c3760e",
+    "bytes": 23508
+  },
+  "lineage": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_vehicle_joint_dggt_20261123_r8/joint_rgb_formal400_v1/supervision_layers/086/layer_integrals.npz",
+    "sha256": "56843f24536c78509c396a61afac054aace666037ff07c78720cf1a2c91e948d",
+    "bytes": 18241212
+  }
+}

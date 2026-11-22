@@ -1,0 +1,41 @@
+{
+  "complete": true,
+  "schema": "R10.timewindow17_audit_schema_correction.v2",
+  "numerical_audit_unchanged": true,
+  "original_legacy_named_audit_preserved": true,
+  "actual_frame_count": 17,
+  "correction": "Original minimal copy calculated all17 but retained historical all8 field names; v2 labels them all17. No data/model/number selection changes.",
+  "source_sha256": "10bafbac1a12c40dd38872453f83399bc549311c41a25a655ef447598217ec0e",
+  "new_sha256": "6f885cc7c8e3046cc980edcfc65bc5975544c1c123a0acaee5556e850c93c3f0",
+  "replacements": [
+    [
+      "D=R/'audit/expanded_curvature_loo_v1'",
+      "D=R/'audit/timewindow17_geometry_v1/loo_selection'"
+    ],
+    [
+      "R10.expanded_original_point_LOO_height_audit.v1",
+      "R10.timewindow17_original_point_LOO_height_audit.v2"
+    ],
+    [
+      "training_fold_original_height_audit.json",
+      "training_fold_original_height_audit_v2.json"
+    ],
+    [
+      "training_original_point_predictions.npz",
+      "training_original_point_predictions_v2.npz"
+    ],
+    [
+      "all8_",
+      "all17_"
+    ],
+    [
+      "raw60=",
+      "first_frame="
+    ],
+    [
+      "raw70=",
+      "second_frame="
+    ]
+  ],
+  "GPU_calls": 0
+}

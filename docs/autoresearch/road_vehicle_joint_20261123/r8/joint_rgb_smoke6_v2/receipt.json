@@ -1,0 +1,53 @@
+{
+  "schema": "R8.actual_joint_RGB_fit.v1",
+  "complete": true,
+  "mode": "smoke",
+  "logical_steps": 6,
+  "actual_optimizer_updates": 7,
+  "formal_steps": 400,
+  "formal_run_fresh_initialization": true,
+  "source_sha256": "2eaf1569a97fb8ee6907696dfa28db91bb5f3072f74d37491007c87012e2c647",
+  "guard_sha256": "8025f666a402c44442695fa019bc4e244eefdc036bda1caced1fe2e332625187",
+  "geometry_sigma_opacity_normal_tracks_fixed": true,
+  "native_context_and_old_guards_fixed": true,
+  "actor_only_DC": true,
+  "road_only_RGB": true,
+  "train_frames": [
+    86,
+    110
+  ],
+  "evaluation_only_frames": [
+    134,
+    179,
+    198
+  ],
+  "no_sealed_evaluation_supervision": true,
+  "new_diffusion_calls": 0,
+  "restore_replay": {
+    "restore_complete_state_bitexact": true,
+    "replay_parameters_optimizer_RNG_bitexact": false,
+    "replay_same_raw": true,
+    "replay_loss_max_abs": 0.0,
+    "parameter_max_abs": 2.9802322387695312e-08,
+    "replay_numeric_decision": "PASS",
+    "all_float_state_checked": true,
+    "counters_RNG_exact": true,
+    "numerical_contract": {
+      "restore": "parameters/optimizer/RNG/sampler bitexact",
+      "eps_multiplier": 4,
+      "loss_abs_bound": 1e-07,
+      "counters_and_RNG_exact": true,
+      "all_optimizer_float_state_checked": true,
+      "reason": "custom native CUDA colour-gradient atomic reduction can change float32 last bits; v1 strict replay FAIL retained",
+      "formal_method_changed": false
+    },
+    "CUDA_float_atomic_order_not_claimed_bitexact": true,
+    "main_smoke_logical_steps": 6,
+    "extra_replay_updates": 1,
+    "extra_replay_F": 2,
+    "extra_replay_B": 2
+  },
+  "fresh_process_verify_required": true,
+  "fresh_process_verify": "PENDING",
+  "whole_scene_restoration_accepted": false
+}

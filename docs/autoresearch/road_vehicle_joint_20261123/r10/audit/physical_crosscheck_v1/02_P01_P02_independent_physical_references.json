@@ -1,0 +1,579 @@
+{
+  "complete": true,
+  "rows": [
+    {
+      "reference": "P01",
+      "raw": 110,
+      "old_geometry": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native_source_transfer_20261122_r5/native_source_blocks_lidar_v1/P01/geometry.json",
+        "bytes": 3071,
+        "sha256": "69b63baa9e0e3ff3d1e7b398417d9cee06b0a530dd02532cc96060adb497f6cc"
+      },
+      "old_fit_points": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native_source_transfer_20261122_r5/native_source_blocks_lidar_v1/P01/plane_fit_samples.npz",
+        "bytes": 4941,
+        "sha256": "409ba28fdc9b68bfb7b8f218edb9e3cb0e436734480094fa8c46b15b43f883a3"
+      },
+      "old_plane_normal_world": [
+        -0.005175212254908017,
+        -0.0115177653090987,
+        0.9999202759522386
+      ],
+      "old_plane_origin_world": [
+        2318.2698357831086,
+        1370.9301314528582,
+        -20.726993911668107
+      ],
+      "plane_points_reloaded_nearest_world_distance_m": {
+        "count": 131,
+        "min": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "old_plane_signed_point_residual_m": {
+        "signed": {
+          "count": 131,
+          "min": -0.0842468705122177,
+          "mean": -0.001254497290541048,
+          "median": 0.000402684017138584,
+          "p05": -0.00815825017654502,
+          "p95": 0.00909328555497806,
+          "max": 0.013888010079586415
+        },
+        "absolute": {
+          "count": 131,
+          "min": 5.636853239589242e-06,
+          "mean": 0.005584013154419449,
+          "median": 0.0036861841883869305,
+          "p05": 0.00019798497451892216,
+          "p95": 0.01346332383393406,
+          "max": 0.0842468705122177
+        }
+      },
+      "old_plane_inlier_count": 129,
+      "old_plane_inliers_vs_current_profile_signed_dZ_m": {
+        "signed": {
+          "count": 129,
+          "min": -0.552502430399624,
+          "mean": -0.37737994244062584,
+          "median": -0.3686227224747185,
+          "p05": -0.5196579469929326,
+          "p95": -0.2717253777451788,
+          "max": -0.24369932459320154
+        },
+        "absolute": {
+          "count": 129,
+          "min": 0.24369932459320154,
+          "mean": 0.37737994244062584,
+          "median": 0.3686227224747185,
+          "p05": 0.2717253777451788,
+          "p95": 0.5196579469929326,
+          "max": 0.552502430399624
+        }
+      },
+      "current_tight_profile_at_old_reference_is_extrapolation": true,
+      "query_outside_current_fit_hull_count": 136,
+      "query_count": 136,
+      "current_profile_hull_margin_m": {
+        "count": 136,
+        "min": -8.280079768566793,
+        "mean": -2.7171942948603003,
+        "median": -2.5390951231432837,
+        "p05": -3.052074228812444,
+        "p95": -2.1825685444624128,
+        "max": -2.02753638335912
+      },
+      "current_profile_leverage_over_max_training": {
+        "count": 136,
+        "min": 15.501779774124534,
+        "mean": 32.34150966740744,
+        "median": 29.939069571062888,
+        "p05": 18.684522186017553,
+        "p95": 57.899160611584456,
+        "max": 66.16796457857293
+      },
+      "nearest_current_profile_training_medoid_m": {
+        "count": 136,
+        "min": 2.4362881735946527,
+        "mean": 3.2091125208515296,
+        "median": 3.087909721923892,
+        "p05": 2.597086432239026,
+        "p95": 3.5503796677571247,
+        "max": 8.38376984262941
+      },
+      "independent_local_neighbourhood_diagnostic": {
+        "raws": [
+          105,
+          110,
+          115
+        ],
+        "source_filter": "same original ego/OBB/photo-road0 erode2; .4m XY context around old physical quad; broadZ planeorigin +/-1.5m; no profile residual trim",
+        "points": 1213,
+        "medoids": 309,
+        "frame_records": [
+          {
+            "raw": 105,
+            "input_rows": 159790,
+            "local_XY_broad_Z_rows": 545,
+            "inside_OBB_rejected": 0,
+            "OBB_filtered_LiDAR_points": 545,
+            "photo_road0_before_erosion": 407,
+            "photo_nonroad_bounded": 0,
+            "photo_query_outside": 138,
+            "road_semantic_retained": 407,
+            "semantic_is_original_photo_proxy": true
+          },
+          {
+            "raw": 110,
+            "input_rows": 159587,
+            "local_XY_broad_Z_rows": 566,
+            "inside_OBB_rejected": 0,
+            "OBB_filtered_LiDAR_points": 566,
+            "photo_road0_before_erosion": 406,
+            "photo_nonroad_bounded": 0,
+            "photo_query_outside": 160,
+            "road_semantic_retained": 405,
+            "semantic_is_original_photo_proxy": true
+          },
+          {
+            "raw": 115,
+            "input_rows": 159262,
+            "local_XY_broad_Z_rows": 595,
+            "inside_OBB_rejected": 0,
+            "OBB_filtered_LiDAR_points": 595,
+            "photo_road0_before_erosion": 402,
+            "photo_nonroad_bounded": 0,
+            "photo_query_outside": 193,
+            "road_semantic_retained": 401,
+            "semantic_is_original_photo_proxy": true
+          }
+        ],
+        "all_point_signed_height_from_old_plane_m": {
+          "signed": {
+            "count": 1213,
+            "min": -0.08924835515479401,
+            "mean": 0.0010709448896174898,
+            "median": 0.00222350073929789,
+            "p05": -0.012876965457088118,
+            "p95": 0.014936831319297277,
+            "max": 0.021887357865235657
+          },
+          "absolute": {
+            "count": 1213,
+            "min": 1.840346804726778e-06,
+            "mean": 0.007881592142232864,
+            "median": 0.005608973468152811,
+            "p05": 0.0003398995367973612,
+            "p95": 0.018179363007013893,
+            "max": 0.08924835515479401
+          }
+        },
+        "same_frame_signed_height_from_old_plane_m": {
+          "signed": {
+            "count": 405,
+            "min": -0.08924835515479401,
+            "mean": -0.0034849258805353567,
+            "median": -0.0011548885579948376,
+            "p05": -0.014979009815370148,
+            "p95": 0.009712106503821616,
+            "max": 0.01678855930153844
+          },
+          "absolute": {
+            "count": 405,
+            "min": 5.6373026673384175e-06,
+            "mean": 0.007079001469312356,
+            "median": 0.004329020298900588,
+            "p05": 0.00024130728880393805,
+            "p95": 0.015983991714574566,
+            "max": 0.08924835515479401
+          }
+        },
+        "per_frame_signed_height_from_old_plane_m": {
+          "105": {
+            "signed": {
+              "count": 407,
+              "min": -0.0627886521048282,
+              "mean": 0.004721609950155176,
+              "median": 0.005989191261207338,
+              "p05": -0.00893050523446206,
+              "p95": 0.017436161844029387,
+              "max": 0.021887357865235657
+            },
+            "absolute": {
+              "count": 407,
+              "min": 5.679240491218707e-06,
+              "mean": 0.00850348980840302,
+              "median": 0.007154580857243076,
+              "p05": 0.0006421190025633905,
+              "p95": 0.01938540505304686,
+              "max": 0.0627886521048282
+            }
+          },
+          "110": {
+            "signed": {
+              "count": 405,
+              "min": -0.08924835515479401,
+              "mean": -0.0034849258805353567,
+              "median": -0.0011548885579948376,
+              "p05": -0.014979009815370148,
+              "p95": 0.009712106503821616,
+              "max": 0.01678855930153844
+            },
+            "absolute": {
+              "count": 405,
+              "min": 5.6373026673384175e-06,
+              "mean": 0.007079001469312356,
+              "median": 0.004329020298900588,
+              "p05": 0.00024130728880393805,
+              "p95": 0.015983991714574566,
+              "max": 0.08924835515479401
+            }
+          },
+          "115": {
+            "signed": {
+              "count": 401,
+              "min": -0.08521428329157388,
+              "mean": 0.0019669722768321145,
+              "median": 0.004073975971202515,
+              "p05": -0.010415007274726662,
+              "p95": 0.014657366441134911,
+              "max": 0.021791017370251353
+            },
+            "absolute": {
+              "count": 401,
+              "min": 1.840346804726778e-06,
+              "mean": 0.008060985838994839,
+              "median": 0.006037720348331277,
+              "p05": 0.00041857521858545965,
+              "p95": 0.01755832827360848,
+              "max": 0.08521428329157388
+            }
+          }
+        },
+        "local_quadratic_at_old_quad_signed_height_from_old_plane_m": {
+          "signed": {
+            "count": 4,
+            "min": -0.0010786352990592718,
+            "mean": 0.004193186258937054,
+            "median": 0.005095632569283026,
+            "p05": -0.0003283071498881184,
+            "p95": 0.007451254833277864,
+            "max": 0.007660115196241435
+          },
+          "absolute": {
+            "count": 4,
+            "min": 0.0010786352990592718,
+            "mean": 0.00473250390846669,
+            "median": 0.005095632569283026,
+            "p05": 0.0015053728585126436,
+            "p95": 0.007451254833277864,
+            "max": 0.007660115196241435
+          }
+        },
+        "local_quadratic_normal_vs_old_plane_deg": {
+          "count": 4,
+          "min": 0.14034771051817146,
+          "mean": 0.4745182539070042,
+          "median": 0.4869583294750367,
+          "p05": 0.1900725822452646,
+          "p95": 0.7415478197734979,
+          "max": 0.7838086461597716
+        },
+        "design_condition": 7.289282961564778,
+        "local_fit_not_added_to_strict_geometry_or_activation": true
+      },
+      "old_reference_is_independent_method_not_independent_raw_coordinate_implementation": true
+    },
+    {
+      "reference": "P02",
+      "raw": 137,
+      "old_geometry": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native_source_transfer_20261122_r5/native_source_blocks_lidar_v1/P02/geometry.json",
+        "bytes": 3096,
+        "sha256": "a4e3f20c65050b4a85d03eb6e2f2a2d2f57f34f4cc828b3994df3094808cfeaf"
+      },
+      "old_fit_points": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native_source_transfer_20261122_r5/native_source_blocks_lidar_v1/P02/plane_fit_samples.npz",
+        "bytes": 9460,
+        "sha256": "f10aa62625797e63f7509141484110636949d4d4801cd6b6037bb999c5ffaa63"
+      },
+      "old_plane_normal_world": [
+        -0.004443800184482354,
+        -0.013204154517314845,
+        0.9999029467620361
+      ],
+      "old_plane_origin_world": [
+        2317.4789172927426,
+        1363.955339163992,
+        -20.850379359585
+      ],
+      "plane_points_reloaded_nearest_world_distance_m": {
+        "count": 265,
+        "min": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "old_plane_signed_point_residual_m": {
+        "signed": {
+          "count": 265,
+          "min": -0.03632954984005648,
+          "mean": 0.012195084367238741,
+          "median": 0.00021439071008245989,
+          "p05": -0.0057104820863023865,
+          "p95": 0.015760203283237774,
+          "max": 0.4932048047369487
+        },
+        "absolute": {
+          "count": 265,
+          "min": 2.2324547000311448e-06,
+          "mean": 0.015716580156589794,
+          "median": 0.002456444266797231,
+          "p05": 0.00023477120215988957,
+          "p95": 0.022294952684596036,
+          "max": 0.4932048047369487
+        }
+      },
+      "old_plane_inlier_count": 256,
+      "old_plane_inliers_vs_current_profile_signed_dZ_m": {
+        "signed": {
+          "count": 256,
+          "min": -0.19167510629504037,
+          "mean": -0.06250752693300357,
+          "median": -0.05782257563032367,
+          "p05": -0.1551729785207625,
+          "p95": 0.018221508113782647,
+          "max": 0.08867604247515715
+        },
+        "absolute": {
+          "count": 256,
+          "min": 3.354608970695949e-05,
+          "mean": 0.06851220830994298,
+          "median": 0.0608906996264853,
+          "p05": 0.006794981892028318,
+          "p95": 0.1551729785207625,
+          "max": 0.19167510629504037
+        }
+      },
+      "current_tight_profile_at_old_reference_is_extrapolation": true,
+      "query_outside_current_fit_hull_count": 270,
+      "query_count": 270,
+      "current_profile_hull_margin_m": {
+        "count": 270,
+        "min": -8.34232820553325,
+        "mean": -3.2915159726299104,
+        "median": -2.9177056455723687,
+        "p05": -8.07852336920148,
+        "p95": -2.1091688091958303,
+        "max": -1.807639892309453
+      },
+      "current_profile_leverage_over_max_training": {
+        "count": 270,
+        "min": 3.791354496387552,
+        "mean": 10.364789473012296,
+        "median": 7.38134827108477,
+        "p05": 4.2553689107152834,
+        "p95": 40.11492762563854,
+        "max": 42.4178109494136
+      },
+      "nearest_current_profile_training_medoid_m": {
+        "count": 270,
+        "min": 1.8183999809362092,
+        "mean": 3.324819289724909,
+        "median": 2.9396945792602134,
+        "p05": 2.1592329823175858,
+        "p95": 8.168925639167803,
+        "max": 8.382200619156572
+      },
+      "independent_local_neighbourhood_diagnostic": {
+        "raws": [
+          130,
+          137,
+          145
+        ],
+        "source_filter": "same original ego/OBB/photo-road0 erode2; .4m XY context around old physical quad; broadZ planeorigin +/-1.5m; no profile residual trim",
+        "points": 1734,
+        "medoids": 264,
+        "frame_records": [
+          {
+            "raw": 130,
+            "input_rows": 159534,
+            "local_XY_broad_Z_rows": 1120,
+            "inside_OBB_rejected": 400,
+            "OBB_filtered_LiDAR_points": 720,
+            "photo_road0_before_erosion": 585,
+            "photo_nonroad_bounded": 0,
+            "photo_query_outside": 135,
+            "road_semantic_retained": 576,
+            "semantic_is_original_photo_proxy": true
+          },
+          {
+            "raw": 137,
+            "input_rows": 159777,
+            "local_XY_broad_Z_rows": 1357,
+            "inside_OBB_rejected": 656,
+            "OBB_filtered_LiDAR_points": 701,
+            "photo_road0_before_erosion": 586,
+            "photo_nonroad_bounded": 0,
+            "photo_query_outside": 115,
+            "road_semantic_retained": 578,
+            "semantic_is_original_photo_proxy": true
+          },
+          {
+            "raw": 145,
+            "input_rows": 159347,
+            "local_XY_broad_Z_rows": 1374,
+            "inside_OBB_rejected": 670,
+            "OBB_filtered_LiDAR_points": 704,
+            "photo_road0_before_erosion": 588,
+            "photo_nonroad_bounded": 0,
+            "photo_query_outside": 116,
+            "road_semantic_retained": 580,
+            "semantic_is_original_photo_proxy": true
+          }
+        ],
+        "all_point_signed_height_from_old_plane_m": {
+          "signed": {
+            "count": 1734,
+            "min": -0.04738261363496932,
+            "mean": -3.0183048797005694e-05,
+            "median": -0.0009210133291137623,
+            "p05": -0.00994513179944434,
+            "p95": 0.014543772451428258,
+            "max": 0.039967790118648594
+          },
+          "absolute": {
+            "count": 1734,
+            "min": 2.232671388213703e-06,
+            "mean": 0.006052205118828412,
+            "median": 0.004575063763297749,
+            "p05": 0.0004004972567052789,
+            "p95": 0.016245042828432144,
+            "max": 0.04738261363496932
+          }
+        },
+        "same_frame_signed_height_from_old_plane_m": {
+          "signed": {
+            "count": 578,
+            "min": -0.04194834794557778,
+            "mean": 0.002095197539004298,
+            "median": 0.0007365116170596764,
+            "p05": -0.005848036980194493,
+            "p95": 0.016043201162555573,
+            "max": 0.025822656145248146
+          },
+          "absolute": {
+            "count": 578,
+            "min": 2.232671388213703e-06,
+            "mean": 0.005340862006355772,
+            "median": 0.0031235099194493188,
+            "p05": 0.00027522801811095124,
+            "p95": 0.01701747072745814,
+            "max": 0.04194834794557778
+          }
+        },
+        "per_frame_signed_height_from_old_plane_m": {
+          "130": {
+            "signed": {
+              "count": 576,
+              "min": -0.03874899990054459,
+              "mean": 0.0014497053494702478,
+              "median": 0.0004844102459404809,
+              "p05": -0.007992319514583457,
+              "p95": 0.01533239116889451,
+              "max": 0.039967790118648594
+            },
+            "absolute": {
+              "count": 576,
+              "min": 1.2033738350680778e-05,
+              "mean": 0.0058070805119135,
+              "median": 0.003993406310394576,
+              "p05": 0.00036196539602428857,
+              "p95": 0.017245309418513877,
+              "max": 0.039967790118648594
+            }
+          },
+          "137": {
+            "signed": {
+              "count": 578,
+              "min": -0.04194834794557778,
+              "mean": 0.002095197539004298,
+              "median": 0.0007365116170596764,
+              "p05": -0.005848036980194493,
+              "p95": 0.016043201162555573,
+              "max": 0.025822656145248146
+            },
+            "absolute": {
+              "count": 578,
+              "min": 2.232671388213703e-06,
+              "mean": 0.005340862006355772,
+              "median": 0.0031235099194493188,
+              "p05": 0.00027522801811095124,
+              "p95": 0.01701747072745814,
+              "max": 0.04194834794557778
+            }
+          },
+          "145": {
+            "signed": {
+              "count": 580,
+              "min": -0.04738261363496932,
+              "mean": -0.0036179170094023357,
+              "median": -0.005082725648049902,
+              "p05": -0.012165593149741128,
+              "p95": 0.010360197982493859,
+              "max": 0.03593263516189538
+            },
+            "absolute": {
+              "count": 580,
+              "min": 8.940986436201115e-05,
+              "mean": 0.007004529416401127,
+              "median": 0.006385526052886448,
+              "p05": 0.0010890566820698667,
+              "p95": 0.013440522341690008,
+              "max": 0.04738261363496932
+            }
+          }
+        },
+        "local_quadratic_at_old_quad_signed_height_from_old_plane_m": {
+          "signed": {
+            "count": 4,
+            "min": -0.011245847530005904,
+            "mean": -0.0053927072408939125,
+            "median": -0.004107696755482948,
+            "p05": -0.010387729087633168,
+            "p95": -0.002196700073730007,
+            "max": -0.0021095879226038505
+          },
+          "absolute": {
+            "count": 4,
+            "min": 0.0021095879226038505,
+            "mean": 0.0053927072408939125,
+            "median": 0.004107696755482948,
+            "p05": 0.0021967000737300067,
+            "p95": 0.010387729087633166,
+            "max": 0.011245847530005904
+          }
+        },
+        "local_quadratic_normal_vs_old_plane_deg": {
+          "count": 4,
+          "min": 0.5266871877660613,
+          "mean": 0.7579815412028618,
+          "median": 0.8241888701021441,
+          "p05": 0.5687131261097764,
+          "p95": 0.8545596958369517,
+          "max": 0.8568612368410974
+        },
+        "design_condition": 4.317527231854915,
+        "local_fit_not_added_to_strict_geometry_or_activation": true
+      },
+      "old_reference_is_independent_method_not_independent_raw_coordinate_implementation": true
+    }
+  ],
+  "no_heldout_points_fitted": true,
+  "formal_geometry_and_coefficients_unchanged": true
+}

@@ -1,0 +1,24 @@
+{
+  "restore_complete_state_bitexact": true,
+  "replay_parameters_optimizer_RNG_bitexact": false,
+  "replay_same_raw": true,
+  "replay_loss_max_abs": 0.0,
+  "parameter_max_abs": 2.9802322387695312e-08,
+  "replay_numeric_decision": "PASS",
+  "all_float_state_checked": true,
+  "counters_RNG_exact": true,
+  "numerical_contract": {
+    "restore": "parameters/optimizer/RNG/sampler bitexact",
+    "eps_multiplier": 4,
+    "loss_abs_bound": 1e-07,
+    "counters_and_RNG_exact": true,
+    "all_optimizer_float_state_checked": true,
+    "reason": "custom native CUDA colour-gradient atomic reduction can change float32 last bits; v1 strict replay FAIL retained",
+    "formal_method_changed": false
+  },
+  "CUDA_float_atomic_order_not_claimed_bitexact": true,
+  "main_smoke_logical_steps": 6,
+  "extra_replay_updates": 1,
+  "extra_replay_F": 2,
+  "extra_replay_B": 2
+}
