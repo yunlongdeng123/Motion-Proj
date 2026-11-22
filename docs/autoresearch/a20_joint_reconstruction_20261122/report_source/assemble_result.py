@@ -81,6 +81,10 @@ def assemble():
         if not any(v for camera in group['views'].values() for mode in camera.values() for v in mode.values()):
             raise ValueError('阶段尚无实际导出图：'+spec['id'])
         groups.append(group)
+    addon=ROOT.parent/'a20_scene_residual_cleanup_20261122/report_integration/assemble_additions.py'
+    if addon.is_file():
+        import runpy
+        groups.extend(runpy.run_path(str(addon))['assemble'](ROOT,OUT))
     complete=[x for x in groups if x['state']=='complete']
     final=read(ROOT/'final_iteration_receipt.json') if (ROOT/'final_iteration_receipt.json').is_file() else None
     asset_verification=read(ROOT/'assets/takeback_verification.json') if (ROOT/'assets/takeback_verification.json').is_file() else None
@@ -96,6 +100,17 @@ def assemble():
         final_iteration=final,asset_verification=asset_verification,final_links=final_links,
         scene_qualified=False if final else None,publication_ready=bool(final),root_report_complete=bool(final),
         disclaimer='渲染期望距离由native depth_sum/alpha换算ray range，离散多层可能混合，始终与灰模验收分开。期望深度法向由实际期望深度梯度计算。生成隐藏区域为先验；BUILD86/110与合成新视图分别统计，未读取封存帧。各40步组独立从共同初始化重放；smoke工程通过或孤立覆盖不能替代场景准入。')
+    if any(g.get('role')=='scene_residual_cleanup' for g in groups):
+        result.update(publication_ready=False,root_report_complete=False,
+            scene_cleanup=dict(root_report_complete=False,scene_qualified=None,visual_review='pending',
+                actor_asset_sha256=final['selected_actor']['sha256'] if final else None,
+                main_acceptance=['RGB','silhouette','road_contact','protected_instances'],internal_grey_is_hard_gate=False))
+        scope_path=ROOT.parent/'a20_scene_residual_cleanup_20261122/report_integration/root_scope.json'
+        if scope_path.is_file():
+            scope=read(scope_path);result['root_scope']=scope
+            if scope.get('closed') is True:
+                result.update(publication_ready=scope['publication_ready'],root_report_complete=scope['root_report_complete'],scene_qualified=False)
+                result['scene_cleanup'].update(root_report_complete=True,scene_qualified=False,visual_review='partial_cleanup_no_final_acceptance',cleanup_candidate=scope['cleanup_candidate'])
     write(ROOT/'result.json',result)
     print(json.dumps(dict(groups=len(groups),complete_groups=len(complete),current_group=result['current_group'],runtime_imported=False)))
 

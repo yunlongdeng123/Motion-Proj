@@ -1,0 +1,44 @@
+{
+  "schema": "a20.scene_cleanup.closure.v1",
+  "client_date": "2026-11-22",
+  "stop_requested_by_user": true,
+  "new_experiments_stopped": true,
+  "current_a20_preserved": true,
+  "actor_sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+  "road_asset_preserved": true,
+  "road_sha256": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+  "BUILD_frames": [86, 110],
+  "heldout_frames_opened": [],
+  "optimizer_updates_this_task": 0,
+  "actual_cleanup_sidecar_rows": [270, 959, 1468, 1500, 1754, 2006],
+  "conservative_partial_candidate": {
+    "stage": "cleanup_visible_red_r1",
+    "rows": 959,
+    "sidecar_sha256": "fe24d7f47e419adb82b6e11a71e28cee42bf831f9768d881c1a18ec393376256",
+    "status": "red_strip_reduced; not_final_scene_acceptance",
+    "replace_default_scene": false
+  },
+  "latest_binary_ablation": {
+    "stage": "cleanup_rgb_residual_r5",
+    "rows": 2006,
+    "static_rows": 1959,
+    "dynamic_stray_rows": 47,
+    "status": "purple_haze_reduced_but_dark_trail_reappeared; not_selected",
+    "fresh_process_reload_maximum_error": 0.0
+  },
+  "continuous_120_step_plan": "CANCELLED_NOT_STARTED; CPU drafts UNEXECUTED",
+  "scene_cleanup_quality_passed": false,
+  "main_findings": [
+    "The dominant source is unclaimed native static background, with a smaller contribution from other dynamic actor stray rows; this is not the current a20 actor body.",
+    "Binary row deletion exposes alternating dark and bright/purple layers; original-scene protection passing does not imply visual cleanup passing.",
+    "The low-coverage grey-strip region has insufficient road-only support and cannot use the reliable-road RGB reference indiscriminately."
+  ],
+  "GPU_keep_on": true,
+  "power_operations": 0,
+  "other_remote_task_observed": {
+    "pid": 41152,
+    "command": "road_shared_appearance_20261122_r7/code/fit_shared_appearance.py",
+    "interrupted": false,
+    "scope": "separate road material task, not this a20 cleanup"
+  }
+}

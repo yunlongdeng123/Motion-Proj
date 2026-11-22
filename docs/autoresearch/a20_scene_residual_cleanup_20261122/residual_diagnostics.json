@@ -1,0 +1,111 @@
+{
+  "reference": "fixed actual road RGB normalized only at alpha >= .95; diagnostic, not ground truth",
+  "views": [
+    {
+      "raw": 86,
+      "stages": [
+        {
+          "stage": "original",
+          "reliable_road_pixels": 5061,
+          "dark_gap_gt_08_pixels": 772,
+          "bright_gap_gt_08_pixels": 277,
+          "absolute_RGB_gap_p95": 0.23709183931350708,
+          "diagnostic_RGB_L1": 0.049031760543584824
+        },
+        {
+          "stage": "cleanup_visible_red_r1",
+          "reliable_road_pixels": 5061,
+          "dark_gap_gt_08_pixels": 710,
+          "bright_gap_gt_08_pixels": 267,
+          "absolute_RGB_gap_p95": 0.23654794692993164,
+          "diagnostic_RGB_L1": 0.04731367900967598
+        },
+        {
+          "stage": "cleanup_red_black_r2_retry1",
+          "reliable_road_pixels": 5061,
+          "dark_gap_gt_08_pixels": 329,
+          "bright_gap_gt_08_pixels": 765,
+          "absolute_RGB_gap_p95": 0.23684287071228027,
+          "diagnostic_RGB_L1": 0.0516575463116169
+        },
+        {
+          "stage": "cleanup_dynamic_strays_r3",
+          "reliable_road_pixels": 5061,
+          "dark_gap_gt_08_pixels": 333,
+          "bright_gap_gt_08_pixels": 739,
+          "absolute_RGB_gap_p95": 0.2300800085067749,
+          "diagnostic_RGB_L1": 0.0508892796933651
+        },
+        {
+          "stage": "cleanup_dark_static_r4",
+          "reliable_road_pixels": 5061,
+          "dark_gap_gt_08_pixels": 143,
+          "bright_gap_gt_08_pixels": 772,
+          "absolute_RGB_gap_p95": 0.23313450813293457,
+          "diagnostic_RGB_L1": 0.04739224538207054
+        },
+        {
+          "stage": "cleanup_rgb_residual_r5",
+          "reliable_road_pixels": 5061,
+          "dark_gap_gt_08_pixels": 815,
+          "bright_gap_gt_08_pixels": 213,
+          "absolute_RGB_gap_p95": 0.25769221782684326,
+          "diagnostic_RGB_L1": 0.0507487989962101
+        }
+      ]
+    },
+    {
+      "raw": 110,
+      "stages": [
+        {
+          "stage": "original",
+          "reliable_road_pixels": 6784,
+          "dark_gap_gt_08_pixels": 1096,
+          "bright_gap_gt_08_pixels": 317,
+          "absolute_RGB_gap_p95": 0.2522578164935112,
+          "diagnostic_RGB_L1": 0.054674435406923294
+        },
+        {
+          "stage": "cleanup_visible_red_r1",
+          "reliable_road_pixels": 6784,
+          "dark_gap_gt_08_pixels": 1064,
+          "bright_gap_gt_08_pixels": 311,
+          "absolute_RGB_gap_p95": 0.2468878462910652,
+          "diagnostic_RGB_L1": 0.05319839343428612
+        },
+        {
+          "stage": "cleanup_red_black_r2_retry1",
+          "reliable_road_pixels": 6784,
+          "dark_gap_gt_08_pixels": 584,
+          "bright_gap_gt_08_pixels": 1362,
+          "absolute_RGB_gap_p95": 0.2952187210321426,
+          "diagnostic_RGB_L1": 0.06634297966957092
+        },
+        {
+          "stage": "cleanup_dynamic_strays_r3",
+          "reliable_road_pixels": 6784,
+          "dark_gap_gt_08_pixels": 595,
+          "bright_gap_gt_08_pixels": 1075,
+          "absolute_RGB_gap_p95": 0.2712023422122,
+          "diagnostic_RGB_L1": 0.05888507515192032
+        },
+        {
+          "stage": "cleanup_dark_static_r4",
+          "reliable_road_pixels": 6784,
+          "dark_gap_gt_08_pixels": 168,
+          "bright_gap_gt_08_pixels": 1187,
+          "absolute_RGB_gap_p95": 0.28320695608854285,
+          "diagnostic_RGB_L1": 0.05501485615968704
+        },
+        {
+          "stage": "cleanup_rgb_residual_r5",
+          "reliable_road_pixels": 6784,
+          "dark_gap_gt_08_pixels": 1416,
+          "bright_gap_gt_08_pixels": 110,
+          "absolute_RGB_gap_p95": 0.29919828325510023,
+          "diagnostic_RGB_L1": 0.05875686556100845
+        }
+      ]
+    }
+  ]
+}

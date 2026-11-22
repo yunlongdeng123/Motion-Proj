@@ -431,3 +431,7 @@ run `a20_sd15_sameview_20261122_r1`：[结果与组件](autoresearch/a20_sd15_sa
 ### A20-JOINT-RECONSTRUCTION-20261122：同一对象坐标高斯场重建
 
 [报告](autoresearch/a20_joint_reconstruction_20261122/report.md) · [HTML](autoresearch/a20_joint_reconstruction_20261122/index.html) · [执行账目](autoresearch/a20_joint_reconstruction_20261122/actual_execution_ledger.json) · [恢复](autoresearch/a20_joint_reconstruction_20261122/restore_index.json)。共同初始化419005行，原始与教师两源共同可学。三次独立G40，另有3×14工程更新；最终选第三次40步+0更新移除检验，有效418194行。期望距离MAE/P90 0.006290/0.013866米，灰模REJECTED、场景未过；材质/联合正式0，道路/其他对象/背景0。完整恢复与取回SHA已核验，历史组选项保留。F06部分完成，GPU保持开机。
+
+### A20-SCENE-RESIDUAL-CLEANUP-20261122：场景残影清理封存
+
+[报告](autoresearch/a20_scene_residual_cleanup_20261122/report.md) · [14组对照](autoresearch/a20_joint_reconstruction_20261122/index.html) · [恢复](autoresearch/a20_scene_residual_cleanup_20261122/restore_index.json)。固定a20/道路，按来源贡献执行0更新上下文清退；959行sidecar为保守新增候选，亮红条基本去除但整体仍partial，原候选/默认不变。1468/1500/1754/2006保存为失败/部分改善消融，亮紫与新黑拖影显示硬删除揭露下一层残留；场景未通过。120步控制取消且未启动。本轮0优化器更新，F06仍部分完成，GPU保持开机。

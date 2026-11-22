@@ -1,0 +1,39 @@
+{
+  "display": "当前任务：保留a20与道路，优先清理场景遮挡和外露伪影；按RGB、轮廓、接地与保留车验收。",
+  "quality": "partial_cleanup_no_final_acceptance",
+  "quality_summary": "本任务停止追加并封存：959行为保守清理候选，未获最终场景验收；原a20/default保持",
+  "internal_grey_is_hard_gate": false,
+  "historical_grey_rejection_preserved": true,
+  "final_stage": null,
+  "final_scene_qualified": false,
+  "root_report_complete": true,
+  "publication_ready": true,
+  "human_user_score": null,
+  "review_source": "root实际视检与本轮明确指派",
+  "actual_cleanup_stages": [
+    "scene_cleanup_visible_red_r1",
+    "scene_cleanup_red_black_r2",
+    "scene_cleanup_dynamic_strays_r3",
+    "scene_cleanup_dark_static_r4",
+    "scene_cleanup_rgb_residual_r5"
+  ],
+  "current_actor_sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+  "latest_actual_stage": "scene_cleanup_rgb_residual_r5",
+  "closed": true,
+  "cleanup_candidate": {
+    "group_id": "scene_cleanup_visible_red_r1",
+    "rows": 959,
+    "sidecar": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_visible_red_r1/context_inactive_sidecar.npz",
+      "sha256": "fe24d7f47e419adb82b6e11a71e28cee42bf831f9768d881c1a18ec393376256",
+      "bytes": 3261
+    },
+    "default_upgraded": false
+  },
+  "opacity_control": {
+    "planned_steps": 120,
+    "actual_steps": 0,
+    "status": "CANCELLED_NOT_STARTED"
+  },
+  "optimizer_updates_this_task": 0
+}

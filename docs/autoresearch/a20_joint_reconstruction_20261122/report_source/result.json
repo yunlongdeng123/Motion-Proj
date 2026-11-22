@@ -1863,6 +1863,1307 @@
       "reload_passed": null,
       "engineering_gate": null,
       "teacher_bg_alpha_max": null
+    },
+    {
+      "id": "scene_attribution_r1",
+      "label": "来源归因",
+      "state": "exported",
+      "role": "scene_residual_cleanup",
+      "stage": "context_diagnostic",
+      "planned_steps": null,
+      "actual_steps": 0,
+      "smoke_counts": null,
+      "smoke_passed": null,
+      "gate_passed": null,
+      "scene_qualified": null,
+      "real": [],
+      "novel": [],
+      "views": {
+        "raw086": {
+          "shared": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw086_shared_crop.png"
+          },
+          "source": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw086_native_static_background_shared_source_crop.png"
+          },
+          "removed": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw086_without_native_static_background_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw086_without_native_static_background_difference_crop.png"
+          },
+          "observed": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw086_observed_RGB_crop.png"
+          },
+          "actor": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw086_actor_only_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw086_road_standalone_crop.png"
+          }
+        },
+        "raw110": {
+          "shared": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw110_shared_crop.png"
+          },
+          "source": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw110_native_static_background_shared_source_crop.png"
+          },
+          "removed": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw110_without_native_static_background_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw110_without_native_static_background_difference_crop.png"
+          },
+          "observed": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw110_observed_RGB_crop.png"
+          },
+          "actor": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw110_actor_only_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/preview/raw110_road_standalone_crop.png"
+          }
+        }
+      },
+      "receipts": [
+        {
+          "label": "来源收据",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/proof.json"
+        },
+        {
+          "label": "按源贡献",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/metrics.json"
+        },
+        {
+          "label": "实际调用账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/attribution_r1/resource_ledger.json"
+        },
+        {
+          "label": "截图定位：真实86",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/user_reference_registration.json"
+        },
+        {
+          "label": "008只读参考",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/reference_008.json"
+        }
+      ],
+      "range_summary": null,
+      "reload_passed": null,
+      "engineering_gate": null,
+      "teacher_bg_alpha_max": null,
+      "grey_overview": null,
+      "extra_figures": [],
+      "architecture": "../../work/a20_scene_residual_cleanup_20261122/architecture.svg",
+      "crop_xyxy": [
+        455,
+        390,
+        730,
+        650
+      ],
+      "internal_grey_is_hard_gate": false,
+      "scene_acceptance": {
+        "rgb": "待视觉验收",
+        "silhouette": "待验收",
+        "road_contact": "待视觉验收",
+        "protected_instances": "待验收"
+      },
+      "summary": "原生静态背景为横条与黑拖影的主要来源；当前a20与道路资产固定，0参数更新",
+      "scene_status": "实际来源归因完成；尚未作清理质量结论",
+      "scene_kind": "attribution",
+      "actual_counts": {
+        "optimizer_updates": 0,
+        "native_calls": 50,
+        "feature_VJP_calls": 23
+      },
+      "mode_labels": {
+        "shared": "完整场景",
+        "source": "静态背景贡献",
+        "removed": "移除整类背景（诊断）",
+        "difference": "来源移除差值",
+        "observed": "实拍RGB",
+        "actor": "固定a20",
+        "road": "道路单独"
+      },
+      "default_modes": [
+        "shared",
+        "source"
+      ],
+      "scene_table": {
+        "headers": [
+          "相机",
+          "横条：背景αT",
+          "拖影：背景αT",
+          "横条：a20 αT",
+          "拖影：a20 αT"
+        ],
+        "rows": [
+          [
+            "raw86",
+            "0.671991",
+            "0.492348",
+            "0.085707",
+            "3.10871e-09"
+          ],
+          [
+            "raw110",
+            "0.555573",
+            "0.458526",
+            "0.167679",
+            "2.59705e-08"
+          ]
+        ]
+      },
+      "scene_stats": [
+        [
+          "主要来源",
+          "原生静态背景",
+          "原始归属owner=-1"
+        ],
+        [
+          "横条 / 拖影：背景αT",
+          "0.672 / 0.492",
+          "真实86；同深度排序平均贡献"
+        ],
+        [
+          "当前a20：横条 / 拖影αT",
+          "0.086 / ≈0",
+          "原始与教师两源之和"
+        ],
+        [
+          "RGBA贡献闭合",
+          "1.61e-06",
+          "真实86；float最大残差"
+        ]
+      ],
+      "diagnostic_ellipses": {
+        "raw086": [
+          128.5,
+          155,
+          69.5,
+          34
+        ],
+        "raw110": [
+          141,
+          195,
+          86,
+          35
+        ]
+      },
+      "scene_summary": "原生静态背景为横条与黑拖影的主要来源；当前a20与道路资产固定，0参数更新；RGB / 轮廓 / 接地 / 保留车为主验收，内部灰模仅诊断。"
+    },
+    {
+      "id": "scene_cleanup_red64_r1",
+      "label": "局部清退（270行，0更新）",
+      "state": "exported",
+      "role": "scene_residual_cleanup",
+      "stage": "context_diagnostic",
+      "planned_steps": null,
+      "actual_steps": 0,
+      "smoke_counts": null,
+      "smoke_passed": null,
+      "gate_passed": null,
+      "scene_qualified": null,
+      "real": [],
+      "novel": [],
+      "views": {
+        "raw086": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/preview/raw086_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/preview/raw086_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/preview/raw086_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/preview/raw086_road_standalone_crop.png"
+          }
+        },
+        "raw110": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/preview/raw110_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/preview/raw110_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/preview/raw110_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/preview/raw110_road_standalone_crop.png"
+          }
+        }
+      },
+      "receipts": [
+        {
+          "label": "清退收据",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/proof.json"
+        },
+        {
+          "label": "逐次整组检验",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/cleanup_ledger.json"
+        },
+        {
+          "label": "实际调用账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/resource_ledger.json"
+        },
+        {
+          "label": "恢复sidecar绑定",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red64_r1/scene_context_binding.json"
+        }
+      ],
+      "range_summary": null,
+      "reload_passed": true,
+      "engineering_gate": null,
+      "teacher_bg_alpha_max": null,
+      "grey_overview": null,
+      "extra_figures": [],
+      "architecture": "../../work/a20_scene_residual_cleanup_20261122/architecture.svg",
+      "crop_xyxy": [
+        455,
+        390,
+        730,
+        650
+      ],
+      "internal_grey_is_hard_gate": false,
+      "scene_acceptance": {
+        "rgb": "待视觉验收",
+        "silhouette": "a20完全不变",
+        "road_contact": "无新增孔洞；接地待视检",
+        "protected_instances": "两帧RGB / Alpha差0"
+      },
+      "summary": "272候选：270接受、2拒绝；23次整组移除检验。两帧保护检查通过，残影视觉待验收",
+      "scene_status": "局部清退实际完成；两帧保护通过；RGB / 接地视觉待验收",
+      "scene_kind": "cleanup",
+      "actual_counts": {
+        "optimizer_updates": 0,
+        "native_calls": 66,
+        "accepted_context_rows": 270,
+        "rejected_rows": 2,
+        "whole_set_trials": 23
+      },
+      "mode_labels": {
+        "before": "清理前",
+        "after": "清理后",
+        "difference": "前后差值",
+        "road": "道路单独"
+      },
+      "default_modes": [
+        "before",
+        "after"
+      ],
+      "scene_stats": [
+        [
+          "RGB残影",
+          "待视觉验收",
+          "尚未登记清除成功"
+        ],
+        [
+          "轮廓 / 固定a20",
+          "完全不变",
+          "RGB / Alpha / 深度差0"
+        ],
+        [
+          "接地保护",
+          "新增孔洞0",
+          "物理接地仍待视觉验收"
+        ],
+        [
+          "其他车辆保护",
+          "RGB / Alpha差0",
+          "真实86 / 110整组检查通过"
+        ]
+      ],
+      "scene_table": {
+        "headers": [
+          "相机",
+          "保留车RGB max",
+          "保留车Alpha max",
+          "区域外RGB max",
+          "新增地面孔洞"
+        ],
+        "rows": [
+          [
+            "raw86",
+            "0",
+            "0",
+            "0.00320742",
+            "0"
+          ],
+          [
+            "raw110",
+            "0",
+            "0",
+            "0.00135741",
+            "0"
+          ]
+        ]
+      },
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_red64_r1/context_inactive_sidecar.npz",
+        "sha256": "930c4e002653697c6f5317e5001ea084640aae092470fecf11811c994da3860d",
+        "bytes": 1688
+      },
+      "diagnostic_ellipses": {
+        "raw086": [
+          128.5,
+          155,
+          69.5,
+          34
+        ],
+        "raw110": [
+          141,
+          195,
+          86,
+          35
+        ]
+      },
+      "scene_summary": "272候选：270接受、2拒绝；23次整组移除检验。两帧保护检查通过，残影视觉待验收；RGB / 轮廓 / 接地 / 保留车为主验收，内部灰模仅诊断。"
+    },
+    {
+      "id": "scene_cleanup_visible_red_r1",
+      "label": "亮红条清退（959行，0更新）",
+      "state": "exported",
+      "role": "scene_residual_cleanup",
+      "stage": "context_diagnostic",
+      "planned_steps": null,
+      "actual_steps": 0,
+      "smoke_counts": null,
+      "smoke_passed": null,
+      "gate_passed": null,
+      "scene_qualified": null,
+      "real": [],
+      "novel": [],
+      "views": {
+        "raw086": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/preview/raw086_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/preview/raw086_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/preview/raw086_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/preview/raw086_road_standalone_crop.png"
+          }
+        },
+        "raw110": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/preview/raw110_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/preview/raw110_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/preview/raw110_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/preview/raw110_road_standalone_crop.png"
+          }
+        }
+      },
+      "receipts": [
+        {
+          "label": "清退收据",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/proof.json"
+        },
+        {
+          "label": "整组检验与继承账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/cleanup_ledger.json"
+        },
+        {
+          "label": "实际调用账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/resource_ledger.json"
+        },
+        {
+          "label": "恢复sidecar绑定",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_visible_red_r1/scene_context_binding.json"
+        }
+      ],
+      "range_summary": null,
+      "reload_passed": true,
+      "engineering_gate": null,
+      "teacher_bg_alpha_max": null,
+      "grey_overview": null,
+      "extra_figures": [],
+      "architecture": "../../work/a20_scene_residual_cleanup_20261122/architecture.svg",
+      "crop_xyxy": [
+        455,
+        390,
+        730,
+        650
+      ],
+      "internal_grey_is_hard_gate": false,
+      "scene_acceptance": {
+        "rgb": "部分改善；暗雾仍明显",
+        "silhouette": "a20完全不变",
+        "road_contact": "无新增孔洞；接地未作最终通过",
+        "protected_instances": "两帧RGB / Alpha差0"
+      },
+      "summary": "亮红条基本去除；整体部分改善，暗雾仍明显；两帧保护通过，a20和道路字节不变",
+      "scene_status": "亮红条基本去除；整体部分改善，暗雾仍明显；当前任务最终质量未定",
+      "scene_kind": "cleanup",
+      "visual_review": "partial",
+      "actual_counts": {
+        "optimizer_updates": 0,
+        "native_calls": 62,
+        "accepted_context_rows": 959,
+        "rejected_rows": 1,
+        "whole_set_trials": 21
+      },
+      "mode_labels": {
+        "before": "本次清理前",
+        "after": "本次清理后",
+        "difference": "本次差值",
+        "road": "道路单独"
+      },
+      "default_modes": [
+        "before",
+        "after"
+      ],
+      "scene_stats": [
+        [
+          "RGB残影",
+          "部分改善",
+          "亮红条基本去除；暗雾仍明显"
+        ],
+        [
+          "轮廓 / 固定a20",
+          "完全不变",
+          "RGB / Alpha / 深度差0"
+        ],
+        [
+          "接地保护",
+          "新增孔洞0",
+          "覆盖检查通过；最终接地未定"
+        ],
+        [
+          "其他车辆保护",
+          "RGB / Alpha差0",
+          "完整保留区域逐像素检查"
+        ]
+      ],
+      "scene_table": {
+        "headers": [
+          "相机",
+          "保留车RGB max",
+          "保留车Alpha max",
+          "区域外RGB max",
+          "新增地面孔洞"
+        ],
+        "rows": [
+          [
+            "raw86",
+            "0",
+            "0",
+            "0.000370532",
+            "0"
+          ],
+          [
+            "raw110",
+            "0",
+            "0",
+            "0.00171536",
+            "0"
+          ]
+        ]
+      },
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_visible_red_r1/context_inactive_sidecar.npz",
+        "sha256": "fe24d7f47e419adb82b6e11a71e28cee42bf831f9768d881c1a18ec393376256",
+        "bytes": 3261
+      },
+      "diagnostic_ellipses": {
+        "raw086": [
+          128.5,
+          155,
+          69.5,
+          34
+        ],
+        "raw110": [
+          141,
+          195,
+          86,
+          35
+        ]
+      },
+      "scene_summary": "亮红条基本去除；整体部分改善，暗雾仍明显；两帧保护通过，a20和道路字节不变；RGB / 轮廓 / 接地 / 保留车为主验收，内部灰模仅诊断。"
+    },
+    {
+      "id": "scene_cleanup_red_black_r2",
+      "label": "静态残影清退（累计1468行，0更新）",
+      "state": "exported",
+      "role": "scene_residual_cleanup",
+      "stage": "context_diagnostic",
+      "planned_steps": null,
+      "actual_steps": 0,
+      "smoke_counts": null,
+      "smoke_passed": null,
+      "gate_passed": null,
+      "scene_qualified": null,
+      "real": [],
+      "novel": [],
+      "views": {
+        "raw086": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw086_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw086_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw086_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw086_road_standalone_crop.png"
+          },
+          "initial": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw086_initial_crop.png"
+          },
+          "cumulative_difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw086_initial_to_after_difference_crop.png"
+          }
+        },
+        "raw110": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw110_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw110_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw110_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw110_road_standalone_crop.png"
+          },
+          "initial": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw110_initial_crop.png"
+          },
+          "cumulative_difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/preview/raw110_initial_to_after_difference_crop.png"
+          }
+        }
+      },
+      "receipts": [
+        {
+          "label": "清退收据",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/proof.json"
+        },
+        {
+          "label": "整组检验与继承账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/cleanup_ledger.json"
+        },
+        {
+          "label": "实际调用账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/resource_ledger.json"
+        },
+        {
+          "label": "恢复sidecar绑定",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_red_black_r2_retry1/scene_context_binding.json"
+        }
+      ],
+      "range_summary": null,
+      "reload_passed": true,
+      "engineering_gate": null,
+      "teacher_bg_alpha_max": null,
+      "grey_overview": null,
+      "extra_figures": [],
+      "architecture": "../../work/a20_scene_residual_cleanup_20261122/architecture.svg",
+      "crop_xyxy": [
+        455,
+        390,
+        730,
+        650
+      ],
+      "internal_grey_is_hard_gate": false,
+      "scene_acceptance": {
+        "rgb": "部分改善；暗雾仍明显",
+        "silhouette": "a20完全不变",
+        "road_contact": "无新增孔洞；接地未作最终通过",
+        "protected_instances": "两帧RGB / Alpha差0"
+      },
+      "summary": "继承959行并新增509行；部分改善，暗雾仍明显；两帧保护通过，a20和道路字节不变",
+      "scene_status": "继承959行并新增509行；部分改善，暗雾仍明显；当前任务最终质量未定",
+      "scene_kind": "cleanup",
+      "visual_review": "partial",
+      "actual_counts": {
+        "optimizer_updates": 0,
+        "native_calls": 96,
+        "accepted_context_rows": 1468,
+        "rejected_rows": 3,
+        "whole_set_trials": 37
+      },
+      "mode_labels": {
+        "before": "本次清理前",
+        "after": "本次清理后",
+        "difference": "本次差值",
+        "road": "道路单独",
+        "initial": "初始场景",
+        "cumulative_difference": "初始至当前差值"
+      },
+      "default_modes": [
+        "initial",
+        "after"
+      ],
+      "scene_stats": [
+        [
+          "RGB残影",
+          "部分改善",
+          "亮红条基本去除；暗雾仍明显"
+        ],
+        [
+          "轮廓 / 固定a20",
+          "完全不变",
+          "RGB / Alpha / 深度差0"
+        ],
+        [
+          "接地保护",
+          "新增孔洞0",
+          "覆盖检查通过；最终接地未定"
+        ],
+        [
+          "其他车辆保护",
+          "RGB / Alpha差0",
+          "完整保留区域逐像素检查"
+        ]
+      ],
+      "scene_table": {
+        "headers": [
+          "相机",
+          "保留车RGB max",
+          "保留车Alpha max",
+          "区域外RGB max",
+          "新增地面孔洞"
+        ],
+        "rows": [
+          [
+            "raw86",
+            "0",
+            "0",
+            "0.00320742",
+            "0"
+          ],
+          [
+            "raw110",
+            "0",
+            "0",
+            "0.00171536",
+            "0"
+          ]
+        ]
+      },
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_red_black_r2_retry1/context_inactive_sidecar.npz",
+        "sha256": "b55847714506c63eba8be45894f818ba652d653e8c5a26e6fa532658997da548",
+        "bytes": 4382
+      },
+      "diagnostic_ellipses": {
+        "raw086": [
+          128.5,
+          155,
+          69.5,
+          34
+        ],
+        "raw110": [
+          141,
+          195,
+          86,
+          35
+        ]
+      },
+      "scene_summary": "继承959行并新增509行；部分改善，暗雾仍明显；两帧保护通过，a20和道路字节不变；RGB / 轮廓 / 接地 / 保留车为主验收，内部灰模仅诊断。"
+    },
+    {
+      "id": "scene_cleanup_dynamic_strays_r3",
+      "label": "外露杂散清退（累计1500行，0更新）",
+      "state": "exported",
+      "role": "scene_residual_cleanup",
+      "stage": "context_diagnostic",
+      "planned_steps": null,
+      "actual_steps": 0,
+      "smoke_counts": null,
+      "smoke_passed": null,
+      "gate_passed": null,
+      "scene_qualified": null,
+      "real": [],
+      "novel": [],
+      "views": {
+        "raw086": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw086_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw086_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw086_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw086_road_standalone_crop.png"
+          },
+          "initial": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw086_initial_crop.png"
+          },
+          "cumulative_difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw086_initial_to_after_difference_crop.png"
+          }
+        },
+        "raw110": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw110_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw110_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw110_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw110_road_standalone_crop.png"
+          },
+          "initial": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw110_initial_crop.png"
+          },
+          "cumulative_difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/preview/raw110_initial_to_after_difference_crop.png"
+          }
+        }
+      },
+      "receipts": [
+        {
+          "label": "清退收据",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/proof.json"
+        },
+        {
+          "label": "整组检验与继承账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/cleanup_ledger.json"
+        },
+        {
+          "label": "实际调用账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/resource_ledger.json"
+        },
+        {
+          "label": "恢复sidecar绑定",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dynamic_strays_r3/scene_context_binding.json"
+        }
+      ],
+      "range_summary": null,
+      "reload_passed": true,
+      "engineering_gate": null,
+      "teacher_bg_alpha_max": null,
+      "grey_overview": null,
+      "extra_figures": [],
+      "architecture": "../../work/a20_scene_residual_cleanup_20261122/architecture.svg",
+      "crop_xyxy": [
+        455,
+        390,
+        730,
+        650
+      ],
+      "internal_grey_is_hard_gate": false,
+      "scene_acceptance": {
+        "rgb": "部分改善；暗雾仍明显",
+        "silhouette": "a20完全不变",
+        "road_contact": "无新增孔洞；接地未作最终通过",
+        "protected_instances": "两帧RGB / Alpha差0"
+      },
+      "summary": "1468静态行＋32条外露动态杂散；部分改善，暗雾仍明显；两帧保护通过，a20和道路字节不变；32条杂散属于原动态来源8/14，其可见车辆区域RGB/Alpha差0，未删除车辆主体",
+      "scene_status": "1468静态行＋32条外露动态杂散；部分改善，暗雾仍明显；当前任务最终质量未定",
+      "scene_kind": "cleanup",
+      "visual_review": "partial",
+      "actual_counts": {
+        "optimizer_updates": 0,
+        "native_calls": 28,
+        "accepted_context_rows": 1500,
+        "rejected_rows": 0,
+        "whole_set_trials": 1
+      },
+      "mode_labels": {
+        "before": "本次清理前",
+        "after": "本次清理后",
+        "difference": "本次差值",
+        "road": "道路单独",
+        "initial": "初始场景",
+        "cumulative_difference": "初始至当前差值"
+      },
+      "default_modes": [
+        "initial",
+        "after"
+      ],
+      "scene_stats": [
+        [
+          "RGB残影",
+          "部分改善",
+          "亮红条基本去除；暗雾仍明显"
+        ],
+        [
+          "轮廓 / 固定a20",
+          "完全不变",
+          "RGB / Alpha / 深度差0"
+        ],
+        [
+          "接地保护",
+          "新增孔洞0",
+          "覆盖检查通过；最终接地未定"
+        ],
+        [
+          "其他车辆保护",
+          "完整可见区差0",
+          "来源8/14可见区域另行核验"
+        ]
+      ],
+      "scene_table": {
+        "headers": [
+          "相机",
+          "保留车RGB max",
+          "保留车Alpha max",
+          "区域外RGB max",
+          "新增地面孔洞"
+        ],
+        "rows": [
+          [
+            "raw86",
+            "0",
+            "0",
+            "0.00320742",
+            "0"
+          ],
+          [
+            "raw110",
+            "0",
+            "0",
+            "0.00171536",
+            "0"
+          ]
+        ]
+      },
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dynamic_strays_r3/context_inactive_sidecar.npz",
+        "sha256": "031375730337a3b409c01154b490c5ba2cdfb3882d4118a1d7828a32e5beb6cb",
+        "bytes": 8257
+      },
+      "dynamic_stray_rows": 32,
+      "whole_actor_deletions": 0,
+      "checked_owner_masks_exact_zero": true,
+      "diagnostic_ellipses": {
+        "raw086": [
+          128.5,
+          155,
+          69.5,
+          34
+        ],
+        "raw110": [
+          141,
+          195,
+          86,
+          35
+        ]
+      },
+      "scene_summary": "1468静态行＋32条外露动态杂散；部分改善，暗雾仍明显；两帧保护通过，a20和道路字节不变；32条杂散属于原动态来源8/14，其可见车辆区域RGB/Alpha差0，未删除车辆主体；RGB / 轮廓 / 接地 / 保留车为主验收，内部灰模仅诊断。"
+    },
+    {
+      "id": "scene_cleanup_dark_static_r4",
+      "label": "暗残影清退（累计1754行，0更新）",
+      "state": "exported",
+      "role": "scene_residual_cleanup",
+      "stage": "context_diagnostic",
+      "planned_steps": null,
+      "actual_steps": 0,
+      "smoke_counts": null,
+      "smoke_passed": null,
+      "gate_passed": null,
+      "scene_qualified": null,
+      "real": [],
+      "novel": [],
+      "views": {
+        "raw086": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw086_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw086_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw086_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw086_road_standalone_crop.png"
+          },
+          "initial": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw086_initial_crop.png"
+          },
+          "cumulative_difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw086_initial_to_after_difference_crop.png"
+          }
+        },
+        "raw110": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw110_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw110_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw110_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw110_road_standalone_crop.png"
+          },
+          "initial": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw110_initial_crop.png"
+          },
+          "cumulative_difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/preview/raw110_initial_to_after_difference_crop.png"
+          }
+        }
+      },
+      "receipts": [
+        {
+          "label": "清退收据",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/proof.json"
+        },
+        {
+          "label": "整组检验与继承账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/cleanup_ledger.json"
+        },
+        {
+          "label": "实际调用账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/resource_ledger.json"
+        },
+        {
+          "label": "恢复sidecar绑定",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_dark_static_r4/scene_context_binding.json"
+        },
+        {
+          "label": "冻结道路残差诊断",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/residual_diagnostics.json"
+        }
+      ],
+      "range_summary": null,
+      "reload_passed": true,
+      "engineering_gate": null,
+      "teacher_bg_alpha_max": null,
+      "grey_overview": null,
+      "extra_figures": [],
+      "architecture": "../../work/a20_scene_residual_cleanup_20261122/architecture.svg",
+      "crop_xyxy": [
+        455,
+        390,
+        730,
+        650
+      ],
+      "internal_grey_is_hard_gate": false,
+      "scene_acceptance": {
+        "rgb": "部分改善；暗雾仍明显",
+        "silhouette": "a20完全不变",
+        "road_contact": "无新增孔洞；接地未作最终通过",
+        "protected_instances": "两帧RGB / Alpha差0"
+      },
+      "summary": "1722静态行＋32条外露动态杂散；相较1500行改善很小，灰紫暗雾仍在；两帧保护通过，a20和道路字节不变；32条杂散属于原动态来源8/14，其可见车辆区域RGB/Alpha差0，未删除车辆主体",
+      "scene_status": "1722静态行＋32条外露动态杂散；相较1500行改善很小，灰紫暗雾仍在；当前任务最终质量未定",
+      "scene_kind": "cleanup",
+      "visual_review": "partial",
+      "actual_counts": {
+        "optimizer_updates": 0,
+        "native_calls": 88,
+        "accepted_context_rows": 1754,
+        "rejected_rows": 2,
+        "whole_set_trials": 31
+      },
+      "mode_labels": {
+        "before": "本次清理前",
+        "after": "本次清理后",
+        "difference": "本次差值",
+        "road": "道路单独",
+        "initial": "初始场景",
+        "cumulative_difference": "初始至当前差值"
+      },
+      "default_modes": [
+        "initial",
+        "after"
+      ],
+      "scene_stats": [
+        [
+          "RGB残影",
+          "改善很小",
+          "相较1500行；灰紫暗雾仍明显"
+        ],
+        [
+          "轮廓 / 固定a20",
+          "完全不变",
+          "RGB / Alpha / 深度差0"
+        ],
+        [
+          "接地保护",
+          "新增孔洞0",
+          "覆盖检查通过；最终接地未定"
+        ],
+        [
+          "其他车辆保护",
+          "完整可见区差0",
+          "来源8/14可见区域另行核验"
+        ]
+      ],
+      "scene_table": {
+        "headers": [
+          "相机",
+          "保留车RGB max",
+          "保留车Alpha max",
+          "区域外RGB max",
+          "新增地面孔洞"
+        ],
+        "rows": [
+          [
+            "raw86",
+            "0",
+            "0",
+            "0.00320742",
+            "0"
+          ],
+          [
+            "raw110",
+            "0",
+            "0",
+            "0.00171536",
+            "0"
+          ]
+        ]
+      },
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/context_inactive_sidecar.npz",
+        "sha256": "41560f965c32f0aeebe470b7862d7ef8f648191756502fcb86f790b9ba728874",
+        "bytes": 9252
+      },
+      "dynamic_stray_rows": 32,
+      "whole_actor_deletions": 0,
+      "checked_owner_masks_exact_zero": true,
+      "cumulative_static_context_rows": 1722,
+      "new_static_context_rows_retired": 254,
+      "residual_diagnostic_reference": "fixed actual road RGB normalized only at alpha >= .95; diagnostic, not ground truth",
+      "residual_diagnostics": [
+        [
+          "86",
+          "772 → 143",
+          "277 → 772",
+          "0.237 → 0.233"
+        ],
+        [
+          "110",
+          "1096 → 168",
+          "317 → 1187",
+          "0.252 → 0.283"
+        ]
+      ],
+      "diagnostic_ellipses": {
+        "raw086": [
+          128.5,
+          155,
+          69.5,
+          34
+        ],
+        "raw110": [
+          141,
+          195,
+          86,
+          35
+        ]
+      },
+      "scene_summary": "1722静态行＋32条外露动态杂散；相较1500行改善很小，灰紫暗雾仍在；两帧保护通过，a20和道路字节不变；32条杂散属于原动态来源8/14，其可见车辆区域RGB/Alpha差0，未删除车辆主体；RGB / 轮廓 / 接地 / 保留车为主验收，内部灰模仅诊断。"
+    },
+    {
+      "id": "scene_cleanup_rgb_residual_r5",
+      "label": "RGB残影清退（累计2006行，0更新）",
+      "state": "exported",
+      "role": "scene_residual_cleanup",
+      "stage": "context_diagnostic",
+      "planned_steps": null,
+      "actual_steps": 0,
+      "smoke_counts": null,
+      "smoke_passed": null,
+      "gate_passed": null,
+      "scene_qualified": null,
+      "real": [],
+      "novel": [],
+      "views": {
+        "raw086": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw086_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw086_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw086_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw086_road_standalone_crop.png"
+          },
+          "initial": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw086_initial_crop.png"
+          },
+          "cumulative_difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw086_initial_to_after_difference_crop.png"
+          }
+        },
+        "raw110": {
+          "before": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw110_before_crop.png"
+          },
+          "after": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw110_after_crop.png"
+          },
+          "difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw110_before_after_difference_crop.png"
+          },
+          "road": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw110_road_standalone_crop.png"
+          },
+          "initial": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw110_initial_crop.png"
+          },
+          "cumulative_difference": {
+            "rgb": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/preview/raw110_initial_to_after_difference_crop.png"
+          }
+        }
+      },
+      "receipts": [
+        {
+          "label": "清退收据",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/proof.json"
+        },
+        {
+          "label": "整组检验与继承账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/cleanup_ledger.json"
+        },
+        {
+          "label": "实际调用账目",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/resource_ledger.json"
+        },
+        {
+          "label": "恢复sidecar绑定",
+          "href": "../../work/a20_scene_residual_cleanup_20261122/takeback/cleanup_rgb_residual_r5/scene_context_binding.json"
+        }
+      ],
+      "range_summary": null,
+      "reload_passed": true,
+      "engineering_gate": null,
+      "teacher_bg_alpha_max": null,
+      "grey_overview": null,
+      "extra_figures": [],
+      "architecture": "../../work/a20_scene_residual_cleanup_20261122/architecture.svg",
+      "crop_xyxy": [
+        455,
+        390,
+        730,
+        650
+      ],
+      "internal_grey_is_hard_gate": false,
+      "scene_acceptance": {
+        "rgb": "紫雾去除但新黑拖影暴露；部分改善",
+        "silhouette": "a20完全不变",
+        "road_contact": "无新增孔洞；接地未作最终通过",
+        "protected_instances": "两帧RGB / Alpha差0"
+      },
+      "summary": "1959静态行＋47条动态杂散；紫雾去除，但新黑拖影暴露，最终质量未通过；两帧保护通过，a20和道路字节不变；47条杂散属于原动态来源8/14，其可见车辆区域RGB/Alpha差0，未删除车辆主体",
+      "scene_status": "1959静态行＋47条动态杂散；紫雾去除，但新黑拖影暴露，最终质量未通过；当前任务最终质量未定",
+      "scene_kind": "cleanup",
+      "visual_review": "partial",
+      "actual_counts": {
+        "optimizer_updates": 0,
+        "native_calls": 108,
+        "accepted_context_rows": 2006,
+        "rejected_rows": 4,
+        "whole_set_trials": 41
+      },
+      "mode_labels": {
+        "before": "本次清理前",
+        "after": "本次清理后",
+        "difference": "本次差值",
+        "road": "道路单独",
+        "initial": "初始场景",
+        "cumulative_difference": "初始至当前差值"
+      },
+      "default_modes": [
+        "initial",
+        "after"
+      ],
+      "scene_stats": [
+        [
+          "RGB残影",
+          "新黑拖影暴露",
+          "紫雾去除；整体未通过最终验收"
+        ],
+        [
+          "轮廓 / 固定a20",
+          "完全不变",
+          "RGB / Alpha / 深度差0"
+        ],
+        [
+          "接地保护",
+          "新增孔洞0",
+          "覆盖检查通过；最终接地未定"
+        ],
+        [
+          "其他车辆保护",
+          "完整可见区差0",
+          "来源8/14可见区域另行核验"
+        ]
+      ],
+      "scene_table": {
+        "headers": [
+          "相机",
+          "保留车RGB max",
+          "保留车Alpha max",
+          "区域外RGB max",
+          "新增地面孔洞"
+        ],
+        "rows": [
+          [
+            "raw86",
+            "0",
+            "0",
+            "0.00378934",
+            "0"
+          ],
+          [
+            "raw110",
+            "0",
+            "0",
+            "0.00171536",
+            "0"
+          ]
+        ]
+      },
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/context_inactive_sidecar.npz",
+        "sha256": "002d33fa65080fe1635bb51810fc01edf72a72e8df9bdae0fa5c9ce95f6d824a",
+        "bytes": 10250
+      },
+      "dynamic_stray_rows": 47,
+      "whole_actor_deletions": 0,
+      "checked_owner_masks_exact_zero": true,
+      "cumulative_static_context_rows": 1959,
+      "cumulative_dynamic_context_rows": 47,
+      "diagnostic_ellipses": {
+        "raw086": [
+          128.5,
+          155,
+          69.5,
+          34
+        ],
+        "raw110": [
+          141,
+          195,
+          86,
+          35
+        ]
+      },
+      "scene_summary": "1959静态行＋47条动态杂散；紫雾去除，但新黑拖影暴露，最终质量未通过；两帧保护通过，a20和道路字节不变；47条杂散属于原动态来源8/14，其可见车辆区域RGB/Alpha差0，未删除车辆主体；RGB / 轮廓 / 接地 / 保留车为主验收，内部灰模仅诊断。"
     }
   ],
   "current_group": "r3_ablation",
@@ -2012,5 +3313,67 @@
   "scene_qualified": false,
   "publication_ready": true,
   "root_report_complete": true,
-  "disclaimer": "渲染期望距离由native depth_sum/alpha换算ray range，离散多层可能混合，始终与灰模验收分开。期望深度法向由实际期望深度梯度计算。生成隐藏区域为先验；BUILD86/110与合成新视图分别统计，未读取封存帧。各40步组独立从共同初始化重放；smoke工程通过或孤立覆盖不能替代场景准入。"
+  "disclaimer": "渲染期望距离由native depth_sum/alpha换算ray range，离散多层可能混合，始终与灰模验收分开。期望深度法向由实际期望深度梯度计算。生成隐藏区域为先验；BUILD86/110与合成新视图分别统计，未读取封存帧。各40步组独立从共同初始化重放；smoke工程通过或孤立覆盖不能替代场景准入。",
+  "scene_cleanup": {
+    "root_report_complete": true,
+    "scene_qualified": false,
+    "visual_review": "partial_cleanup_no_final_acceptance",
+    "actor_asset_sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "main_acceptance": [
+      "RGB",
+      "silhouette",
+      "road_contact",
+      "protected_instances"
+    ],
+    "internal_grey_is_hard_gate": false,
+    "cleanup_candidate": {
+      "group_id": "scene_cleanup_visible_red_r1",
+      "rows": 959,
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_visible_red_r1/context_inactive_sidecar.npz",
+        "sha256": "fe24d7f47e419adb82b6e11a71e28cee42bf831f9768d881c1a18ec393376256",
+        "bytes": 3261
+      },
+      "default_upgraded": false
+    }
+  },
+  "root_scope": {
+    "display": "当前任务：保留a20与道路，优先清理场景遮挡和外露伪影；按RGB、轮廓、接地与保留车验收。",
+    "quality": "partial_cleanup_no_final_acceptance",
+    "quality_summary": "本任务停止追加并封存：959行为保守清理候选，未获最终场景验收；原a20/default保持",
+    "internal_grey_is_hard_gate": false,
+    "historical_grey_rejection_preserved": true,
+    "final_stage": null,
+    "final_scene_qualified": false,
+    "root_report_complete": true,
+    "publication_ready": true,
+    "human_user_score": null,
+    "review_source": "root实际视检与本轮明确指派",
+    "actual_cleanup_stages": [
+      "scene_cleanup_visible_red_r1",
+      "scene_cleanup_red_black_r2",
+      "scene_cleanup_dynamic_strays_r3",
+      "scene_cleanup_dark_static_r4",
+      "scene_cleanup_rgb_residual_r5"
+    ],
+    "current_actor_sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "latest_actual_stage": "scene_cleanup_rgb_residual_r5",
+    "closed": true,
+    "cleanup_candidate": {
+      "group_id": "scene_cleanup_visible_red_r1",
+      "rows": 959,
+      "sidecar": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_visible_red_r1/context_inactive_sidecar.npz",
+        "sha256": "fe24d7f47e419adb82b6e11a71e28cee42bf831f9768d881c1a18ec393376256",
+        "bytes": 3261
+      },
+      "default_upgraded": false
+    },
+    "opacity_control": {
+      "planned_steps": 120,
+      "actual_steps": 0,
+      "status": "CANCELLED_NOT_STARTED"
+    },
+    "optimizer_updates_this_task": 0
+  }
 }

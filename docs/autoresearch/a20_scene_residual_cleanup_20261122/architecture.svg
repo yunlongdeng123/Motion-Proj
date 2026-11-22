@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="450" viewBox="0 0 1320 450">
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0L10 4L0 8Z" fill="#8ac8de"/></marker><style>text{font-family:'Microsoft YaHei',sans-serif;fill:#edf5ff}.h{font-size:20px;font-weight:600}.s{font-size:16px}.b{fill:#173348;stroke:#659fb8;stroke-width:2;rx:12}.g{fill:#174338;stroke:#63bea0;stroke-width:2;rx:12}.o{fill:#453a28;stroke:#d7b16b;stroke-width:2;rx:12}.l{stroke:#8ac8de;stroke-width:3;fill:none;marker-end:url(#a)}</style></defs>
+<rect width="1320" height="450" fill="#0b1723"/><text x="28" y="42" font-size="29" font-weight="700">a20：场景残影清理</text>
+<rect class="b" x="28" y="104" width="235" height="134"/><text class="h" x="46" y="139">固定 a20 候选 + 道路</text><text class="s" x="46" y="177">保留当前对象资产</text><text class="s" x="46" y="209">相机 / 轨迹 / 原始数据固定</text>
+<rect class="g" x="310" y="104" width="278" height="134"/><text class="h" x="328" y="139">原生上下文来源贡献归因</text><text class="s" x="328" y="177">定位横条、黑拖影与遮挡来源</text><text class="s" x="328" y="209">记录实际贡献与来源行标识</text>
+<rect class="g" x="636" y="104" width="281" height="134"/><text class="h" x="654" y="139">受保护实例约束的残影清退</text><text class="s" x="654" y="177">按来源行执行整场移除检验</text><text class="s" x="654" y="209">保护其他车辆与可信道路</text>
+<rect class="b" x="965" y="104" width="327" height="134"/><text class="h" x="983" y="139">统一深度渲染 / 保存 sidecar</text><text class="s" x="983" y="177">RGB / Alpha / 遮挡前后对照</text><text class="s" x="983" y="209">来源记录、清退清单、恢复指针</text>
+<path class="l" d="M263 171H310"/><path class="l" d="M588 171H636"/><path class="l" d="M917 171H965"/>
+<rect class="o" x="310" y="306" width="607" height="96"/><text class="h" x="330" y="341">主验收：RGB / 轮廓 / 接地 / 其他车辆保护</text><text class="s" x="330" y="375">实际同相机前后比较；内部灰模仅作诊断，不作为完美硬门</text><path class="l" d="M777 306V238"/>
+</svg>

@@ -1,0 +1,272 @@
+{
+  "schema": "a20.scene_residual_cleanup.cold_reload_proof.v1",
+  "complete": true,
+  "passed": true,
+  "cleanup_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5",
+  "sidecar": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/context_inactive_sidecar.npz",
+    "sha256": "002d33fa65080fe1635bb51810fc01edf72a72e8df9bdae0fa5c9ce95f6d824a",
+    "bytes": 10250
+  },
+  "binding": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/scene_context_binding.json",
+    "sha256": "f38984202b19ff2c2ed015d4163852ed88c32323428990d5e723b14f7ecc531c",
+    "bytes": 35110
+  },
+  "original_proof": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/proof.json",
+    "sha256": "289095f97b2d3003192e616e481d77e2c8b0e277fff73518e61d894c0020c0f0",
+    "bytes": 76564
+  },
+  "script": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/runtime/cold_reload_cleanup.py",
+    "sha256": "2bd960e9b564a5edd89e484a336a0e0c9e32abcd4e33cea256d82ebc9087cd74",
+    "bytes": 20912
+  },
+  "original_runtime": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_gpu.py",
+    "sha256": "ac44a59fae6ab4c6a9f5c48be825a13c83e92d6f9864123f7c6f45ceb8f3b328",
+    "bytes": 67669
+  },
+  "actor": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/assets/geometry_ablation/actor.npz",
+    "sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "bytes": 24031638
+  },
+  "actor_checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/checkpoints/geometry_ablation_step0040.pt",
+    "sha256": "d76911141106a102ef592a93ba1c0352982b2cadcd4130146dcfe65dfc438907",
+    "bytes": 199228354
+  },
+  "original_road": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz",
+    "sha256": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+    "bytes": 18628894
+  },
+  "native_source_manifest": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/native_bindings.json",
+    "sha256": "bc23e8e9130ed622c570890a8c456c09a7ebfb196b96a9b71e35ddcd6a603a86",
+    "bytes": 8927
+  },
+  "native_topology": {
+    "static_rows": 1558011,
+    "dynamic_rows": 1035290
+  },
+  "inactive_rows": 2006,
+  "static_rows": 1959,
+  "dynamic_rows": 47,
+  "exact_source_branch_validated": true,
+  "loaded_sidecar_applied_to_original_Runtime": true,
+  "reused_accepted_variable": false,
+  "no_road_or_new_a20_rows": true,
+  "context_checks": [
+    {
+      "raw": 86,
+      "selected_present_rows": 2006,
+      "static_present_rows": 1959,
+      "dynamic_present_rows": 47,
+      "selected_owner_counts": {
+        "-1": 1959,
+        "8": 46,
+        "14": 1
+      },
+      "original_context_mask_active_rows": 2006
+    },
+    {
+      "raw": 110,
+      "selected_present_rows": 2006,
+      "static_present_rows": 1959,
+      "dynamic_present_rows": 47,
+      "selected_owner_counts": {
+        "-1": 1959,
+        "8": 46,
+        "14": 1
+      },
+      "original_context_mask_active_rows": 2006
+    }
+  ],
+  "actual_shared_render_comparisons": [
+    {
+      "raw": 86,
+      "maximum": {
+        "rgb": 0.0,
+        "alpha": 0.0,
+        "actor_alpha": 0.0,
+        "K_alpha": 0.0
+      },
+      "tolerance": 5e-06
+    },
+    {
+      "raw": 110,
+      "maximum": {
+        "rgb": 0.0,
+        "alpha": 0.0,
+        "actor_alpha": 0.0,
+        "K_alpha": 0.0
+      },
+      "tolerance": 5e-06
+    }
+  ],
+  "actor_only_exact_zero_change": [
+    {
+      "raw": 86,
+      "maximum": {
+        "rgb": 0.0,
+        "alpha": 0.0,
+        "depth_sum_m": 0.0
+      },
+      "tolerance": 0.0
+    },
+    {
+      "raw": 110,
+      "maximum": {
+        "rgb": 0.0,
+        "alpha": 0.0,
+        "depth_sum_m": 0.0
+      },
+      "tolerance": 0.0
+    }
+  ],
+  "actor_and_global_active_unchanged": true,
+  "Adam_unchanged": true,
+  "source_files_unchanged": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/scene_context_binding.json": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/proof.json": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/runtime/cold_reload_cleanup.py": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/context_inactive_sidecar.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/assets/geometry_ablation/actor.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/checkpoints/geometry_ablation_step0040.pt": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/native_bindings.json": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/evaluation/raw086_after.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/evaluation/raw110_after.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/runtime/source_attribution.py": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/context_inactive_sidecar.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/evaluation/raw086_before.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/fixed_domains/raw086.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/evaluation/raw110_before.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/fixed_domains/raw110.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/evaluation/retained_owner_visible_alpha_before_after.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/dynamic_chkpnt30000.pth": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/env_light_chkpnt30000.pth": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1/ownership/semantic_ownership.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_core.py": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_gpu.py": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/initialization/joint_actor_init.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/initialization/manifest.json": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/formal80_r1/actor.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/mapping.json": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/visible_mask.png": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/unknown_potential_mask.png": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/known_background_mask.png": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/T_native_scene_final80_r1/frozen_metric_masks/086_labels.png": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/mapping.json": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/visible_mask.png": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/unknown_potential_mask.png": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/known_background_mask.png": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/T_native_scene_final80_r1/frozen_metric_masks/110_labels.png": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/glass_return_diagnostic_r1/grouped_returns.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/frozen_formal_r2/run_joint.py": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/a9_ownership_sidecar.npz": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student/opaque_anchor_selection.json": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student/contract.json": true
+  },
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/scene_context_binding.json": "f38984202b19ff2c2ed015d4163852ed88c32323428990d5e723b14f7ecc531c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/proof.json": "289095f97b2d3003192e616e481d77e2c8b0e277fff73518e61d894c0020c0f0",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/runtime/cold_reload_cleanup.py": "2bd960e9b564a5edd89e484a336a0e0c9e32abcd4e33cea256d82ebc9087cd74",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/context_inactive_sidecar.npz": "002d33fa65080fe1635bb51810fc01edf72a72e8df9bdae0fa5c9ce95f6d824a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/assets/geometry_ablation/actor.npz": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/checkpoints/geometry_ablation_step0040.pt": "d76911141106a102ef592a93ba1c0352982b2cadcd4130146dcfe65dfc438907",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/native_bindings.json": "bc23e8e9130ed622c570890a8c456c09a7ebfb196b96a9b71e35ddcd6a603a86",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/evaluation/raw086_after.npz": "eb60866dcbf3aac8fd40b68255390c15cf1aa7d724a284976a4efae03ffb7af6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/evaluation/raw110_after.npz": "31966b3f1a4d1a690ec91f0d9e2d9be8253513e5438196263fa6d8a95f97d98b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/runtime/source_attribution.py": "e9f48392cda06252c5097296e254174859687bc9a5763bd800461e105f48b818",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/context_inactive_sidecar.npz": "41560f965c32f0aeebe470b7862d7ef8f648191756502fcb86f790b9ba728874",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/evaluation/raw086_before.npz": "1b5ae03e9b3b475c77ee6a80e34c67c0b8e52bcbe9ee4486a039102c7b99cd2e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/fixed_domains/raw086.npz": "d7d10cf2e5d91f6a12d12117a539e54bdbf6c4a92e8933ecdb0adf7da7342007",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/evaluation/raw110_before.npz": "46c01ee2e0c944c766da8b984f21bb69cd1010a1e4da936de2adf81b00381b12",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_dark_static_r4/fixed_domains/raw110.npz": "01fa9c04d16aa80163423a66bbd352f2acaa2407fc6679c4b1ed61624cd9ea69",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_scene_residual_cleanup_20261122_r1/cleanup_rgb_residual_r5/evaluation/retained_owner_visible_alpha_before_after.npz": "728ec3fecf8bbb9c7722610eb4239371743ac034f711fa0be1d293776e04ae7e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth": "23d7f2c74f7ac96211795223c2b07910eadf52a3813105644d24a2189763b548",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/dynamic_chkpnt30000.pth": "260d5b87b7abb7b85afbcc9a546439afd6ac4cdfe86e1e1c1a1c853edc002611",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/env_light_chkpnt30000.pth": "83e066d9a4d83d33c110361bced915962c2d0b1305d5948a390ad19d1e5e70ae",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1/ownership/semantic_ownership.npz": "9828e1ce6cc1d6ff59ba3508d1bea4f7f950619f3779b75a6b5b2dcf56af93fb",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_core.py": "bde889e6ddd00ed4dea55ac4bfe11497faad719bdaac8086ec1cd7d41501b869",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_gpu.py": "ac44a59fae6ab4c6a9f5c48be825a13c83e92d6f9864123f7c6f45ceb8f3b328",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/initialization/joint_actor_init.npz": "1e7964eda4a06ae835cc0d8483c5bdce06a21c707dc35120a44b04914a937dc4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/initialization/manifest.json": "366d866c0fc455257fc9e1776dd65baf0f8e09363acdcf0160b96573443f593d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/formal80_r1/actor.npz": "0dc65c4aa9fefbf73a1c2d482c0015915818c5bf0ac34d5d318e0784693da53a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/mapping.json": "d2e1a478bcd2d08ec4a1ddaedaadc71483e8de230eb19c48152364cfed92e3ab",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/visible_mask.png": "e5489d29ee6d756313e6a71d0b2db0a1f0962acef4c095e0b3c71a8fdf7e86da",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/unknown_potential_mask.png": "5a45429728753d4c4e148af2b195db5bd03a57a744f936162fb05ae02e0637c3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/known_background_mask.png": "e37463c9cbc092d54ff7a870f7a5ef68f4eff873d7c0688de5cf008c7bb29235",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/T_native_scene_final80_r1/frozen_metric_masks/086_labels.png": "e3482af3fc9e545b5ba3091c8fc22a4f6aada8e8c5ebc1881498940460b69699",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/mapping.json": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/visible_mask.png": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/unknown_potential_mask.png": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/known_background_mask.png": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/T_native_scene_final80_r1/frozen_metric_masks/110_labels.png": "94f39797f8f09d4cb9046416a4e00bda2b3593c570b9f5225b2990812131c910",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/glass_return_diagnostic_r1/grouped_returns.npz": "7724d132a3817fd1be1b70691090f141a8fdbf5f71f4758fa3e19fa5c62228a4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/frozen_formal_r2/run_joint.py": "2bc5cfd9f5cf67c9aad2252a73de34228b525eecf6cb4ec3f673f22f4eef400b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/a9_ownership_sidecar.npz": "c38e4b8b47e21c05d5db30280fb1935f43661ac70e68567b0765b23e6cb87943",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student/opaque_anchor_selection.json": "82cf8c5dac91e046a75bc28479f6c2a0130cb812497fff199c410df7244719a1",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student/contract.json": "8c5805d0c900d7133c273910a8dd31ccee3bcfb0d00d610d051f3cc5fe590986"
+  },
+  "frozen_scene": {
+    "persistent_native_scene_unchanged": true,
+    "road_camera_trajectory_unchanged": true,
+    "other_actors_frozen": true,
+    "source_model_gradient_max": {
+      "static._xyz": null,
+      "static._features_dc": null,
+      "static._features_rest": null,
+      "static._scaling": null,
+      "static._rotation": null,
+      "static._opacity": null,
+      "static._t": null,
+      "static._scaling_t": null,
+      "static._velocity": null,
+      "static.max_radii2D": null,
+      "static.xyz_gradient_accum": null,
+      "static.t_gradient_accum": null,
+      "static.denom": null,
+      "static._sgcm_lineage_ids": null,
+      "static._sgcm_clone_blocked": null,
+      "dynamic._xyz": null,
+      "dynamic._features_dc": null,
+      "dynamic._features_rest": null,
+      "dynamic._scaling": null,
+      "dynamic._rotation": null,
+      "dynamic._opacity": null,
+      "dynamic._t": null,
+      "dynamic._scaling_t": null,
+      "dynamic._velocity": null,
+      "dynamic.max_radii2D": null,
+      "dynamic.xyz_gradient_accum": null,
+      "dynamic.t_gradient_accum": null,
+      "dynamic.denom": null,
+      "dynamic._sgcm_lineage_ids": null,
+      "dynamic._sgcm_clone_blocked": null,
+      "dynamic._dynamic_actor_source_ids": null,
+      "environment.base": null,
+      "environment.to_opengl": null
+    },
+    "all_source_model_gradients_None_or_zero": true
+  },
+  "BUILD": [
+    86,
+    110
+  ],
+  "heldout_frames_opened": [],
+  "optimizer_updates": 0,
+  "cleanup_decisions": 0,
+  "road_patch_activated": false,
+  "actual_native_CUDA": true,
+  "native_calls": 14,
+  "elapsed_seconds": 35.68124299123883,
+  "GPU_keep_on": true,
+  "power_operations": 0
+}

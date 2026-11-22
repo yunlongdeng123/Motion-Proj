@@ -4,7 +4,7 @@ const pct=x=>x===null||x===undefined?'—':(100*x).toFixed(2)+'%';
 const names={rgb:'RGB',alpha:'目标Alpha',depth:'期望深度灰模',normal:'期望深度法向',grey:'灰影（辅助）'};
 D.groups.filter(g=>!['pending','not_started'].includes(g.state)||g.role==='post_geometry_ablation').forEach(g=>$('group').add(new Option(g.label,g.id)));
 D.cameras.forEach(c=>$('camera').add(new Option(c.label,c.id)));
-$('group').value=D.current_group;$('camera').value='raw110';
+$('group').value=D.groups.some(g=>g.id===location.hash.slice(1))?location.hash.slice(1):D.current_group;$('camera').value='raw110';
 function selected(){return D.groups.find(g=>g.id===$('group').value)}
 function textCell(row,value,cls=''){const td=document.createElement('td');td.textContent=value;if(cls)td.className=cls;row.append(td)}
 function stageStatus(g){
@@ -13,7 +13,8 @@ function stageStatus(g){
   return g.label+' · '+(g.range_gate_passed?'渲染期望距离数值满足':'期望距离按实际收据')+(g.gate_passed===false?'；覆盖／场景验收未过':g.gate_passed===true?'；收据验收通过，场景准入另审':'')+eng;
 }
 function draw(){
-  const g=selected(),cam=$('camera').value,channel=$('channel').value,novel=cam.startsWith('novel_');
+  const g=selected();if(window.SceneReport?.render(g))return;
+  const cam=$('camera').value,channel=$('channel').value,novel=cam.startsWith('novel_');
   const teacherAvailable=Object.values(g.views?.[cam]?.teacher||{}).some(Boolean);
   for(const id of ['left-mode','right-mode']){
     [...$(id).options].find(x=>x.value==='shared').disabled=novel;
@@ -43,7 +44,7 @@ function draw(){
 for(const id of ['group','camera','channel','left-mode','right-mode'])$(id).addEventListener('change',draw);
 $('native-view').onclick=()=>{$('camera').value='raw110';$('channel').value='rgb';$('left-mode').value='shared';$('right-mode').value='isolated';draw()};
 $('geometry-view').onclick=()=>{$('camera').value='novel_00';$('channel').value='depth';$('left-mode').value='teacher';$('right-mode').value='isolated';draw()};
-for(const g of D.groups){const tr=document.createElement('tr');textCell(tr,g.label);textCell(tr,g.planned_steps??'—');textCell(tr,g.actual_steps??'—');textCell(tr,g.state==='not_started'?'未启动':g.state==='pending'?'待实际结果':g.state==='exported'?(g.role==='initial'?'初始导出；0更新':'实际检验；0更新'+(g.engineering_gate===false?'；灰模未过':'')):g.engineering_gate===false?'实际完成；灰模／场景未过':g.gate_passed===false?'实际完成；数值验收未过':'实际完成；工程结论另审',g.engineering_gate===false?'badge':'muted');textCell(tr,g.summary||'');$('ledger').append(tr)}
+for(const g of D.groups){const tr=document.createElement('tr');textCell(tr,g.label);textCell(tr,g.planned_steps??'—');textCell(tr,g.actual_steps??'—');textCell(tr,g.role==='scene_residual_cleanup'?'实际完成；视觉结论另列':g.state==='not_started'?'未启动':g.state==='pending'?'待实际结果':g.state==='exported'?(g.role==='initial'?'初始导出；0更新':'实际检验；0更新'+(g.engineering_gate===false?'；灰模未过':'')):g.engineering_gate===false?'实际完成；灰模／场景未过':g.gate_passed===false?'实际完成；数值验收未过':'实际完成；工程结论另审',g.engineering_gate===false?'badge':'muted');textCell(tr,g.summary||'');$('ledger').append(tr)}
 for(const x of D.final_links||[]){const a=document.createElement('a');a.href=x.href;a.textContent=x.label;a.target='_blank';$('final-links').append(a)}
 if(D.final_iteration){const f=D.final_iteration;$('final-summary').textContent='最终有效高斯 '+f.final_active_rows+'行（原始源'+f.final_active_by_source.old+'＋教师源'+f.final_active_by_source.TRELLIS+'）；累计退休原始源'+f.total_global_retired_old_rows+'。几何训练40步；移除检验0步；材质与联合精修未启动。单对象灰模失败与冻结场遮挡分别记录。'}
 draw();

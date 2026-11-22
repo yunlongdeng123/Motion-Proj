@@ -13,12 +13,21 @@ with sync_playwright() as p:
     page=browser.new_page(viewport={'width':1440,'height':1000},device_scale_factor=1)
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto((OUT/'index.html').as_uri(),wait_until='load');wait(page)
-    states=[]
+    states=[];scene_links=[]
     selectable=page.locator('#group option').evaluate_all('(xs)=>xs.map(x=>x.value)')
     for group in data['groups']:
         if group['id'] not in selectable:
             states.append(dict(group=group['id'],not_started_not_in_selector=True,ok=group['state'] in ('pending','not_started')));continue
         page.locator('#group').select_option(group['id'])
+        if group.get('role')=='scene_residual_cleanup':
+            for camera in group['views']:
+                page.locator('#camera').select_option(camera)
+                for mode in group['mode_labels']:
+                    page.locator('#left-mode').select_option(mode);wait(page)
+                    states.append(dict(group=group['id'],camera=camera,mode=mode,ok=images_ok(page)))
+            for href in page.locator('a[href]').evaluate_all('(xs)=>xs.map(i=>i.getAttribute("href"))'):
+                if not href.startswith(('https:','http:','#')):scene_links.append(dict(href=href,exists=(OUT/unquote(href)).resolve().is_file()))
+            continue
         if group['state']=='pending':
             states.append(dict(group=group['id'],pending=True,ok=page.locator('.image-body img').count()==0));continue
         for camera in data['cameras']:
@@ -37,7 +46,7 @@ with sync_playwright() as p:
                 required_geometry.append(dict(group=group['id'],camera=camera,channel=channel,ok=bool(group['views'].get(camera,{}).get('isolated',{}).get(channel))))
                 if group['id'] in ('r3_G40','r3_ablation'):required_geometry.append(dict(group=group['id'],camera=camera,channel='pure_T_'+channel,ok=bool(group['views'].get(camera,{}).get('teacher',{}).get(channel))))
     page.locator('#group').select_option(data['current_group']);page.locator('#native-view').click();wait(page)
-    links=[]
+    links=scene_links
     for href in page.locator('a[href]').evaluate_all('(xs)=>xs.map(i=>i.getAttribute("href"))'):
         if href.startswith(('https:','http:','#')):continue
         links.append(dict(href=href,exists=(OUT/unquote(href)).resolve().is_file()))
@@ -48,14 +57,39 @@ with sync_playwright() as p:
     page.set_viewport_size({'width':390,'height':844});page.locator('#native-view').click();wait(page)
     mobile_overflow=page.evaluate('document.documentElement.scrollWidth>innerWidth')
     page.evaluate('scrollTo(0,0)');page.screenshot(path=str(Q/'mobile.png'))
+    for gid,filename in [('scene_attribution_r1','scene_attribution.png'),('scene_cleanup_red64_r1','scene_cleanup_before_after.png'),('scene_cleanup_visible_red_r1','scene_cleanup_959.png'),('scene_cleanup_red_black_r2','scene_cleanup_1468.png'),('scene_cleanup_dynamic_strays_r3','scene_cleanup_1500.png'),('scene_cleanup_dark_static_r4','scene_cleanup_1754.png'),('scene_cleanup_rgb_residual_r5','scene_cleanup_2006.png')]:
+        if gid in selectable:
+            page.set_viewport_size({'width':1440,'height':1000});page.locator('#group').select_option(gid);wait(page)
+            page.locator('#left-image').scroll_into_view_if_needed();page.screenshot(path=str(Q/filename))
+    if 'scene_cleanup_dynamic_strays_r3' in selectable or 'scene_cleanup_red64_r1' in selectable:
+        page.set_viewport_size({'width':390,'height':844});wait(page)
+        mobile_overflow=mobile_overflow or page.evaluate('document.documentElement.scrollWidth>innerWidth')
+        page.evaluate('scrollTo(0,0)');page.screenshot(path=str(Q/'scene_cleanup_mobile.png'))
     old=browser.new_page();old.goto((OUT.parent/'a20_sd15_sameview_20261122/index.html').as_uri(),wait_until='load')
     old_option_count=old.locator('#left-method option').count()
     forward_count=old.locator('a[href="../a20_joint_reconstruction_20261122/index.html"]').count()
-    receipt=dict(errors=errors,states=states,required_expected_depth_and_normal=required_geometry,links=links,
+    baseline=ROOT.parent/'a20_scene_residual_cleanup_20261122/report_integration/baseline_before_scene_groups/result.json'
+    old_groups_preserved=True
+    if baseline.is_file():
+        prior=json.loads(baseline.read_text(encoding='utf-8'))
+        old_groups_preserved=data['groups'][:len(prior['groups'])]==prior['groups'] and data['current_group']==prior['current_group']
+    extended_baseline=ROOT.parent/'a20_scene_residual_cleanup_20261122/report_integration/baseline_before_extended_cleanups/result.json'
+    if extended_baseline.is_file():
+        prior=json.loads(extended_baseline.read_text(encoding='utf-8'))
+        old_groups_preserved=old_groups_preserved and data['groups'][:len(prior['groups'])]==prior['groups'] and data['current_group']==prior['current_group']
+    r4_baseline=ROOT.parent/'a20_scene_residual_cleanup_20261122/report_integration/baseline_before_r4/result.json'
+    if r4_baseline.is_file():
+        prior=json.loads(r4_baseline.read_text(encoding='utf-8'))
+        old_groups_preserved=old_groups_preserved and data['groups'][:len(prior['groups'])]==prior['groups'] and data['current_group']==prior['current_group']
+    r5_baseline=ROOT.parent/'a20_scene_residual_cleanup_20261122/report_integration/baseline_before_r5/result.json'
+    if r5_baseline.is_file():
+        prior=json.loads(r5_baseline.read_text(encoding='utf-8'))
+        old_groups_preserved=old_groups_preserved and data['groups'][:len(prior['groups'])]==prior['groups'] and data['current_group']==prior['current_group']
+    receipt=dict(errors=errors,states=states,required_expected_depth_and_normal=required_geometry,links=links,old_groups_and_default_preserved=old_groups_preserved,
         desktop_overflow=desktop_overflow,mobile_overflow=mobile_overflow,
         historical_methods=old_option_count,historical_forward_links=forward_count,
         model_frames_modified=False,AutoDL_GPU_or_runtime_operations=False)
-    receipt['passed']=not errors and all(x['ok'] for x in states+required_geometry) and all(x['exists'] for x in links) and not desktop_overflow and not mobile_overflow and old_option_count==3 and forward_count==1
+    receipt['passed']=not errors and all(x['ok'] for x in states+required_geometry) and all(x['exists'] for x in links) and not desktop_overflow and not mobile_overflow and old_option_count==3 and forward_count==1 and old_groups_preserved
     (Q/'receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(dict(passed=receipt['passed'],states=len(states),geometry_channels=len(required_geometry),errors=errors,desktop_overflow=desktop_overflow,mobile_overflow=mobile_overflow,historical_methods=old_option_count)))
     browser.close()

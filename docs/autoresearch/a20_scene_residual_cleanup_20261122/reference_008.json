@@ -1,0 +1,171 @@
+{
+  "schema": "a20.scene_residual_cleanup.reference_008.v1",
+  "purpose": "Keep the accepted a20 actor fixed; transfer verified scene-residual diagnosis and background-protection practices from the historical 008 work.",
+  "source_workbook": {
+    "path": "C:/Users/dengyunlong/Downloads/editor_badcase_analysis.xlsx",
+    "sha256": "611485864008332142560a06a36dba782cc4dac1246ce0f24bda2587849ef74a",
+    "bytes": 57733,
+    "read_only": true,
+    "extraction": "Python standard-library ZIP and XML text extraction; workbook was not authored, recalculated or exported.",
+    "source_commands_executed": false,
+    "hash_unchanged_after_analysis": true
+  },
+  "cell_evidence": [
+    {
+      "id": "008_causes",
+      "sheet": "waymo·scene008归因",
+      "range": "A2:C5",
+      "findings": {
+        "a5_black_trail_A2_C2": "Time-varying opacity, time-varying colour, material and illumination separation; representation resolution and illumination complexity also matter.",
+        "a37_coloured_vehicle_residual_A3_C3": "Object ownership, road geometry, visibility/compositing, and retaining or replacing old representation.",
+        "blurred_yellow_line_A4_C4": "Representation resolution, smoothing and road-reference colour; Gaussian scale/support and local boundaries.",
+        "road_discontinuity_A5_C5": "Road-reference colour and local scope/boundaries; freezing/joint optimization and old representation replacement."
+      }
+    },
+    {
+      "id": "actual_road_visibility",
+      "sheet": "13类坏例证据",
+      "range": "D53:F53",
+      "scope": "Historical early Waymo road case, 49-to-199-frame road input and three-view optimization.",
+      "finding": "Near-vehicle standalone road coverage became 95.56%, while road contribution in the complete scene was only 26/19313 pixels (0.135%); existing static rows still blocked the road."
+    },
+    {
+      "id": "selected_preserve_mechanism",
+      "sheet": "13类坏例证据",
+      "range": "D54:F55",
+      "scope": "Historical early Waymo road case, three optimized views and 49 same-sequence inspection frames.",
+      "finding": "Editable static opacity plus road repair improved the supported reference region. Forcing more road transmission damaged protected output and had worse final reference error."
+    },
+    {
+      "id": "composite_training",
+      "sheet": "13类坏例证据",
+      "range": "D51:F52",
+      "finding": "Optimizing a standalone road image did not ensure a correct shared-depth composite; added road could obscure valid texture. Final composite and outside-target protection must both be evaluated."
+    },
+    {
+      "id": "temporal_source_diagnosis",
+      "sheet": "13类坏例证据",
+      "range": "D59:F59",
+      "finding": "A frozen-model factor diagnostic in an early Waymo case found time-dependent appearance/disappearance affected the image far more than position changes. Use factor isolation to diagnose a black trail rather than assuming physical shadow."
+    },
+    {
+      "id": "environment_and_numeric_sources",
+      "sheet": "V43 overview",
+      "range": "B10:G11",
+      "finding": "Separate Gaussian colour/alpha, environment fill and final float RGB; zero Gaussian alpha can leave an environment dark band, and out-of-range components can cancel before editing.",
+      "scope": "The explicit environment-dark-band measurement is from Waymo scene one, not a verified cause for Scene008 or Scene065."
+    },
+    {
+      "id": "scope_and_boundaries",
+      "sheet": "自由度取舍",
+      "range": "C24:E25",
+      "finding": "Use local old-representation replacement or controlled contribution, with protected boundaries. Too small a scope leaves the trail; too large a scope damages valid roads/vehicles."
+    },
+    {
+      "id": "post_edit_recall",
+      "sheet": "13类坏例证据",
+      "range": "C9:H10",
+      "finding": "Before-edit contribution coverage does not guarantee after-edit source coverage. Recompute contribution after removal; newly exposed sources are candidates, not automatically rows to delete.",
+      "scope": "The 78.08% weak-before-edit contribution statistic belongs to the procedural simulation evidence, not an observed Scene008 or Scene065 percentage."
+    }
+  ],
+  "correct_branch": {
+    "selected_preserve": {
+      "report_path": "C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/c_selected_mechanism/REPORT.md",
+      "historical_checkpoint": "edit_smoke_preserve/full199/checkpoint1000_from0.pth",
+      "frozen_components": ["original B static/environment", "road positions/scales/rotations", "default complete-reconstruction route"],
+      "editable_components_in_historical_experiment": ["independent edit-only static opacity multiplier", "road DC colour", "road opacity"],
+      "supported_reference_MAE_three_views": 0.00760,
+      "outside_target_change_MAE_49_views": 0.00378,
+      "mechanism": "Some pixels improve by reweighting useful original static contributions; other pixels need the road repair layer. Do not require every pixel to be replaced by new road."
+    },
+    "strong_transmission_unselected": {
+      "report_path": "C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/c_mechanism/REPORT.md",
+      "historical_checkpoint": "edit_visibility/full199/checkpoint1000_from0.pth",
+      "additional_objective": "Negative log transmission through the complete static ray.",
+      "supported_reference_MAE_three_views": 0.01336,
+      "outside_target_change_MAE_49_views": 0.00904,
+      "reason_not_to_copy": "Road contribution increased but reference error and outside-target changes worsened. The historical selected-C report explicitly corrected an earlier wrong branch binding."
+    },
+    "transfer": "Reuse same-sort diagnosis, selective local edit control and outside-target protection. Do not import historical thresholds, candidate sets, checkpoints, training budgets or entire-ray suppression."
+  },
+  "transfer_rules": [
+    {
+      "id": "R1_source_decomposition",
+      "rule": "At frozen actor/camera/scene state, split actual shared-sort premultiplied RGB and alpha*T by source, retain environment and constant-background terms, and verify float reconstruction closure.",
+      "evidence": ["environment_and_numeric_sources", "implementation_same_sort_audit"]
+    },
+    {
+      "id": "R2_actual_visibility",
+      "rule": "Compare road standalone coverage, road alpha*T in the complete scene, and whole-group removal counterfactuals. A present but hidden road layer is an occlusion problem; an absent road layer is a supply problem.",
+      "evidence": ["actual_road_visibility", "implementation_same_sort_audit"]
+    },
+    {
+      "id": "R3_local_reversible_edit",
+      "rule": "Keep the accepted a20 actor, original source assets, cameras and trajectory fixed. Apply only evidence-backed context opacity/ownership changes in a reversible sidecar with exact native global row IDs; preserve the original/default scene.",
+      "evidence": ["selected_preserve_mechanism", "scope_and_boundaries", "implementation_exact_retirement"]
+    },
+    {
+      "id": "R4_protect_good_content",
+      "rule": "Jointly check BUILD86/110 residual masks, all retained other vehicles, trustworthy visible road/markings and outside-edit regions. Candidate membership or ancestry alone does not authorize deleting a row that supports protected content.",
+      "evidence": ["selected_preserve_mechanism", "scope_and_boundaries"],
+      "Scene065_existing_K_union": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-16/xian/work/a20_sd15_sameview_20261122/audit/native21_vjp_protection_r1/execution/native21_contribution_selection.npz",
+        "sha256": "de59356129729b3262fe161d6cb51d579da9c3e76cd736c4e2ff337da706108f",
+        "global_row_id_expression": "global_row_ids[preserve_any_K]",
+        "count": 1922,
+        "policy": "Existing complete native K-positive preservation union; do not substitute the 1831-row old-actor-source subset. Retained other actors also require their own full ownership protection."
+      }
+    },
+    {
+      "id": "R5_recompute_after_edit",
+      "rule": "After each tested removal/gate, rerender actual source contribution to detect newly exposed rows. Record one auditable global sidecar and fixed comparison masks, rather than accumulating untracked per-frame deletions.",
+      "evidence": ["post_edit_recall", "implementation_pixel_trace"]
+    },
+    {
+      "id": "R6_distinguish_colour_from_occlusion",
+      "rule": "If a trusted road surface itself contributes the red/grey band, diagnose material colour rather than deleting its geometry. If a wrong static layer blocks a trusted road surface, test selective front-occluder suppression. If alpha is absent and environment dominates, route the issue to the background/coverage diagnosis.",
+      "evidence": ["008_causes", "actual_road_visibility", "environment_and_numeric_sources"]
+    },
+    {
+      "id": "R7_composite_acceptance",
+      "rule": "Evaluate the final shared-depth RGB, silhouette, real tyre contact/shadow, road markings/boundaries and protected vehicles across both BUILD frames. Greater new-road mass is diagnostic, not an objective or a success criterion.",
+      "evidence": ["selected_preserve_mechanism", "composite_training", "scope_and_boundaries"]
+    }
+  ],
+  "implementations": [
+    {
+      "id": "implementation_same_sort_audit",
+      "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-16/xian/work/scene008_road_layer_audit_20261121/render_layers.py",
+      "lines": {"group_alpha_T": 72, "same_sort_RGB_features": 80, "float_closure": 84, "standalone_and_remove_group_counterfactuals": 88, "float_evidence_export": 115},
+      "reuse": "Actual shared-sort source attribution, Gaussian/environment closure and entire-group ablations."
+    },
+    {
+      "id": "implementation_pixel_trace",
+      "path": "C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/v42/controlled_smoke_20261026/trace_selected_c.py",
+      "lines": {"native_buffer_trace": 28, "alpha_RGB_depth_replay_check": 34, "row_alpha_T_weight_depth_lineage": 39},
+      "reuse": "Pixel-wise source row identities and actual compositing weights with replay verification."
+    },
+    {
+      "id": "implementation_edit_gate",
+      "path": "C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/v42/controlled_smoke_20261026/train_edit_smoke.py",
+      "lines": {"historical_candidate_proposal_not_semantic_authority": 13, "edit_static_multiplier": 49, "crossview_and_outside_protection_losses": 50, "joint_loss": 53},
+      "reuse": "Independent edit-only gate with final composite and outside-target protection.",
+      "do_not_copy": "Its broad finite-footprint candidate proposal, thresholds, loss weights and initial gate values are historical experiment settings, not Scene065 deletion rules."
+    },
+    {
+      "id": "implementation_exact_retirement",
+      "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-06/a5-file-c-users-dengyunlong-documents-7/work/v44_integration/v44_integration_source_retire_a1022.py",
+      "lines": {"source_identity_validation": 173, "lineage_hash_validation": 188, "checkpoint_binding": 201, "temporary_render_mask_only": 299, "exact_mask_difference_assertion": 308},
+      "reuse": "Validate source checkpoint and exact row identity; apply only an approved temporary render-mask intersection; prove no other mask entries changed.",
+      "do_not_copy": "Its actor5 source-lineage cohort is specific to Scene008 and is not a Scene065 ownership or retirement authority."
+    }
+  ],
+  "reports": {
+    "008_same_sort_layer_analysis": "C:/Users/dengyunlong/Documents/Codex/2026-10-20/file-c-users-dengyunlong-documents-codex-2/outputs/GS_Reconstruction_Diagnostics_20261021_Evidence_r1/assets/road_layer_audit_20261121/analysis.html",
+    "008_C49_material_report": "C:/Users/dengyunlong/Documents/Codex/2026-11-06/a5-file-c-users-dengyunlong-documents-7/outputs/scene008_v44_a5_c49_rgb_20261107/index.html",
+    "008_material_protection_report": "C:/Users/dengyunlong/Documents/Codex/2026-11-06/a5-file-c-users-dengyunlong-documents-7/outputs/scene008_v44_a5_material_protection_20261108/index.html"
+  },
+  "architecture": {"path": "architecture.svg", "relationship": "Current cleanup components; existing local diagram, unchanged by this reference extraction."},
+  "execution": {"local_only": true, "SSH_used": false, "GPU_used": false, "xlsx_modified": false, "runtime_modified": false}
+}

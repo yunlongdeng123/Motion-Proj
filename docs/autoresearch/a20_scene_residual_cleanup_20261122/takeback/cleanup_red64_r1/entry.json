@@ -1,0 +1,400 @@
+{
+  "runtime": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_gpu.py",
+    "sha256": "ac44a59fae6ab4c6a9f5c48be825a13c83e92d6f9864123f7c6f45ceb8f3b328",
+    "bytes": 67669
+  },
+  "init": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/initialization/joint_actor_init.npz",
+    "sha256": "1e7964eda4a06ae835cc0d8483c5bdce06a21c707dc35120a44b04914a937dc4",
+    "bytes": 23436396
+  },
+  "manifest": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/initialization/manifest.json",
+    "sha256": "366d866c0fc455257fc9e1776dd65baf0f8e09363acdcf0160b96573443f593d",
+    "bytes": 13412
+  },
+  "source_manifest": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/native_bindings.json",
+    "sha256": "bc23e8e9130ed622c570890a8c456c09a7ebfb196b96a9b71e35ddcd6a603a86",
+    "bytes": 8927
+  },
+  "frozen_teacher": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/formal80_r1/actor.npz",
+    "sha256": "0dc65c4aa9fefbf73a1c2d482c0015915818c5bf0ac34d5d318e0784693da53a",
+    "bytes": 19980928
+  },
+  "context": [
+    {
+      "raw": 86,
+      "native_rows": 1210430,
+      "removed_replaced_rows": 24369,
+      "frozen_context_rows": 1032278,
+      "retained_other_actor_rows": 353182
+    },
+    {
+      "raw": 110,
+      "native_rows": 1106752,
+      "removed_replaced_rows": 26033,
+      "frozen_context_rows": 962170,
+      "retained_other_actor_rows": 319571
+    }
+  ],
+  "initial_forward": {
+    "xyz": {
+      "max_abs_error": 0.0,
+      "bit_exact": true
+    },
+    "scales": {
+      "max_abs_error": 0.0,
+      "bit_exact": true
+    },
+    "rotation": {
+      "max_abs_error": 0.0,
+      "bit_exact": true
+    },
+    "coefficients": {
+      "max_abs_error": 0.0,
+      "bit_exact": true
+    },
+    "opacity": {
+      "max_abs_error": 0.0,
+      "bit_exact": true
+    }
+  },
+  "config": {
+    "schema": "a20.unified_field.training_contract.v1",
+    "build_raws": [
+      86,
+      110
+    ],
+    "sealed_raws": [
+      134,
+      179,
+      198
+    ],
+    "seed": 101,
+    "stages": {
+      "smoke": 10,
+      "geometry": 40,
+      "appearance": 80,
+      "joint": 40
+    },
+    "learning_rates": {
+      "xyz": 0.0005,
+      "log_scales": 0.001,
+      "raw_rotation": 0.0005,
+      "opacity": 0.005,
+      "dc": 0.005
+    },
+    "loss": {
+      "real_rgb": 1.0,
+      "retained_K_rgb": 1.0,
+      "retained_K_alpha": 1.0,
+      "silhouette_positive": 0.2,
+      "silhouette_negative": 0.2,
+      "teacher_background": 0.2,
+      "lidar_range": 2.0,
+      "lidar_alpha": 0.5,
+      "teacher_alpha": 0.5,
+      "teacher_depth": 0.2,
+      "teacher_rgb": 0.25,
+      "parameter_geometry": 0.02,
+      "parameter_appearance": 0.02,
+      "delta_smoothness": 0.002,
+      "duplicate_opacity": 0.002
+    },
+    "lidar": {
+      "opaque_group": 2,
+      "glass_group": 1,
+      "stable_alpha": 0.95,
+      "training_denominator_floor": 0.05,
+      "huber_delta_m": 0.03,
+      "expected_opaque_count": 246,
+      "expected_all_count": 1030
+    },
+    "teacher": {
+      "stable_alpha": 0.95,
+      "training_denominator_floor": 0.05,
+      "unknown_attribution_minimum": 0.95,
+      "background_support_alpha": 0.01,
+      "background_dilation_pixels": 8,
+      "background_topk_pixels": 1024,
+      "real_support_margin_m": 0.075
+    },
+    "retained_K": {
+      "topk_pixels": 1024,
+      "changed_threshold": 0.00392156862745098
+    },
+    "regularizer": {
+      "xyz_scale_m": 0.05,
+      "log_scale_scale": 0.2,
+      "quaternion_scale": 0.1,
+      "opacity_scale": 0.2,
+      "dc_scale": 0.5,
+      "confidence_floor": 0.1,
+      "safety_xyz_bound_m": 0.3,
+      "safety_scale_ratio_bounds": [
+        0.5,
+        2.0
+      ]
+    },
+    "redundancy": {
+      "refresh_every": 10,
+      "cross_source_radius_m": 0.05,
+      "conflict_range_m": 0.075,
+      "inactive_opacity_max": 0.01,
+      "support_contribution_max": 0.001,
+      "conflict_fraction_minimum": 0.8,
+      "novel_outside_view_minimum": 2,
+      "novel_outside_raw_contribution_minimum": 0.001,
+      "automatic_global_retirement": true
+    },
+    "geometry_gate": {
+      "visible_alpha95_fraction_minimum": 0.99,
+      "opaque_stable_count_minimum": 246,
+      "opaque_mae_m_maximum": 0.075,
+      "opaque_p90_m_maximum": 0.15,
+      "novel_unknown_alpha95_fraction_minimum": 0.99
+    },
+    "raster": {
+      "real_resolution": [
+        1152,
+        768
+      ],
+      "synthetic_resolution": [
+        512,
+        512
+      ],
+      "shared_scene_depth_sort": true,
+      "per_camera_row_selection": false,
+      "rgb_alpha_division": false
+    },
+    "supervision": {
+      "real_V_rgb": "isolated actual native actor raster",
+      "real_V_positive_alpha": "isolated actual native actor raster",
+      "retained_K": "shared native scene versus frozen context-only DELETE",
+      "teacher_background": "outside frozen pure-T alpha>.01 dilated8px; alpha squared only"
+    },
+    "freeze": [
+      "road",
+      "camera",
+      "trajectory",
+      "native_static",
+      "native_dynamic",
+      "other_actors",
+      "environment",
+      "SH_rest"
+    ]
+  },
+  "read_ledger": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/initialization/joint_actor_init.npz",
+      "sha256": "1e7964eda4a06ae835cc0d8483c5bdce06a21c707dc35120a44b04914a937dc4",
+      "purpose": "unified source-bound initialization",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/initialization/manifest.json",
+      "sha256": "366d866c0fc455257fc9e1776dd65baf0f8e09363acdcf0160b96573443f593d",
+      "purpose": "unified initialization manifest",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/native_bindings.json",
+      "sha256": "bc23e8e9130ed622c570890a8c456c09a7ebfb196b96a9b71e35ddcd6a603a86",
+      "purpose": "native source bindings and fixed BUILD domains",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/formal80_r1/actor.npz",
+      "sha256": "0dc65c4aa9fefbf73a1c2d482c0015915818c5bf0ac34d5d318e0784693da53a",
+      "purpose": "frozen full native TRELLIS teacher",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/mapping.json",
+      "sha256": "d2e1a478bcd2d08ec4a1ddaedaadc71483e8de230eb19c48152364cfed92e3ab",
+      "purpose": "fixed 86 mapping",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/visible_mask.png",
+      "sha256": "e5489d29ee6d756313e6a71d0b2db0a1f0962acef4c095e0b3c71a8fdf7e86da",
+      "purpose": "fixed 86 visible_mask",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/unknown_potential_mask.png",
+      "sha256": "5a45429728753d4c4e148af2b195db5bd03a57a744f936162fb05ae02e0637c3",
+      "purpose": "fixed 86 unknown_potential",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/known_background_mask.png",
+      "sha256": "e37463c9cbc092d54ff7a870f7a5ef68f4eff873d7c0688de5cf008c7bb29235",
+      "purpose": "fixed 86 known_background",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/T_native_scene_final80_r1/frozen_metric_masks/086_labels.png",
+      "sha256": "e3482af3fc9e545b5ba3091c8fc22a4f6aada8e8c5ebc1881498940460b69699",
+      "purpose": "fixed 86 categorical K labels",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/mapping.json",
+      "sha256": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8",
+      "purpose": "fixed 110 mapping",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/visible_mask.png",
+      "sha256": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e",
+      "purpose": "fixed 110 visible_mask",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/unknown_potential_mask.png",
+      "sha256": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e",
+      "purpose": "fixed 110 unknown_potential",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/known_background_mask.png",
+      "sha256": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83",
+      "purpose": "fixed 110 known_background",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/T_native_scene_final80_r1/frozen_metric_masks/110_labels.png",
+      "sha256": "94f39797f8f09d4cb9046416a4e00bda2b3593c570b9f5225b2990812131c910",
+      "purpose": "fixed 110 categorical K labels",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/glass_return_diagnostic_r1/grouped_returns.npz",
+      "sha256": "7724d132a3817fd1be1b70691090f141a8fdbf5f71f4758fa3e19fa5c62228a4",
+      "purpose": "all1030 frozen measured returns",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/frozen_formal_r2/run_joint.py",
+      "sha256": "2bc5cfd9f5cf67c9aad2252a73de34228b525eecf6cb4ec3f673f22f4eef400b",
+      "purpose": "frozen native scene/camera adapter",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth",
+      "sha256": "23d7f2c74f7ac96211795223c2b07910eadf52a3813105644d24a2189763b548",
+      "purpose": "full frozen native static",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/dynamic_chkpnt30000.pth",
+      "sha256": "260d5b87b7abb7b85afbcc9a546439afd6ac4cdfe86e1e1c1a1c853edc002611",
+      "purpose": "full frozen native dynamic",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/env_light_chkpnt30000.pth",
+      "sha256": "83e066d9a4d83d33c110361bced915962c2d0b1305d5948a390ad19d1e5e70ae",
+      "purpose": "full frozen native environment",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1/ownership/semantic_ownership.npz",
+      "sha256": "9828e1ce6cc1d6ff59ba3508d1bea4f7f950619f3779b75a6b5b2dcf56af93fb",
+      "purpose": "full frozen native source",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz",
+      "sha256": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+      "purpose": "full frozen native source",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/a9_ownership_sidecar.npz",
+      "sha256": "c38e4b8b47e21c05d5db30280fb1935f43661ac70e68567b0765b23e6cb87943",
+      "purpose": "fixed a9 identity guard",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/mapping.json",
+      "sha256": "d2e1a478bcd2d08ec4a1ddaedaadc71483e8de230eb19c48152364cfed92e3ab",
+      "purpose": "BUILD 86 mask mapping",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/visible_mask.png",
+      "sha256": "e5489d29ee6d756313e6a71d0b2db0a1f0962acef4c095e0b3c71a8fdf7e86da",
+      "purpose": "BUILD86 V",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/unknown_potential_mask.png",
+      "sha256": "5a45429728753d4c4e148af2b195db5bd03a57a744f936162fb05ae02e0637c3",
+      "purpose": "BUILD86 U",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/086/known_background_mask.png",
+      "sha256": "e37463c9cbc092d54ff7a870f7a5ef68f4eff873d7c0688de5cf008c7bb29235",
+      "purpose": "BUILD86 B",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/T_native_scene_final80_r1/frozen_metric_masks/086_labels.png",
+      "sha256": "e3482af3fc9e545b5ba3091c8fc22a4f6aada8e8c5ebc1881498940460b69699",
+      "purpose": "BUILD86 fixed categorical labels",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/mapping.json",
+      "sha256": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8",
+      "purpose": "BUILD 110 mask mapping",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/visible_mask.png",
+      "sha256": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e",
+      "purpose": "BUILD110 V",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/unknown_potential_mask.png",
+      "sha256": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e",
+      "purpose": "BUILD110 U",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/reference/conditioning/train/110/known_background_mask.png",
+      "sha256": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83",
+      "purpose": "BUILD110 B",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/audit/T_native_scene_final80_r1/frozen_metric_masks/110_labels.png",
+      "sha256": "94f39797f8f09d4cb9046416a4e00bda2b3593c570b9f5225b2990812131c910",
+      "purpose": "BUILD110 fixed categorical labels",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student/opaque_anchor_selection.json",
+      "sha256": "82cf8c5dac91e046a75bc28479f6c2a0130cb812497fff199c410df7244719a1",
+      "purpose": "frozen source-eligible235 audit subset",
+      "raw": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student/contract.json",
+      "sha256": "8c5805d0c900d7133c273910a8dd31ccee3bcfb0d00d610d051f3cc5fe590986",
+      "purpose": "six-view frozen teacher camera contract",
+      "raw": null
+    }
+  ],
+  "heldout_frames_opened": [],
+  "one_object_field": true,
+  "previous_P0_filter_used": false,
+  "PID": 28675
+}
