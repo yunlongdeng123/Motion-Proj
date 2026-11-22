@@ -462,3 +462,11 @@ task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_2
 [共享曝光、参考池数量配对及完整恢复](autoresearch/road_source_multiframe_20261122/README.md)。run=road_source_multiframe_20261122_r3/paired400_seed0；pool2=[88,115]，pool8=[88,90,92,94,96,99,104,115]；共同原始source02、900核心RGB、固定几何／halo，Adam .01、初始RGB先验1e-4，各400步，每步两帧。主QUERY100／110／117未入本轮loss；平均raw-Brown MAE .00828349→.00776457，HFσ5/3 .125033→.197742，RMS比 .863627→.598285，117略有回退。共享曝光只用核心外同世界道路，bias=0；query外部读出用于曝光，不称独立盲测，86单列stress。
 
 资源1684F／1612B，正式800次更新、丢弃smoke／恢复6次；r2的918F／1B另账。完整Adam/RNG／schedule／终点源NPZ和60份浮点结果进入archive；Git只存代码、轻量摘要和恢复索引。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。
+
+## ROAD-CLEAN-CORE-TRANSFER-20261122
+
+[三维核心核验、零步刚体迁移及完整恢复](autoresearch/road_clean_core_transfer_20261122/README.md)。run=road_clean_core_transfer_20261122_r4；00原色／相机校正色、02原色／八帧400步色，4种源组件仅含1598／900核心行。源原位12视角与目标86／110／134／179／198的20视角均为实际原生渲染，彩图不套2D评分mask。共同目标中心[2317.6824295521806,1367.2912566758953,-20.742015623860436]；完整核心刚体运输，scale=1，无铺砖、世界支持裁剪或按颜色删点。源row ID、RGB、sigma、opacity exact；内部点对距离误差≤4.96e-13m，独立协方差误差≤1.36e-19。8个标准RoadRows组件全部重载渲染一致。
+
+原始02默认：五目标视角内缩3px∩alpha≥.95评分域的RGB/alpha色度>.15均0。110帧评分3483像素；完整物理5585像素中alpha95为3896（69.76%），其中2像素高色度。保存crop内、物理投影外alpha .05–.95有1611像素，其中native灰底高色度50；归一化RGB/alpha为116，两个读出分开。仅取core行仍有边缘足迹。原父场景只提供定位框，独立组件未做父点退出或联合叠加。
+
+资源107F／0B（源42F、目标65F），优化更新0，新扩散0；CPU审计新增GPU0。全量组件／float／追踪／照片／相机／目标检查在归档，Git仅代码与轻量恢复入口。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06；human_verdict/problem_solved=null。

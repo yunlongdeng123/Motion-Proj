@@ -1,0 +1,12 @@
+{
+  "task_id": "ROAD-CLEAN-CORE-TRANSFER-20261122",
+  "stage": "source_core_probe",
+  "definition": "Only source world_row_ids where packet core_mask is true; halo rows not exported",
+  "render": "Actual native RGBA on black and neutral(.32) backgrounds; no 2D mask applied to display",
+  "pixel_metrics": "Diagnostic physical core eroded3px AND alpha>=.95; masks only used for metrics",
+  "prior_boundary": "Earlier r2 transfer already copied core rows only; support halo was a source-gallery context",
+  "optimizer_updates": 0,
+  "new_diffusion_calls": 0,
+  "target_fusion": false,
+  "source_geometry_unchanged": true
+}

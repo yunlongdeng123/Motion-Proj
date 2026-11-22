@@ -1,0 +1,144 @@
+{
+  "schema": "clean_core_component_summary.v1",
+  "ready": true,
+  "source": [
+    {
+      "label": "source00_original",
+      "patch": "patch_00",
+      "core_rows": 1598,
+      "halo_rows": 0,
+      "material_input": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/source_selection/candidates/patch_00.npz",
+      "raw_frames": [
+        110,
+        137
+      ],
+      "reload_RGB_max_abs": 0.0,
+      "original_parent_core_equivalence_max_abs": 0.0
+    },
+    {
+      "label": "source00_camera137",
+      "patch": "patch_00",
+      "core_rows": 1598,
+      "halo_rows": 0,
+      "material_input": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_fidelity_20261122_r2/camera_corrected_00_137/source_camera_corrected_RGB.npz",
+      "raw_frames": [
+        110,
+        137
+      ],
+      "reload_RGB_max_abs": 0.0,
+      "original_parent_core_equivalence_max_abs": null
+    },
+    {
+      "label": "source02_original",
+      "patch": "patch_02",
+      "core_rows": 900,
+      "halo_rows": 0,
+      "material_input": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/source_selection/candidates/patch_02.npz",
+      "raw_frames": [
+        100,
+        110,
+        115,
+        117
+      ],
+      "reload_RGB_max_abs": 0.0,
+      "original_parent_core_equivalence_max_abs": 0.0
+    },
+    {
+      "label": "source02_eight400",
+      "patch": "patch_02",
+      "core_rows": 900,
+      "halo_rows": 0,
+      "material_input": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_multiframe_20261122_r3/paired400_seed0/eight_frames/source_patch_02.npz",
+      "raw_frames": [
+        100,
+        110,
+        115,
+        117
+      ],
+      "reload_RGB_max_abs": 0.0,
+      "original_parent_core_equivalence_max_abs": null
+    }
+  ],
+  "target": [
+    {
+      "label": "source00_original",
+      "patch": "patch_00",
+      "core_rows": 1598,
+      "halo_rows": 0,
+      "source_RGB_sigma_opacity_exact": true,
+      "rigid_internal_distances": true,
+      "covariance_reconstruction_max_abs": 1.6263032587282567e-19,
+      "raw_frames": [
+        86,
+        110,
+        134,
+        179,
+        198
+      ],
+      "reload_RGB_max_abs": 0.0
+    },
+    {
+      "label": "source00_camera137",
+      "patch": "patch_00",
+      "core_rows": 1598,
+      "halo_rows": 0,
+      "source_RGB_sigma_opacity_exact": true,
+      "rigid_internal_distances": true,
+      "covariance_reconstruction_max_abs": 1.6263032587282567e-19,
+      "raw_frames": [
+        86,
+        110,
+        134,
+        179,
+        198
+      ],
+      "reload_RGB_max_abs": 0.0
+    },
+    {
+      "label": "source02_original",
+      "patch": "patch_02",
+      "core_rows": 900,
+      "halo_rows": 0,
+      "source_RGB_sigma_opacity_exact": true,
+      "rigid_internal_distances": true,
+      "covariance_reconstruction_max_abs": 1.6263032587282567e-19,
+      "raw_frames": [
+        86,
+        110,
+        134,
+        179,
+        198
+      ],
+      "reload_RGB_max_abs": 0.0
+    },
+    {
+      "label": "source02_eight400",
+      "patch": "patch_02",
+      "core_rows": 900,
+      "halo_rows": 0,
+      "source_RGB_sigma_opacity_exact": true,
+      "rigid_internal_distances": true,
+      "covariance_reconstruction_max_abs": 1.6263032587282567e-19,
+      "raw_frames": [
+        86,
+        110,
+        134,
+        179,
+        198
+      ],
+      "reload_RGB_max_abs": 0.0
+    }
+  ],
+  "source_view_count": 12,
+  "target_view_count": 20,
+  "source_black_grey_are_actual_native_RGBA": true,
+  "display_pixel_mask_applied": false,
+  "metric_domain": "Projected physical core eroded3px AND alpha>=.95; this score domain is not the whole physical footprint.",
+  "color_regions": "Full physical and saved-crop outside/edge regions are separately summarized in cpu_audit_summary.json; RGB/alpha and native-grey chroma are distinct.",
+  "parent_retirement": false,
+  "parent_stamp_compositing": false,
+  "target_fusion_executed": false,
+  "material_source": "Similar-road inference; not same-position target observed material",
+  "human_verdict": null,
+  "problem_solved": null
+}

@@ -31,3 +31,5 @@
 本轮七臂仅覆盖单参考与链路诊断，未测试多帧参考池；对应400步随机训练对照另在road_source_multiframe_20261122_r3记录。
 
 参考数量配对 `ROAD-SOURCE-MULTIFRAME-20261122`：[source02两帧／八帧各400步及恢复入口](autoresearch/road_source_multiframe_20261122/README.md)。共同原始900核心RGB、固定形状与halo、共享核心外真实道路曝光，seed0均衡每步两帧；主QUERY100／110／117的原始Brown域平均MAE .008283→.007765，HF相关 .1250→.1977，117略回退且纹理能量下降。说明多帧参考池有可测收益，不能用此前单／双参考诊断提前否定；本轮限固定核心颜色对照，干净核心单独原生渲染与后续搬运另记。1684F／1612B、正式800更新与smoke6分列，QUERY核心未入loss或曝光，86单列曝光较弱stress；目标迁移／融合和新扩散均0，沿用V82-F06，human_verdict/problem_solved=null。
+
+干净核心验证 `ROAD-CLEAN-CORE-TRANSFER-20261122`：[独立组件、零步迁移与恢复](autoresearch/road_clean_core_transfer_20261122/README.md)。实际导出00／02核心1598／900行，原生黑／灰底彩图无二维遮图mask；4版本共12源视角、20目标视角。原始02五目标视角内缩3px∩alpha≥.95的RGB/alpha色度>.15像素均0；110帧评分3483像素，完整物理投影5585中3896达到alpha≥.95、其中2像素高色度，保存裁片外部中alpha仍有灰底彩尾。全部源RGB／sigma／opacity及刚体结构保留，NPZ重载渲染差0。107F／0B，优化与新扩散0，父道路未修改或叠加。旧r1/r2迁移本已只复制core，不能把彩边全归halo；覆盖和边界仍待后续处理。沿用V82-F06，human_verdict/problem_solved=null，GPU保持开机。

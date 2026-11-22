@@ -1,0 +1,113 @@
+{
+  "schema": "clean_core_git_restore_entry.v1",
+  "ready": true,
+  "complete": true,
+  "run_id": "road_clean_core_transfer_20261122_r4",
+  "index_only": true,
+  "archive": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_clean_core_transfer_20261122_r4/archives/road_clean_core_transfer_20261122_r4_curated_20261122T125500Z.tar.gz",
+    "filename": "road_clean_core_transfer_20261122_r4_curated_20261122T125500Z.tar.gz",
+    "bytes": 54748405,
+    "sha256": "c0eac55a4a0c529d87bc5295479532aa49987219f0c6f5d8965d53a0b49f201a",
+    "payload_files": 550,
+    "verified_every_member": true
+  },
+  "main_archive_role": "R4八个源/目标独立RoadRows组件、刚体covariance/rowID追踪、32视图原生黑灰底/alpha/PNG/float及完整CPU审计和同页增量。",
+  "prior_r3_git_entry": "../road_source_multiframe_20261122/restore_manifest_compact.json",
+  "full_report_companion": {
+    "filename": "full_report_companion_20261122.tar.gz",
+    "bytes": 484007427,
+    "sha256": "5e9abc8acc82aca4b6d510d2ae08555307edff0e676845d919e8d0a3625869c1",
+    "member_count": 2511,
+    "logical_restore_directory": "outputs/road_material_three_rounds_20261121"
+  },
+  "state_recovery": {
+    "complete": true,
+    "format": "Standard RoadRows-compatible independent components; not a full persistent scene",
+    "states": [
+      {
+        "variant": "source00_original",
+        "source_patch": "patch_00",
+        "core_rows": 1598,
+        "halo_rows": 0,
+        "material_input": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/source_selection/candidates/patch_00.npz",
+        "source_component": "source_core_probe/source00_original/road.npz",
+        "target_component": "single_stamp_zero/source00_original/road.npz",
+        "trace": "single_stamp_zero/source00_original/transfer_trace.npz",
+        "provenance": "single_stamp_zero/source00_original/provenance.json",
+        "RGB_sigma_opacity_preserved": true,
+        "rigid_internal_distances_preserved": true,
+        "covariance_reconstruction_max_abs": 1.6263032587282567e-19
+      },
+      {
+        "variant": "source00_camera137",
+        "source_patch": "patch_00",
+        "core_rows": 1598,
+        "halo_rows": 0,
+        "material_input": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_fidelity_20261122_r2/camera_corrected_00_137/source_camera_corrected_RGB.npz",
+        "source_component": "source_core_probe/source00_camera137/road.npz",
+        "target_component": "single_stamp_zero/source00_camera137/road.npz",
+        "trace": "single_stamp_zero/source00_camera137/transfer_trace.npz",
+        "provenance": "single_stamp_zero/source00_camera137/provenance.json",
+        "RGB_sigma_opacity_preserved": true,
+        "rigid_internal_distances_preserved": true,
+        "covariance_reconstruction_max_abs": 1.6263032587282567e-19
+      },
+      {
+        "variant": "source02_original",
+        "source_patch": "patch_02",
+        "core_rows": 900,
+        "halo_rows": 0,
+        "material_input": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/source_selection/candidates/patch_02.npz",
+        "source_component": "source_core_probe/source02_original/road.npz",
+        "target_component": "single_stamp_zero/source02_original/road.npz",
+        "trace": "single_stamp_zero/source02_original/transfer_trace.npz",
+        "provenance": "single_stamp_zero/source02_original/provenance.json",
+        "RGB_sigma_opacity_preserved": true,
+        "rigid_internal_distances_preserved": true,
+        "covariance_reconstruction_max_abs": 1.6263032587282567e-19
+      },
+      {
+        "variant": "source02_eight400",
+        "source_patch": "patch_02",
+        "core_rows": 900,
+        "halo_rows": 0,
+        "material_input": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_multiframe_20261122_r3/paired400_seed0/eight_frames/source_patch_02.npz",
+        "source_component": "source_core_probe/source02_eight400/road.npz",
+        "target_component": "single_stamp_zero/source02_eight400/road.npz",
+        "trace": "single_stamp_zero/source02_eight400/transfer_trace.npz",
+        "provenance": "single_stamp_zero/source02_eight400/provenance.json",
+        "RGB_sigma_opacity_preserved": true,
+        "rigid_internal_distances_preserved": true,
+        "covariance_reconstruction_max_abs": 1.6263032587282567e-19
+      }
+    ],
+    "target_origin": [
+      2317.6824295521806,
+      1367.2912566758953,
+      -20.742015623860436
+    ],
+    "transport": "Existing locally rigid mean/covariance transport",
+    "scale": 1.0,
+    "material_source": "Similar-road inference, not same-position target observation",
+    "reload_evidence": "Actual second RoadRows native load, grey RGB and alpha asserted exact; equal duplicate pixels are represented by the saved grey result and receipt zero-delta."
+  },
+  "report_restore_chain": [
+    "Verified r2 full report companion",
+    "road_source_fidelity_20261122_r2 curated run/report_source/publication patch",
+    "road_source_multiframe_20261122_r3 curated run/report_source/publication patch",
+    "road_clean_core_transfer_20261122_r4 run/report_source/publication patch"
+  ],
+  "restore_steps": [
+    "Verify every archive member before extracting to a new empty directory.",
+    "Restore original parent scene/engine through prior_r3_recovery and preserve all archived original code. Map paths in a separate working copy.",
+    "Load each source_core_probe/VARIANT/road.npz as an independent RoadRows component; IDs are only original core rows, no gallery halo.",
+    "Load each single_stamp_zero/VARIANT/road.npz independently; transfer_trace.npz carries original IDs, XYZ, rigidR, origins/frames and world covariance.",
+    "These components did not retire or overlay the parent scene and are not proof of completed fusion. No optimizer state exists because this run has0 updates.",
+    "Restore the full r2 report companion, then r2, r3 and this report patch over the same logical report directory."
+  ],
+  "no_duplicated_parent_model_catalog": true,
+  "parent_retirement": false,
+  "parent_stamp_compositing": false,
+  "target_fusion": false
+}
