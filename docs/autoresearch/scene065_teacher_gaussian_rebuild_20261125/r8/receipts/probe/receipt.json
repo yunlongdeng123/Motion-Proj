@@ -1,0 +1,33 @@
+{
+  "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/training_v1/probe/receipt.json",
+  "complete": true,
+  "phase": "continuation_probe",
+  "logical_step": 2016,
+  "new_unique_updates": 16,
+  "projected_unique_training_seconds": 136.5083140321076,
+  "transition": {
+    "parent_checkpoint": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/training_v1/train/checkpoint_final.pt",
+      "sha256": "fa29ebc09b9621041eb6c464dc22b6721ca20676bfb72559d27408b79d118208"
+    },
+    "parent_unique_updates": 2000,
+    "road_parameters_preserved_exact": true,
+    "road_Adam_moments_preserved_exact": true,
+    "sampler_and_all_RNG_restored": true,
+    "background_seed": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/initialization/bg_seed.npz",
+      "sha256": "ec7c6fd45c874141a7bcf2b622d65cdc05a9405efedf8cb4b580ae4e7607e46b"
+    },
+    "background_rows_added": 9149,
+    "old_rows": 15403,
+    "new_rows": 24552,
+    "input_policy_change": "Append legitimate real-visible BG and increase residual-driven densification; keep all five groups trainable",
+    "frozen_binding_changes": [
+      "cache_manifest",
+      "candidate_pool",
+      "real_background_manifest",
+      "retained_fragments"
+    ]
+  },
+  "original_native_parameters_frozen": true
+}

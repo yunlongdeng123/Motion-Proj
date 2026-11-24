@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene065教师驱动的三维高斯重建（2026-11-25）
+
+- `SCENE065-TEACHER-GAUSSIAN-REBUILD-20261125`：[R7–R9代码、预算、恢复与质量证据](autoresearch/scene065_teacher_gaussian_rebuild_20261125/README.md)。最终run=`road_teacher_background_coverage_fix_20261125_r9`；五参数重建及实拍背景续训已完成，视觉仍未通过。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
 ## 二维教师提示词与五seed对照（2026-11-20）
 
 - 二维教师独立范围 `ROAD-2D-TEACHER-PROMPT-20261120`：[五seed提示词对照与组件](autoresearch/road_2d_teacher_prompt_20261120/publication.html)完成。用户已采纳整帧1152×768＋注意力LoRA T0为后续默认；本轮5seed×2prompt×6任务正式60次，另4次真实GPU smoke，4进程并行，训练与三维修改0。合成两底图等权ΔE76 2.239597→2.242254、共同频谱偏差1.201894→1.141373，但改善配对仅7/20与8/20，seed波动未降低；新prompt不晋升，不再追加调词。12次旧1152三图重放和实际W/K门通过，60原始PNG及全部对照资产已取回核验；真实隐藏道路无GT。保持历史活动提示词，原CPU/GPU报告及其他三维任务保留。method human_verdict=用户采纳当前审阅样例；prompt human_verdict/problem_solved=null。实例按用户明确要求保持开机。

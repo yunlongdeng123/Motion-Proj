@@ -1,0 +1,558 @@
+{
+  "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/outside_preservation_v1/receipt.json",
+  "schema": "scene065.outside_static_preservation.v1",
+  "complete": true,
+  "source_model": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/training_v1/train/model_final.pt",
+    "sha256": "82d8dccb2753bddfa4e2217a8c5c690a8942b3df87136bcc3795fa8bc2e5b73d"
+  },
+  "source_runtime": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/config/runtime.json",
+    "sha256": "4d5ebc5a8c3235462178db449b950025443d9452fcfd4e6eba7d4a5cf2a092bb"
+  },
+  "source_retirement": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/bounded_context_v2/retirement.npz",
+    "sha256": "691469935bc2b95564e043a97987c1610249970f2a6e8f6aadf0ec8f7b9657d8"
+  },
+  "retirement": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/outside_preservation_v1/retirement_preserved.npz",
+    "sha256": "436207eff6edd97ed8ef9fd29e75332335b8742fac9589314d5e46573cbcefe1"
+  },
+  "restored_IDs": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/outside_preservation_v1/restored_static_global_row_ids.npz",
+    "sha256": "436f74048251cee3eb78135722124a6a2b450395488f1d43db9b73b68724a5ad"
+  },
+  "source_final_field_unchanged_exact": true,
+  "original_native_parameters_unchanged": true,
+  "optimizer_updates": 0,
+  "training_updates": 0,
+  "source_logical_step": 2800,
+  "all20_frames": [
+    70,
+    80,
+    86,
+    96,
+    106,
+    107,
+    108,
+    109,
+    110,
+    120,
+    134,
+    137,
+    165,
+    179,
+    181,
+    182,
+    183,
+    184,
+    185,
+    198
+  ],
+  "native_static_rows": 1558011,
+  "native_dynamic_rows": 1035290,
+  "original_retired_rows": 432608,
+  "static_retired_rows": 182821,
+  "eligible_static_candidates": 65712,
+  "excluded_semantic_A9_static": 112770,
+  "excluded_existing_fragment_parents": 4340,
+  "excluded_A9_box_centres": 18262,
+  "rejected_any_ROI_footprint": 64883,
+  "restored_static_rows": 259,
+  "restored_never_preprocessed_visible": 259,
+  "final_retired_rows": 432349,
+  "restored_dynamic_rows": 0,
+  "original_fragment_recipe_unchanged": true,
+  "selection": "Restore only original static parents with zero overlap against every protected ROI in all20 native cameras; never use occlusion to certify absence",
+  "ROI": "local-only alpha>0 union original16 red+green masks union train8 fullBG geometry_scope union all official vehicle box rectangles",
+  "radius": "Native raster preprocessing radii; bbox expanded by>=32px and rounded outward to16x16 tiles; original native near eligibility retained",
+  "radius_pad_pixels": 32,
+  "tile_size": [
+    16,
+    16
+  ],
+  "official_box_coordinate_size": [
+    960,
+    640
+  ],
+  "dynamic_or_A9_restoration": false,
+  "no_new_fragments": true,
+  "no_color_scale_or_pose_changes": true,
+  "protected_view_evidence": [
+    {
+      "raw": 70,
+      "ROI_pixels": 884736,
+      "local_only_alpha_positive_pixels": 46623,
+      "original_red_pixels": 0,
+      "original_green_pixels": 0,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 884736,
+      "projected_vehicle_boxes": 16,
+      "preprocessed_positive_radius_rows": 63372,
+      "nonempty_padded_tile_bboxes": 63372,
+      "intersecting_parent_rows": 63372,
+      "newly_rejected_parent_rows": 63372
+    },
+    {
+      "raw": 80,
+      "ROI_pixels": 215574,
+      "local_only_alpha_positive_pixels": 74838,
+      "original_red_pixels": 0,
+      "original_green_pixels": 0,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 180269,
+      "projected_vehicle_boxes": 15,
+      "preprocessed_positive_radius_rows": 63578,
+      "nonempty_padded_tile_bboxes": 63578,
+      "intersecting_parent_rows": 63445,
+      "newly_rejected_parent_rows": 310
+    },
+    {
+      "raw": 86,
+      "ROI_pixels": 238522,
+      "local_only_alpha_positive_pixels": 98214,
+      "original_red_pixels": 0,
+      "original_green_pixels": 0,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 194538,
+      "projected_vehicle_boxes": 15,
+      "preprocessed_positive_radius_rows": 61156,
+      "nonempty_padded_tile_bboxes": 61156,
+      "intersecting_parent_rows": 61038,
+      "newly_rejected_parent_rows": 147
+    },
+    {
+      "raw": 96,
+      "ROI_pixels": 294611,
+      "local_only_alpha_positive_pixels": 143159,
+      "original_red_pixels": 0,
+      "original_green_pixels": 0,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 233755,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 56102,
+      "nonempty_padded_tile_bboxes": 56102,
+      "intersecting_parent_rows": 55994,
+      "newly_rejected_parent_rows": 185
+    },
+    {
+      "raw": 106,
+      "ROI_pixels": 321013,
+      "local_only_alpha_positive_pixels": 167542,
+      "original_red_pixels": 64409,
+      "original_green_pixels": 87218,
+      "BG_geometry_scope_pixels": 45683,
+      "official_vehicle_rectangle_pixels": 253373,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 54725,
+      "nonempty_padded_tile_bboxes": 54725,
+      "intersecting_parent_rows": 54646,
+      "newly_rejected_parent_rows": 158
+    },
+    {
+      "raw": 107,
+      "ROI_pixels": 321652,
+      "local_only_alpha_positive_pixels": 168206,
+      "original_red_pixels": 64371,
+      "original_green_pixels": 88062,
+      "BG_geometry_scope_pixels": 47091,
+      "official_vehicle_rectangle_pixels": 253680,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 54677,
+      "nonempty_padded_tile_bboxes": 54677,
+      "intersecting_parent_rows": 54603,
+      "newly_rejected_parent_rows": 26
+    },
+    {
+      "raw": 108,
+      "ROI_pixels": 322540,
+      "local_only_alpha_positive_pixels": 168430,
+      "original_red_pixels": 65487,
+      "original_green_pixels": 89888,
+      "BG_geometry_scope_pixels": 47735,
+      "official_vehicle_rectangle_pixels": 254381,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 54607,
+      "nonempty_padded_tile_bboxes": 54607,
+      "intersecting_parent_rows": 54537,
+      "newly_rejected_parent_rows": 27
+    },
+    {
+      "raw": 109,
+      "ROI_pixels": 323616,
+      "local_only_alpha_positive_pixels": 168888,
+      "original_red_pixels": 65703,
+      "original_green_pixels": 89656,
+      "BG_geometry_scope_pixels": 47862,
+      "official_vehicle_rectangle_pixels": 255135,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 54495,
+      "nonempty_padded_tile_bboxes": 54495,
+      "intersecting_parent_rows": 54385,
+      "newly_rejected_parent_rows": 24
+    },
+    {
+      "raw": 110,
+      "ROI_pixels": 325569,
+      "local_only_alpha_positive_pixels": 169622,
+      "original_red_pixels": 88531,
+      "original_green_pixels": 90670,
+      "BG_geometry_scope_pixels": 46787,
+      "official_vehicle_rectangle_pixels": 256974,
+      "projected_vehicle_boxes": 13,
+      "preprocessed_positive_radius_rows": 54367,
+      "nonempty_padded_tile_bboxes": 54367,
+      "intersecting_parent_rows": 54257,
+      "newly_rejected_parent_rows": 24
+    },
+    {
+      "raw": 120,
+      "ROI_pixels": 334492,
+      "local_only_alpha_positive_pixels": 176497,
+      "original_red_pixels": 74632,
+      "original_green_pixels": 95774,
+      "BG_geometry_scope_pixels": 51953,
+      "official_vehicle_rectangle_pixels": 263289,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 51008,
+      "nonempty_padded_tile_bboxes": 51008,
+      "intersecting_parent_rows": 50940,
+      "newly_rejected_parent_rows": 265
+    },
+    {
+      "raw": 134,
+      "ROI_pixels": 349420,
+      "local_only_alpha_positive_pixels": 179491,
+      "original_red_pixels": 77449,
+      "original_green_pixels": 96669,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 277789,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 49525,
+      "nonempty_padded_tile_bboxes": 49525,
+      "intersecting_parent_rows": 49409,
+      "newly_rejected_parent_rows": 180
+    },
+    {
+      "raw": 137,
+      "ROI_pixels": 355965,
+      "local_only_alpha_positive_pixels": 179223,
+      "original_red_pixels": 90311,
+      "original_green_pixels": 100295,
+      "BG_geometry_scope_pixels": 51414,
+      "official_vehicle_rectangle_pixels": 284558,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 49781,
+      "nonempty_padded_tile_bboxes": 49781,
+      "intersecting_parent_rows": 49669,
+      "newly_rejected_parent_rows": 32
+    },
+    {
+      "raw": 165,
+      "ROI_pixels": 334886,
+      "local_only_alpha_positive_pixels": 179513,
+      "original_red_pixels": 90076,
+      "original_green_pixels": 90106,
+      "BG_geometry_scope_pixels": 50779,
+      "official_vehicle_rectangle_pixels": 263492,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 49284,
+      "nonempty_padded_tile_bboxes": 49284,
+      "intersecting_parent_rows": 49216,
+      "newly_rejected_parent_rows": 88
+    },
+    {
+      "raw": 179,
+      "ROI_pixels": 884736,
+      "local_only_alpha_positive_pixels": 179511,
+      "original_red_pixels": 77322,
+      "original_green_pixels": 97331,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 884736,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 49117,
+      "nonempty_padded_tile_bboxes": 49117,
+      "intersecting_parent_rows": 49117,
+      "newly_rejected_parent_rows": 28
+    },
+    {
+      "raw": 181,
+      "ROI_pixels": 884736,
+      "local_only_alpha_positive_pixels": 179473,
+      "original_red_pixels": 77212,
+      "original_green_pixels": 95183,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 884736,
+      "projected_vehicle_boxes": 15,
+      "preprocessed_positive_radius_rows": 48967,
+      "nonempty_padded_tile_bboxes": 48967,
+      "intersecting_parent_rows": 48967,
+      "newly_rejected_parent_rows": 1
+    },
+    {
+      "raw": 182,
+      "ROI_pixels": 884736,
+      "local_only_alpha_positive_pixels": 179488,
+      "original_red_pixels": 77125,
+      "original_green_pixels": 94669,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 884736,
+      "projected_vehicle_boxes": 15,
+      "preprocessed_positive_radius_rows": 48953,
+      "nonempty_padded_tile_bboxes": 48953,
+      "intersecting_parent_rows": 48953,
+      "newly_rejected_parent_rows": 0
+    },
+    {
+      "raw": 183,
+      "ROI_pixels": 884736,
+      "local_only_alpha_positive_pixels": 179480,
+      "original_red_pixels": 77293,
+      "original_green_pixels": 92192,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 884736,
+      "projected_vehicle_boxes": 15,
+      "preprocessed_positive_radius_rows": 48939,
+      "nonempty_padded_tile_bboxes": 48939,
+      "intersecting_parent_rows": 48939,
+      "newly_rejected_parent_rows": 1
+    },
+    {
+      "raw": 184,
+      "ROI_pixels": 884736,
+      "local_only_alpha_positive_pixels": 179503,
+      "original_red_pixels": 77200,
+      "original_green_pixels": 91529,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 884736,
+      "projected_vehicle_boxes": 15,
+      "preprocessed_positive_radius_rows": 48913,
+      "nonempty_padded_tile_bboxes": 48913,
+      "intersecting_parent_rows": 48913,
+      "newly_rejected_parent_rows": 3
+    },
+    {
+      "raw": 185,
+      "ROI_pixels": 884736,
+      "local_only_alpha_positive_pixels": 179490,
+      "original_red_pixels": 77077,
+      "original_green_pixels": 91067,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 884736,
+      "projected_vehicle_boxes": 15,
+      "preprocessed_positive_radius_rows": 48971,
+      "nonempty_padded_tile_bboxes": 48971,
+      "intersecting_parent_rows": 48971,
+      "newly_rejected_parent_rows": 0
+    },
+    {
+      "raw": 198,
+      "ROI_pixels": 884736,
+      "local_only_alpha_positive_pixels": 179647,
+      "original_red_pixels": 77262,
+      "original_green_pixels": 78323,
+      "BG_geometry_scope_pixels": 0,
+      "official_vehicle_rectangle_pixels": 884736,
+      "projected_vehicle_boxes": 14,
+      "preprocessed_positive_radius_rows": 48950,
+      "nonempty_padded_tile_bboxes": 48950,
+      "intersecting_parent_rows": 48950,
+      "newly_rejected_parent_rows": 12
+    }
+  ],
+  "mask_inputs": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/106/native.npz",
+      "sha256": "3bfcbf630e9e1870313766fdb7effcb598f143766b981395b49efdf8cccdad12"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/107/native.npz",
+      "sha256": "45f9477790326caea92a451c9e8043b6b2e4f19b54f474920f97c5171b93d06d"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/108/native.npz",
+      "sha256": "8e0e5926cfc7474836ca03f16991ab289a1d89e80ec37c742d468458d062f173"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/109/native.npz",
+      "sha256": "a0fdc6a76e41015696d3591439baed3b2b6af2d1ca01c28f81ea11da0ce64280"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/110/native.npz",
+      "sha256": "1b47ceae5eb84a87abc18ad9bf174d4c44de8721df8b09bd0baa79bf8e90a9e0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/120/native.npz",
+      "sha256": "a276d103a41ad7cd686ae346197540169d981395114cfb38ac1e99f33e56ff11"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/134/native.npz",
+      "sha256": "f0d41e32f9973fe105a6afd2cf08fcaf5ccd11556c2144360e6b468c50b06355"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/137/native.npz",
+      "sha256": "2b6ff319ef73bc722b78a98539d525163f958bb7f43cdfe16a52af84a8e6f1e1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/165/native.npz",
+      "sha256": "390590865f023660c904ca06f27387e31c288909519d1cf76b63834bd208aa94"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/179/native.npz",
+      "sha256": "52cb6c77b2d8139d59dd0a367d05a65a6e24d77ec7aa7a6450721fc20237b584"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/181/native.npz",
+      "sha256": "eb72725aee171011f21ef45be00aebfd7be5322044a3f87bd47422582285c169"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/182/native.npz",
+      "sha256": "5f379cd468a188dcb33379806a7cd7be29c0126d63e0f736c32b88eebc31878d"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/183/native.npz",
+      "sha256": "29df7e688cb902a7ba6cee3f8afacbaf762a2294da738fe5c6f9e5db53e8af3a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/184/native.npz",
+      "sha256": "d6937ae750d1222bb37db0eec182ea0086b1dafddc100b8369429c88d51b75d8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/185/native.npz",
+      "sha256": "4a6973d3d258670a99336dc5239e4b25a3b4b0d18cc7eb67a88cb1164eb8b127"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/198/native.npz",
+      "sha256": "263526305503a6ec9855e25d0b30ec960ad0aba62ab6585aa79390d22466e65f"
+    }
+  ],
+  "observation_inputs": [
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/070.json",
+      "sha256": "df528b76c20750afd0c6183c9ca29ce122f9d2d955d71f46464f140f666d028c"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/080.json",
+      "sha256": "da123830286fa1ef8d4a311b3a8bd8ff9df966ddf806bc7a30807452b026c5ab"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/086.json",
+      "sha256": "f3cf942844cbf41c67b078f7e23a9dd84d97c058e10122faf204be8b7aa13f3f"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/096.json",
+      "sha256": "76212aa9c03c982502caa01c5b57734f861a673432851090f7812c243e8e4866"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/106.json",
+      "sha256": "7ee7d8a43666e007e699310cb81b19bfe35576c0d5ac91d5389628cceb9f8f91"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/107.json",
+      "sha256": "0acf388f47a53bf8d359634ffd342e7ddbe1014ae40cb109ab59cf079841f5e3"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/108.json",
+      "sha256": "89a8eaa1ca518f5f7517e356054f93b33c0701085e8f74b59cf768741d685958"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/109.json",
+      "sha256": "56fe875e22de61f65e947d24091c2d2b1b4c44c8bee817a567e1631b9bff6618"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+      "sha256": "67ab85c64bca56b2d309f7c2fccef021b9749cd0bbb196d0573cfcad4ed6a300"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/120.json",
+      "sha256": "54b5d011b20bc7080cc3fc38d151301ec9616381af7b8263887c1f66e1c7ed86"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/134.json",
+      "sha256": "a84dcdea787a6504257c90cf9647bfae8f57141fca73cc83406cfedda2be093a"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/137.json",
+      "sha256": "378628dc80310256e040fff0c5593ce4bd878009415ec59a946afaf2f0d57cc4"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/165.json",
+      "sha256": "5c6a0e6a7eee5d79d39c6bc4ecc05a6d482e15738382c0d4879d47cb33ff0ada"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/179.json",
+      "sha256": "3fe98ac23d3af6a01a78773f830e839b8965666ab06aa7aefd6cd7f74f9e0ab6"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/181.json",
+      "sha256": "0c059785379052694fb47b42e3bde920414fc6545b3ef9adc5956ed89771447a"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/182.json",
+      "sha256": "0c6bb6805ea86d4f67cd07557441fccd80a3d7d33f355ba58105f13a383bd4e1"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/183.json",
+      "sha256": "4cb5abc819471255f7008d9fef3478355cbf9254e84a486a99c22370c0cad3b3"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/184.json",
+      "sha256": "c706dd152d61fb69a16c7b086f741851c5257a549fad1e9ef51e80dd9164b56a"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/185.json",
+      "sha256": "c621be653f756e20cfde18013a87bcd8656102facf2828e4dac2bde9df9d5b77"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/198.json",
+      "sha256": "22d854ddd744cb79c6892412e0e2a2e635a8fc2fc032f38420f48e142911676f"
+    }
+  ],
+  "geometry_inputs": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/106/fixed_bg_masks.npz",
+      "sha256": "fb3dda9195666579c424fb2fecadca6a6d5d7c1eb14036f97fa6967e66361cf9",
+      "bytes": 65483
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/107/fixed_bg_masks.npz",
+      "sha256": "29752e6359efe1d6a50a139af180d12e441f5fabe4b0a78aa045cfcc1beee5e8",
+      "bytes": 65334
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/108/fixed_bg_masks.npz",
+      "sha256": "967a0c399a30c796e5a2fc7383b228ef92638bf0a59fd2895b09c5bac7c0ae88",
+      "bytes": 64723
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/109/fixed_bg_masks.npz",
+      "sha256": "945a7303c50c631e0d2b7d6db30e265d0a17337c775da2794c97371368d49dfa",
+      "bytes": 65109
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/110/fixed_bg_masks.npz",
+      "sha256": "4ec7c5df362877889e2c151d0cb59aa66d14c6fb6ac793b9d1b1e1a309cac2ba",
+      "bytes": 59595
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/120/fixed_bg_masks.npz",
+      "sha256": "b321e239c109f5b96fe58703dee2c6268bc8e5df0f563660fe74c5c84d2948d0",
+      "bytes": 65289
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/137/fixed_bg_masks.npz",
+      "sha256": "04c1fd582f461990d7ebc18366f30feba388e250d1022d730d768b34ef7023e8",
+      "bytes": 61496
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/165/fixed_bg_masks.npz",
+      "sha256": "dd0528fc0b3bf6aeb202f360fd70036ef0692203e6a000eb3e6de4e5251629f5",
+      "bytes": 61731
+    }
+  ],
+  "native_local_forward_calls": 20,
+  "native_candidate_radius_calls": 20,
+  "native_backward_calls": 0,
+  "seconds": 18.264190593734384,
+  "finished_UTC": "2026-11-24T23:20:25.290497+00:00"
+}

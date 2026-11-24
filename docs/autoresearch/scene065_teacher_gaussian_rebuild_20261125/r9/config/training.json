@@ -1,0 +1,173 @@
+{
+  "schema": "scene065.full_teacher_gaussian.training.v1",
+  "seed": 20261125,
+  "train_frames": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    120,
+    137,
+    165
+  ],
+  "evaluation_frames": [
+    134,
+    179,
+    181,
+    182,
+    183,
+    184,
+    185,
+    198
+  ],
+  "frames": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    120,
+    134,
+    137,
+    165,
+    179,
+    181,
+    182,
+    183,
+    184,
+    185,
+    198
+  ],
+  "fixed_eval_frames": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    120,
+    137,
+    165
+  ],
+  "fixed_monitor_frames": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    120,
+    137,
+    165
+  ],
+  "view_groups": [
+    [
+      106,
+      107,
+      108,
+      109,
+      110
+    ],
+    [
+      120
+    ],
+    [
+      137
+    ],
+    [
+      165
+    ]
+  ],
+  "views_per_optimizer_step": 2,
+  "learning_rates": {
+    "xyz": 0.003,
+    "log_scales": 0.005,
+    "raw_quaternion": 0.001,
+    "opacity_logits": 0.05,
+    "dc": 0.03544907701811032
+  },
+  "adam_eps": 1e-08,
+  "category_weights": {
+    "real_visible": 1.0,
+    "teacher_pseudo": 0.25,
+    "similar_reference": 0.15,
+    "real_visible_background": 1.0
+  },
+  "regularization_weights": {
+    "geometry_prior": 0.0001,
+    "scale_prior": 0.0001,
+    "rotation_prior": 0.0001,
+    "color_prior": 0.0001,
+    "road_height_prior": 0.005
+  },
+  "protection_RGB_weight": 1.0,
+  "opacity_inside_weight": 0.05,
+  "opacity_outside_weight": 0.05,
+  "green_alpha_threshold": 0.95,
+  "RGB_loss_domain": "LDR sRGB clamp[0,1] -> canonical linear; raw render preserved for assets",
+  "trainable_new_parameters": [
+    "xyz",
+    "log_scales",
+    "raw_quaternion",
+    "opacity_logits",
+    "dc"
+  ],
+  "frozen": [
+    "native30k_static",
+    "native30k_dynamic",
+    "native30k_environment",
+    "cameras"
+  ],
+  "geometry_prior_policy": "learnable xyz/scale/rotation with soft metric road-height prior; no plane clamp",
+  "teacher_RGB_policy": "direct original diffusion FULL RGB, not LF; other five projections labelled non-independent",
+  "independent_teacher_count": 3,
+  "structural_unknown_RGB_loss_weight": 0,
+  "probe_unique_updates": 32,
+  "target_unique_updates": 2800,
+  "probe_unique_updates_count_toward_2000": true,
+  "restore_replay_is_additional_engineering_update": true,
+  "fixed_monitor_every": 100,
+  "checkpoint_every": 100,
+  "readout_at": [
+    2700,
+    2800
+  ],
+  "readout_frames": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    120,
+    134,
+    137,
+    165,
+    179,
+    181,
+    182,
+    183,
+    184,
+    185,
+    198
+  ],
+  "replay_rtol": 4.76837158203125e-07,
+  "replay_atol": 4.76837158203125e-07,
+  "replay_loss_atol": 1e-07,
+  "long_run_smoke_threshold_seconds": 3600,
+  "minimum_long_run_smoke_seconds": 600,
+  "old_fixed_plane_runs_comparison_only": true,
+  "reconstruction_revision": "r9_unknown_BG_geometry_coverage_fix",
+  "fresh_seed_and_optimizer": true,
+  "previous_r5_loaded": false,
+  "A20_visibility_weight": 1.0,
+  "road_height_sigma_m": 0.05,
+  "effective_alpha_target_policy": "inside * (1 - frozen retained foreground effective alpha); fixed full-image inside/outside domains",
+  "source_fixed_cache_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/fixed_training_cache_v1/manifest.json",
+  "source_fixed_cache_sha256": "061175861c329a1bba0b23fc058e67e145e421d11f8edc0c61c1698c156b7eb9",
+  "previous_r6_loaded": false,
+  "background_added_at_unique_step": 2000,
+  "background_unique_updates": 800,
+  "continuation_probe_unique_updates": 16,
+  "continuation_start_step": 2600,
+  "unknown_BG_RGB_loss_weight": 0,
+  "protection_RGB_normalization": "Full original protected denominator; unknown_BG direct RGB weight0, no frozen-render truth there"
+}

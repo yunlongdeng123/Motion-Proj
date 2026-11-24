@@ -1,0 +1,98 @@
+{
+  "schema": "scene065.full_teacher_gaussian.execution.v1",
+  "authorized": true,
+  "native30k_original_unedited": true,
+  "green_and_orange_frozen": true,
+  "full_gaussian_reconstruction": true,
+  "teacher_generated_Gaussians": true,
+  "densification_enabled": true,
+  "new_parameter_groups": [
+    "xyz",
+    "log_scales",
+    "raw_quaternion",
+    "opacity_logits",
+    "dc"
+  ],
+  "geometry_is_soft_prior_only": true,
+  "fixed_plane_RGB_only": false,
+  "permanent_A20_world_carve": false,
+  "unique_optimizer_budget": 2800,
+  "teacher_count": 3,
+  "previous_RGB_only_runs_comparison_only": true,
+  "previous_r4_saved_unique_updates": 1772,
+  "previous_r4_saved_actual_optimizer_updates": 1773,
+  "source_native": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/config/native30k.json",
+    "sha256": "70365112a44b9f02001eb109f3aefd475be7ada7809315031aa516253c719079"
+  },
+  "source_masks": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/manifest.json",
+    "sha256": "b4b677ffcebae60abf4ca934877be6f43bf0ffa52ab53724f26e1691d2d06148"
+  },
+  "source_teachers": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/teachers/manifest.json",
+    "sha256": "6870fc8ef0eeede9e4badf9cc8e1f83e7efc68c1d4c681771a5bab10e118a156"
+  },
+  "teacher_targets": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/config/targets8.remote.json",
+    "sha256": "8c2339f0614c6ffbe72fa3218e8a24d0cf515cd4a5b03e968121edf5cd878223"
+  },
+  "automatic_seed": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/initialization/teacher_seed.npz",
+    "sha256": "889d789243b6eddb9e97986563a556624ca529668bef0d5c69da229e61b6b386"
+  },
+  "candidate_pool": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/initialization/combined_candidate_pool.npz",
+    "sha256": "b2b42503a8833604c8ff8800c37cc172cb231a6e1d2e76aa13d085f9e649c985"
+  },
+  "human_approval_changed": false,
+  "reconstruction_revision": "r7_region_batch_takeover",
+  "previous_r5_complete_unique_updates": 2000,
+  "previous_r5_actual_optimizer_updates": 2001,
+  "previous_r5_engineering_micro_updates": 1,
+  "previous_r5_model_or_optimizer_loaded": false,
+  "revision_reason": "Separate geometric occupancy from RGB permission; preserve old proxy RGB veto and fixed evaluation range; no new RGB source",
+  "unchanged_inputs": [
+    "unedited_native30k",
+    "red_deletion",
+    "green_orange_preservation",
+    "three_FULL_RGB_teachers",
+    "fresh_teacher_seed",
+    "candidate_pool",
+    "training_split",
+    "sampling",
+    "five_learning_rates",
+    "unique_update_budget"
+  ],
+  "RGB_evaluation_masks_and_denominators_unchanged_from_r5": false,
+  "A20_visibility_preservation_enabled": true,
+  "road_height_is_soft_not_clamped": true,
+  "candidate_residual_pixel_unit_fix": "teacher Brown 1920x1280 coordinates mapped to native 1152x768 before image residual sampling",
+  "region_batch_takeover": true,
+  "previous_r6_unique_updates": 894,
+  "previous_r6_actual_updates": 895,
+  "previous_r6_model_or_optimizer_loaded": false,
+  "previous_r6_stop_reason": "preserved old foreground Gaussian ghost discovered; not numerical failure",
+  "source_retirement": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/bounded_context_v2/retirement.npz",
+    "sha256": "691469935bc2b95564e043a97987c1610249970f2a6e8f6aadf0ec8f7b9657d8"
+  },
+  "fixed_mask_correction": "A20 occlusion reference corrected to original dynamic source owner21 before training; original photo/red/orange/teacher RGB masks unchanged; historical common-domain RGB evaluated separately",
+  "necessary_cross_boundary_retention": "Frozen persistent 3D child Gaussian recipe for retained body/outside support; original tensors unchanged; no screen-space render gate",
+  "parent_checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/training_v1/train/checkpoint_final.pt",
+    "sha256": "56b0e49bc267d4d81edcce1c9831f582123b602a068bcf0ed1c93a87e85238ae"
+  },
+  "background_seed": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/initialization/empty_append.npz",
+    "sha256": "e1ac53ed18554713a62e1f2de01e9b5aeffeeb0f297540f7a9ac85612486dc05"
+  },
+  "background_manifest": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/manifest.json",
+    "sha256": "a116abdcf100b4cbbb5d32a6e33137c2c6268d308ede503d3d27e08b9c1fd1e6"
+  },
+  "previous_road_unique_updates": 2600,
+  "new_background_unique_updates": 800,
+  "continuation_preserves_road_optimizer_sampler_RNG": true,
+  "old_R1_student_or_optimizer_loaded": false
+}

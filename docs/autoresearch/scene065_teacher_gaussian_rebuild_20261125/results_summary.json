@@ -1,0 +1,234 @@
+{
+  "schema": "scene065.teacher_background_coverage_fix.publication_summary.v1",
+  "task_id": "SCENE065-TEACHER-GAUSSIAN-REBUILD-20261125",
+  "execution_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9",
+  "training_complete": true,
+  "visual_pass": false,
+  "visual_findings": [
+    "车底残影",
+    "边界彩色破碎"
+  ],
+  "legacy_human_review_changed": false,
+  "road_unique": 2800,
+  "background_lifetime_unique": 800,
+  "physical_optimizer_updates": 2804,
+  "replay_by_stage": {
+    "R7": 1,
+    "R8": 1,
+    "R9": 2
+  },
+  "final_new_Gaussians": 69695,
+  "previous_independent_controls": {
+    "R4_RGB_only": {
+      "unique": 1772,
+      "physical": 1773
+    },
+    "R5": {
+      "unique": 2000,
+      "physical_with_replay": 2001,
+      "wiring": 1,
+      "physical_total": 2002
+    },
+    "R6_interrupted": {
+      "unique": 894,
+      "physical": 895
+    }
+  },
+  "fixed_training_RGB_monitors": [
+    {
+      "unique_step": 2600,
+      "road_RGB_balanced_MSE_only": 0.00019087250911979935,
+      "real_visible_background_RGB_balanced_MSE_only": 7.336480248341105e-05,
+      "balanced_RGB_MSE_only": 0.0002642373116032104,
+      "balanced_fixed_total_without_prior": 0.0020227735745720564
+    },
+    {
+      "unique_step": 2616,
+      "road_RGB_balanced_MSE_only": 0.0002645116477651754,
+      "real_visible_background_RGB_balanced_MSE_only": 4.790654038515641e-05,
+      "balanced_RGB_MSE_only": 0.00031241818815033187,
+      "balanced_fixed_total_without_prior": 0.001989743218291551
+    },
+    {
+      "unique_step": 2700,
+      "road_RGB_balanced_MSE_only": 0.00025303768888988997,
+      "real_visible_background_RGB_balanced_MSE_only": 4.394330590002937e-05,
+      "balanced_RGB_MSE_only": 0.00029698099478991935,
+      "balanced_fixed_total_without_prior": 0.0018861205957364292
+    },
+    {
+      "unique_step": 2800,
+      "road_RGB_balanced_MSE_only": 0.0001675757663178956,
+      "real_visible_background_RGB_balanced_MSE_only": 3.3062968032027126e-05,
+      "balanced_RGB_MSE_only": 0.00020063873434992275,
+      "balanced_fixed_total_without_prior": 0.0017446984769776464
+    }
+  ],
+  "monitor_is_heldout_loss": false,
+  "common_R8_RGB_summary": [
+    {
+      "stage": "R8 2600 控制",
+      "road": 0.00018787098704931915,
+      "background": 7.12039552155826e-05,
+      "total": 0.00025907494226490177
+    },
+    {
+      "stage": "R9 2616",
+      "road": 0.00026451164881909257,
+      "background": 4.7906544475038845e-05,
+      "total": 0.0003124181932941315
+    },
+    {
+      "stage": "R9 2700",
+      "road": 0.000253037717116304,
+      "background": 4.394331061648174e-05,
+      "total": 0.0002969810277327858
+    },
+    {
+      "stage": "R9 2800",
+      "road": 0.0001675757773419451,
+      "background": 3.30629706525975e-05,
+      "total": 0.00020063874799454258
+    }
+  ],
+  "fullmask_unweighted_reference_diagnostic": [
+    {
+      "domain": "完整绿区",
+      "pixels": 732464,
+      "reference_RGB": 5.005248320034975e-06,
+      "alpha": 0.0028450146306740424,
+      "alpha_target_MSE": 0.0015311244623319013
+    },
+    {
+      "domain": "完整橙区",
+      "pixels": 500600,
+      "reference_RGB": 0.00263236746233768,
+      "alpha": 0.7652835349415332,
+      "alpha_target_MSE": 0.04099776333186417
+    },
+    {
+      "domain": "完整保护区",
+      "pixels": 1233064,
+      "reference_RGB": 0.0010716631564901776,
+      "alpha": 0.3123802233703659,
+      "alpha_target_MSE": 0.017553811772100532
+    },
+    {
+      "domain": "背景几何域",
+      "pixels": 389304,
+      "reference_RGB": 0.003013449688273432,
+      "alpha": 0.9368700486930386,
+      "alpha_target_MSE": 0.012924630743802948
+    },
+    {
+      "domain": "背景未知域",
+      "pixels": 8665,
+      "reference_RGB": 0.1305425758409624,
+      "alpha": 0.8705745549127675,
+      "alpha_target_MSE": 0.046434504590795275
+    }
+  ],
+  "unknown_BG_fixed_monitor": {
+    "fixed_pixels": 8665,
+    "RGB_loss_weight": 0,
+    "balanced_mean_local_alpha": 0.8398150950670242,
+    "denominator_pooled_mean_local_alpha": 0.8705745437691409,
+    "balanced_alpha_target_MSE": 0.06250732988119126,
+    "denominator_pooled_alpha_target_MSE": 0.04643450430446598,
+    "protection_RGB_weight_sum": 0.0
+  },
+  "R9_parameter_updates": [
+    {
+      "name": "位置 XYZ",
+      "updates": 200,
+      "positive_gradient_updates": 200,
+      "positive_delta_updates": 200
+    },
+    {
+      "name": "尺度",
+      "updates": 200,
+      "positive_gradient_updates": 200,
+      "positive_delta_updates": 200
+    },
+    {
+      "name": "旋转",
+      "updates": 200,
+      "positive_gradient_updates": 200,
+      "positive_delta_updates": 200
+    },
+    {
+      "name": "不透明度",
+      "updates": 200,
+      "positive_gradient_updates": 200,
+      "positive_delta_updates": 200
+    },
+    {
+      "name": "RGB / DC",
+      "updates": 200,
+      "positive_gradient_updates": 200,
+      "positive_delta_updates": 200
+    }
+  ],
+  "replay": {
+    "nextstep_bit_exact": false,
+    "initial_state_restored_exactly": true,
+    "original_4eps_log_scale_passed": false,
+    "physical_parameter_equivalence_passed": true,
+    "log_scale_max_abs": 3.6954879760742188e-06,
+    "sigma_max_abs_m": 8.791685104370117e-07,
+    "sigma_atol_m": 1e-06,
+    "log_scale_atol": 1e-05,
+    "other_state_atol": 4.76837158203125e-07,
+    "continued_from_exact_saved_unique2616": true
+  },
+  "asset_reload": {
+    "main_asset": "R9 actual2800 + saved reload",
+    "edited_frames": 20,
+    "native_baseline_frames": 20,
+    "compared_actual_frames": 16,
+    "all_arrays_byte_equal": true,
+    "max_abs": 0.0,
+    "Adam_created": false,
+    "optimizer_loaded": false
+  },
+  "outside_preservation": {
+    "adopted_as_main_asset": false,
+    "optimizer_updates": 0,
+    "seconds": 18.264190593734384,
+    "final_eligible_static_rows": 259,
+    "never_preprocessed_visible_all20": 259,
+    "image_improvement_evidence": false
+  },
+  "evidence": {
+    "metrics": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/results/metrics.json",
+      "sha256": "324696d2617422a592d177619f0c80b73f6efa22db949830c28d886b6613647a",
+      "bytes": 3050897
+    },
+    "train_receipt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/training_v1/train/receipt.json",
+      "sha256": "be67b0bea8813c130fec055d767faf3ffc536d4b7119c2de29673c3cef4a391f",
+      "bytes": 557372
+    },
+    "replay": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/training_v1/probe/step2616_replay.json",
+      "sha256": "fc3fbdc626ee7e314e8b8e8f81fbbeaae295b2e77423c93d87738947017ce3d9",
+      "bytes": 710
+    },
+    "asset_manifest": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/training_v1/asset/manifest.json",
+      "sha256": "51c1eab84189be463fc0402027ace0db9476f7cf55c250a05891ba11f7afb9bd",
+      "bytes": 79841
+    },
+    "asset_comparison": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/training_v1/asset/comparison_step002800.json",
+      "sha256": "1315e61df90180d17042acc3d4c25a7171ca8f6149ba0b6cf3f262be39705335",
+      "bytes": 22154
+    },
+    "outside_candidate": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_coverage_fix_20261125_r9/outside_preservation_v1/receipt.json",
+      "sha256": "a8ccfc30aaedbac2162e827fd2ec176e59543b6ab49c0b37abe74728e29ba6cb",
+      "bytes": 22581
+    }
+  }
+}

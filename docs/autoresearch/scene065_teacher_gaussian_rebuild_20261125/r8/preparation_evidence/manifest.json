@@ -1,0 +1,809 @@
+{
+  "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/manifest.json",
+  "schema": "scene065.real_visible_background_continuation.v1",
+  "complete": true,
+  "CPU_only": true,
+  "GPU_calls": 0,
+  "training_frames": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    120,
+    137,
+    165
+  ],
+  "seed_frames": [
+    110,
+    137,
+    165
+  ],
+  "candidate_frames": [
+    110,
+    137,
+    165
+  ],
+  "source_photo_only": true,
+  "teacher_generated": false,
+  "geometry_initialization_is_soft": true,
+  "A9_and_shadow_excluded": true,
+  "dynamic_and_green_excluded": true,
+  "fixed_damage_masks": true,
+  "fixed_scope_rule": "original R4 orange AND max(abs(original Native30k baseline RGB - R7 frozen context RGB)) > 0.04; exclude original-photo dynamic/A9/shadow and green",
+  "context_total_alpha_used": false,
+  "real_visible_weight": 1.0,
+  "unknown_RGB_loss_weight": 0.0,
+  "seed_pixel_stride": 4,
+  "candidate_pixel_stride": 2,
+  "seed_rows": 9149,
+  "candidate_rows": 36524,
+  "seed": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/initialization/bg_seed.npz",
+    "sha256": "ec7c6fd45c874141a7bcf2b622d65cdc05a9405efedf8cb4b580ae4e7607e46b",
+    "bytes": 1079299
+  },
+  "candidate_pool": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/initialization/bg_candidate_pool.npz",
+    "sha256": "41d1d3cf70adb4cdf4aa150ad0aac2a5fffc3069fb28c2a4995ba1209b529e46",
+    "bytes": 4395671
+  },
+  "pose": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/initialization/pose.json",
+    "sha256": "da1a0bced38ecf9b349ad9643ec4bc411a764c7fe7dd982b28f37110e558d0bb",
+    "bytes": 367
+  },
+  "source_candidate_id_rule": "1000000000000 + raw*1000000 + native_y*1152 + native_x; seed and pool identical pixel IDs",
+  "source_pixel_xy_convention": "integer native pinhole x,y at 1152x768; source_pinhole_uv=x+.5,y+.5; source_uv original Brown photo coordinates only provenance",
+  "geometry_source": {
+    "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/road_underbody_local_20261123_r10/audit/timewindow17_geometry_v1/candidate_reprojected_v1/candidate_geometry.npz",
+    "sha256": "0d62e87abddd3017a40b06d80c485d331c0feb5c13a433be7f50f6933cda269b",
+    "bytes": 26546830
+  },
+  "prior_plane_origin_world": [
+    2328.097190956565,
+    1367.0906853716008,
+    -20.75090016994689
+  ],
+  "prior_normal_world": [
+    -0.00449796829902562,
+    -0.016013518143946793,
+    0.9998616581896891
+  ],
+  "geometry_description": "camera-ray intersection with previously verified affine road plane is soft inferred initial geometry, not measured depth",
+  "all_parameters_learnable": [
+    "xyz",
+    "log_scales",
+    "raw_quaternion",
+    "opacity_logits",
+    "dc"
+  ],
+  "opacity_initial": 0.2,
+  "scale_rule": "stride-pixel ray-plane footprint/2.355, tangent sigma clipped 0.004 to 0.18 m, normal sigma 0.003 m",
+  "old_student_RGB_used": false,
+  "render_RGB_used_as_GT": false,
+  "A20_source_replaced": false,
+  "frames": [
+    {
+      "raw": 106,
+      "original_observation": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/cpu_reconstruction_preflight_20261124/multiview_training/data_v1/frames/106/real_observation.npz",
+        "sha256": "ef1bddb00df9c9ccadeb8d31ec267f56c512c49119a0c6609a8ae17385b219c8",
+        "bytes": 14092536
+      },
+      "camera": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/native_baseline/106/actual_native_camera.npz",
+        "sha256": "6dc7a32d3db14e623ff540de1b4aa8eedaa2414e45d99a0977e7ca9130c7425b",
+        "bytes": 1801
+      },
+      "original_orange_masks": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/masks/106/native.npz",
+        "sha256": "3bfcbf630e9e1870313766fdb7effcb598f143766b981395b49efdf8cccdad12",
+        "bytes": 27623
+      },
+      "original_photo_instances": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/source_masks/photo_instances/106.png",
+        "sha256": "5d35df72756354897edc61166400a36f522a3192e228ec731479b8ccd4df8319",
+        "bytes": 5792
+      },
+      "shadow_guard": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/photometry_pool12_native_v2/masks/106/native_safe_asphalt.npz",
+        "sha256": "0d037dcb85e4d53f7982c344c99986f8dc68420ed0465d70e398d6c2edf97e41",
+        "bytes": 151822
+      },
+      "shadow_guard_kind": "conservative original-photo dark_or_shadow + original_dynamic_guard; official A9 shadow unavailable",
+      "damage_sources": {
+        "raw": 106,
+        "baseline": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/training_v1/asset_reload_v2/native30k_baseline/106/joint.npz",
+          "sha256": "8ff9411c0edc33bf752e815afb4fa2bff0eb02cf63471608c8a6968678170eb5",
+          "bytes": 37147677
+        },
+        "context_cache": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/fixed_training_cache_v1/106/cache.npz",
+          "sha256": "fd2502babb9b5bf416878db8a6757ed940a71846c8970fbd08e3926f7d5b7a1c",
+          "bytes": 10398314
+        },
+        "damage_mask": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/106.npz",
+          "sha256": "964402cbefb83a97ea6788cf50e36537ba7ecd61460b0400f0fbb06153165bc2",
+          "bytes": 3744678
+        },
+        "max_RGB_difference_threshold": 0.04,
+        "rgb_changed_pixels": 301580,
+        "context_total_alpha_available": false
+      },
+      "damage_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/106.npz",
+        "sha256": "964402cbefb83a97ea6788cf50e36537ba7ecd61460b0400f0fbb06153165bc2",
+        "bytes": 3744678
+      },
+      "colour_transform": {
+        "gain_linear_RGB": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bias_linear_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "convention": "canonical_linear = raw_linear * gain + bias",
+        "source": "independently qualified original-photo measured-world gauge; reference110",
+        "evaluation_RGB_fitted": null
+      },
+      "real_visible": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/106/real_visible_background.npz",
+        "sha256": "fed6f4de29ab664cea00f5acc2b6eef979f761dacf1dea440091449227b1508e",
+        "bytes": 488928
+      },
+      "fixed_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/106/fixed_bg_masks.npz",
+        "sha256": "fb3dda9195666579c424fb2fecadca6a6d5d7c1eb14036f97fa6967e66361cf9",
+        "bytes": 65483
+      },
+      "weight": 1.0,
+      "RGB_source": "same-position original photo canonical linear; no rendered or teacher RGB",
+      "orange_pixels": 60625,
+      "orange_changed_pixels": 45683,
+      "bg_scope_pixels": 45683,
+      "real_visible_pixels": 44662,
+      "unknown_RGB_loss0_pixels": 1021,
+      "lane_GT_pixels": 0,
+      "overlap_outside_orange": 0,
+      "overlap_green_dynamic_A9_shadow": 0
+    },
+    {
+      "raw": 107,
+      "original_observation": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/cpu_reconstruction_preflight_20261124/multiview_training/data_v1/frames/107/real_observation.npz",
+        "sha256": "c4102a91f28e981902f03ebab0aa75a685d5bec97308bfe1dee7f609282a29a6",
+        "bytes": 14081556
+      },
+      "camera": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/native_baseline/107/actual_native_camera.npz",
+        "sha256": "7be46d4535076ca2f4e6c2d9836df327b8eda0596e91ab68a6e1a0d894a97556",
+        "bytes": 1802
+      },
+      "original_orange_masks": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/masks/107/native.npz",
+        "sha256": "45f9477790326caea92a451c9e8043b6b2e4f19b54f474920f97c5171b93d06d",
+        "bytes": 27915
+      },
+      "original_photo_instances": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/source_masks/photo_instances/107.png",
+        "sha256": "92202d02d5cec08578d35014165b90458a23d9d5a30b12dace491d0972ad875b",
+        "bytes": 5943
+      },
+      "shadow_guard": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/photometry_pool12_native_v2/masks/107/native_safe_asphalt.npz",
+        "sha256": "c025b501a0e3e560029ef1d1dd63de0677284dcdae7308fab2efc3efc2891034",
+        "bytes": 150991
+      },
+      "shadow_guard_kind": "conservative original-photo dark_or_shadow + original_dynamic_guard; official A9 shadow unavailable",
+      "damage_sources": {
+        "raw": 107,
+        "baseline": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/training_v1/asset_reload_v2/native30k_baseline/107/joint.npz",
+          "sha256": "ffcd24323e2488b4c6c6a4b58a3062907a9ce733d867ee43059cfc570d6d6883",
+          "bytes": 37214271
+        },
+        "context_cache": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/fixed_training_cache_v1/107/cache.npz",
+          "sha256": "191f951d222f61fff46ed3f05174953fa55eb46112b690cba46ce24527af4613",
+          "bytes": 10380631
+        },
+        "damage_mask": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/107.npz",
+          "sha256": "64a02d166bc7bb60dbed62a58ca78571126ab8aa82c5c12419d30c83e83d8882",
+          "bytes": 3754734
+        },
+        "max_RGB_difference_threshold": 0.04,
+        "rgb_changed_pixels": 302543,
+        "context_total_alpha_available": false
+      },
+      "damage_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/107.npz",
+        "sha256": "64a02d166bc7bb60dbed62a58ca78571126ab8aa82c5c12419d30c83e83d8882",
+        "bytes": 3754734
+      },
+      "colour_transform": {
+        "gain_linear_RGB": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bias_linear_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "convention": "canonical_linear = raw_linear * gain + bias",
+        "source": "independently qualified original-photo measured-world gauge; reference110",
+        "evaluation_RGB_fitted": null
+      },
+      "real_visible": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/107/real_visible_background.npz",
+        "sha256": "eaec56746717609fa504b8fc284fcaa073a09b2cdfc5444295a60feb24bbfefb",
+        "bytes": 500482
+      },
+      "fixed_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/107/fixed_bg_masks.npz",
+        "sha256": "29752e6359efe1d6a50a139af180d12e441f5fabe4b0a78aa045cfcc1beee5e8",
+        "bytes": 65334
+      },
+      "weight": 1.0,
+      "RGB_source": "same-position original photo canonical linear; no rendered or teacher RGB",
+      "orange_pixels": 61539,
+      "orange_changed_pixels": 47091,
+      "bg_scope_pixels": 47091,
+      "real_visible_pixels": 45872,
+      "unknown_RGB_loss0_pixels": 1219,
+      "lane_GT_pixels": 0,
+      "overlap_outside_orange": 0,
+      "overlap_green_dynamic_A9_shadow": 0
+    },
+    {
+      "raw": 108,
+      "original_observation": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/cpu_reconstruction_preflight_20261124/multiview_training/data_v1/frames/108/real_observation.npz",
+        "sha256": "8fd3770fec8c79e7221102af2db0756613d23d825c2e50bf0ddc043bb6abaaa7",
+        "bytes": 14082252
+      },
+      "camera": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/native_baseline/108/actual_native_camera.npz",
+        "sha256": "d63ad7064afad150e2d10d311b2f4f3a61ca7920d2bd74abf221643e4699d52f",
+        "bytes": 1802
+      },
+      "original_orange_masks": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/masks/108/native.npz",
+        "sha256": "8e0e5926cfc7474836ca03f16991ab289a1d89e80ec37c742d468458d062f173",
+        "bytes": 27611
+      },
+      "original_photo_instances": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/source_masks/photo_instances/108.png",
+        "sha256": "c7fbe3a1582a9913912b2355c1d4e20ad1348614fdefc504f61e96fdf0801c55",
+        "bytes": 5884
+      },
+      "shadow_guard": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/photometry_pool12_native_v2/masks/108/native_safe_asphalt.npz",
+        "sha256": "cfbb2dced4dfb01fac4afd545e17d0ef01dd5457efceee077eb9d8e92ea26180",
+        "bytes": 149705
+      },
+      "shadow_guard_kind": "conservative original-photo dark_or_shadow + original_dynamic_guard; official A9 shadow unavailable",
+      "damage_sources": {
+        "raw": 108,
+        "baseline": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/training_v1/asset_reload_v2/native30k_baseline/108/joint.npz",
+          "sha256": "37e75cb72e4faf46df80b8c20ce448ffb6455ca83fb33087465c4df7b24d5e49",
+          "bytes": 37232644
+        },
+        "context_cache": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/fixed_training_cache_v1/108/cache.npz",
+          "sha256": "cacd1b6420180e30854ab66c1ce7e979b02ddfd5b7975366540ad9dc34bd94f2",
+          "bytes": 10386962
+        },
+        "damage_mask": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/108.npz",
+          "sha256": "e64596477efbd1c295d888406d75372c034ff9b491b7224c5acdcdf0a76d141c",
+          "bytes": 3754874
+        },
+        "max_RGB_difference_threshold": 0.04,
+        "rgb_changed_pixels": 301174,
+        "context_total_alpha_available": false
+      },
+      "damage_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/108.npz",
+        "sha256": "e64596477efbd1c295d888406d75372c034ff9b491b7224c5acdcdf0a76d141c",
+        "bytes": 3754874
+      },
+      "colour_transform": {
+        "gain_linear_RGB": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bias_linear_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "convention": "canonical_linear = raw_linear * gain + bias",
+        "source": "independently qualified original-photo measured-world gauge; reference110",
+        "evaluation_RGB_fitted": null
+      },
+      "real_visible": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/108/real_visible_background.npz",
+        "sha256": "8750b01d4818c50367ed1390715e692f049958af6d499ceb1148cc5c15f5c54c",
+        "bytes": 506765
+      },
+      "fixed_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/108/fixed_bg_masks.npz",
+        "sha256": "967a0c399a30c796e5a2fc7383b228ef92638bf0a59fd2895b09c5bac7c0ae88",
+        "bytes": 64723
+      },
+      "weight": 1.0,
+      "RGB_source": "same-position original photo canonical linear; no rendered or teacher RGB",
+      "orange_pixels": 62111,
+      "orange_changed_pixels": 47735,
+      "bg_scope_pixels": 47735,
+      "real_visible_pixels": 46431,
+      "unknown_RGB_loss0_pixels": 1304,
+      "lane_GT_pixels": 0,
+      "overlap_outside_orange": 0,
+      "overlap_green_dynamic_A9_shadow": 0
+    },
+    {
+      "raw": 109,
+      "original_observation": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/cpu_reconstruction_preflight_20261124/multiview_training/data_v1/frames/109/real_observation.npz",
+        "sha256": "a565e5fc7954e95131ea08d5f52c0d9dba88a96d0a08deff6079db7bf399b9d0",
+        "bytes": 14080760
+      },
+      "camera": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/native_baseline/109/actual_native_camera.npz",
+        "sha256": "8d1a9be01653caa5b39fe8e717e00308caa3e323d73b4f2cdee71b003110aa68",
+        "bytes": 1799
+      },
+      "original_orange_masks": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/masks/109/native.npz",
+        "sha256": "a0fdc6a76e41015696d3591439baed3b2b6af2d1ca01c28f81ea11da0ce64280",
+        "bytes": 27778
+      },
+      "original_photo_instances": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/source_masks/photo_instances/109.png",
+        "sha256": "207c68405bcfa19c1897ce415d87c26907b4d9a0ad13a626bfe866dda2ffe709",
+        "bytes": 5876
+      },
+      "shadow_guard": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/photometry_pool12_native_v2/masks/109/native_safe_asphalt.npz",
+        "sha256": "7d794de5d7adf68f6b71c18eba0c8bd594ea4e9f2bd6e3431d8d5a7e691ca72e",
+        "bytes": 150448
+      },
+      "shadow_guard_kind": "conservative original-photo dark_or_shadow + original_dynamic_guard; official A9 shadow unavailable",
+      "damage_sources": {
+        "raw": 109,
+        "baseline": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/training_v1/asset_reload_v2/native30k_baseline/109/joint.npz",
+          "sha256": "e8edbd9191735f26821d7dd407d96b3551b7a94ebc3b1b0b023d8d947c6ec5c8",
+          "bytes": 37255842
+        },
+        "context_cache": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/fixed_training_cache_v1/109/cache.npz",
+          "sha256": "571eca0db5ee97b53d6db19ffc6967a412a22f2b6b8896ff6db262b9dc981c17",
+          "bytes": 10404452
+        },
+        "damage_mask": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/109.npz",
+          "sha256": "e6654c66d60a029c95c2d40285c76acd2b94f9f0d543f3c7b2ac4e6d69139eba",
+          "bytes": 3759506
+        },
+        "max_RGB_difference_threshold": 0.04,
+        "rgb_changed_pixels": 301862,
+        "context_total_alpha_available": false
+      },
+      "damage_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/109.npz",
+        "sha256": "e6654c66d60a029c95c2d40285c76acd2b94f9f0d543f3c7b2ac4e6d69139eba",
+        "bytes": 3759506
+      },
+      "colour_transform": {
+        "gain_linear_RGB": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bias_linear_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "convention": "canonical_linear = raw_linear * gain + bias",
+        "source": "independently qualified original-photo measured-world gauge; reference110",
+        "evaluation_RGB_fitted": null
+      },
+      "real_visible": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/109/real_visible_background.npz",
+        "sha256": "f28ac6fd191ce147dd8f001fa56e6d81516227ea842743ef203839aa7ae48b83",
+        "bytes": 507501
+      },
+      "fixed_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/109/fixed_bg_masks.npz",
+        "sha256": "945a7303c50c631e0d2b7d6db30e265d0a17337c775da2794c97371368d49dfa",
+        "bytes": 65109
+      },
+      "weight": 1.0,
+      "RGB_source": "same-position original photo canonical linear; no rendered or teacher RGB",
+      "orange_pixels": 61966,
+      "orange_changed_pixels": 47862,
+      "bg_scope_pixels": 47862,
+      "real_visible_pixels": 46574,
+      "unknown_RGB_loss0_pixels": 1288,
+      "lane_GT_pixels": 0,
+      "overlap_outside_orange": 0,
+      "overlap_green_dynamic_A9_shadow": 0
+    },
+    {
+      "raw": 110,
+      "original_observation": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/inputs/110/real_observation.npz",
+        "sha256": "236ff1fabbddceb8c92b42632d1f267b4da16d9173000997761c76e75c744153",
+        "bytes": 14087079
+      },
+      "camera": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/native_baseline/110/actual_native_camera.npz",
+        "sha256": "84bee4ec0ff01a1feec59879b63ec848c80c9cb78ec95cfea0ca3712d0af7554",
+        "bytes": 1802
+      },
+      "original_orange_masks": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/masks/110/native.npz",
+        "sha256": "1b47ceae5eb84a87abc18ad9bf174d4c44de8721df8b09bd0baa79bf8e90a9e0",
+        "bytes": 23054
+      },
+      "original_photo_instances": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/source_masks/photo_instances/110.png",
+        "sha256": "d6a96bb3b2d71614cb5480b115b4e093cc9cac2d4d6a09e4c3e4cceb02c2b607",
+        "bytes": 5899
+      },
+      "shadow_guard": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/cpu_fusion_acceptance_20261124_r2/correspondence/formal/gpt110_native/masks.npz",
+        "sha256": "ca7739602b90f5f829edaab52bcc29590cc881890d04f81e2de9055f14753d94",
+        "bytes": 301680
+      },
+      "shadow_guard_kind": "official edit_and_source_shadow_guard",
+      "damage_sources": {
+        "raw": 110,
+        "baseline": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/training_v1/asset_reload_v2/native30k_baseline/110/joint.npz",
+          "sha256": "3f0e40b1102b33987dc01fbbc984189cdf42b1a0e33de474db48a51f625c40e7",
+          "bytes": 37225196
+        },
+        "context_cache": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/fixed_training_cache_v1/110/cache.npz",
+          "sha256": "7a3e9ed3dbf459c4378e3f0920415127e3ad768fef01a6eda9ff85bf84cc71a7",
+          "bytes": 10645291
+        },
+        "damage_mask": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/110.npz",
+          "sha256": "626fcb03209734f0f0e8b3d54714665d9b8ffbd67ed5f21403c99ffc9aea405a",
+          "bytes": 3759529
+        },
+        "max_RGB_difference_threshold": 0.04,
+        "rgb_changed_pixels": 303141,
+        "context_total_alpha_available": false
+      },
+      "damage_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/110.npz",
+        "sha256": "626fcb03209734f0f0e8b3d54714665d9b8ffbd67ed5f21403c99ffc9aea405a",
+        "bytes": 3759529
+      },
+      "colour_transform": {
+        "gain_linear_RGB": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bias_linear_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "convention": "canonical_linear = raw_linear * gain + bias",
+        "source": "independently qualified original-photo measured-world gauge; reference110",
+        "evaluation_RGB_fitted": null
+      },
+      "real_visible": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/110/real_visible_background.npz",
+        "sha256": "114cb85e6b2c07a302be4be15c68a239d1feb5c1264cde6f861b8fb5ab2ee6e8",
+        "bytes": 502154
+      },
+      "fixed_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/110/fixed_bg_masks.npz",
+        "sha256": "4ec7c5df362877889e2c151d0cb59aa66d14c6fb6ac793b9d1b1e1a309cac2ba",
+        "bytes": 59595
+      },
+      "weight": 1.0,
+      "RGB_source": "same-position original photo canonical linear; no rendered or teacher RGB",
+      "orange_pixels": 61945,
+      "orange_changed_pixels": 46787,
+      "bg_scope_pixels": 46787,
+      "real_visible_pixels": 45965,
+      "unknown_RGB_loss0_pixels": 822,
+      "lane_GT_pixels": 0,
+      "overlap_outside_orange": 0,
+      "overlap_green_dynamic_A9_shadow": 0
+    },
+    {
+      "raw": 120,
+      "original_observation": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/inputs/120/real_observation.npz",
+        "sha256": "bd08c2e8fce10b497a95cd77d636e9e8771e17b322b43feb2abf030ab89c0400",
+        "bytes": 14090787
+      },
+      "camera": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/native_baseline/120/actual_native_camera.npz",
+        "sha256": "5188e94ded5c925d4698b7a032105d8f40489fa5de1a9fb65460585f263baaf1",
+        "bytes": 1800
+      },
+      "original_orange_masks": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/masks/120/native.npz",
+        "sha256": "a276d103a41ad7cd686ae346197540169d981395114cfb38ac1e99f33e56ff11",
+        "bytes": 28329
+      },
+      "original_photo_instances": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/source_masks/photo_instances/120.png",
+        "sha256": "da349157bbed11784ba57b974fde2330e3296689abf61b7abab2440f1aa438c2",
+        "bytes": 6091
+      },
+      "shadow_guard": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/photometry_pool12_native_v2/masks/120/native_safe_asphalt.npz",
+        "sha256": "892ca4078f396a4404c03faa89b845ab0b255167c016e6c8d741b717d6eae560",
+        "bytes": 151900
+      },
+      "shadow_guard_kind": "conservative original-photo dark_or_shadow + original_dynamic_guard; official A9 shadow unavailable",
+      "damage_sources": {
+        "raw": 120,
+        "baseline": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/training_v1/asset_reload_v2/native30k_baseline/120/joint.npz",
+          "sha256": "5a9dddcd05bdeceeec4735f56983b0528187b4e30590d58aa65d417d90fe0073",
+          "bytes": 37304675
+        },
+        "context_cache": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/fixed_training_cache_v1/120/cache.npz",
+          "sha256": "05188de2d8aa12958a95b9e3f4d4e9fb24acd3d3df66ff46fa9b5bcb9a7bdc54",
+          "bytes": 10537766
+        },
+        "damage_mask": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/120.npz",
+          "sha256": "27b831ac9d28d4bbe4f13909c89e3bcaee7fd268a57c1ca675e579efe0b3b751",
+          "bytes": 3789978
+        },
+        "max_RGB_difference_threshold": 0.04,
+        "rgb_changed_pixels": 311091,
+        "context_total_alpha_available": false
+      },
+      "damage_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/120.npz",
+        "sha256": "27b831ac9d28d4bbe4f13909c89e3bcaee7fd268a57c1ca675e579efe0b3b751",
+        "bytes": 3789978
+      },
+      "colour_transform": {
+        "gain_linear_RGB": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bias_linear_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "convention": "canonical_linear = raw_linear * gain + bias",
+        "source": "independently qualified original-photo measured-world gauge; reference110",
+        "evaluation_RGB_fitted": null
+      },
+      "real_visible": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/120/real_visible_background.npz",
+        "sha256": "8912a16cc1ec936e5d77b2ae34afb39e7e8f26e57e80a6dbdfcde1c242ae0464",
+        "bytes": 552808
+      },
+      "fixed_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/120/fixed_bg_masks.npz",
+        "sha256": "b321e239c109f5b96fe58703dee2c6268bc8e5df0f563660fe74c5c84d2948d0",
+        "bytes": 65289
+      },
+      "weight": 1.0,
+      "RGB_source": "same-position original photo canonical linear; no rendered or teacher RGB",
+      "orange_pixels": 68252,
+      "orange_changed_pixels": 51953,
+      "bg_scope_pixels": 51953,
+      "real_visible_pixels": 50829,
+      "unknown_RGB_loss0_pixels": 1124,
+      "lane_GT_pixels": 0,
+      "overlap_outside_orange": 0,
+      "overlap_green_dynamic_A9_shadow": 0
+    },
+    {
+      "raw": 137,
+      "original_observation": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/inputs/137/real_observation.npz",
+        "sha256": "dba191a32dc991b7d3be66fa8d6c565ba5275b8fbe90bc5479d4d3d200d97c25",
+        "bytes": 14037248
+      },
+      "camera": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/native_baseline/137/actual_native_camera.npz",
+        "sha256": "4173a836ea4f9539942ab73c2d5177dc89bc6f5cc2657a880f04223786d59a16",
+        "bytes": 1802
+      },
+      "original_orange_masks": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/masks/137/native.npz",
+        "sha256": "2b6ff319ef73bc722b78a98539d525163f958bb7f43cdfe16a52af84a8e6f1e1",
+        "bytes": 33810
+      },
+      "original_photo_instances": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/source_masks/photo_instances/137.png",
+        "sha256": "3a5bdc5dd795d0735bb0c0f3bbc15b2d945ef474ecca56c299301b909bc883d7",
+        "bytes": 6112
+      },
+      "shadow_guard": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/cpu_fusion_acceptance_20261124_r2/correspondence/formal/gpt137_native/masks.npz",
+        "sha256": "3335abc832043a19f91216d7bc8927db651fad4a627057dc3bfa3055537a9786",
+        "bytes": 306100
+      },
+      "shadow_guard_kind": "official edit_and_source_shadow_guard",
+      "damage_sources": {
+        "raw": 137,
+        "baseline": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/training_v1/asset_reload_v2/native30k_baseline/137/joint.npz",
+          "sha256": "7d2636a8007ef4c3fad45f19ab92f725976590b2e57589297a13c436becd776c",
+          "bytes": 37259682
+        },
+        "context_cache": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/fixed_training_cache_v1/137/cache.npz",
+          "sha256": "77c18ef72f31e163f44ab825a30782d09afbcf518444f105bd6aacc0b51f975a",
+          "bytes": 10634204
+        },
+        "damage_mask": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/137.npz",
+          "sha256": "30949efee1bfd726e1a751036123389a1633ed12398fbf42a3f4cf3877eb7c10",
+          "bytes": 3800575
+        },
+        "max_RGB_difference_threshold": 0.04,
+        "rgb_changed_pixels": 316479,
+        "context_total_alpha_available": false
+      },
+      "damage_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/137.npz",
+        "sha256": "30949efee1bfd726e1a751036123389a1633ed12398fbf42a3f4cf3877eb7c10",
+        "bytes": 3800575
+      },
+      "colour_transform": {
+        "gain_linear_RGB": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bias_linear_RGB": [
+          0.006980538368225098,
+          0.006077483296394348,
+          0.007276907563209534
+        ],
+        "convention": "canonical_linear = raw_linear * gain + bias",
+        "source": "independently qualified original-photo measured-world gauge; reference110",
+        "evaluation_RGB_fitted": null
+      },
+      "real_visible": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/137/real_visible_background.npz",
+        "sha256": "c445d45b3fc99b168d186d2afab20eed5b009feaff1b1bd9af5f2d7708b908a7",
+        "bytes": 551339
+      },
+      "fixed_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/137/fixed_bg_masks.npz",
+        "sha256": "04c1fd582f461990d7ebc18366f30feba388e250d1022d730d768b34ef7023e8",
+        "bytes": 61496
+      },
+      "weight": 1.0,
+      "RGB_source": "same-position original photo canonical linear; no rendered or teacher RGB",
+      "orange_pixels": 62253,
+      "orange_changed_pixels": 51414,
+      "bg_scope_pixels": 51414,
+      "real_visible_pixels": 50436,
+      "unknown_RGB_loss0_pixels": 978,
+      "lane_GT_pixels": 0,
+      "overlap_outside_orange": 0,
+      "overlap_green_dynamic_A9_shadow": 0
+    },
+    {
+      "raw": 165,
+      "original_observation": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/inputs/165/real_observation.npz",
+        "sha256": "bea1ecb2a0bc58e7aa61232c2ce0360bc0de1975ccd0f8e8e0c369ef32f06c92",
+        "bytes": 14027741
+      },
+      "camera": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/gpu_clean_rebuild_20261125_r1/supervision/native_baseline/165/actual_native_camera.npz",
+        "sha256": "074425fb0185d1b9f3edec74863738713cbdf4d03f09c0c8876edc8a6cc1e125",
+        "bytes": 1801
+      },
+      "original_orange_masks": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/masks/165/native.npz",
+        "sha256": "390590865f023660c904ca06f27387e31c288909519d1cf76b63834bd208aa94",
+        "bytes": 33618
+      },
+      "original_photo_instances": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-25/r2-text-scene065-a20-a20-dggt/work/native30k_red_rebuild_20261125_r4/source_masks/photo_instances/165.png",
+        "sha256": "151880239417c9366cfe14e45a0d433f2b82a2c292cd96d759fbbeece3c28ada",
+        "bytes": 5779
+      },
+      "shadow_guard": {
+        "path": "C:/Users/dengyunlong/Documents/Codex/2026-11-22/065-file-c-users-dengyunlong-documents-2/work/cpu_fusion_acceptance_20261124_r2/correspondence/formal/gpt165_native/masks.npz",
+        "sha256": "0fec3fb313e2c4c4321ab8ff24cd6fb0c2c4e96ef8af8c9f56d9b3e1166c4c3a",
+        "bytes": 309751
+      },
+      "shadow_guard_kind": "official edit_and_source_shadow_guard",
+      "damage_sources": {
+        "raw": 165,
+        "baseline": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/training_v1/asset_reload_v2/native30k_baseline/165/joint.npz",
+          "sha256": "c92fdfbe0d532de945edf9257b8ecfb6e80e331a8a168a68fb38f32aa524a907",
+          "bytes": 37126354
+        },
+        "context_cache": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/fixed_training_cache_v1/165/cache.npz",
+          "sha256": "9db3c8611ab2ffd28cc7a5b5848df78d2036a34870b87a1623e76a700ad2c1aa",
+          "bytes": 10605380
+        },
+        "damage_mask": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/165.npz",
+          "sha256": "c50468e6819c38336377e4f8e253d795335471ac00bca8d68f5828025da0bc61",
+          "bytes": 3814940
+        },
+        "max_RGB_difference_threshold": 0.04,
+        "rgb_changed_pixels": 318827,
+        "context_total_alpha_available": false
+      },
+      "damage_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/inputs/damage/165.npz",
+        "sha256": "c50468e6819c38336377e4f8e253d795335471ac00bca8d68f5828025da0bc61",
+        "bytes": 3814940
+      },
+      "colour_transform": {
+        "gain_linear_RGB": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bias_linear_RGB": [
+          0.006951592862606049,
+          0.005431674420833588,
+          0.007802240550518036
+        ],
+        "convention": "canonical_linear = raw_linear * gain + bias",
+        "source": "independently qualified original-photo measured-world gauge; reference110",
+        "evaluation_RGB_fitted": null
+      },
+      "real_visible": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/165/real_visible_background.npz",
+        "sha256": "ba1f4a8bd02d0f18643ba1104a5c6445e669fe2faa00693b0227654788a2e22b",
+        "bytes": 544402
+      },
+      "fixed_masks": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_background_continuation_20261125_r8/supervision/165/fixed_bg_masks.npz",
+        "sha256": "dd0528fc0b3bf6aeb202f360fd70036ef0692203e6a000eb3e6de4e5251629f5",
+        "bytes": 61731
+      },
+      "weight": 1.0,
+      "RGB_source": "same-position original photo canonical linear; no rendered or teacher RGB",
+      "orange_pixels": 61909,
+      "orange_changed_pixels": 50779,
+      "bg_scope_pixels": 50779,
+      "real_visible_pixels": 49870,
+      "unknown_RGB_loss0_pixels": 909,
+      "lane_GT_pixels": 0,
+      "overlap_outside_orange": 0,
+      "overlap_green_dynamic_A9_shadow": 0
+    }
+  ],
+  "seconds": 7.723950147628784
+}

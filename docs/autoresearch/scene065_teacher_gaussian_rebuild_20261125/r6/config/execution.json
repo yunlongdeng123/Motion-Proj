@@ -1,0 +1,71 @@
+{
+  "schema": "scene065.full_teacher_gaussian.execution.v1",
+  "authorized": true,
+  "native30k_original_unedited": true,
+  "green_and_orange_frozen": true,
+  "full_gaussian_reconstruction": true,
+  "teacher_generated_Gaussians": true,
+  "densification_enabled": true,
+  "new_parameter_groups": [
+    "xyz",
+    "log_scales",
+    "raw_quaternion",
+    "opacity_logits",
+    "dc"
+  ],
+  "geometry_is_soft_prior_only": true,
+  "fixed_plane_RGB_only": false,
+  "permanent_A20_world_carve": false,
+  "unique_optimizer_budget": 2000,
+  "teacher_count": 3,
+  "previous_RGB_only_runs_comparison_only": true,
+  "previous_r4_saved_unique_updates": 1772,
+  "previous_r4_saved_actual_optimizer_updates": 1773,
+  "source_native": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/config/native30k.json",
+    "sha256": "70365112a44b9f02001eb109f3aefd475be7ada7809315031aa516253c719079"
+  },
+  "source_masks": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4/masks/manifest.json",
+    "sha256": "b4b677ffcebae60abf4ca934877be6f43bf0ffa52ab53724f26e1691d2d06148"
+  },
+  "source_teachers": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/teachers/manifest.json",
+    "sha256": "6870fc8ef0eeede9e4badf9cc8e1f83e7efc68c1d4c681771a5bab10e118a156"
+  },
+  "teacher_targets": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/config/targets8.remote.json",
+    "sha256": "046f1d7fa945a8e6cde456daef4aead40c8d54e5df627e90374a0515b2b9a06f"
+  },
+  "automatic_seed": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/initialization/teacher_seed.npz",
+    "sha256": "889d789243b6eddb9e97986563a556624ca529668bef0d5c69da229e61b6b386"
+  },
+  "candidate_pool": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5/initialization/candidate_pool.npz",
+    "sha256": "87891a6ce63649a03d0ccf42010f633d5f18974e5f925b3708fe1d101fc73906"
+  },
+  "human_approval_changed": false,
+  "reconstruction_revision": "r6_visibility_consistent_soft_road_height",
+  "previous_r5_complete_unique_updates": 2000,
+  "previous_r5_actual_optimizer_updates": 2001,
+  "previous_r5_engineering_micro_updates": 1,
+  "previous_r5_model_or_optimizer_loaded": false,
+  "revision_reason": "r5 seed geometry correct, but learned road rose up to 1.276m; correct effective-alpha occlusion supervision and soft metric road-height prior",
+  "unchanged_inputs": [
+    "unedited_native30k",
+    "red_deletion",
+    "green_orange_preservation",
+    "three_FULL_RGB_teachers",
+    "fresh_teacher_seed",
+    "candidate_pool",
+    "training_split",
+    "sampling",
+    "five_learning_rates",
+    "unique_update_budget"
+  ],
+  "RGB_evaluation_masks_and_denominators_unchanged_from_r5": true,
+  "A20_visibility_preservation_enabled": true,
+  "road_height_is_soft_not_clamped": true,
+  "candidate_residual_pixel_unit_fix": "teacher Brown 1920x1280 coordinates mapped to native 1152x768 before image residual sampling"
+}

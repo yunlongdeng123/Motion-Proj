@@ -1,0 +1,13 @@
+from pathlib import Path
+import json,hashlib
+R=Path('/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_gaussian_rebuild_20261125_r5');B=Path('/root/autodl-tmp/drivingeditor_repro/campaign/road_native30k_red_rebuild_20261125_r4')
+def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
+def write(p,v):p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+def pin(p):return dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest())
+base=read(B/'config/native30k.json');bind=read(R/'config/targets8.remote.json');by={int(x['raw']):x for x in bind['frames']};photo={}
+for raw in base['frames']:
+ q=by.get(raw,{}).get('colour_transform',{});photo[str(raw)]=dict(gain=q.get('gain_linear_RGB',[1,1,1]),bias=q.get('bias_linear_RGB',[0,0,0]))
+rc=dict(schema='scene065.teacher_gaussian.runtime.v1',frames=base['frames'],native_adapter_code=pin(B/'code/native30k_adapter.py'),native30k_contract=pin(B/'config/native30k.json'),context_retirement=pin(B/'deletion_green_preserved_v2/retirement.npz'),mask_manifest=pin(B/'masks/manifest.json'),teacher_seed=pin(R/'initialization/teacher_seed.npz'),candidate_pool=pin(R/'initialization/candidate_pool.npz'),pose=pin(R/'initialization/pose.json'),teacher_manifest=pin(R/'teachers/manifest.json'),seed_manifest=pin(R/'initialization/manifest.json'),photometric_by_raw=photo,minimum_scale_m=.0005,maximum_scale_m=.25,densification=dict(every=100,until_step=1500,birth_per_event=512,max_densify_parents=256,candidate_window=8192,min_candidate_confidence=.05,split_scale_m=.025,grad_threshold=1e-9,max_points=120000,min_points=128,min_opacity=.005,max_scale_m=.25,invisible_prune_age=300),permanent_green_carve=False,fixed_planar_RGB_only=False)
+write(R/'config/runtime.json',rc)
+ex=dict(schema='scene065.full_teacher_gaussian.execution.v1',authorized=True,native30k_original_unedited=True,green_and_orange_frozen=True,full_gaussian_reconstruction=True,teacher_generated_Gaussians=True,densification_enabled=True,new_parameter_groups=['xyz','log_scales','raw_quaternion','opacity_logits','dc'],geometry_is_soft_prior_only=True,fixed_plane_RGB_only=False,permanent_A20_world_carve=False,unique_optimizer_budget=2000,teacher_count=3,previous_RGB_only_runs_comparison_only=True,previous_r4_saved_unique_updates=1772,previous_r4_saved_actual_optimizer_updates=1773,source_native=rc['native30k_contract'],source_masks=rc['mask_manifest'],source_teachers=rc['teacher_manifest'],teacher_targets=pin(R/'config/targets8.remote.json'),automatic_seed=rc['teacher_seed'],candidate_pool=rc['candidate_pool'],human_approval_changed=False)
+write(R/'config/execution.json',ex);print(json.dumps(dict(runtime=pin(R/'config/runtime.json'),execution=pin(R/'config/execution.json'),seed=rc['teacher_seed'])))

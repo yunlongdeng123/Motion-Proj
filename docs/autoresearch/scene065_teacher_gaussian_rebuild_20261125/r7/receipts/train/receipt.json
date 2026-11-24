@@ -1,0 +1,90 @@
+{
+  "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/training_v1/train/receipt.json",
+  "schema": "scene065.teacher_gaussian.phase.v1",
+  "phase": "train",
+  "complete": true,
+  "interrupted_at_optimizer_boundary": false,
+  "error": null,
+  "origin": {
+    "phase": "train",
+    "pid": 22294,
+    "host": "autodl-container-396445a2a1-1984c713",
+    "nonce": "427db08cd03f4d98a91d1103aec840ad",
+    "started_UTC": "2026-11-24T21:42:17.313236+00:00"
+  },
+  "logical_step": 2000,
+  "unique_optimizer_updates": 2000,
+  "this_phase_unique_updates": 1968,
+  "this_phase_engineering_replay_updates": 1,
+  "this_phase_actual_optimizer_updates": 1969,
+  "optimizer_step_attempts": 1969,
+  "failed_or_uncommitted_optimizer_updates": 0,
+  "unique_training_seconds": 437.96967876143754,
+  "engineering_replay_seconds": 0.35567877255380154,
+  "projected_unique_training_seconds": 437.96967876143754,
+  "cache_seconds": 1.7691981326788664,
+  "evaluation_seconds": 3.6232455484569073,
+  "readout_seconds": 83.39396529644728,
+  "wall_seconds": 546.7152371034026,
+  "final_point_count": 15403,
+  "actual_native_forward_calls": 4146,
+  "actual_native_backward_calls": 3938,
+  "gradient_nonzero_totals_by_group": {
+    "xyz": 64432776,
+    "log_scales": 64432748,
+    "raw_quaternion": 85909825,
+    "opacity_logits": 20604948,
+    "dc": 64399946
+  },
+  "parameter_changed_value_totals_by_group": {
+    "xyz": 64325926,
+    "log_scales": 63378186,
+    "raw_quaternion": 85831733,
+    "opacity_logits": 21471346,
+    "dc": 64137468
+  },
+  "all_five_groups_have_actual_changes": true,
+  "replay_verification": {
+    "full_state": true,
+    "views_exact": true,
+    "event_exact": true,
+    "loss_abs": 0.0,
+    "rtol": 4.76837158203125e-07,
+    "atol": 4.76837158203125e-07,
+    "loss_atol": 1e-07,
+    "passed": true,
+    "fresh_process": true,
+    "source": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/training_v1/probe/checkpoint31.pt",
+      "sha256": "4e7e7bb2e588858ec606d26429a2bb161ad20b927e67ce42c94807171a081140"
+    },
+    "expected": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_region_rebuild_20261125_r7/training_v1/probe/expected32.pt",
+      "sha256": "bf6844cde26970757cfb7ff042547a11c5c07de501f3bac709fd34317e275536"
+    }
+  },
+  "old_r4_checkpoint_loaded": false,
+  "initial_from_engineering_step1": false,
+  "training_frames": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    120,
+    137,
+    165
+  ],
+  "heldout_render_only_frames": [
+    134,
+    179,
+    181,
+    182,
+    183,
+    184,
+    185,
+    198
+  ],
+  "human_approval_changed": false,
+  "final_visual_quality_pass": false
+}

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="470" viewBox="0 0 1280 470" role="img" aria-labelledby="title desc">
+  <title id="title">R9：分离几何占据与RGB监督许可</title>
+  <desc id="desc">R8的同一场与完整优化状态继续训练200步。合法实拍背景RGB支持不变；完整背景几何域允许占据学习，8665个未知像素的所有RGB训练及保护权重保持零。原30k与真实车体冻结保留，所有新场参数继续优化。</desc>
+  <defs><marker id="scope-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#7bdac4"/></marker></defs>
+  <rect width="1280" height="470" rx="12" fill="#0d1621"/>
+  <g fill="#182b3c" stroke="#4f7088" stroke-width="1.5">
+    <rect x="20" y="70" width="205" height="145" rx="10"/>
+    <rect x="265" y="70" width="210" height="145" rx="10" stroke="#69c8ef"/>
+    <rect x="515" y="70" width="230" height="145" rx="10" stroke="#7bdac4"/>
+    <rect x="785" y="70" width="215" height="145" rx="10"/>
+    <rect x="1040" y="70" width="220" height="145" rx="10"/>
+    <rect x="20" y="310" width="205" height="108" rx="10"/>
+    <rect x="340" y="310" width="350" height="108" rx="10"/>
+    <rect x="785" y="310" width="475" height="108" rx="10"/>
+  </g>
+  <g stroke="#7bdac4" stroke-width="2" fill="none" marker-end="url(#scope-arrow)">
+    <path d="M225 143H256"/><path d="M475 143H506"/><path d="M745 143H776"/><path d="M1000 143H1031"/>
+    <path d="M122 310V264H630V224"/><path d="M690 365H715V264H892V224"/>
+    <path d="M1000 174H1025V301"/><path d="M785 365H760V244H630V224"/>
+  </g>
+  <g font-family="system-ui,Microsoft YaHei,sans-serif" fill="#e3edf5" text-anchor="middle">
+    <text x="122" y="104" font-size="18">原有输入保持不变</text>
+    <text x="122" y="137" font-size="15">完整 RGB 教师 ×3</text>
+    <text x="122" y="164" font-size="15">相机 / 红绿橙 masks</text>
+    <text x="122" y="191" font-size="15">实拍背景原支持域</text>
+    <text x="370" y="104" font-size="18">两类许可独立定义</text>
+    <text x="370" y="137" font-size="14">RGB：原合法实拍支持</text>
+    <text x="370" y="164" font-size="14">占据：完整背景几何域</text>
+    <text x="370" y="191" font-size="14">未知 RGB 仍为 0</text>
+    <text x="630" y="104" font-size="18">同一可学习三维场</text>
+    <text x="630" y="137" font-size="14">XYZ / scale / quat / α / RGB</text>
+    <text x="630" y="164" font-size="15">保留原点与候选 ID</text>
+    <text x="630" y="191" font-size="15">按既定生命周期继续学习</text>
+    <text x="892" y="104" font-size="18">原生联合渲染</text>
+    <text x="892" y="137" font-size="15">冻结保留场 / 三维子核</text>
+    <text x="892" y="164" font-size="15">+ 同一新高斯场</text>
+    <text x="892" y="191" font-size="15">同一深度排序</text>
+    <text x="1150" y="104" font-size="18">实际结果与持久资产</text>
+    <text x="1150" y="137" font-size="15">实际阶段联合渲染</text>
+    <text x="1150" y="164" font-size="15">完整模型 / Adam / RNG</text>
+    <text x="1150" y="191" font-size="15">来源绑定 / 独立重载</text>
+    <text x="122" y="345" font-size="18">R8 完整 2600 步</text>
+    <text x="122" y="377" font-size="15">模型与优化状态接续</text>
+    <text x="122" y="401" font-size="14">追加 200 唯一更新</text>
+    <text x="515" y="342" font-size="18">原30k与真实车体核心冻结保留</text>
+    <text x="515" y="374" font-size="14">仅退出完整背景几何域中的错误子核尾部</text>
+    <text x="515" y="399" font-size="14">域外与车辆继续原参考组成</text>
+    <text x="1022" y="342" font-size="18">训练接线修复</text>
+    <text x="1022" y="374" font-size="14">占据可学；未知处 RGB 及 RGB 保护权重 0</text>
+    <text x="1022" y="399" font-size="14">原评价 mask 与分母固定；原道路与背景 GT 不变</text>
+    <text x="640" y="30" font-size="15" fill="#a7c8bb">道路 2800 唯一更新 / 背景 800 步 · 实际优化 2804（重放 4）</text>
+    <text x="640" y="451" font-size="14" fill="#9fb4c5">新增实拍 RGB 像素 0 · 新增 seed 0 · 新增候选 0 · 固定几何范围不扩展</text>
+  </g>
+</svg>
