@@ -1,0 +1,197 @@
+{
+  "schema": "scene065.postprocess.paired_comparison.20261126.v1",
+  "training_updates": 0,
+  "gaussian_updates": 0,
+  "width": 480,
+  "height": 320,
+  "fps": 10,
+  "mask_tag": "w8_swept_cd18",
+  "seed": 2026,
+  "vace_sampling_steps": 25,
+  "vace_reference_images": false,
+  "common_masked_RGB_value": 127,
+  "clips": {
+    "087": {
+      "raw_range": [
+        78,
+        98
+      ],
+      "frames": 21,
+      "propainter_run": {
+        "returncode": 0,
+        "wall_s": 7.702773394063115,
+        "peak_vram_mb": 2166.0,
+        "command": [
+          "/root/autodl-tmp/envs/driveeditor/bin/python",
+          "inference_propainter.py",
+          "-i",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene065_vace13b_20261126_r2_official_inpainting/087/src_video",
+          "-m",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene065_vace13b_20261126_r2_official_inpainting/087/src_mask",
+          "-o",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene065_vace13b_20261126_r2_official_inpainting/087/matched_propainter/raw",
+          "--fp16",
+          "--save_frames",
+          "--mask_dilation",
+          "4",
+          "--neighbor_length",
+          "10",
+          "--ref_stride",
+          "10",
+          "--subvideo_length",
+          "50",
+          "--save_fps",
+          "10"
+        ],
+        "model_training_updates": 0,
+        "gaussian_updates": 0
+      },
+      "vace_run": {
+        "wall_s": 103.5,
+        "peak_vram_mb": 21488.0,
+        "nvidia_smi_samples": 182,
+        "returncode": 0,
+        "steps": 25
+      },
+      "common_mask_mean": 10444.809523809523,
+      "retained_pixel_frame_denominator": 295618,
+      "metrics": {
+        "input": {
+          "luma_delta": 7.226666666666667,
+          "grad_ratio_patch_vs_ring": 1.3357619047619047,
+          "seam_inner_over_far": 1.1530952380952382,
+          "hist_chi2_bgr": 0.3212761904761905,
+          "unwarped_temporal_RGB_delta": 7.567663407325744
+        },
+        "propainter": {
+          "luma_delta": 2.069047619047619,
+          "grad_ratio_patch_vs_ring": 0.4947142857142858,
+          "seam_inner_over_far": 0.9116190476190477,
+          "hist_chi2_bgr": 0.5756904761904762,
+          "unwarped_temporal_RGB_delta": 3.346464967727661
+        },
+        "propainter_tone": {
+          "luma_delta": 3.217142857142857,
+          "grad_ratio_patch_vs_ring": 0.5939047619047619,
+          "seam_inner_over_far": 0.9575238095238097,
+          "hist_chi2_bgr": 0.7431714285714286,
+          "unwarped_temporal_RGB_delta": 4.611620545387268
+        },
+        "vace": {
+          "luma_delta": 4.882857142857143,
+          "grad_ratio_patch_vs_ring": 1.2828095238095236,
+          "seam_inner_over_far": 1.1291428571428572,
+          "hist_chi2_bgr": 0.7942904761904762,
+          "unwarped_temporal_RGB_delta": 8.064270853996277
+        }
+      },
+      "protection_PNG_exact": true
+    },
+    "141": {
+      "raw_range": [
+        132,
+        152
+      ],
+      "frames": 21,
+      "propainter_run": {
+        "returncode": 0,
+        "wall_s": 9.371648473665118,
+        "peak_vram_mb": 2490.0,
+        "command": [
+          "/root/autodl-tmp/envs/driveeditor/bin/python",
+          "inference_propainter.py",
+          "-i",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene065_vace13b_20261126_r2_official_inpainting/141/src_video",
+          "-m",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene065_vace13b_20261126_r2_official_inpainting/141/src_mask",
+          "-o",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene065_vace13b_20261126_r2_official_inpainting/141/matched_propainter/raw",
+          "--fp16",
+          "--save_frames",
+          "--mask_dilation",
+          "4",
+          "--neighbor_length",
+          "10",
+          "--ref_stride",
+          "10",
+          "--subvideo_length",
+          "50",
+          "--save_fps",
+          "10"
+        ],
+        "model_training_updates": 0,
+        "gaussian_updates": 0
+      },
+      "vace_run": {
+        "wall_s": 105.7,
+        "peak_vram_mb": 21488.0,
+        "nvidia_smi_samples": 185,
+        "returncode": 0,
+        "steps": 25
+      },
+      "common_mask_mean": 15044.190476190477,
+      "retained_pixel_frame_denominator": 356722,
+      "metrics": {
+        "input": {
+          "luma_delta": 20.65095238095238,
+          "grad_ratio_patch_vs_ring": 1.1067619047619046,
+          "seam_inner_over_far": 1.567095238095238,
+          "hist_chi2_bgr": 1.111838095238095,
+          "unwarped_temporal_RGB_delta": 2.2218904316425325
+        },
+        "propainter": {
+          "luma_delta": 3.8885714285714292,
+          "grad_ratio_patch_vs_ring": 0.6323809523809524,
+          "seam_inner_over_far": 1.321190476190476,
+          "hist_chi2_bgr": 0.8783095238095239,
+          "unwarped_temporal_RGB_delta": 1.102104553580284
+        },
+        "propainter_tone": {
+          "luma_delta": 5.643809523809524,
+          "grad_ratio_patch_vs_ring": 0.5926666666666668,
+          "seam_inner_over_far": 1.3184761904761906,
+          "hist_chi2_bgr": 0.9858476190476189,
+          "unwarped_temporal_RGB_delta": 1.5122501403093338
+        },
+        "vace": {
+          "luma_delta": -6.3447619047619055,
+          "grad_ratio_patch_vs_ring": 1.6741904761904762,
+          "seam_inner_over_far": 1.6658571428571427,
+          "hist_chi2_bgr": 0.7966476190476192,
+          "unwarped_temporal_RGB_delta": 1.3231098622083663
+        }
+      },
+      "protection_PNG_exact": true
+    }
+  },
+  "metric_notes": [
+    "All RGB/texture/seam statistics are diagnostics without hidden-road ground truth.",
+    "Temporal delta is unwarped adjacent-frame RGB change, not a motion-compensated flicker score.",
+    "Peak memory is nvidia-smi device memory sampled every 0.5 seconds.",
+    "Primary ProPainter control sees the same 21 frames as VACE; full199 run is supplemental."
+  ],
+  "engineering_replays": {
+    "087": {
+      "run": {
+        "wall_s": 105.5,
+        "peak_vram_mb": 21488.0,
+        "nvidia_smi_samples": 184,
+        "returncode": 0,
+        "steps": 25
+      },
+      "valid_primary_comparison": false,
+      "reason": "Unknown RGB was not gray-neutralized for VACE inpainting"
+    },
+    "141": {
+      "run": {
+        "wall_s": 104.0,
+        "peak_vram_mb": 21488.0,
+        "nvidia_smi_samples": 182,
+        "returncode": 0,
+        "steps": 25
+      },
+      "valid_primary_comparison": false,
+      "reason": "Unknown RGB was not gray-neutralized for VACE inpainting"
+    }
+  }
+}

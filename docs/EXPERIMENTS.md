@@ -478,3 +478,6 @@ task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_2
 ## ROAD-VEHICLE-JOINT-20261123
 
 [方法、资产与恢复导航](autoresearch/road_vehicle_joint_20261123/README.md) · [固定评价与实际资源](autoresearch/road_vehicle_joint_20261123/compact_result.json) · [交付及归档入口](autoresearch/road_vehicle_joint_20261123/final_delivery.json)。包含R8对齐/联合RGB400步和原版DGGT原场景控制、R9原始教师联合校色、R10局部新表示/足迹与独立覆盖替换/两次不透明度smoke。唯一可视化仍为原道路HTML；所有实际失败保留。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict=null，problem_solved=null。
+
+
+- `SCENE065-POSTPROCESSING-COMPARE-20261126`：修正版ProPainter与VACE1.3B两段同域冻结推理；[运行与资源](autoresearch/scene065_postprocessing_20261126/results_summary.json) · [结果判断](autoresearch/scene065_postprocessing_20261126/review.json)。训练更新0，failure_ledger_delta=none。

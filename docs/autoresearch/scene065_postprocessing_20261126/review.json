@@ -1,0 +1,26 @@
+{
+  "schema": "scene065.postprocess.technical_review.20261126.v1",
+  "requested_comparison_complete": true,
+  "selected_backend": "corrected_propainter_without_forced_tone",
+  "vace_promoted": false,
+  "final_visual_quality_pass": false,
+  "human_approval": null,
+  "headline": "保留修正版 ProPainter；本次 VACE 1.3B 配置不晋升",
+  "conclusion": "正式对照使用共同置灰输入和同一补全范围。ProPainter减少车形残留与硬矩形接缝，但道路仍有涂抹和大面积暗区；VACE在087段生成带红色图案的新物体，在141段重新生成一辆黑色轿车，违背删除后空路面的目标。本轮停止追加VACE适配，不将两种后端标为最终画质通过。",
+  "findings": [
+    "主对照固定078—098与132—152，各21帧；分辨率480×320，最终视频10fps。两种后端使用完全相同的PNG帧与mask文件；mask内RGB统一置为127，无额外参考图。ProPainter内部保留原生4px mask dilation；最终合成范围一致。",
+    "ProPainter两段耗时7.70s、9.37s，设备显存采样峰值2.12GiB、2.43GiB；VACE各25步，含模型加载耗时103.5s、105.7s，峰值均20.98GiB。这是本次启动方式的总耗时，不是常驻模型吞吐。",
+    "无损PNG检查覆盖652340个保留车辆像素帧；各后端对K保护域和mask外的新增差分均为0。该检查以输入渲染为参照，不代表输入自身已有车辆缺陷被修复。",
+    "全199帧r5 mask对固定静态主导候选域覆盖530121/555905，即95.36%；不是子集扫描的100%。该候选域不是隐藏道路真值。",
+    "原始087/141两段未置灰试跑被保留为输入接线错误的工程重放，不用于后端选型。正式结果修复了该格式错误，模型、提示词、seed、mask与25步预算均未调优。",
+    "补齐tokenizer文件、兼容依赖、480×320尺寸表及token预算、PNG序列读取和可关闭的prompt扩展依赖；无FlashAttention时使用保留padding与缩放语义的PyTorch SDPA，GPU小规模数值核对max_abs=0.002027。所有适配源码及修改前副本随结果保存。",
+    "5帧/2步GPU smoke完整生成通过。正式实验没有优化器、没有新增模型训练，也没有修改高斯资产。",
+    "调色版本作为独立控制保留；无调色版本的未对齐帧差在两个片段均低于强制逐帧调色。该统计不能替代运动补偿的闪烁评价，选择还依据真实序列图中的对象与道路表现。",
+    "本轮没有引入深度、语义或位姿新条件，没有进行微调、蒸馏、缓存研发，也没有宣称闭环仿真器或三维资产修复完成。"
+  ],
+  "primary_remote_run": "/root/autodl-tmp/drivingeditor_repro/campaign/scene065_vace13b_20261126_r2_official_inpainting",
+  "invalid_conditioning_pilot_preserved": "/root/autodl-tmp/drivingeditor_repro/campaign/scene065_vace13b_20261126_r1",
+  "inpainting_input_reference": "https://github.com/ali-vilab/VACE/blob/main/UserGuide.md",
+  "failure_ledger_refs": ["V82-F06"],
+  "failure_ledger_delta": "none"
+}
