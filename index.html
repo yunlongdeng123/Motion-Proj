@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1214">
+  <meta name="description" content="WorldSim：基于实车多模态数据的可编辑三维驾驶场景重建。展示动静分解、实例编辑、道路资产补全与多视角拟合结果。">
+  <title>WorldSim · 可编辑三维驾驶场景重建</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">跳转到正文</a>
+<header class="site-header wrap">
+  <a class="brand" href="#"><svg width="27" height="27" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 2 28 9v12l-13 7L2 21V9Z M2 9l13 7 13-7 M15 16v12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>WorldSim</a>
+  <nav aria-label="页面导航"><a href="#method">方法</a><a href="#results">结果</a><a href="https://github.com/yunlongdeng123/Motion-Proj/tree/research/worldsim-v8.2-drivingeditor-v44">GitHub</a></nav>
+</header>
+<main id="main">
+<section class="hero wrap">
+  <div class="hero-copy">
+    <p class="eyebrow">3D GAUSSIAN SPLATTING · AUTONOMOUS DRIVING</p>
+    <h1>从真实街景到<br><span>可编辑三维场景</span></h1>
+    <p class="lead">融合实车图像、激光雷达与实例轨迹，分解背景、道路和动态车辆，构建支持对象编辑与新视角渲染的三维资产。</p>
+    <div class="author">邓云龙 <span>个人研究项目</span></div>
+    <div class="actions"><a class="button primary" href="#results">查看实验结果</a><a class="button" href="https://github.com/yunlongdeng123/Motion-Proj/tree/research/worldsim-v8.2-drivingeditor-v44">代码与实验记录</a></div>
+  </div>
+  <figure class="hero-visual">
+    <img src="assets/scene-reconstruction.png" width="480" height="320" alt="Waymo 街段的三维高斯重建画面，包含路面、动态车辆及静态街景">
+    <figcaption><span>Waymo 实车场景重建</span><span>30,000 steps</span></figcaption>
+  </figure>
+</section>
+<section class="stats wrap" aria-label="主要实验结果">
+  <div><strong>2 <span>街段</span></strong><p>各约 200 帧 · 分别完成 30K 重建</p></div>
+  <div><strong>97.37<span>%</span></strong><p>道路充分覆盖率 · 基线 86.99%</p></div>
+  <div><strong>−6.26<span>%</span></strong><p>多视角颜色 MAE · 相同渲染预算</p></div>
+</section>
+
+<section id="method" class="section wrap">
+  <div class="section-heading"><p class="eyebrow">METHOD</p><h2>场景表示与编辑渲染</h2><p>对象局部表示与世界道路资产，在同一渲染链路中汇合。</p></div>
+  <div class="pipeline" role="img" aria-label="实车多模态数据经过动静分解、实例归属和道路补全，构成可编辑场景，最后通过联合深度排序输出RGB、深度及Alpha">
+    <div class="module input"><small>输入</small><strong>实车多模态数据</strong><span>RGB · LiDAR<br>相机标定 · 实例轨迹</span></div>
+    <span class="flow" aria-hidden="true">→</span>
+    <div class="branches"><div class="module"><strong>动静分解与实例归属</strong><span>背景 / 道路 / 对象局部高斯</span></div><div class="module"><strong>遮挡路面补全</strong><span>多帧观测 · 几何约束 · 外观场</span></div></div>
+    <span class="flow" aria-hidden="true">→</span>
+    <div class="module"><small>持久场景</small><strong>按对象 ID 编辑</strong><span>资产重载 · 车辆保留 / 删除</span></div>
+    <span class="flow" aria-hidden="true">→</span>
+    <div class="module output"><small>输出</small><strong>联合深度排序</strong><span>RGB · Depth · Alpha</span></div>
+  </div>
+  <div class="method-grid">
+    <article><h3>稳定的实例身份</h3><p>车辆在对象局部坐标系建模，背景和道路位于世界坐标系；在高斯克隆、分裂与剪枝过程中维护实例归属，使对象编辑与表示增密保持一致。</p><div class="tags"><span>动静分解</span><span>身份谱系</span><span>坐标变换</span></div></article>
+    <article><h3>共享的道路资产</h3><p>融合跨帧实拍、相似路面检索与冻结的生成补全结果，建立世界坐标下共享的道路外观场；结合 LiDAR 几何与可微渲染，优化覆盖和局部颜色。</p><div class="tags"><span>几何约束</span><span>可微渲染</span><span>多视角一致性</span></div></article>
+    <article><h3>可复核的训练与评测</h3><p>将场景构建与编辑查询分离，固定评价区域、采样预算和相机读出；覆盖检查点恢复、资产重载及分区 RGB / Alpha / 深度检查。</p><div class="tags"><span>配对实验</span><span>固定评价域</span><span>恢复与重载</span></div></article>
+  </div>
+</section>
+
+<section id="results" class="section results-section">
+<div class="wrap">
+  <div class="section-heading"><p class="eyebrow">RESULTS</p><h2>让改进落到同一评价域</h2></div>
+  <div class="result-layout">
+    <div class="result-copy"><h3>道路资产覆盖校准</h3><p>针对车辆移除后暴露的路面空洞，在有几何支撑的区域构建补全面，并分阶段优化不透明度、切向尺度与局部颜色。</p>
+      <div class="result-value"><span>86.99%</span><b aria-hidden="true">→</b><strong>97.37%</strong></div>
+      <p class="caption">α &gt; 0.9 的道路像素占比<br>固定 5 视角 · 38,416 像素评价域</p>
+      <div class="mini-fact"><strong>77,266</strong><span>保留车辆像素的 RGB 变化为 0</span></div>
+    </div>
+    <div class="comparison-block">
+      <div class="comparison" id="road-comparison" style="--split:50%">
+        <img class="before" src="assets/road-before.webp" width="480" height="320" alt="优化前的道路单层渲染，中心区域存在黑色覆盖空洞" loading="lazy">
+        <img class="after" src="assets/road-after.webp" width="480" height="320" alt="优化后的道路单层渲染，中心空洞缩小" loading="lazy">
+        <span class="divider" aria-hidden="true"></span>
+        <span class="image-label left">优化后</span><span class="image-label right">优化前</span>
+      </div>
+      <div class="range-row"><label for="split">前后对比</label><input type="range" id="split" min="0" max="100" value="50" aria-label="调整道路优化前后对比的分割位置"><output id="split-output" for="split">50%</output></div>
+      <p class="caption">同一相机、同一帧的道路单层渲染。</p>
+    </div>
+  </div>
+
+  <div class="multiview">
+    <div class="multi-heading"><div><p class="eyebrow">CONTROLLED EXPERIMENT</p><h3>多视角监督与均衡采样</h3></div><div class="metric-pill">平均颜色 MAE <strong>−6.26%</strong></div></div>
+    <p class="multi-description">共享畸变校正与曝光归一化，将参考池从 2 帧扩展为 8 帧；两组均训练 400 步、每步渲染 2 帧。以下 3 个查询视角未参与本轮 RGB 参数更新。</p>
+    <div class="query-controls"><span>查询视角</span><div class="segmented" role="group" aria-label="选择查询视角"><button type="button" data-frame="100" aria-pressed="true">100</button><button type="button" data-frame="110" aria-pressed="false">110</button><button type="button" data-frame="117" aria-pressed="false">117</button></div></div>
+    <div class="query-images"><figure><div><img id="query-photo" src="assets/query-100-photo.png" alt="查询视角100的实拍路面局部" width="206" height="68" loading="lazy"></div><figcaption>实拍局部</figcaption></figure><figure><div><img id="query-two" src="assets/query-100-two.png" alt="查询视角100的两帧监督结果" width="206" height="68" loading="lazy"></div><figcaption>2 帧监督</figcaption></figure><figure><div><img id="query-eight" src="assets/query-100-eight.png" alt="查询视角100的八帧监督结果" width="206" height="68" loading="lazy"></div><figcaption>8 帧监督</figcaption></figure></div>
+    <p id="query-status" class="caption" aria-live="polite">视角 100 · 颜色 MAE：0.008189 → 0.006780</p>
+    <div class="table-scroll"><table><caption>原始照片域颜色 MAE ↓</caption><thead><tr><th scope="col">查询视角</th><th scope="col">2 帧监督</th><th scope="col">8 帧监督</th><th scope="col">变化</th></tr></thead><tbody><tr><th scope="row">100</th><td>0.008189</td><td>0.006780</td><td class="gain">−17.21%</td></tr><tr><th scope="row">110</th><td>0.008336</td><td>0.008122</td><td class="gain">−2.57%</td></tr><tr><th scope="row">117</th><td>0.008325</td><td>0.008391</td><td>+0.79%</td></tr><tr class="mean"><th scope="row">三视角均值</th><td>0.008283</td><td>0.007765</td><td class="gain">−6.26%</td></tr></tbody></table></div>
+  </div>
+</div>
+</section>
+<section class="closing wrap"><div><p class="eyebrow">PROJECT RESOURCES</p><h2>从实现到实验记录</h2><p>场景构建、可编辑表示、道路资产与配对评测。</p></div><a class="button primary" href="https://github.com/yunlongdeng123/Motion-Proj/tree/research/worldsim-v8.2-drivingeditor-v44">浏览 GitHub 仓库</a></section>
+</main>
+<footer class="wrap"><div class="footer-line"><span>WorldSim · 邓云龙</span><span>可编辑三维驾驶场景重建与渲染</span></div><details><summary>免责声明 · 实验范围</summary><p>所示结果来自当前开发街段。道路覆盖指标衡量固定区域的表面支撑，不等同于隐藏道路真值恢复；主要覆盖收益来自初始化修复。多视角结果为同一街段、单次配对实验，查询视角未参加本轮 RGB 更新，共享曝光校正使用其核心外路面。完整街景编辑画质及跨场景泛化仍需进一步验证。原始驾驶数据归其数据提供方所有。</p></details></footer>
+<script src="app.js"></script>
+</body>
+</html>
